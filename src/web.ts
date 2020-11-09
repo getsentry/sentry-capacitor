@@ -3,7 +3,9 @@ import { Integration } from '@sentry/types';
 
 import { SentryCapacitorPlugin } from './definitions';
 
-export class SentryCapacitorWeb extends WebPlugin implements SentryCapacitorPlugin {
+export class SentryCapacitorWeb
+  extends WebPlugin
+  implements SentryCapacitorPlugin {
   constructor() {
     super({
       name: 'SentryCapacitor',

@@ -7,5 +7,10 @@ declare module '@capacitor/core' {
 }
 
 export interface SentryCapacitorPlugin {
-  startWithOptions(options: { dsn: string, release: string, integrations: Integration[], tracesSampleRate: number}): void
+  startWithOptions(options: {
+    dsn: string;
+    release: string;
+    integrations: Integration[];
+    tracesSampleRate: number;
+  }): void;
 }

@@ -3,7 +3,8 @@ import { BaseClient, Scope } from '@sentry/core';
 import { Event, EventHint } from '@sentry/types';
 import { SyncPromise } from '@sentry/utils';
 
-import { CapacitorBackend, CapacitorOptions } from './backend';
+import { CapacitorBackend } from './backend';
+import { CapacitorOptions } from './options';
 
 /**
  * The Sentry Capacitor SDK Client.

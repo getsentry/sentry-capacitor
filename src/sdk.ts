@@ -1,30 +1,48 @@
 import { defaultIntegrations } from '@sentry/browser';
 import { initAndBind } from '@sentry/core';
+import { getCurrentHub, Hub, makeMain } from '@sentry/hub';
 
-import { CapacitorOptions } from './options';
 import { CapacitorClient } from './client';
-import { Capacitor, Release } from './integrations';
+import { CapacitorErrorHandlers, DeviceContext, Release } from './integrations';
+import { CapacitorOptions } from './options';
+import { CapacitorScope } from './scope';
 
 const DEFAULT_OPTIONS: CapacitorOptions = {
-    enableNative: true,
-    enableNativeNagger: true
-}
+  enableNative: true,
+  enableNativeNagger: true,
+};
 
 /**
  * Inits the SDK
  */
-
-export function init(passedOptions: CapacitorOptions = {
+export function init(
+  passedOptions: CapacitorOptions = {
     enableNative: true,
-    enableNativeNagger: true
-}): void {
+    enableNativeNagger: true,
+  },
+): void {
+  const capacitorHub = new Hub(undefined, new CapacitorScope());
+  makeMain(capacitorHub);
 
-    const options = {
-        ...DEFAULT_OPTIONS,
-        ...passedOptions
+  const options = {
+    ...DEFAULT_OPTIONS,
+    ...passedOptions,
+  };
+
+  if (options.defaultIntegrations === undefined) {
+    options.defaultIntegrations = [
+      new CapacitorErrorHandlers(),
+      new Release(),
+      ...defaultIntegrations,
+    ];
+
+    if (options.enableNative) {
+      options.defaultIntegrations.push(new DeviceContext());
     }
-    if (options.defaultIntegrations === undefined) {
-        options.defaultIntegrations = [...defaultIntegrations, new Capacitor(), new Release()];
-    }
-    initAndBind(CapacitorClient, options);
- }
+  }
+
+  initAndBind(CapacitorClient, options);
+
+  // set the event.origin tag.
+  getCurrentHub().setTag('event.origin', 'javascript');
+}

@@ -4,9 +4,10 @@ import { BaseBackend, getCurrentHub } from '@sentry/core';
 import { forget, getGlobalObject } from '@sentry/utils';
 
 import { Capacitor, Plugins } from '@capacitor/core';
-const SentryCapacitor = Plugins;
 
-const PLUGIN_NAME = 'Sentry';
+import { CapacitorOptions } from './options';
+
+const SentryCapacitor = Plugins;
 
 /**
  * The Sentry Capacitor SDK Backend.
