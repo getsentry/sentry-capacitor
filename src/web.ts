@@ -1,4 +1,6 @@
 import { WebPlugin } from '@capacitor/core';
+import { Integration } from '@sentry/types';
+
 import { SentryCapacitorPlugin } from './definitions';
 
 export class SentryCapacitorWeb extends WebPlugin implements SentryCapacitorPlugin {
@@ -9,9 +11,14 @@ export class SentryCapacitorWeb extends WebPlugin implements SentryCapacitorPlug
     });
   }
 
-  async echo(options: { value: string }): Promise<{ value: string }> {
-    console.log('ECHO', options);
-    return options;
+  async startWithOptions(options: {
+    dsn: string;
+    release: string;
+    integrations: Integration[];
+    tracesSampleRate: number;
+  }): Promise<void> {
+    // TODO integrate web
+    console.log('options: ', options);
   }
 }
 

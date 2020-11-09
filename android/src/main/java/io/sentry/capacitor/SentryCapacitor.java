@@ -6,6 +6,8 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 
+import io.sentry.android.core.SentryAndroid;
+
 @NativePlugin
 public class SentryCapacitor extends Plugin {
 
@@ -16,5 +18,14 @@ public class SentryCapacitor extends Plugin {
         JSObject ret = new JSObject();
         ret.put("value", value);
         call.success(ret);
+    }
+
+    @PluginMethod
+    public void init(PluginCall call) {
+        String dsn = call.getString("dsn");
+
+        SentryAndroid.init(this.getContext(), options -> {
+            options.setDsn(dsn);
+        })
     }
 }
