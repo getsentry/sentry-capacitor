@@ -59,32 +59,16 @@ export class CapacitorBackend extends BaseBackend<BrowserOptions> {
     const scope = getCurrentHub().getScope();
     if (scope) {
       scope.addScopeListener(internalScope => {
-        this._nativeCall(
-          'setExtraContext',
-          (internalScope as any)._extra,
-        ).catch(() => {
-          // We do nothing since scope is handled and attached to the event.
-          // This only applies to android.
-        });
-        this._nativeCall('setTagsContext', (internalScope as any)._tags).catch(
-          () => {
-            // We do nothing since scope is handled and attached to the event.
-            // This only applies to android.
-          },
-        );
-        this._nativeCall('setUserContext', (internalScope as any)._user).catch(
-          () => {
-            // We do nothing since scope is handled and attached to the event.
-            // This only applies to android.
-          },
-        );
+        this._nativeCall('setExtraContext', (internalScope as any)._extra);
+
+        this._nativeCall('setTagsContext', (internalScope as any)._tags);
+
+        this._nativeCall('setUserContext', (internalScope as any)._user);
+
         this._nativeCall(
           'addBreadcrumb',
           (internalScope as any)._breadcrumbs.pop(),
-        ).catch(() => {
-          // We do nothing since scope is handled and attached to the event.
-          // This only applies to android.
-        });
+        );
       });
     }
   }

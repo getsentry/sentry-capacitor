@@ -50,23 +50,6 @@ export const NATIVE = {
   },
 
   /**
-   * Fetches the device contexts. Not used on Android.
-   */
-  async deviceContexts(): Promise<{ [key: string]: Record<string, unknown> }> {
-    if (!this.enableNative) {
-      throw this._DisabledNativeError;
-    }
-
-    if (this.platform !== 'ios') {
-      // Only ios uses deviceContexts, return an empty object.
-      return {};
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    return SentryCapacitor.deviceContexts();
-  },
-
-  /**
    * Sets context on the native scope.
    * @param key string
    * @param context key-value map

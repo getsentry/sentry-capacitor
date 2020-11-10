@@ -3,7 +3,7 @@ import { initAndBind } from '@sentry/core';
 import { getCurrentHub, Hub, makeMain } from '@sentry/hub';
 
 import { CapacitorClient } from './client';
-import { CapacitorErrorHandlers, DeviceContext, Release } from './integrations';
+import { CapacitorErrorHandlers, Release } from './integrations';
 import { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 
@@ -35,10 +35,6 @@ export function init(
       new Release(),
       ...defaultIntegrations,
     ];
-
-    if (options.enableNative) {
-      options.defaultIntegrations.push(new DeviceContext());
-    }
   }
 
   initAndBind(CapacitorClient, options);
