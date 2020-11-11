@@ -196,7 +196,7 @@ export const NATIVE = {
    *  Checks whether the SentryCapacitor module is loaded and the native client is available
    */
   isNativeClientAvailable(): boolean {
-    return this.isModuleLoaded() && SentryCapacitor.nativeClientAvailable;
+    return this.isModuleLoaded() && SentryCapacitor.nativeClientAvailable();
   },
 
   /**

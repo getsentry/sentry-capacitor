@@ -3,12 +3,8 @@ import { BrowserBackend } from '@sentry/browser/dist/backend';
 import { BaseBackend } from '@sentry/core';
 import { getGlobalObject } from '@sentry/utils';
 
-import { Capacitor, Plugins } from '@capacitor/core';
-
 import { CapacitorOptions } from './options';
 import { NATIVE } from './wrapper';
-
-const SentryCapacitor = Plugins;
 
 declare const global: any;
 
@@ -16,6 +12,7 @@ declare const global: any;
  * The Sentry Capacitor SDK Backend.
  */
 export class CapacitorBackend extends BaseBackend<BrowserOptions> {
+  // @ts-ignore
   private readonly _browserBackend: BrowserBackend;
 
   /**

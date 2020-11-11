@@ -3,7 +3,8 @@ import { initAndBind } from '@sentry/core';
 import { getCurrentHub, Hub, makeMain } from '@sentry/hub';
 
 import { CapacitorClient } from './client';
-import { CapacitorErrorHandlers, Release } from './integrations';
+// import { CapacitorErrorHandlers, Release } from './integrations';
+import {  Release } from './integrations';
 import { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 
@@ -31,7 +32,7 @@ export function init(
 
   if (options.defaultIntegrations === undefined) {
     options.defaultIntegrations = [
-      new CapacitorErrorHandlers(),
+      // new CapacitorErrorHandlers(),
       new Release(),
       ...defaultIntegrations,
     ];
