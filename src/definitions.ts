@@ -1,4 +1,4 @@
-import { Integration } from '@sentry/types';
+import { CapacitorOptions } from './options';
 
 declare module '@capacitor/core' {
   interface PluginRegistry {
@@ -7,10 +7,5 @@ declare module '@capacitor/core' {
 }
 
 export interface SentryCapacitorPlugin {
-  startWithOptions(options: {
-    dsn: string;
-    release: string;
-    integrations: Integration[];
-    tracesSampleRate: number;
-  }): void;
+  startWithOptions(options: CapacitorOptions): boolean;
 }
