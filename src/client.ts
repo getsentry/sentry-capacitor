@@ -1,10 +1,10 @@
-import { SDK_NAME, SDK_VERSION } from '@sentry/browser';
 import { BaseClient, Scope } from '@sentry/core';
 import { Event, EventHint } from '@sentry/types';
 import { SyncPromise } from '@sentry/utils';
 
 import { CapacitorBackend } from './backend';
 import { CapacitorOptions } from './options';
+import { SDK_NAME, SDK_VERSION } from './version';
 
 /**
  * The Sentry Capacitor SDK Client.

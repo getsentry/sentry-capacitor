@@ -66,6 +66,29 @@ export const NATIVE = {
   },
 
   /**
+   * Sets log level in native
+   * @param level number
+   */
+  setLogLevel(level: number): void {
+    if (!this.enableNative) {
+      return;
+    }
+
+    if (!this.isNativeClientAvailable()) {
+      throw this._NativeClientError;
+    }
+
+    SentryCapacitor.setLogLevel(level);
+  },
+
+  /**
+   *  Checks whether the SentryCapacitor module is loaded and the native client is available
+   */
+  isNativeClientAvailable(): boolean {
+    return this.isModuleLoaded() && SentryCapacitor.nativeClientAvailable;
+  },
+
+  /**
    * Serializes all values of root-level keys into strings.
    * @param data key-value map.
    * @returns An object where all root-level values are strings.
