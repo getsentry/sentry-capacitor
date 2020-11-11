@@ -1,3 +1,5 @@
+import { CapacitorOptions } from './options';
+
 declare module '@capacitor/core' {
   interface PluginRegistry {
     SentryCapacitor: SentryCapacitorPlugin;
@@ -5,5 +7,5 @@ declare module '@capacitor/core' {
 }
 
 export interface SentryCapacitorPlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+  startWithOptions(options: CapacitorOptions): boolean;
 }

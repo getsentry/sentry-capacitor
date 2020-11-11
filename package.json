@@ -23,12 +23,16 @@
     "@ionic/prettier-config": "^1.0.0",
     "@ionic/swiftlint-config": "^1.0.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
-    "prettier": "^2.0.5",
+    "@sentry-internal/eslint-config-sdk": "^5.27.3",
+    "@sentry-internal/eslint-plugin-sdk": "^5.27.3",
+    "@sentry/typescript": "^5.20.1",
+    "eslint": "^7.13.0",
+    "prettier": "^2.1.2",
     "prettier-plugin-java": "^0.8.0",
     "rimraf": "^3.0.0",
     "rollup": "^2.21.0",
     "swiftlint": "^1.0.1",
-    "typescript": "~3.8.3"
+    "typescript": "^4.0.5"
   },
   "peerDependencies": {
     "@capacitor/core": "^2.4.2"
@@ -60,5 +64,15 @@
   },
   "bugs": {
     "url": "https://github.com/getsentry/sentry-capacitor/issues"
+  },
+  "dependencies": {
+    "@sentry/browser": "^5.27.3",
+    "@sentry/core": "^5.27.3",
+    "@sentry/hub": "^5.27.3",
+    "@sentry/integrations": "^5.27.3",
+    "@sentry/tracing": "^5.27.3",
+    "@sentry/types": "^5.27.3",
+    "@sentry/utils": "^5.27.3",
+    "@sentry/wizard": "^1.1.4"
   }
 }
