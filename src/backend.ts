@@ -1,7 +1,6 @@
 import { BrowserOptions, Transports } from '@sentry/browser';
 import { BrowserBackend } from '@sentry/browser/dist/backend';
 import { BaseBackend, NoopTransport } from '@sentry/core';
-import { getGlobalObject } from '@sentry/utils';
 
 import { CapacitorOptions } from './options';
 import { NativeTransport } from './transports/native';
@@ -39,7 +38,7 @@ export class CapacitorBackend extends BaseBackend<BrowserOptions> {
   /**
    * @inheritDoc
    */
-  protected _setupTransport(): Transport | NoopTransport {
+  protected _setupCapacitorTransport(): Transport | NoopTransport {
     if (!this._options.dsn) {
       // We return the noop transport here in case there is no Dsn.
       return new NoopTransport();
@@ -64,12 +63,12 @@ export class CapacitorBackend extends BaseBackend<BrowserOptions> {
   /**
    * Has Capacitor on window?
    */
-  private _isCapacitor(): boolean {
-    return (
-      getGlobalObject<any>().capacitor !== undefined ||
-      getGlobalObject<any>().Capacitor !== undefined
-    );
-  }
+  // private _isCapacitor(): boolean {
+  //   return (
+  //     getGlobalObject<any>().capacitor !== undefined ||
+  //     getGlobalObject<any>().Capacitor !== undefined
+  //   );
+  // }
 
   /**
    * If true, native client is availabe and active

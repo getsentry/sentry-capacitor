@@ -73,6 +73,7 @@
     "@sentry/tracing": "^5.27.3",
     "@sentry/types": "^5.27.3",
     "@sentry/utils": "^5.27.3",
-    "@sentry/wizard": "^1.1.4"
+    "@sentry/wizard": "^1.1.4",
+    "promise": "^8.1.0"
   }
 }
