@@ -1,4 +1,7 @@
 import { WebPlugin } from '@capacitor/core';
+
+import { Response, Status } from "@sentry/types";
+
 import { CapacitorOptions } from './options';
 
 import { SentryCapacitorPlugin } from './definitions';
@@ -17,7 +20,18 @@ export class SentryCapacitorWeb
     // TODO integrate web
   }
 
+  captureEnvelope(): Promise<Response> {
+    // TODO integrate web
+    return Promise.resolve({
+      status: Status.Success
+    })
+  }
+
   clearBreadcrumbs(): void {
+    // TODO integrate web
+  }
+
+  crash(): void {
     // TODO integrate web
   }
 
@@ -34,14 +48,25 @@ export class SentryCapacitorWeb
     };
   }
 
+  getStringBytesLength(payloadString: "somepayload"): number {
+    // TODO integrate web
+    console.log(payloadString);
+    return 12;
+  }
+
   nativeClientAvailable(): boolean {
+    // TODO integrate web
+    return false;
+  }
+
+  nativeTransportAvailable(): boolean {
     // TODO integrate web
     return false;
   }
 
   async startWithOptions(options: CapacitorOptions): Promise<boolean> {
     // TODO integrate web
-    console.log('options: ', options);
+    console.log(options);
     return true;
   }
 
@@ -54,10 +79,6 @@ export class SentryCapacitorWeb
   }
 
   setExtra(): void {
-    // TODO integrate web
-  }
-
-  setContext(): void {
     // TODO integrate web
   }
 

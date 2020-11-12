@@ -1,2 +1,2 @@
-// export { CapacitorErrorHandlers } from './capacitorerrorhandlers';
+export { CapacitorErrorHandlers } from './capacitorerrorhandlers';
 export { Release } from './release';
