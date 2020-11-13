@@ -53,7 +53,7 @@ export class CapacitorBackend extends BaseBackend<BrowserOptions> {
       return new this._options.transport(transportOptions);
     }
 
-    if (this._isNativeTransportAvailable()) {
+    if (this._isNativeClientAvailable()) {
       return new NativeTransport();
     }
 
@@ -73,11 +73,10 @@ export class CapacitorBackend extends BaseBackend<BrowserOptions> {
   /**
    * If true, native client is availabe and active
    */
-  private _isNativeTransportAvailable(): boolean {
+  private _isNativeClientAvailable(): boolean {
     return (
       this._options.enableNative === true &&
-      NATIVE.isNativeClientAvailable() &&
-      NATIVE.isNativeTransportAvailable()
+      NATIVE.isNativeClientAvailable()
     );
   }
 

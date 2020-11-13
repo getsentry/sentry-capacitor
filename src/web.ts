@@ -16,6 +16,8 @@ export class SentryCapacitorWeb
     });
   }
 
+  public nativeClientAvailable: boolean = false;
+
   addBreadcrumb(): void {
     // TODO integrate web
   }
@@ -52,16 +54,6 @@ export class SentryCapacitorWeb
     // TODO integrate web
     console.log(payloadString);
     return 12;
-  }
-
-  nativeClientAvailable(): boolean {
-    // TODO integrate web
-    return false;
-  }
-
-  nativeTransportAvailable(): boolean {
-    // TODO integrate web
-    return false;
   }
 
   async startWithOptions(options: CapacitorOptions): Promise<boolean> {

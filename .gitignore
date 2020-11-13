@@ -6,6 +6,9 @@
 dist/
 node_modules/
 
+# Jest generated folder
+coverage/
+
 # iOS files
 Pods
 Build
