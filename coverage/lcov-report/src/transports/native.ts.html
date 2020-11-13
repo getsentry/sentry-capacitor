@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">37.5% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/8</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">66.67% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">37.5% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/8</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -88,26 +88,26 @@
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -123,21 +123,21 @@ import { PromiseBuffer, SentryError } from '@sentry/utils';
 import { NATIVE } from '../wrapper';
 &nbsp;
 /** Native Transport class implementation */
-<span class="fstat-no" title="function not covered" >export class N</span>ativeTransport implements Transport {
+export class NativeTransport implements Transport {
   /** A simple buffer holding all requests. */
-  protected readonly <span class="cstat-no" title="statement not covered" >_buffer: PromiseBuffer&lt;Response&gt; = new PromiseBuffer(30);</span>
+  protected readonly _buffer: PromiseBuffer&lt;Response&gt; = new PromiseBuffer(30);
 &nbsp;
   /**
    * @inheritDoc
    */
-  public <span class="fstat-no" title="function not covered" >sendEvent(</span>event: Event): PromiseLike&lt;Response&gt; {
-<span class="cstat-no" title="statement not covered" >    if (!this._buffer.isReady()) {</span>
+  public sendEvent(event: Event): PromiseLike&lt;Response&gt; {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!this._buffer.isReady()) {
 <span class="cstat-no" title="statement not covered" >      return Promise.reject(</span>
         new SentryError('Not adding Promise due to buffer limit reached.'),
       );
     }
     // @ts-ignore
-<span class="cstat-no" title="statement not covered" >    return this._buffer.add(NATIVE.sendEvent(event));</span>
+    return this._buffer.add(NATIVE.sendEvent(event));
   }
 &nbsp;
   /**
@@ -154,7 +154,7 @@ import { NATIVE } from '../wrapper';
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Nov 12 2020 23:44:52 GMT-0500 (Eastern Standard Time)
+                at Thu Nov 12 2020 23:48:42 GMT-0500 (Eastern Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
