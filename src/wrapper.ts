@@ -1,7 +1,7 @@
+/* eslint-disable max-lines */
 import { Plugins } from '@capacitor/core';
-
-import { logger, SentryError } from '@sentry/utils';
 import { Breadcrumb, Event, Severity, User } from '@sentry/types';
+import { logger, SentryError } from '@sentry/utils';
 
 import { CapacitorOptions } from './options';
 
@@ -58,7 +58,7 @@ export const NATIVE = {
     const itemString = JSON.stringify(item);
 
     const envelopeString = `${headerString}\n${itemString}\n${payloadString}`;
-    // @ts-ignore
+    // @ts-ignore // TODO remove this ignore once captureEnvelope implementation is completed
     return SentryCapacitor.captureEnvelope(envelopeString);
   },
 
@@ -89,6 +89,7 @@ export const NATIVE = {
     }
 
     // filter out all options that would crash native
+    /* eslint-disable @typescript-eslint/unbound-method, @typescript-eslint/no-unused-vars */
     const {
       beforeSend,
       beforeBreadcrumb,

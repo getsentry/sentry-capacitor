@@ -17,7 +17,7 @@ export class CapacitorClient extends BaseClient<
   public constructor(options: CapacitorOptions) {
     super(CapacitorBackend, options);
   }
-  
+
   /**
    * If native client is available it will trigger a native crash.
    * Use this only for testing purposes.

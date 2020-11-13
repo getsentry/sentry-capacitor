@@ -65,7 +65,6 @@ export function init(
         },
       }),
     );
-
   }
 
   initAndBind(CapacitorClient, options);
