@@ -23,8 +23,6 @@ export interface SentryCapacitorPlugin {
     version: string;
   }>;
   getStringBytesLength(payloadString: string): number;
-  nativeClientAvailable(): boolean;
-  nativeTransportAvailable(): boolean;
   startWithOptions(options: CapacitorOptions): Promise<boolean>;
   setUser(
     user: serializedObject | null,
@@ -33,4 +31,5 @@ export interface SentryCapacitorPlugin {
   setTag(key: string, value: string): void;
   setExtra(key: string, value: string): void;
   setLogLevel(level: number): void;
+  nativeClientAvailable: boolean;
 }

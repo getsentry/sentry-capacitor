@@ -23,22 +23,7 @@ public class SentryCapacitor extends Plugin {
 
     static final Logger logger = Logger.getLogger("capacitor-sentry");
     private SentryOptions sentryOptions;
-
-    @PluginMethod
-    public boolean nativeClientAvailable(final PluginCall call) {
-        JSObject ret = new JSObject();
-        ret.put("available", true);
-        call.resolve(ret);
-        return true;
-    }
-
-    @PluginMethod
-    public boolean nativeTransportAvailable(final PluginCall call) {
-        JSObject ret = new JSObject();
-        ret.put("available", true);
-        call.resolve(ret);
-        return true;
-    }
+    static final boolean nativeClientAvailable = true;
 
     // @PluginMethod
     // public void echo(PluginCall call) {
