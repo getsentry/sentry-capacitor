@@ -67,12 +67,4 @@ export class CapacitorScope extends Scope {
     NATIVE.clearBreadcrumbs();
     return super.clearBreadcrumbs();
   }
-
-  /**
-   * @inheritDoc
-   */
-  public setContext(key: string, context: { [key: string]: any } | null): this {
-    NATIVE.setContext(key, context);
-    return super.setContext(key, context);
-  }
 }

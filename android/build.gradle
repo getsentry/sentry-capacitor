@@ -34,6 +34,11 @@ android {
     lintOptions {
         abortOnError false
     }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+    buildToolsVersion '29.0.3'
 }
 
 repositories {
