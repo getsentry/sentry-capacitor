@@ -37,7 +37,7 @@ export class CapacitorScope extends Scope {
   /**
    * @inheritDoc
    */
-  public setExtras(extras: { [key: string]: any }): this {
+  public setExtras(extras: { [key: string]: unknown }): this {
     Object.keys(extras).forEach(key => {
       NATIVE.setExtra(key, extras[key]);
     });
@@ -47,7 +47,7 @@ export class CapacitorScope extends Scope {
   /**
    * @inheritDoc
    */
-  public setExtra(key: string, extra: any): this {
+  public setExtra(key: string, extra: unknown): this {
     NATIVE.setExtra(key, extra);
     return super.setExtra(key, extra);
   }

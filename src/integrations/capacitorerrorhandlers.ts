@@ -4,6 +4,14 @@ import { logger } from '@sentry/utils';
 
 import { CapacitorClient } from '../client';
 
+type ErrorHandlerCallback = (error: Error, isFatal?: boolean) => void;
+
+export interface ErrorUtils {
+  setGlobalHandler: (callback: ErrorHandlerCallback) => void;
+  getGlobalHandler: () => ErrorHandlerCallback;
+}
+let ErrorUtils: ErrorUtils;
+
 /**
  * CapacitorErrorHandlers Options
  */
@@ -11,8 +19,6 @@ interface CapacitorErrorHandlersOptions {
   onerror: boolean;
   onunhandledrejection: boolean;
 }
-
-declare const global: any;
 
 /**
  * CapacitorErrorHandlers Integration
@@ -57,6 +63,7 @@ export class CapacitorErrorHandlers implements Integration {
       const tracking: {
         disable: () => void;
         enable: (arg: unknown) => void;
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
       } = require('promise/setimmediate/rejection-tracking');
       tracking.disable();
       tracking.enable({
@@ -64,12 +71,7 @@ export class CapacitorErrorHandlers implements Integration {
         onHandled: () => {
           // We do nothing
         },
-        onUnhandled: (id: any, error: any) => {
-          if (global.__DEV__) {
-            // eslint-disable-next-line no-console
-            console.warn(id, error);
-          }
-
+        onUnhandled: (id: number, error: Error) => {
           getCurrentHub().captureException(error, {
             data: { id },
             originalException: error,
@@ -87,12 +89,11 @@ export class CapacitorErrorHandlers implements Integration {
       let handlingFatal = false;
 
       const defaultHandler =
-        global.ErrorUtils.getGlobalHandler &&
-        global.ErrorUtils.getGlobalHandler();
+        ErrorUtils.getGlobalHandler && ErrorUtils.getGlobalHandler();
 
-      global.ErrorUtils.setGlobalHandler((error: any, isFatal?: boolean) => {
+      ErrorUtils.setGlobalHandler((error: Error, isFatal?: boolean) => {
         // We want to handle fatals, but only in production mode.
-        const shouldHandleFatal = isFatal && !global.__DEV__;
+        const shouldHandleFatal = isFatal;
         if (shouldHandleFatal) {
           if (handlingFatal) {
             logger.log(
@@ -116,7 +117,7 @@ export class CapacitorErrorHandlers implements Integration {
         const client = getCurrentHub().getClient<CapacitorClient>();
         // If in dev, we call the default handler anyway and hope the error will be sent
         // Just for a better dev experience
-        if (client && !global.__DEV__) {
+        if (client) {
           void client
             .flush(client.getOptions().shutdownTimeout || 2000)
             .then(() => {

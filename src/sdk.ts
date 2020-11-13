@@ -9,8 +9,6 @@ import { CapacitorErrorHandlers, Release } from './integrations';
 import { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 
-declare const global: any;
-
 const DEFAULT_OPTIONS: CapacitorOptions = {
   enableNative: true,
   enableNativeNagger: true,
