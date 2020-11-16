@@ -19,6 +19,7 @@ export class CapacitorScope extends Scope {
    * @inheritDoc
    */
   public setTag(key: string, value: string): this {
+    /* eslint-disable no-console */
     NATIVE.setTag(key, value);
     return super.setTag(key, value);
   }
@@ -27,6 +28,7 @@ export class CapacitorScope extends Scope {
    * @inheritDoc
    */
   public setTags(tags: { [key: string]: string }): this {
+    /* eslint-disable no-console */
     // As native only has setTag, we just loop through each tag key.
     Object.keys(tags).forEach(key => {
       NATIVE.setTag(key, tags[key]);
@@ -56,6 +58,7 @@ export class CapacitorScope extends Scope {
    * @inheritDoc
    */
   public addBreadcrumb(breadcrumb: Breadcrumb, maxBreadcrumbs?: number): this {
+    /* eslint-disable no-console */
     NATIVE.addBreadcrumb(breadcrumb);
     return super.addBreadcrumb(breadcrumb, maxBreadcrumbs);
   }

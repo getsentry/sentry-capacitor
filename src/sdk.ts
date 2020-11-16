@@ -5,7 +5,7 @@ import { RewriteFrames } from '@sentry/integrations';
 import { StackFrame } from '@sentry/types';
 
 import { CapacitorClient } from './client';
-import { CapacitorErrorHandlers, Release } from './integrations';
+import { Release } from './integrations';
 import { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 
@@ -23,6 +23,7 @@ export function init(
     enableNativeNagger: true,
   },
 ): void {
+  /* eslint-disable no-console */
   const capacitorHub = new Hub(undefined, new CapacitorScope());
   makeMain(capacitorHub);
 
@@ -32,11 +33,7 @@ export function init(
   };
 
   if (options.defaultIntegrations === undefined) {
-    options.defaultIntegrations = [
-      new CapacitorErrorHandlers(),
-      new Release(),
-      ...defaultIntegrations,
-    ];
+    options.defaultIntegrations = [new Release(), ...defaultIntegrations];
 
     options.defaultIntegrations.push(
       new RewriteFrames({
