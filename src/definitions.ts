@@ -13,8 +13,9 @@ interface serializedObject {
 }
 
 export interface SentryCapacitorPlugin {
+  nativeClientAvailable: boolean;
   addBreadcrumb(breadcrumb: Breadcrumb): void;
-  captureEnvelope(envelope: string): Promise<Response>;
+  captureEnvelope(envelope: string): PromiseLike<Response>;
   clearBreadcrumbs(): void;
   crash(): void;
   fetchRelease(): Promise<{
@@ -31,5 +32,4 @@ export interface SentryCapacitorPlugin {
   setTag(key: string, value: string): void;
   setExtra(key: string, value: string): void;
   setLogLevel(level: number): void;
-  nativeClientAvailable: boolean;
 }

@@ -1,23 +1,39 @@
 {
   "name": "@sentry/capacitor",
+  "homepage": "https://github.com/getsentry/sentry-capacitor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getsentry/sentry-capacitor"
+  },
   "version": "0.0.1",
-  "description": "Sentry SDK for Capacitor",
+  "description": "Official Sentry SDK for Capacitor",
+  "types": "dist/esm/index.d.ts",
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
   "scripts": {
-    "lint": "npm run prettier -- --check && npm run swiftlint -- lint",
-    "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
-    "swiftlint": "node-swiftlint",
-    "build": "npm run clean && tsc && rollup -c rollup.config.js",
-    "clean": "rimraf ./dist",
+    "build": "npm run clean && npm run lint && tsc && rollup -c rollup.config.js",
+    "watch": "tsc --watch",
+    "clean": "rimraf ./dist ./coverage",
     "test": "jest",
     "test:watch": "jest --watch",
-    "watch": "tsc --watch",
+    "lint": "npm run prettier -- --check && npm run swiftlint -- lint",
+    "prettier": "prettier --check \"src/**/*.ts\"",
+    "swiftlint": "node-swiftlint",
     "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "capacitor",
+    "plugin",
+    "native"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "author": "Sentry Team and Contributors",
   "license": "MIT",
+  "peerDependencies": {
+    "@capacitor/core": "^2.4.2"
+  },
   "dependencies": {
     "@sentry/browser": "^5.27.3",
     "@sentry/core": "^5.27.3",
@@ -50,19 +66,11 @@
     "jest": "^26.6.3",
     "ts-jest": "^26.4.4"
   },
-  "peerDependencies": {
-    "@capacitor/core": "^2.4.2"
-  },
   "files": [
     "dist/",
     "ios/",
     "android/",
     "SentryCapacitor.podspec"
-  ],
-  "keywords": [
-    "capacitor",
-    "plugin",
-    "native"
   ],
   "capacitor": {
     "ios": {
@@ -74,10 +82,6 @@
   },
   "prettier": "@ionic/prettier-config",
   "swiftlint": "@ionic/swiftlint-config",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/getsentry/sentry-capacitor"
-  },
   "bugs": {
     "url": "https://github.com/getsentry/sentry-capacitor/issues"
   },

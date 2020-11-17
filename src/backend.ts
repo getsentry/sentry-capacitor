@@ -1,18 +1,17 @@
 import { BrowserOptions, Transports } from '@sentry/browser';
 import { BrowserBackend } from '@sentry/browser/dist/backend';
 import { BaseBackend, NoopTransport } from '@sentry/core';
+import { logger } from '@sentry/utils';
 
 import { CapacitorOptions } from './options';
 import { NativeTransport } from './transports/native';
 import { NATIVE } from './wrapper';
 
-declare const global: any;
-
 /**
  * The Sentry Capacitor SDK Backend.
  */
 export class CapacitorBackend extends BaseBackend<BrowserOptions> {
-  // @ts-ignore
+  // @ts-ignore IDE thinks this variable is never called, but it is initialized in the constructure below
   private readonly _browserBackend: BrowserBackend;
 
   /**
@@ -75,8 +74,7 @@ export class CapacitorBackend extends BaseBackend<BrowserOptions> {
    */
   private _isNativeClientAvailable(): boolean {
     return (
-      this._options.enableNative === true &&
-      NATIVE.isNativeClientAvailable()
+      this._options.enableNative === true && NATIVE.isNativeClientAvailable()
     );
   }
 
@@ -87,19 +85,8 @@ export class CapacitorBackend extends BaseBackend<BrowserOptions> {
     try {
       await NATIVE.startWithOptions(this._options);
       NATIVE.setLogLevel(this._options.debug ? 2 : 1);
-    } catch (_) {
-      this._showCannotConnectDialog();
-    }
-  }
-
-  /**
-   * If the user is in development mode, and the native nagger is enabled, then it will show an alert
-   */
-  private _showCannotConnectDialog(): void {
-    if (global.__DEV__ && this._options.enableNativeNagger) {
-      alert(
-        'Warning, could not connect to Sentry native SDK.\nIf you do not want to use the native component please pass `enableNative: false` in the options.\nVisit: https://docs.sentry.io/platforms/capacitor/#linking for more details.',
-      );
+    } catch (error) {
+      logger.error(error);
     }
   }
 }

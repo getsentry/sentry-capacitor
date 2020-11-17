@@ -8,6 +8,14 @@ export default {
     name: 'capacitorPlugin', // TODO: change this
     globals: {
       '@capacitor/core': 'capacitorExports',
+      'tslib': 'tslib',
+      '@sentry/types': 'types',
+      '@sentry/core': 'core',
+      '@sentry/utils': 'utils',
+      '@sentry/browser': 'browser',
+      '@sentry/browser/dist/backend': 'backend',
+      '@sentry/hub': 'hub',
+      '@sentry/integrations': 'integrations'
     },
     sourcemap: true,
   },

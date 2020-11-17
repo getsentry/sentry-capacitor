@@ -17,7 +17,6 @@ export class NativeTransport implements Transport {
         new SentryError('Not adding Promise due to buffer limit reached.'),
       );
     }
-    // @ts-ignore
     return this._buffer.add(NATIVE.sendEvent(event));
   }
 
