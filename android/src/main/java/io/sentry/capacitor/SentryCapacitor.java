@@ -1,10 +1,10 @@
 package io.sentry.capacitor;
 
-import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
+
 import io.sentry.Integration;
 import io.sentry.SentryOptions;
 import io.sentry.UncaughtExceptionHandlerIntegration;
@@ -13,8 +13,13 @@ import io.sentry.android.core.NdkIntegration;
 import io.sentry.android.core.SentryAndroid;
 import io.sentry.protocol.SdkVersion;
 import io.sentry.protocol.SentryException;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.UUID;
 
 @NativePlugin
 public class SentryCapacitor extends Plugin {
@@ -128,5 +133,24 @@ public class SentryCapacitor extends Plugin {
         );
 
         capOptions.resolve();
+    }
+
+    @PluginMethod
+    public void captureEnvelope(PluginCall call) {
+        String envelope = call.getString("envelope");
+        try {
+            File installation =  new File(sentryOptions.getOutboxPath(), UUID.randomUUID().toString());
+            try (FileOutputStream out = new FileOutputStream(installation)) {
+                out.write(envelope.getBytes(Charset.forName("UTF-8")));
+                logger.info("Successfully captured envelope")
+            } catch (Exception e) {
+                logger.info("Error writing envelope: ", e);
+            }
+        }
+        catch (Exception e) {
+            logger.info("Error reading envelope: ", e);
+        }
+
+        call.resolve();
     }
 }

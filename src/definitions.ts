@@ -15,7 +15,7 @@ interface serializedObject {
 export interface SentryCapacitorPlugin {
   nativeClientAvailable: boolean;
   addBreadcrumb(breadcrumb: Breadcrumb): void;
-  captureEnvelope(envelope: string): Promise<Response>;
+  captureEnvelope(envelope: string): PromiseLike<Response>;
   clearBreadcrumbs(): void;
   crash(): void;
   fetchRelease(): Promise<{
