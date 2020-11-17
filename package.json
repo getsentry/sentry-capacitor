@@ -11,9 +11,9 @@
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
   "scripts": {
-    "build": "npm run clean && tsc && rollup -c rollup.config.js",
+    "build": "npm run clean && npm run lint && tsc && rollup -c rollup.config.js",
     "watch": "tsc --watch",
-    "clean": "rimraf ./dist",
+    "clean": "rimraf ./dist ./coverage",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "npm run prettier -- --check && npm run swiftlint -- lint",

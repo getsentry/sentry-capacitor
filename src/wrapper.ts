@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
-import { Plugins } from '@capacitor/core';
-import { Breadcrumb, Event, Severity, User } from '@sentry/types';
+import { Capacitor, Plugins } from '@capacitor/core';
+import { Breadcrumb, Event, Response, Severity, User } from '@sentry/types';
 import { logger, SentryError } from '@sentry/utils';
 
 import { CapacitorOptions } from './options';
@@ -58,7 +58,6 @@ export const NATIVE = {
     const itemString = JSON.stringify(item);
 
     const envelopeString = `${headerString}\n${itemString}\n${payloadString}`;
-    // @ts-ignore // TODO remove this ignore once captureEnvelope implementation is completed
     return SentryCapacitor.captureEnvelope(envelopeString);
   },
 
@@ -303,7 +302,9 @@ export const NATIVE = {
    *  Checks whether the SentryCapacitor module is loaded and the native client is available
    */
   isNativeClientAvailable(): boolean {
-    return this.isModuleLoaded() && SentryCapacitor.nativeClientAvailable;
+    return (
+      this.isModuleLoaded() && Capacitor.isPluginAvailable('SentryCapacitor')
+    );
   },
 
   _DisabledNativeError: new SentryError('Native is disabled'),
