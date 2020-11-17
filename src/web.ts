@@ -10,7 +10,6 @@ import { CapacitorOptions } from './options';
 export class SentryCapacitorWeb
   extends WebPlugin
   implements SentryCapacitorPlugin {
-  public nativeClientAvailable: boolean = false;
   constructor() {
     super({
       name: 'SentryCapacitor',

@@ -142,7 +142,7 @@ public class SentryCapacitor extends Plugin {
             File installation =  new File(sentryOptions.getOutboxPath(), UUID.randomUUID().toString());
             try (FileOutputStream out = new FileOutputStream(installation)) {
                 out.write(envelope.getBytes(Charset.forName("UTF-8")));
-                logger.info("Successfully captured envelope")
+                logger.info("Successfully captured envelope");
             } catch (Exception e) {
                 logger.info("Error writing envelope: ", e);
             }
