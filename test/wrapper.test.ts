@@ -6,6 +6,9 @@ import { NATIVE } from '../src/wrapper';
 jest.mock(
   '@capacitor/core',
   () => ({
+    Capacitor: {
+      isPluginAvailable: jest.fn(() => true),
+    },
     Plugins: {
       SentryCapacitor: {
         addBreadcrumb: jest.fn(),
@@ -19,7 +22,6 @@ jest.mock(
           });
         }),
         getStringBytesLength: jest.fn(() => Promise.resolve(1)),
-        nativeClientAvailable: true,
         sendEvent: jest.fn(() => Promise.resolve()),
         setUser: jest.fn(() => {
           return;

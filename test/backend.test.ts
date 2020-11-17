@@ -9,7 +9,6 @@ jest.mock(
     Plugins: {
       SentryCapacitor: {
         crash: jest.fn(),
-        nativeClientAvailable: true,
         nativeTransportAvailable: true,
         setLogLevel: jest.fn(),
         startWithDsnString: jest.fn(dsn => {
