@@ -46,11 +46,12 @@ public class SentryCapacitor extends Plugin {
 
         if (this.context == null) {
             this.context = this.bridge.getContext();
-            try {
-                this.packageInfo = this.context.getPackageManager().getPackageInfo(this.getContext().getPackageName(), 0);
-            } catch (Exception e) {
-                logger.info("Error getting package info.");
-            }
+        }
+
+        try {
+            this.packageInfo = this.context.getPackageManager().getPackageInfo(this.getContext().getPackageName(), 0);
+        } catch (Exception e) {
+            logger.info("Error getting package info.");
         }
     }
 
@@ -95,19 +96,6 @@ public class SentryCapacitor extends Plugin {
 
                 options.setBeforeSend(
                     (event, hint) -> {
-                        // TODO Need to look into whether this is needed for Capacitor
-                        // React native internally throws a JavascriptException
-                        // Since we catch it before that, we don't want to send this one
-                        // because we would send it twice
-                        // try {
-                        //     SentryException ex = event.getExceptions().get(0);
-                        //     if (null != ex && ex.getType().contains("JavascriptException")) {
-                        //         return null;
-                        //     }
-                        // } catch (Exception e) {
-                        //     // We do nothing
-                        // }
-
                         // Add on the correct event.origin tag.
                         // it needs to be here so we can determine where it originated from.
                         SdkVersion sdkVersion = event.getSdk();
@@ -199,11 +187,13 @@ public class SentryCapacitor extends Plugin {
             } catch (Exception e) {
                 logger.info("Error writing envelope.");
                 call.reject(String.valueOf(e));
+                return;
             }
         }
         catch (Exception e) {
             logger.info("Error reading envelope.");
             call.reject(String.valueOf(e));
+            return;
         }
     }
     
@@ -218,6 +208,8 @@ public class SentryCapacitor extends Plugin {
             } catch (UnsupportedEncodingException e) {
                 call.reject(String.valueOf(e));
             }
+        } else {
+            call.reject("Could not calculate string length.");
         }
     }
 
@@ -289,6 +281,7 @@ public class SentryCapacitor extends Plugin {
         Sentry.configureScope(scope -> {
             scope.setExtra(key, extra);
         });
+        call.resolve();
     }
 
     @PluginMethod
@@ -298,5 +291,6 @@ public class SentryCapacitor extends Plugin {
         Sentry.configureScope(scope -> {
             scope.setTag(key, value);
         });
+        call.resolve();
     }
 }
