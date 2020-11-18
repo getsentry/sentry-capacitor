@@ -163,6 +163,11 @@ public class SentryCapacitor extends Plugin {
     }
 
     @PluginMethod
+    public void crash() {
+        throw new RuntimeException("TEST - Sentry Client Crash (only works in release mode)");
+    }
+
+    @PluginMethod
     public void fetchRelease(PluginCall call) {
         JSObject release = new JSObject();
         release.put("id", this.packageInfo.packageName);
