@@ -1,11 +1,14 @@
 import { CapacitorBackend } from '../src/backend';
 
-// const EXAMPLE_DSN =
-//   'https://6890c2f6677340daa4804f8194804ea2@o19635.ingest.sentry.io/148053';
+const EXAMPLE_DSN =
+  'https://6890c2f6677340daa4804f8194804ea2@o19635.ingest.sentry.io/148053';
 
 jest.mock(
   '@capacitor/core',
   () => ({
+    Capacitor: {
+      isPluginAvailable: jest.fn(() => true),
+    },
     Plugins: {
       SentryCapacitor: {
         crash: jest.fn(),
@@ -26,15 +29,14 @@ jest.mock(
 
 describe('Tests CapacitorBackend', () => {
   describe('initializing the backend', () => {
-    // TODO add these in once eventFromMessage method is in progress
-    // test('backend initializes', async () => {
-    //   const backend = new CapacitorBackend({
-    //     dsn: EXAMPLE_DSN,
-    //     enableNative: true,
-    //   });
+    test('backend initializes', async () => {
+      const backend = new CapacitorBackend({
+        dsn: EXAMPLE_DSN,
+        enableNative: true,
+      });
 
-    //   await expect(backend.eventFromMessage('test')).resolves.toBeDefined();
-    // });
+      await expect(backend.eventFromMessage('test')).resolves.toBeDefined();
+    });
 
     test('invalid dsn is thrown', () => {
       try {
@@ -47,16 +49,15 @@ describe('Tests CapacitorBackend', () => {
       }
     });
 
-    // TODO add these in once eventFromMessage method is in progress
-    // test("undefined dsn doesn't crash", () => {
-    //   expect(() => {
-    //     const backend = new CapacitorBackend({
-    //       dsn: undefined,
-    //       enableNative: true,
-    //     });
+    test("undefined dsn doesn't crash", () => {
+      expect(() => {
+        const backend = new CapacitorBackend({
+          dsn: undefined,
+          enableNative: true,
+        });
 
-    //     return expect(backend.eventFromMessage('test')).resolves.toBeDefined();
-    //   }).not.toThrow();
-    // });
+        return expect(backend.eventFromMessage('test')).resolves.toBeDefined();
+      }).not.toThrow();
+    });
   });
 });

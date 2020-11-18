@@ -1,6 +1,7 @@
 import { BrowserOptions, Transports } from '@sentry/browser';
 import { BrowserBackend } from '@sentry/browser/dist/backend';
 import { BaseBackend, NoopTransport } from '@sentry/core';
+import { Event, EventHint, Severity, Transport } from '@sentry/types';
 import { logger } from '@sentry/utils';
 
 import { CapacitorOptions } from './options';
@@ -37,7 +38,29 @@ export class CapacitorBackend extends BaseBackend<BrowserOptions> {
   /**
    * @inheritDoc
    */
-  protected _setupCapacitorTransport(): Transport | NoopTransport {
+  public eventFromException(
+    exception: unknown,
+    hint?: EventHint,
+  ): PromiseLike<Event> {
+    return this._browserBackend.eventFromException(exception, hint);
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public eventFromMessage(
+    message: string,
+    level: Severity = Severity.Info,
+    hint?: EventHint,
+  ): PromiseLike<Event> {
+    /* eslint-disable no-console */
+    return this._browserBackend.eventFromMessage(message, level, hint);
+  }
+
+  /**
+   * @inheritDoc
+   */
+  protected _setupTransport(): Transport | NoopTransport {
     if (!this._options.dsn) {
       // We return the noop transport here in case there is no Dsn.
       return new NoopTransport();
@@ -58,16 +81,6 @@ export class CapacitorBackend extends BaseBackend<BrowserOptions> {
 
     return new Transports.FetchTransport(transportOptions);
   }
-
-  /**
-   * Has Capacitor on window?
-   */
-  // private _isCapacitor(): boolean {
-  //   return (
-  //     getGlobalObject<any>().capacitor !== undefined ||
-  //     getGlobalObject<any>().Capacitor !== undefined
-  //   );
-  // }
 
   /**
    * If true, native client is availabe and active

@@ -14,7 +14,7 @@ interface serializedObject {
 
 export interface SentryCapacitorPlugin {
   addBreadcrumb(breadcrumb: Breadcrumb): void;
-  captureEnvelope(envelope: string): PromiseLike<Response>;
+  captureEnvelope(payload: { envelope: string }): PromiseLike<Response>;
   clearBreadcrumbs(): void;
   crash(): void;
   fetchRelease(): Promise<{
@@ -22,7 +22,7 @@ export interface SentryCapacitorPlugin {
     id: string;
     version: string;
   }>;
-  getStringBytesLength(payloadString: string): number;
+  getStringBytesLength(payload: { string: string }): Promise<{ value: number }>;
   startWithOptions(options: CapacitorOptions): Promise<boolean>;
   setUser(
     user: serializedObject | null,

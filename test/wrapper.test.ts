@@ -21,7 +21,7 @@ jest.mock(
             version: '0.0.1',
           });
         }),
-        getStringBytesLength: jest.fn(() => Promise.resolve(1)),
+        getStringBytesLength: jest.fn(() => Promise.resolve({ value: 1 })),
         sendEvent: jest.fn(() => Promise.resolve()),
         setUser: jest.fn(() => {
           return;
@@ -117,13 +117,15 @@ describe('Tests Native Wrapper', () => {
 
       const item = JSON.stringify({
         content_type: 'application/json',
-        length: 1,
+        length: 114,
         type: 'event',
       });
 
-      await expect(NATIVE.sendEvent(event)).resolves.toMatch(
-        `${header}\n${item}\n${payload}`,
-      );
+      const response = {
+        envelope: `${header}\n${item}\n${payload}`,
+      };
+
+      await expect(NATIVE.sendEvent(event)).resolves.toMatchObject(response);
     });
 
     test('does not call Capacitor at all if enableNative is false', async () => {
