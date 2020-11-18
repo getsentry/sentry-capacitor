@@ -27,8 +27,10 @@ export class SentryCapacitorWeb
   /**
    *
    */
-  captureEnvelope(): Promise<Response> {
+  captureEnvelope(payload: { envelope: string }): Promise<Response> {
     // TODO integrate web
+    /* eslint-disable-next-line no-console */
+    console.log(payload.envelope);
     return Promise.resolve({
       status: Status.Success,
     });
@@ -67,11 +69,13 @@ export class SentryCapacitorWeb
   /**
    *
    */
-  getStringBytesLength(payloadString: 'somepayload'): number {
+  getStringBytesLength(payload: {
+    string: string;
+  }): Promise<{ value: number }> {
     // TODO integrate web
     /* eslint-disable-next-line no-console */
-    console.log(payloadString);
-    return 12;
+    console.log(payload.string);
+    return Promise.resolve({ value: 12 });
   }
 
   /**

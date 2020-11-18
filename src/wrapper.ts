@@ -39,12 +39,15 @@ export const NATIVE = {
       },
     };
 
-    const headerString = JSON.stringify(header);
-
-    const payloadString = JSON.stringify(payload);
+    const headerString: string = JSON.stringify(header);
+    const payloadString: string = JSON.stringify(payload);
     let length = payloadString.length;
     try {
-      length = await SentryCapacitor.getStringBytesLength(payloadString);
+      void SentryCapacitor.getStringBytesLength({ string: payloadString }).then(
+        resp => {
+          length = resp.value;
+        },
+      );
     } catch {
       // The native call failed, we do nothing, we have payload.length as a fallback
     }
@@ -58,7 +61,7 @@ export const NATIVE = {
     const itemString = JSON.stringify(item);
 
     const envelopeString = `${headerString}\n${itemString}\n${payloadString}`;
-    return SentryCapacitor.captureEnvelope(envelopeString);
+    return SentryCapacitor.captureEnvelope({ envelope: envelopeString });
   },
 
   /**
