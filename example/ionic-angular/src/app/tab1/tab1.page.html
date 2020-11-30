@@ -13,20 +13,41 @@
 
   <section class="button-container">
     <label>
-      Throws an error that is not captured by Sentry
+      Throws an unhandled exception
       <ion-button (click)="throwUnhandledException()"
         >Throw unhandled exception</ion-button
       >
     </label>
 
     <label>
+      Throws an error that is NOT captured by Sentry
+      <ion-button (click)="regularException()"
+        >Throw regular exception</ion-button
+      >
+    </label>
+
+    <label>
       Logs a defined exception message to Sentry
-      <ion-button (click)="handledError()">Log Handled Error</ion-button>
+      <ion-button (click)="sentryCapturedException()"
+        >Log Handled Error</ion-button
+      >
     </label>
 
     <label>
       Logs a defined exception with user data to Sentry
       <ion-button (click)="errorWithUserData()">Log User Data Error</ion-button>
+    </label>
+
+    <label>
+      Ignore logging an error that uses excluded keyword
+      <ion-button (click)="ignoredKeywordError()"
+        >Ignored Keyword Error</ion-button
+      >
+    </label>
+
+    <label>
+      Ignore logging an error that uses excluded type
+      <ion-button (click)="ignoredTypeError()">Ignored Type Error</ion-button>
     </label>
   </section>
 </ion-content>

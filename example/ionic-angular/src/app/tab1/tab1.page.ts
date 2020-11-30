@@ -15,20 +15,33 @@ export class Tab1Page {
     undefinedMethod();
   }
 
-  public handledError(): void {
-    try {
-      // @ts-ignore intentionally calling to demonstrate catching exception in Sentry
-      undefinedMethod();
-    } catch (error) {
-      Sentry.captureException(new Error(`${Date.now()}: ${error}`));
-    }
+  public regularException(): void {
+    throw new Error(`${Date.now()}: regular exception`);
+  }
+
+  public sentryCapturedException(): void {
+    Sentry.captureException(new Error(`${Date.now()}: a test error occurred`));
   }
 
   public errorWithUserData(): void {
     Sentry.setUser({
-      id: "42",
-      email: "allknowingcomputer@email.com"
-    })
+      id: '42',
+      email: 'allknowingcomputer@email.com',
+    });
     Sentry.captureException(new Error(`${Date.now()}: a test error occurred`));
+  }
+
+  public ignoredKeywordError(): void {
+    Sentry.captureException(
+      new Error(
+        'Exception that will be ignored because of this keyword => MiddleEarth_42 <=',
+      ),
+    );
+  }
+
+  public ignoredTypeError(): void {
+    Sentry.captureException(
+      new RangeError('Exception that will be ignored because of its type'),
+    );
   }
 }
