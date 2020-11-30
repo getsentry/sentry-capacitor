@@ -17,6 +17,7 @@ import io.sentry.android.core.AnrIntegration;
 import io.sentry.android.core.NdkIntegration;
 import io.sentry.android.core.SentryAndroid;
 import io.sentry.protocol.SdkVersion;
+import io.sentry.protocol.User;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -160,6 +161,50 @@ public class SentryCapacitor extends Plugin {
             default:
                 return Level.OFF;
         }
+    }
+
+    @PluginMethod
+    public void setUser(PluginCall call) {
+        Sentry.configureScope(scope -> {
+            if (!call.getData().has("user") && !call.getData().has("otherUserKeys")) {
+                scope.setUser(null);
+            } else {
+                User userInstance = new User();
+
+                if (call.getData().has("user")) {
+                    JSObject user = call.getObject("user");
+                    if (user.has("email")) {
+                        userInstance.setEmail(user.getString("email"));
+                    }
+
+                    if (user.has("id")) {
+                        userInstance.setId(user.getString("id"));
+                    }
+
+                    if (user.has("username")) {
+                        userInstance.setUsername(user.getString("username"));
+                    }
+
+                    if (user.has("ip_address")) {
+                        userInstance.setIpAddress(user.getString("ip_address"));
+                    }
+                }
+
+                if (call.getData().has("otherUserKeys")) {
+                    Map<String, String> otherUserKeysMap = (Map<String, String>) call.getObject("otherUserKeys");
+
+                    for (Map.Entry<String, String> entry: otherUserKeysMap.entrySet()) {
+                        String key = entry.getKey();
+                        String value = entry.getValue();
+                        otherUserKeysMap.put(key, value);
+                    }
+
+                    userInstance.setOthers(otherUserKeysMap);
+                }
+
+                scope.setUser(userInstance);
+            }
+        });
     }
 
     @PluginMethod

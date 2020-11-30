@@ -175,44 +175,43 @@ describe('Tests Native Wrapper', () => {
     });
   });
 
-  // TODO uncomment this when in progress of creating setUser functionality
-  // describe('setUser', () => {
-  //   test('serializes all user object keys', async () => {
-  //     const Capacitor = require('@capacitor/core');
+  describe('setUser', () => {
+    test('serializes all user object keys', async () => {
+      const Capacitor = require('@capacitor/core');
 
-  //     NATIVE.setUser({
-  //       email: 'hello@sentry.io',
-  //       // @ts-ignore Intentional incorrect type to simulate using a double as an id (We had a user open an issue because this didn't work before)
-  //       id: 3.1234587,
-  //       unique: 123,
-  //     });
+      NATIVE.setUser({
+        email: 'hello@sentry.io',
+        // @ts-ignore Intentional incorrect type to simulate using a double as an id (We had a user open an issue because this didn't work before)
+        id: "3.1234587",
+        unique: "123",
+      });
 
-  //     expect(Capacitor.Plugins.SentryCapacitor.setUser).toBeCalledWith(
-  //       {
-  //         email: 'hello@sentry.io',
-  //         id: 3.1234587,
-  //       },
-  //       {
-  //         unique: 123,
-  //       },
-  //     );
-  //   });
+      expect(Capacitor.Plugins.SentryCapacitor.setUser).toBeCalledWith(
+        {
+          email: 'hello@sentry.io',
+          id: "3.1234587",
+        },
+        {
+          unique: "123",
+        },
+      );
+    });
 
-  //   test('calls native setUser with empty object as second param if no unique keys', async () => {
-  //     const Capacitor = require('@capacitor/core');
+    test('calls native setUser with empty object as second param if no unique keys', async () => {
+      const Capacitor = require('@capacitor/core');
 
-  //     NATIVE.setUser({
-  //       id: 'Hello',
-  //     });
+      NATIVE.setUser({
+        id: 'Hello',
+      });
 
-  //     expect(Capacitor.Plugins.SentryCapacitor.setUser).toBeCalledWith(
-  //       {
-  //         id: 'Hello',
-  //       },
-  //       {},
-  //     );
-  //   });
-  // });
+      expect(Capacitor.Plugins.SentryCapacitor.setUser).toBeCalledWith(
+        {
+          id: 'Hello',
+        },
+        {},
+      );
+    });
+  });
 
   describe('_processLevel', () => {
     test('converts deprecated levels', () => {
