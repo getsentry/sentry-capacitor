@@ -2159,11 +2159,22 @@
 
       var _app_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! ./app.component */
-      "./src/app/app.component.ts");
+      "./src/app/app.component.ts"); // ATTENTION: Change the DSN below with your own to see the events in Sentry. Get one at sentry.io
+
 
       _sentry_capacitor__WEBPACK_IMPORTED_MODULE_7__["init"]({
         dsn: 'https://48fce7f88fb54b8788d9242310630b52@o476433.ingest.sentry.io/5538147',
+        // An array of strings or regexps that'll be used to ignore specific errors based on their type/message
+        ignoreErrors: [/MiddleEarth_\d\d/, 'RangeError'],
+        // Debug mode with valuable initialization/lifecycle information
+        debug: true,
+        // Whether SDK should be enabled or not
+        enabled: true,
         integrations: [new _sentry_tracing__WEBPACK_IMPORTED_MODULE_8__["Integrations"].BrowserTracing()],
+        // A release identifier
+        release: '1537345109360',
+        // An environment identifier
+        environment: 'staging',
         // We recommend adjusting this value in production, or using tracesSampler
         // for finer control
         tracesSampleRate: 1.0

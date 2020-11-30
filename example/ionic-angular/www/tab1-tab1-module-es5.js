@@ -22,7 +22,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title> Exceptions </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">Exceptions</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <section class=\"button-container\">\n    <label>\n      Throws an error that is not captured by Sentry\n      <ion-button (click)=\"throwUnhandledException()\"\n        >Throw unhandled exception</ion-button\n      >\n    </label>\n\n    <label>\n      Logs a defined exception message to Sentry\n      <ion-button (click)=\"handledError()\">Log Handled Error</ion-button>\n    </label>\n\n    <label>\n      Logs a defined exception with user data to Sentry\n      <ion-button (click)=\"errorWithUserData()\">Log User Data Error</ion-button>\n    </label>\n  </section>\n</ion-content>\n";
+      __webpack_exports__["default"] = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title> Exceptions </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">Exceptions</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <section class=\"button-container\">\n    <label>\n      Throws an unhandled exception\n      <ion-button (click)=\"throwUnhandledException()\"\n        >Throw unhandled exception</ion-button\n      >\n    </label>\n\n    <label>\n      Throws an error that is NOT captured by Sentry\n      <ion-button (click)=\"regularException()\"\n        >Throw regular exception</ion-button\n      >\n    </label>\n\n    <label>\n      Logs a defined exception message to Sentry\n      <ion-button (click)=\"sentryCapturedException()\"\n        >Log Handled Error</ion-button\n      >\n    </label>\n\n    <label>\n      Logs a defined exception with user data to Sentry\n      <ion-button (click)=\"errorWithUserData()\">Log User Data Error</ion-button>\n    </label>\n\n    <label>\n      Ignore logging an error that uses excluded keyword\n      <ion-button (click)=\"ignoredKeywordError()\"\n        >Ignored Keyword Error</ion-button\n      >\n    </label>\n\n    <label>\n      Ignore logging an error that uses excluded type\n      <ion-button (click)=\"ignoredTypeError()\">Ignored Type Error</ion-button>\n    </label>\n  </section>\n</ion-content>\n";
       /***/
     },
 
@@ -235,24 +235,34 @@
             undefinedMethod();
           }
         }, {
-          key: "handledError",
-          value: function handledError() {
-            try {
-              // @ts-ignore intentionally calling to demonstrate catching exception in Sentry
-              undefinedMethod();
-            } catch (error) {
-              _sentry_capacitor__WEBPACK_IMPORTED_MODULE_2__["captureException"](new Error("".concat(Date.now(), ": ").concat(error)));
-            }
+          key: "regularException",
+          value: function regularException() {
+            throw new Error("".concat(Date.now(), ": regular exception"));
+          }
+        }, {
+          key: "sentryCapturedException",
+          value: function sentryCapturedException() {
+            _sentry_capacitor__WEBPACK_IMPORTED_MODULE_2__["captureException"](new Error("".concat(Date.now(), ": a test error occurred")));
           }
         }, {
           key: "errorWithUserData",
           value: function errorWithUserData() {
             _sentry_capacitor__WEBPACK_IMPORTED_MODULE_2__["setUser"]({
-              id: "42",
-              email: "allknowingcomputer@email.com"
+              id: '42',
+              email: 'allknowingcomputer@email.com'
             });
 
             _sentry_capacitor__WEBPACK_IMPORTED_MODULE_2__["captureException"](new Error("".concat(Date.now(), ": a test error occurred")));
+          }
+        }, {
+          key: "ignoredKeywordError",
+          value: function ignoredKeywordError() {
+            _sentry_capacitor__WEBPACK_IMPORTED_MODULE_2__["captureException"](new Error('Exception that will be ignored because of this keyword => MiddleEarth_42 <='));
+          }
+        }, {
+          key: "ignoredTypeError",
+          value: function ignoredTypeError() {
+            _sentry_capacitor__WEBPACK_IMPORTED_MODULE_2__["captureException"](new RangeError('Exception that will be ignored because of its type'));
           }
         }]);
 

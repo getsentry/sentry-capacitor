@@ -1,4 +1,21 @@
-## Add Capacitor to your project
+# Instructions for using this test app
+
+## Install dependencies
+`npm install`
+
+## Build for native
+`ionic build`
+
+## Sync resources
+`npx cap sync`
+
+## Open emulator
+`npx cap open android`
+
+
+# General Capacitor/Ionic Instructions
+
+## Add Capacitor to an existing Ionic project
 Full details can be found at capacitorjs.com/docs/getting-started/with-ionic
 1. `ionic integrations enable capacitor`
 2. `npx cap init [appName] [appId]`
