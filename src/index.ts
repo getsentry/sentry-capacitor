@@ -44,7 +44,7 @@ export { CapacitorBackend } from './backend';
 export { CapacitorOptions } from './options';
 export { CapacitorClient } from './client';
 
-export { init } from './sdk';
+export { init, nativeCrash } from './sdk';
 
 /**
  * Adds the SDK info. Make sure this is called after @sentry/capacitor's so this is the top-level SDK.

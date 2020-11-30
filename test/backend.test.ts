@@ -60,4 +60,16 @@ describe('Tests CapacitorBackend', () => {
       }).not.toThrow();
     });
   });
+
+    describe('nativeCrash', () => {
+      test('calls native crash', () => {
+        const Capacitor = require('@capacitor/core');
+        const backend = new CapacitorBackend({
+          enableNative: true,
+        });
+
+        backend.nativeCrash();
+        expect(Capacitor.Plugins.SentryCapacitor.crash).toBeCalled();
+      });
+    });
 });
