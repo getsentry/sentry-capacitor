@@ -10,13 +10,13 @@ node_modules/
 coverage/
 
 # example files
-example/ionic-angular/dist/
-example/ionic-angular/node_modules/
-example/ionic-angular/platforms/
-example/ionic-angular/plugins/
-example/ionic-angular/www/
-example/ionic-angular/.gradle/
-example/ionic-angular/build/
+example/ionic-angular/dist
+example/ionic-angular/node_modules
+example/ionic-angular/platforms
+example/ionic-angular/plugins
+example/ionic-angular/www
+example/ionic-angular/.gradle
+example/ionic-angular/build
 example/ionic-angular/.ionic
 
 # iOS files
