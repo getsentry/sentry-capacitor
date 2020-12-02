@@ -11,20 +11,20 @@ export class Tab2Page {
   constructor() {}
 
   public captureSimpleMessage(): void {
-    Sentry.captureMessage(`${Date.now()}: Captured messaged on button click.`);
+    Sentry.captureMessage(`${Date.now()}: Captured message on button click.`);
   }
 
   public captureBreadcrumbMessage(): void {
     Sentry.addBreadcrumb({ message: 'message with breadcrumbs' });
     Sentry.captureMessage(
-      `${Date.now()}: Captured messaged with breadcrumbs on button click.`,
+      `${Date.now()}: Captured message with added breadcrumbs.`,
     );
   }
 
   public captureTagMessage(): void {
     Sentry.setTag('testTag', 'test-tag-value');
     Sentry.captureMessage(
-      `${Date.now()}: Captured messaged with tag on button click.`,
+      `${Date.now()}: Captured message with custom tag.`,
     );
   }
 
@@ -35,7 +35,7 @@ export class Tab2Page {
       special_bonus: "Can summon anything at any time."
     });
     Sentry.captureMessage(
-      `${Date.now()}: Captured messaged added context.`,
+      `${Date.now()}: Captured message with added context.`,
     );
   }
 }
