@@ -338,10 +338,9 @@ public class SentryCapacitor extends Plugin {
                 String key = call.getString("key");
                 String extra = call.getString("extra");
                 scope.setExtra(key, extra);
-            });
-
-            call.resolve();
+            });            
         }
+        call.resolve();
     }
 
     @PluginMethod
@@ -352,8 +351,7 @@ public class SentryCapacitor extends Plugin {
                 String value = call.getString("value");
                 scope.setTag(key, value);
             });
-
-            call.resolve();
         }
+        call.resolve();
     }
 }
