@@ -1,11 +1,11 @@
 package io.sentry.capacitor;
 
-import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
+import com.google.gson.Gson;
 
 import io.sentry.Breadcrumb;
 import io.sentry.Integration;
@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -147,7 +148,11 @@ public class SentryCapacitor extends Plugin {
     @PluginMethod
     public void setLogLevel(PluginCall call) {
         int level = call.getInt("level", 2);
-        logger.setLevel(this.logLevel(level));
+        try {
+            logger.setLevel(this.logLevel(level));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private Level logLevel(int level) {
@@ -304,9 +309,10 @@ public class SentryCapacitor extends Plugin {
             }
 
             if (breadcrumb.getData().has("data")) {
-                Map<String, String> data = (Map<String, String>) breadcrumb.getArray("data");
+                JSObject data = breadcrumb.getObject("data");
+                HashMap<String, String> mappedData = new Gson().fromJson(data.toString(), HashMap.class);
 
-                for (Map.Entry<String, String> entry: data.entrySet()) {
+                for ( HashMap.Entry<String, String> entry: mappedData.entrySet()) {
                     String key = entry.getKey();
                     String value = entry.getValue();
                     breadcrumbInstance.setData(key, value);
@@ -315,6 +321,7 @@ public class SentryCapacitor extends Plugin {
 
             scope.addBreadcrumb(breadcrumbInstance);
         });
+        breadcrumb.resolve();
     }
 
     @PluginMethod
@@ -326,21 +333,25 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void setExtra(PluginCall call) {
-        String key = call.getString("key");
-        String extra = call.getString("extra");
-        Sentry.configureScope(scope -> {
-            scope.setExtra(key, extra);
-        });
+        if (call.getData().has("key") && call.getData().has("extra")) {
+            Sentry.configureScope(scope -> {
+                String key = call.getString("key");
+                String extra = call.getString("extra");
+                scope.setExtra(key, extra);
+            });            
+        }
         call.resolve();
     }
 
     @PluginMethod
     public void setTag(PluginCall call) {
-        String key = call.getString("key");
-        String value = call.getString("value");
-        Sentry.configureScope(scope -> {
-            scope.setTag(key, value);
-        });
+        if (call.getData().has("key") && call.getData().has("value")) {
+            Sentry.configureScope(scope -> {
+                String key = call.getString("key");
+                String value = call.getString("value");
+                scope.setTag(key, value);
+            });
+        }
         call.resolve();
     }
 }
