@@ -16,9 +16,8 @@
     "clean": "rimraf ./dist ./coverage",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "npm run prettier -- --check && npm run swiftlint -- lint",
+    "lint": "npm run prettier -- --check",
     "prettier": "prettier --check \"src/**/*.ts\"",
-    "swiftlint": "node-swiftlint",
     "prepublishOnly": "npm run build"
   },
   "keywords": [

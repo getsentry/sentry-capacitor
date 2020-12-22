@@ -1,17 +1,46 @@
 import Foundation
 import Capacitor
+import Sentry
 
-/**
- * Please read the Capacitor iOS Plugin Development Guide
- * here: https://capacitorjs.com/docs/plugins/ios
- */
 @objc(SentryCapacitor)
 public class SentryCapacitor: CAPPlugin {
-
-    @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
-        call.success([
-            "value": value
-        ])
+    
+    @objc public func startWithOptions(capOptions: CAPPluginCall) {
+        SentrySDK.start { options in
+            options.dsn = capOptions.getString("dsn") ?? ""
+            options.debug = capOptions.getBool("debug") ?? false
+            options.environment = capOptions.getString("environment") ?? "production"
+            options.enableAutoSessionTracking = capOptions.getBool("enableAutoSessionTracking") ?? false
+            options.sessionTrackingIntervalMillis = capOptions.options["sessionTrackingIntervalMillis"] as? UInt ?? 5000
+            options.attachStacktrace = capOptions.getBool("attachStacktrace") ?? false
+            
+            options.beforeSend = { event in
+                return event;
+            }
+        }
+        
+        capOptions.resolve(["value": true]);
     }
+    
+    @objc public func setLogLevel() {}
+    
+    @objc private func logLevel() {}
+    
+    @objc public func setUser() {}
+    
+    @objc public func crash() {}
+    
+    @objc public func fetchRelease() {}
+    
+    @objc public func captureEnvelope() {}
+    
+    @objc public func getStringBytesLength() {}
+    
+    @objc public func addBreadcrumb() {}
+    
+    @objc public func clearBreadcrumbs() {}
+    
+    @objc public func setExtra() {}
+    
+    @objc public func setTag() {}
 }
