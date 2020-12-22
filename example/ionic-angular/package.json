@@ -38,6 +38,7 @@
     "@angular/language-service": "~10.0.0",
     "@capacitor/cli": "2.4.3",
     "@ionic/angular-toolkit": "^2.3.0",
+    "@ionic/lab": "3.2.10",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",

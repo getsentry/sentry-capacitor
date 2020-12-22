@@ -22,11 +22,27 @@ public class SentryCapacitor: CAPPlugin {
         capOptions.resolve(["value": true]);
     }
     
-    @objc public func setLogLevel() {}
-    
-    @objc private func logLevel() {}
-    
-    @objc public func setUser() {}
+    @objc public func setUser(call: CAPPluginCall) {
+        SentrySDK.configureScope { (scope) in
+            if (call.options["user"] != nil && call.options["otherUserKeys"] != nil) {
+                scope.setUser(nil);
+            } else {
+                let userInstance = Sentry.User();
+                
+                if (call.options["user"] != nil) {
+                    let userOptions = call.getObject("user")!;
+                    for case let option? in userOptions {
+                        let key = option.key;
+                        userInstance.option.key = option.value;
+                    }
+                }
+                
+                if (call.options["otherUserKeys"] != nil) {
+                    userInstance.data = call.getObject("otherUserKeys");
+                }
+            }
+        }
+    }
     
     @objc public func crash() {}
     
