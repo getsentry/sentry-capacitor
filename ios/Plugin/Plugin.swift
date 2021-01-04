@@ -6,19 +6,24 @@ import Sentry
 public class SentryCapacitor: CAPPlugin {
     
     @objc public func startWithOptions(capOptions: CAPPluginCall) {
-        SentrySDK.start { options in
-            options.dsn = capOptions.getString("dsn") ?? ""
-            options.debug = capOptions.getBool("debug") ?? false
-            options.environment = capOptions.getString("environment") ?? "production"
-            options.enableAutoSessionTracking = capOptions.getBool("enableAutoSessionTracking") ?? false
-            options.sessionTrackingIntervalMillis = capOptions.options["sessionTrackingIntervalMillis"] as? UInt ?? 5000
-            options.attachStacktrace = capOptions.getBool("attachStacktrace") ?? false
-            
-            options.beforeSend = { event in
-                return event;
+        let options = capOptions;
+        
+        options.beforeSend = { event in
+            if (event.exceptions.firstObject.type != nil && ["Unhandled JS Exception"].location != NSNotFound) {
+                NSLog("Unhandled JS Exception");
+                return nil;
             }
+            
+            if (event.sdk && event.sdk["name"] == "sentry.cocoa") {
+                var newTags: [String: String] = event.tags;
+                newTags["event.origin"] = "ios";
+                event.tags = newTags;
+            }
+            
+            return event;
         }
         
+        SentrySDK.startWithOptionsObject(capOptions);
         capOptions.resolve(["value": true]);
     }
     
