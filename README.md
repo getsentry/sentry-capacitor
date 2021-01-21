@@ -24,12 +24,14 @@ _Android alpha_
 
 To use this SDK, call `Sentry.init(options)` as early as possible after loading the page. This will initialize the SDK and hook into the environment. _Note that you can turn off almost all side effects using the respective options._
 
-    import * as Sentry from '@sentry/capacitor';
+```javascript
+import * as Sentry from '@sentry/capacitor';
 
-    Sentry.init({
-      dsn: '__DSN__',
-      // ...
-    });
+Sentry.init({
+  dsn: '__DSN__',
+  // ...
+});
+```
 
 To set context information or send manual events, use the exported functions of `@sentry/capacitor`. _Note that these functions will not perform any action before you have called `Sentry.init()`:_
 
