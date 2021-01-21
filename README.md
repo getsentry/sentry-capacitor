@@ -12,14 +12,6 @@ _Work in progress_ Sentry SDK for [Capacitor](https://capacitorjs.com/).
 **Release Stage**
 _Android alpha_
 
-#### Resources
-
-[![Documentation](https://img.shields.io/badge/documentation-sentry.io-green.svg)](https://docs.sentry.io/platforms/capacitor/)
-[![Forum](https://img.shields.io/badge/forum-sentry-green.svg)](https://forum.sentry.io/c/sdks)
-[![Discord](https://img.shields.io/discord/621778831602221064)](https://discord.gg/Ww9hbqr)
-[![Stack Overflow](https://img.shields.io/badge/stack%20overflow-sentry-green.svg)](https://stackoverflow.com/questions/tagged/sentry)
-[![Twitter Follow](https://img.shields.io/twitter/follow/getsentry?label=getsentry&style=social)](https://twitter.com/intent/follow?screen_name=getsentry)
-
 ## Usage
 
 To use this SDK, call `Sentry.init(options)` as early as possible after loading the page. This will initialize the SDK and hook into the environment. _Note that you can turn off almost all side effects using the respective options._
@@ -62,3 +54,11 @@ Sentry.captureEvent({
   ],
 });
 ```
+
+#### Resources
+
+[![Documentation](https://img.shields.io/badge/documentation-sentry.io-green.svg)](https://docs.sentry.io/platforms/capacitor/)
+[![Forum](https://img.shields.io/badge/forum-sentry-green.svg)](https://forum.sentry.io/c/sdks)
+[![Discord](https://img.shields.io/discord/621778831602221064)](https://discord.gg/Ww9hbqr)
+[![Stack Overflow](https://img.shields.io/badge/stack%20overflow-sentry-green.svg)](https://stackoverflow.com/questions/tagged/sentry)
+[![Twitter Follow](https://img.shields.io/twitter/follow/getsentry?label=getsentry&style=social)](https://twitter.com/intent/follow?screen_name=getsentry)
