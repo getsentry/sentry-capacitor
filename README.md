@@ -33,28 +33,30 @@ To use this SDK, call `Sentry.init(options)` as early as possible after loading 
 
 To set context information or send manual events, use the exported functions of `@sentry/capacitor`. _Note that these functions will not perform any action before you have called `Sentry.init()`:_
 
-    import * as Sentry from '@sentry/capacitor';
+```javascript
+import * as Sentry from '@sentry/capacitor';
 
-    // Set user information, as well as tags and further extras
-    Sentry.configureScope(scope => {
-      scope.setExtra('battery', 0.7);
-      scope.setTag('user_mode', 'admin');
-      scope.setUser({ id: '4711' });
-      // scope.clear();
-    });
+// Set user information, as well as tags and further extras
+Sentry.configureScope(scope => {
+  scope.setExtra('battery', 0.7);
+  scope.setTag('user_mode', 'admin');
+  scope.setUser({ id: '4711' });
+  // scope.clear();
+});
 
-    // Add a breadcrumb for future events
-    Sentry.addBreadcrumb({
-      message: 'My Breadcrumb',
-      // ...
-    });
+// Add a breadcrumb for future events
+Sentry.addBreadcrumb({
+  message: 'My Breadcrumb',
+  // ...
+});
 
-    // Capture exceptions, messages or manual events
-    Sentry.captureMessage('Hello, world!');
-    Sentry.captureException(new Error('Good bye'));
-    Sentry.captureEvent({
-      message: 'Manual',
-      stacktrace: [
-        // ...
-      ],
-    });
+// Capture exceptions, messages or manual events
+Sentry.captureMessage('Hello, world!');
+Sentry.captureException(new Error('Good bye'));
+Sentry.captureEvent({
+  message: 'Manual',
+  stacktrace: [
+    // ...
+  ],
+});
+```
