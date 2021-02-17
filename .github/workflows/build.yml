@@ -43,7 +43,7 @@ jobs:
       dependency_cache_key: ${{ steps.compute_lockfile_hash.outputs.hash }}
 
   job_unit_test:
-    name: Test (Node 12)
+    name: Test
     needs: job_build
     continue-on-error: true
     timeout-minutes: 30
