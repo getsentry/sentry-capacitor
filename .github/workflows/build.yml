@@ -48,7 +48,6 @@ jobs:
     continue-on-error: true
     timeout-minutes: 30
     runs-on: ubuntu-latest
-    node: 12
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v2
