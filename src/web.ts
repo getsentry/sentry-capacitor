@@ -28,7 +28,7 @@ export class SentryCapacitorWeb
    *
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  captureEnvelope(payload: { envelope: string }): Promise<Response> {
+  captureEnvelope(_payload: { envelope: string }): Promise<Response> {
     // TODO integrate web
 
     return Promise.resolve({
@@ -70,7 +70,7 @@ export class SentryCapacitorWeb
    *
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getStringBytesLength(payload: {
+  getStringBytesLength(_payload: {
     string: string;
   }): Promise<{ value: number }> {
     // TODO integrate web
@@ -81,7 +81,7 @@ export class SentryCapacitorWeb
    *
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async startWithOptions(options: CapacitorOptions): Promise<boolean> {
+  async startWithOptions(_options: CapacitorOptions): Promise<boolean> {
     // TODO integrate web
     return true;
   }
