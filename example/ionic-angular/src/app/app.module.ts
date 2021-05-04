@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 // ATTENTION: Change the DSN below with your own to see the events in Sentry. Get one at sentry.io
 Sentry.init({
   dsn:
-    'https://48fce7f88fb54b8788d9242310630b52@o476433.ingest.sentry.io/5538147',
+    'https://4079af8b316240ea9453eb0a23b715cc@o447951.ingest.sentry.io/5522756',
   // An array of strings or regexps that'll be used to ignore specific errors based on their type/message
   ignoreErrors: [/MiddleEarth_\d\d/, 'RangeError'],
   // Debug mode with valuable initialization/lifecycle information
