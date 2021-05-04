@@ -120,22 +120,6 @@ export const NATIVE = {
   },
 
   /**
-   * Sets log level in native
-   * @param level number
-   */
-  setLogLevel(level: number): void {
-    if (!this.enableNative) {
-      return;
-    }
-
-    if (!this.isNativeClientAvailable()) {
-      throw this._NativeClientError;
-    }
-
-    SentryCapacitor.setLogLevel(level);
-  },
-
-  /**
    * Triggers a native crash.
    * Use this only for testing purposes.
    */

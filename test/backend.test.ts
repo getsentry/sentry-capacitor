@@ -13,7 +13,6 @@ jest.mock(
       SentryCapacitor: {
         crash: jest.fn(),
         nativeTransportAvailable: true,
-        setLogLevel: jest.fn(),
         startWithDsnString: jest.fn(dsn => {
           if (typeof dsn !== 'string') {
             throw new Error();
@@ -61,15 +60,15 @@ describe('Tests CapacitorBackend', () => {
     });
   });
 
-    describe('nativeCrash', () => {
-      test('calls native crash', () => {
-        const Capacitor = require('@capacitor/core');
-        const backend = new CapacitorBackend({
-          enableNative: true,
-        });
-
-        backend.nativeCrash();
-        expect(Capacitor.Plugins.SentryCapacitor.crash).toBeCalled();
+  describe('nativeCrash', () => {
+    test('calls native crash', () => {
+      const Capacitor = require('@capacitor/core');
+      const backend = new CapacitorBackend({
+        enableNative: true,
       });
+
+      backend.nativeCrash();
+      expect(Capacitor.Plugins.SentryCapacitor.crash).toBeCalled();
     });
+  });
 });

@@ -97,7 +97,6 @@ export class CapacitorBackend extends BaseBackend<BrowserOptions> {
   private async _startWithOptions(): Promise<void> {
     try {
       await NATIVE.startWithOptions(this._options);
-      NATIVE.setLogLevel(this._options.debug ? 2 : 1);
     } catch (error) {
       logger.error(error);
     }
