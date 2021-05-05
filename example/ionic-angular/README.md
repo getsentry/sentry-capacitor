@@ -1,7 +1,7 @@
 # Instructions for using the example app
 
 ## Install dependencies
-`npm install`
+`yarn install`
 
 ## Build for native
 `ionic build`
