@@ -28,7 +28,7 @@ yarn watch
 
 ## Running the example app
 
-See `example/ionic-angular/README.md`
+See [example/ionic-angular/README.md](example/ionic-angular/README.md)
 
 ## testing
 
