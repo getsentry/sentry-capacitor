@@ -13,7 +13,11 @@ const DEFAULT_OPTIONS: CapacitorOptions = {
 /**
  *
  */
-export function init(_options: CapacitorOptions): void {
+export function init(
+  _options: CapacitorOptions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  originalInit: (options: any) => void = browserInit,
+): void {
   const options = {
     ...DEFAULT_OPTIONS,
     ..._options,
@@ -32,7 +36,7 @@ export function init(_options: CapacitorOptions): void {
     options.transport = NativeTransport;
   }
 
-  browserInit(options);
+  originalInit(options);
 
   void NATIVE.initNativeSdk(options);
 }
