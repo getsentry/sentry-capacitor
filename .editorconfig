@@ -1,0 +1,14 @@
+root = true
+
+[*]
+indent_style = space
+trim_trailing_whitespace = true
+insert_final_newline = true
+indent_size = 2
+charset = utf-8
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.xml]
+indent_size = 2
