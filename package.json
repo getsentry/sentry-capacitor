@@ -16,10 +16,10 @@
     "clean": "rimraf ./dist ./coverage",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "npm run prettier -- --check && npm run swiftlint -- lint",
-    "prettier": "prettier --check \"src/**/*.ts\"",
+    "lint": "eslint .",
     "swiftlint": "node-swiftlint",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "refresh-example": "cd example/ionic-angular && yarn run refresh"
   },
   "keywords": [
     "capacitor",

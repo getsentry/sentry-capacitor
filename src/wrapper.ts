@@ -68,9 +68,7 @@ export const NATIVE = {
    * Starts native with the provided options
    * @param options CapacitorOptions
    */
-  async startWithOptions(
-    options: CapacitorOptions = { enableNative: true },
-  ): Promise<boolean> {
+  async initNativeSdk(options: CapacitorOptions): Promise<boolean> {
     if (!options.dsn) {
       logger.warn(
         'Warning: No DSN was provided. The Sentry SDK will be disabled. Native SDK will also not be initalized.',

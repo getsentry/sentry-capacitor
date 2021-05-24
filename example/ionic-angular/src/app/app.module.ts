@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -7,6 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import * as Sentry from '@sentry/capacitor';
+import { createErrorHandler } from '@sentry/angular';
 import { Integrations } from '@sentry/tracing';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -32,6 +33,25 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
+// /**
+//  * Wrap the ionic error handler with this method so Sentry catches unhandled errors on ionic.
+//  * See the documentation for more details.
+//  */
+// const withSentryIonicErrorHandler = <C extends new (...args: any[]) => any>(
+//   IonicErrorHandler: C,
+// ): C => {
+//   class SentryIonicErrorHandler extends IonicErrorHandler {
+//     handleError(error: any) {
+//       super.handleError(error);
+//       Sentry.captureException(error.originalError ?? error);
+//     }
+//   }
+
+//   return SentryIonicErrorHandler;
+// };
+
+// const SentryIonicErrorHandler = withSentryIonicErrorHandler(ErrorHandler);
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -39,8 +59,12 @@ Sentry.init({
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: ErrorHandler,
+      useValue: createErrorHandler(),
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

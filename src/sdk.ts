@@ -1,71 +1,40 @@
-import { defaultIntegrations } from '@sentry/browser';
-import { initAndBind } from '@sentry/core';
-import { getCurrentHub, Hub, makeMain } from '@sentry/hub';
-import { RewriteFrames } from '@sentry/integrations';
-import { StackFrame } from '@sentry/types';
+import { defaultIntegrations, init as browserInit } from '@sentry/browser';
+import { Hub, makeMain } from '@sentry/hub';
 
-import { CapacitorClient } from './client';
-import { Release } from './integrations';
 import { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
+import { NativeTransport } from './transports/native';
+import { NATIVE } from './wrapper';
 
 const DEFAULT_OPTIONS: CapacitorOptions = {
   enableNative: true,
-  enableNativeNagger: true,
 };
 
 /**
- * Inits the SDK
+ *
  */
-export function init(
-  passedOptions: CapacitorOptions = {
-    enableNative: true,
-    enableNativeNagger: true,
-  },
-): void {
-  /* eslint-disable no-console */
+export function init(_options: CapacitorOptions): void {
+  const options = {
+    ...DEFAULT_OPTIONS,
+    ..._options,
+  };
+
   const capacitorHub = new Hub(undefined, new CapacitorScope());
   makeMain(capacitorHub);
 
-  const options = {
-    ...DEFAULT_OPTIONS,
-    ...passedOptions,
-  };
+  options.defaultIntegrations = [...defaultIntegrations];
 
-  if (options.defaultIntegrations === undefined) {
-    options.defaultIntegrations = [new Release(), ...defaultIntegrations];
-
-    options.defaultIntegrations.push(
-      new RewriteFrames({
-        iteratee: (frame: StackFrame) => {
-          if (frame.filename) {
-            frame.filename = frame.filename
-              .replace(/^file:\/\//, '')
-              .replace(/^address at /, '')
-              .replace(/^.*\/[^.]+(\.app|CodePush|.*(?=\/))/, '');
-
-            if (
-              frame.filename !== '[native code]' &&
-              frame.filename !== 'native'
-            ) {
-              const appPrefix = 'app://';
-              // We always want to have a triple slash
-              frame.filename =
-                frame.filename.indexOf('/') === 0
-                  ? `${appPrefix}${frame.filename}`
-                  : `${appPrefix}/${frame.filename}`;
-            }
-          }
-          return frame;
-        },
-      }),
-    );
+  if (typeof options.enableNative === 'undefined') {
+    options.enableNative = true;
   }
 
-  initAndBind(CapacitorClient, options);
+  if (options.enableNative && !options.transport) {
+    options.transport = NativeTransport;
+  }
 
-  // set the event.origin tag.
-  getCurrentHub().setTag('event.origin', 'javascript');
+  browserInit(options);
+
+  void NATIVE.initNativeSdk(options);
 }
 
 /**
@@ -73,8 +42,5 @@ export function init(
  * Use this only for testing purposes
  */
 export function nativeCrash(): void {
-  const client = getCurrentHub().getClient<CapacitorClient>();
-  if (client) {
-    client.nativeCrash();
-  }
+  NATIVE.crash();
 }

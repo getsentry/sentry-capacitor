@@ -2,12 +2,15 @@
   "appId": "io.ionic.starter",
   "appName": "ionic-angular",
   "bundledWebRuntime": false,
+  "cordova": {},
+  "includePlugins": [
+    "../../"
+  ],
   "npmClient": "npm",
-  "webDir": "www",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
     }
   },
-  "cordova": {}
+  "webDir": "www"
 }
