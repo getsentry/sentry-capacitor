@@ -1,0 +1,12 @@
+{
+  "extends": "./node_modules/@sentry/typescript/tsconfig.json",
+  "files": [
+    "src/index.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "compilerOptions": {
+    "outDir": "dist/esm"
+  }
+}

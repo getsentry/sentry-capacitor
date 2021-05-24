@@ -1,5 +1,4 @@
 {
-  "extends": "./node_modules/@sentry/typescript/tsconfig.json",
   "compilerOptions": {
     "allowUnreachableCode": false,
     "declaration": true,
@@ -19,8 +18,9 @@
     "strict": true,
     "target": "es2015"
   },
+  "extends": "./node_modules/@sentry/typescript/tsconfig.json",
   "include": [
     "src/**/*.ts",
     "test/**/*.ts"
-  ],
+  ]
 }

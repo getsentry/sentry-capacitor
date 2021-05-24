@@ -11,7 +11,7 @@
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
   "scripts": {
-    "build": "npm run clean && npm run lint && tsc && rollup -c rollup.config.js",
+    "build": "npm run clean && npm run lint && tsc -p tsconfig.build.json && rollup -c rollup.config.js",
     "watch": "tsc --watch",
     "clean": "rimraf ./dist ./coverage",
     "test": "jest",
