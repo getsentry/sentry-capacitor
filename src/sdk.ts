@@ -8,37 +8,39 @@ import { NATIVE } from './wrapper';
 
 const DEFAULT_OPTIONS: CapacitorOptions = {
   enableNative: true,
+  enableNativeNagger: true,
 };
 
 /**
- *
+ * Initializes the Capacitor SDK alongside a sibling Sentry SDK
+ * @param options Options for the SDK
+ * @param originalInit The init function of the sibling SDK, leave blank to initialize with `@sentry/browser`
  */
-export function init(
-  _options: CapacitorOptions,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  originalInit: (options: any) => void = browserInit,
+export function init<O>(
+  options: CapacitorOptions & O,
+  originalInit: (options: O) => void = browserInit,
 ): void {
-  const options = {
+  const finalOptions = {
     ...DEFAULT_OPTIONS,
-    ..._options,
+    ...options,
   };
 
   const capacitorHub = new Hub(undefined, new CapacitorScope());
   makeMain(capacitorHub);
 
-  options.defaultIntegrations = [...defaultIntegrations];
+  finalOptions.defaultIntegrations = [...defaultIntegrations];
 
-  if (typeof options.enableNative === 'undefined') {
-    options.enableNative = true;
+  if (typeof finalOptions.enableNative === 'undefined') {
+    finalOptions.enableNative = true;
   }
 
-  if (options.enableNative && !options.transport) {
-    options.transport = NativeTransport;
+  if (finalOptions.enableNative && !options.transport) {
+    finalOptions.transport = NativeTransport;
   }
 
-  originalInit(options);
+  originalInit(finalOptions);
 
-  void NATIVE.initNativeSdk(options);
+  void NATIVE.initNativeSdk(finalOptions);
 }
 
 /**
