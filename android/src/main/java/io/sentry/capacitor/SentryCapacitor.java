@@ -62,13 +62,14 @@ public class SentryCapacitor extends Plugin {
         SentryAndroid.init(
             this.getContext(),
             options -> {
+                if (capOptions.getData().has("debug") && capOptions.getBoolean("debug")) {
+                    options.setDebug(true);
+                    logger.setLevel(Level.INFO);
+                }
+
                 String dsn = capOptions.getString("dsn") != null ? capOptions.getString("dsn") : "";
                 logger.info(String.format("Starting with DSN: '%s'", dsn));
                 options.setDsn(dsn);
-
-                if (capOptions.getData().has("debug")) {
-                    options.setDebug(capOptions.getBoolean("debug"));
-                }
 
                 if (capOptions.getData().has("environment") && capOptions.getString("environment") != null) {
                     options.setEnvironment(capOptions.getString("environment"));
@@ -143,29 +144,6 @@ public class SentryCapacitor extends Plugin {
         JSObject resp = new JSObject();
         resp.put("value", true);
         capOptions.resolve(resp);
-    }
-
-    @PluginMethod
-    public void setLogLevel(PluginCall call) {
-        int level = call.getInt("level", 2);
-        try {
-            logger.setLevel(this.logLevel(level));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private Level logLevel(int level) {
-        switch (level) {
-            case 1:
-                return Level.SEVERE;
-            case 2:
-                return Level.INFO;
-            case 3:
-                return Level.ALL;
-            default:
-                return Level.OFF;
-        }
     }
 
     @PluginMethod

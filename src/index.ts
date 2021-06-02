@@ -37,12 +37,9 @@ export {
   withScope,
 } from '@sentry/core';
 
-import * as Integrations from './integrations';
 import { SDK_NAME, SDK_VERSION } from './version';
 
-export { CapacitorBackend } from './backend';
 export { CapacitorOptions } from './options';
-export { CapacitorClient } from './client';
 
 export { init, nativeCrash } from './sdk';
 
@@ -73,4 +70,4 @@ function createCapacitorEventProcessor(): void {
 
 createCapacitorEventProcessor();
 
-export { Integrations, SDK_NAME, SDK_VERSION };
+export { SDK_NAME, SDK_VERSION };

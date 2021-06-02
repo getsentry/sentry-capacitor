@@ -1,13 +1,15 @@
-import { defaultIntegrations } from '@sentry/browser';
-import { initAndBind } from '@sentry/core';
-import { getCurrentHub, Hub, makeMain } from '@sentry/hub';
+import {
+  defaultIntegrations,
+  init as browserInit,
+  StackFrame,
+} from '@sentry/browser';
+import { Hub, makeMain } from '@sentry/hub';
 import { RewriteFrames } from '@sentry/integrations';
-import { StackFrame } from '@sentry/types';
 
-import { CapacitorClient } from './client';
-import { Release } from './integrations';
 import { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
+import { NativeTransport } from './transports/native';
+import { NATIVE } from './wrapper';
 
 const DEFAULT_OPTIONS: CapacitorOptions = {
   enableNative: true,
@@ -15,57 +17,63 @@ const DEFAULT_OPTIONS: CapacitorOptions = {
 };
 
 /**
- * Inits the SDK
+ * Initializes the Capacitor SDK alongside a sibling Sentry SDK
+ * @param options Options for the SDK
+ * @param originalInit The init function of the sibling SDK, leave blank to initialize with `@sentry/browser`
  */
-export function init(
-  passedOptions: CapacitorOptions = {
-    enableNative: true,
-    enableNativeNagger: true,
-  },
+export function init<O>(
+  options: CapacitorOptions & O,
+  originalInit: (options: O) => void = browserInit,
 ): void {
-  /* eslint-disable no-console */
+  const finalOptions = {
+    ...DEFAULT_OPTIONS,
+    ...options,
+  };
+
   const capacitorHub = new Hub(undefined, new CapacitorScope());
   makeMain(capacitorHub);
 
-  const options = {
-    ...DEFAULT_OPTIONS,
-    ...passedOptions,
-  };
+  finalOptions.defaultIntegrations = [
+    ...defaultIntegrations,
+    new RewriteFrames({
+      iteratee: (frame: StackFrame) => {
+        if (frame.filename) {
+          frame.filename = frame.filename
+            .replace(/^http:\/\/localhost/, '')
+            .replace(/^ng:\/\//, '');
 
-  if (options.defaultIntegrations === undefined) {
-    options.defaultIntegrations = [new Release(), ...defaultIntegrations];
+          if (
+            frame.filename !== '[native code]' &&
+            frame.filename !== 'native'
+          ) {
+            const appPrefix = 'app://';
+            // We always want to have a triple slash
+            frame.filename =
+              frame.filename.indexOf('/') === 0
+                ? `${appPrefix}${frame.filename}`
+                : `${appPrefix}/${frame.filename}`;
 
-    options.defaultIntegrations.push(
-      new RewriteFrames({
-        iteratee: (frame: StackFrame) => {
-          if (frame.filename) {
-            frame.filename = frame.filename
-              .replace(/^file:\/\//, '')
-              .replace(/^address at /, '')
-              .replace(/^.*\/[^.]+(\.app|CodePush|.*(?=\/))/, '');
-
-            if (
-              frame.filename !== '[native code]' &&
-              frame.filename !== 'native'
-            ) {
-              const appPrefix = 'app://';
-              // We always want to have a triple slash
-              frame.filename =
-                frame.filename.indexOf('/') === 0
-                  ? `${appPrefix}${frame.filename}`
-                  : `${appPrefix}/${frame.filename}`;
-            }
+            frame.in_app = true;
+          } else {
+            frame.in_app = false;
           }
-          return frame;
-        },
-      }),
-    );
+        }
+        return frame;
+      },
+    }),
+  ];
+
+  if (typeof finalOptions.enableNative === 'undefined') {
+    finalOptions.enableNative = true;
   }
 
-  initAndBind(CapacitorClient, options);
+  if (finalOptions.enableNative && !options.transport) {
+    finalOptions.transport = NativeTransport;
+  }
 
-  // set the event.origin tag.
-  getCurrentHub().setTag('event.origin', 'javascript');
+  originalInit(finalOptions);
+
+  void NATIVE.initNativeSdk(finalOptions);
 }
 
 /**
@@ -73,8 +81,5 @@ export function init(
  * Use this only for testing purposes
  */
 export function nativeCrash(): void {
-  const client = getCurrentHub().getClient<CapacitorClient>();
-  if (client) {
-    client.nativeCrash();
-  }
+  NATIVE.crash();
 }

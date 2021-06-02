@@ -14,13 +14,13 @@ jest.mock(
         addBreadcrumb: jest.fn(),
         captureEnvelope: jest.fn(envelope => Promise.resolve(envelope)),
         crash: jest.fn(),
-        fetchRelease: jest.fn(() => {
+        fetchRelease: jest.fn(() =>
           Promise.resolve({
             build: '0.0.1',
             id: 'test-mock',
             version: '0.0.1',
-          });
-        }),
+          }),
+        ),
         getStringBytesLength: jest.fn(() => Promise.resolve({ value: 1 })),
         sendEvent: jest.fn(() => Promise.resolve()),
         setUser: jest.fn(() => {
@@ -49,7 +49,7 @@ describe('Tests Native Wrapper', () => {
 
       Capacitor.Plugins.SentryCapacitor.startWithOptions = jest.fn();
 
-      await NATIVE.startWithOptions({ dsn: 'test', enableNative: true });
+      await NATIVE.initNativeSdk({ dsn: 'test', enableNative: true });
 
       expect(Capacitor.Plugins.SentryCapacitor.startWithOptions).toBeCalled();
     });
@@ -60,11 +60,12 @@ describe('Tests Native Wrapper', () => {
       Capacitor.Plugins.SentryCapacitor.startWithOptions = jest.fn();
       logger.warn = jest.fn();
 
-      await NATIVE.startWithOptions({ enableNative: true });
+      await NATIVE.initNativeSdk({ enableNative: true });
 
       expect(
         Capacitor.Plugins.SentryCapacitor.startWithOptions,
       ).not.toBeCalled();
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(logger.warn).toHaveBeenLastCalledWith(
         'Warning: No DSN was provided. The Sentry SDK will be disabled. Native SDK will also not be initalized.',
       );
@@ -76,7 +77,7 @@ describe('Tests Native Wrapper', () => {
       Capacitor.Plugins.SentryCapacitor.startWithOptions = jest.fn();
       logger.warn = jest.fn();
 
-      await NATIVE.startWithOptions({
+      await NATIVE.initNativeSdk({
         dsn: 'test',
         enableNative: false,
         enableNativeNagger: true,
@@ -85,6 +86,7 @@ describe('Tests Native Wrapper', () => {
       expect(
         Capacitor.Plugins.SentryCapacitor.startWithOptions,
       ).not.toBeCalled();
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(logger.warn).toHaveBeenLastCalledWith(
         'Note: Native Sentry SDK is disabled.',
       );
@@ -107,7 +109,6 @@ describe('Tests Native Wrapper', () => {
         message: {
           message: event.message,
         },
-        type: 'event',
       });
 
       const header = JSON.stringify({
@@ -117,7 +118,7 @@ describe('Tests Native Wrapper', () => {
 
       const item = JSON.stringify({
         content_type: 'application/json',
-        length: 114,
+        length: 99,
         type: 'event',
       });
 
@@ -132,7 +133,7 @@ describe('Tests Native Wrapper', () => {
       const Capacitor = require('@capacitor/core');
 
       try {
-        await NATIVE.startWithOptions({ dsn: 'test-dsn', enableNative: false });
+        await NATIVE.initNativeSdk({ dsn: 'test-dsn', enableNative: false });
         await NATIVE.sendEvent({});
       } catch (error) {
         expect(error.message).toMatch('Native is disabled');
@@ -182,17 +183,17 @@ describe('Tests Native Wrapper', () => {
       NATIVE.setUser({
         email: 'hello@sentry.io',
         // @ts-ignore Intentional incorrect type to simulate using a double as an id (We had a user open an issue because this didn't work before)
-        id: "3.1234587",
-        unique: "123",
+        id: '3.1234587',
+        unique: '123',
       });
 
       expect(Capacitor.Plugins.SentryCapacitor.setUser).toBeCalledWith(
         {
           email: 'hello@sentry.io',
-          id: "3.1234587",
+          id: '3.1234587',
         },
         {
-          unique: "123",
+          unique: '123',
         },
       );
     });

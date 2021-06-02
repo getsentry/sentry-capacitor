@@ -30,5 +30,4 @@ export interface SentryCapacitorPlugin {
   ): void;
   setTag(key: string, value: string): void;
   setExtra(key: string, value: string): void;
-  setLogLevel(level: number): void;
 }

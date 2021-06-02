@@ -11,15 +11,15 @@
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
   "scripts": {
-    "build": "npm run clean && npm run lint && tsc && rollup -c rollup.config.js",
+    "build": "npm run clean && npm run lint && tsc -p tsconfig.build.json && rollup -c rollup.config.js",
     "watch": "tsc --watch",
     "clean": "rimraf ./dist ./coverage",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "npm run prettier -- --check && npm run swiftlint -- lint",
-    "prettier": "prettier --check \"src/**/*.ts\"",
+    "lint": "eslint .",
     "swiftlint": "node-swiftlint",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "refresh-example": "cd example/ionic-angular && yarn run refresh"
   },
   "keywords": [
     "capacitor",

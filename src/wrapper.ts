@@ -33,7 +33,6 @@ export const NATIVE = {
 
     const payload = {
       ...event,
-      type: event.type ?? 'event',
       message: {
         message: event.message,
       },
@@ -55,7 +54,7 @@ export const NATIVE = {
     const item = {
       content_type: 'application/json',
       length,
-      type: payload.type,
+      type: payload.type ?? 'event',
     };
 
     const itemString = JSON.stringify(item);
@@ -68,9 +67,7 @@ export const NATIVE = {
    * Starts native with the provided options
    * @param options CapacitorOptions
    */
-  async startWithOptions(
-    options: CapacitorOptions = { enableNative: true },
-  ): Promise<boolean> {
+  async initNativeSdk(options: CapacitorOptions): Promise<boolean> {
     if (!options.dsn) {
       logger.warn(
         'Warning: No DSN was provided. The Sentry SDK will be disabled. Native SDK will also not be initalized.',
@@ -117,22 +114,6 @@ export const NATIVE = {
     }
 
     return SentryCapacitor.fetchRelease();
-  },
-
-  /**
-   * Sets log level in native
-   * @param level number
-   */
-  setLogLevel(level: number): void {
-    if (!this.enableNative) {
-      return;
-    }
-
-    if (!this.isNativeClientAvailable()) {
-      throw this._NativeClientError;
-    }
-
-    SentryCapacitor.setLogLevel(level);
   },
 
   /**

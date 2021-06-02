@@ -106,13 +106,6 @@ export class SentryCapacitorWeb
   setExtra(): void {
     // TODO integrate web
   }
-
-  /**
-   *
-   */
-  setLogLevel(): void {
-    // TODO integrate web
-  }
 }
 
 const SentryCapacitor = new SentryCapacitorWeb();
