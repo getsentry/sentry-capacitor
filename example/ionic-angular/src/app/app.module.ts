@@ -27,7 +27,7 @@ Sentry.init(
     integrations: [new Integrations.BrowserTracing()],
     // A release identifier
     release: '1.0.0',
-    dist: "1.0.0.1",
+    dist: '1.0.0.1',
     // An environment identifier
     environment: 'staging',
     // We recommend adjusting this value in production, or using tracesSampler
@@ -37,25 +37,6 @@ Sentry.init(
   sentryAngularInit,
 );
 
-// /**
-//  * Wrap the ionic error handler with this method so Sentry catches unhandled errors on ionic.
-//  * See the documentation for more details.
-//  */
-// const withSentryIonicErrorHandler = <C extends new (...args: any[]) => any>(
-//   IonicErrorHandler: C,
-// ): C => {
-//   class SentryIonicErrorHandler extends IonicErrorHandler {
-//     handleError(error: any) {
-//       super.handleError(error);
-//       Sentry.captureException(error.originalError ?? error);
-//     }
-//   }
-
-//   return SentryIonicErrorHandler;
-// };
-
-// const SentryIonicErrorHandler = withSentryIonicErrorHandler(ErrorHandler);
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -64,6 +45,7 @@ Sentry.init(
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    /* Provide the @sentry/angular error handler */
     {
       provide: ErrorHandler,
       useValue: createErrorHandler(),
