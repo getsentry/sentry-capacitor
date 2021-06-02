@@ -109,7 +109,6 @@ describe('Tests Native Wrapper', () => {
         message: {
           message: event.message,
         },
-        type: 'event',
       });
 
       const header = JSON.stringify({
@@ -119,7 +118,7 @@ describe('Tests Native Wrapper', () => {
 
       const item = JSON.stringify({
         content_type: 'application/json',
-        length: 114,
+        length: 99,
         type: 'event',
       });
 
