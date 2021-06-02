@@ -1,5 +1,10 @@
-import { defaultIntegrations, init as browserInit } from '@sentry/browser';
+import {
+  defaultIntegrations,
+  init as browserInit,
+  StackFrame,
+} from '@sentry/browser';
 import { Hub, makeMain } from '@sentry/hub';
+import { RewriteFrames } from '@sentry/integrations';
 
 import { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
@@ -28,7 +33,35 @@ export function init<O>(
   const capacitorHub = new Hub(undefined, new CapacitorScope());
   makeMain(capacitorHub);
 
-  finalOptions.defaultIntegrations = [...defaultIntegrations];
+  finalOptions.defaultIntegrations = [
+    ...defaultIntegrations,
+    new RewriteFrames({
+      iteratee: (frame: StackFrame) => {
+        if (frame.filename) {
+          frame.filename = frame.filename
+            .replace(/^http:\/\/localhost/, '')
+            .replace(/^ng:\/\//, '');
+
+          if (
+            frame.filename !== '[native code]' &&
+            frame.filename !== 'native'
+          ) {
+            const appPrefix = 'app://';
+            // We always want to have a triple slash
+            frame.filename =
+              frame.filename.indexOf('/') === 0
+                ? `${appPrefix}${frame.filename}`
+                : `${appPrefix}/${frame.filename}`;
+
+            frame.in_app = true;
+          } else {
+            frame.in_app = false;
+          }
+        }
+        return frame;
+      },
+    }),
+  ];
 
   if (typeof finalOptions.enableNative === 'undefined') {
     finalOptions.enableNative = true;
