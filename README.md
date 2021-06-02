@@ -9,7 +9,7 @@ _Bad software is everywhere, and we're tired of it. Sentry is on a mission to he
 
 ## Official Sentry SDK for Capacitor
 [![build](https://github.com/getsentry/sentry-capacitor/workflows/Build%20&%20Test/badge.svg?branch=main)](https://github.com/getsentry/sentry-capacitor/actions?query=branch%3Amain)
-[![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)  
+[![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)
 
 
 _Work in progress_ Sentry SDK for [Capacitor](https://capacitorjs.com/).
@@ -38,16 +38,14 @@ Sentry.init({
   dsn: "__DSN__",
 }, sentryAngularInit);
 
-// Attach the Sentry error handler
+// Attach the Sentry ErrorHandler
 @NgModule({
   providers: [
     {
       provide: ErrorHandler,
       useValue: createErrorHandler(),
     },
-  // ...
   ],
-  // ...
 })
 ```
 
@@ -85,6 +83,6 @@ Sentry.captureEvent({
 
 * [![Documentation](https://img.shields.io/badge/documentation-sentry.io-green.svg)](https://docs.sentry.io/platforms/capacitor/)
 * [![Forum](https://img.shields.io/badge/forum-sentry-green.svg)](https://forum.sentry.io/c/sdks)
-* [![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)  
+* [![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)
 * [![Stack Overflow](https://img.shields.io/badge/stack%20overflow-sentry-green.svg)](https://stackoverflow.com/questions/tagged/sentry)
 * [![Twitter Follow](https://img.shields.io/twitter/follow/getsentry?label=getsentry&style=social)](https://twitter.com/intent/follow?screen_name=getsentry)
