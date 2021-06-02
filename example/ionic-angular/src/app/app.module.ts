@@ -26,7 +26,8 @@ Sentry.init(
     enabled: true,
     integrations: [new Integrations.BrowserTracing()],
     // A release identifier
-    release: '1537345109360',
+    release: '1.0.0',
+    dist: "1.0.0.1",
     // An environment identifier
     environment: 'staging',
     // We recommend adjusting this value in production, or using tracesSampler
