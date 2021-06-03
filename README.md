@@ -9,7 +9,7 @@ _Bad software is everywhere, and we're tired of it. Sentry is on a mission to he
 
 ## Official Sentry SDK for Capacitor
 [![build](https://github.com/getsentry/sentry-capacitor/workflows/Build%20&%20Test/badge.svg?branch=main)](https://github.com/getsentry/sentry-capacitor/actions?query=branch%3Amain)
-[![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)  
+[![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)
 
 
 _Work in progress_ Sentry SDK for [Capacitor](https://capacitorjs.com/).
@@ -17,17 +17,36 @@ _Work in progress_ Sentry SDK for [Capacitor](https://capacitorjs.com/).
 **Release Stage**
 _Android alpha_
 
+## Installation
+
+```bash
+yarn add @sentry/capacitor @sentry/angular
+```
+
 ## Usage
 
-To use this SDK, call `Sentry.init(options)` as early as possible after loading the page. This will initialize the SDK and hook into the environment. _Note that you can turn off almost all side effects using the respective options._
+To use this SDK, call `Sentry.init` as early as possible after loading the page. This will initialize the SDK and hook into the environment. _Note that you can turn off almost all side effects using the respective options._
 
-```javascript
-import * as Sentry from '@sentry/capacitor';
+```typescript
+// app.module.ts
 
+import * as Sentry from "@sentry/capacitor";
+import { init as sentryAngularInit, createErrorHandler }  from "@sentry/angular";
+
+// Init by passing the sibling SDK's init as the second parameter.
 Sentry.init({
-  dsn: '__DSN__',
-  // ...
-});
+  dsn: "__DSN__",
+}, sentryAngularInit);
+
+// Attach the Sentry ErrorHandler
+@NgModule({
+  providers: [
+    {
+      provide: ErrorHandler,
+      useValue: createErrorHandler(),
+    },
+  ],
+})
 ```
 
 To set context information or send manual events, use the exported functions of `@sentry/capacitor`. _Note that these functions will not perform any action before you have called `Sentry.init()`:_
@@ -64,6 +83,6 @@ Sentry.captureEvent({
 
 * [![Documentation](https://img.shields.io/badge/documentation-sentry.io-green.svg)](https://docs.sentry.io/platforms/capacitor/)
 * [![Forum](https://img.shields.io/badge/forum-sentry-green.svg)](https://forum.sentry.io/c/sdks)
-* [![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)  
+* [![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)
 * [![Stack Overflow](https://img.shields.io/badge/stack%20overflow-sentry-green.svg)](https://stackoverflow.com/questions/tagged/sentry)
 * [![Twitter Follow](https://img.shields.io/twitter/follow/getsentry?label=getsentry&style=social)](https://twitter.com/intent/follow?screen_name=getsentry)
