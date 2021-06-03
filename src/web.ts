@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { registerWebPlugin, WebPlugin } from '@capacitor/core';
 import { Response, Status } from '@sentry/types';
 

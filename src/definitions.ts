@@ -8,6 +8,7 @@ declare module '@capacitor/core' {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 interface serializedObject {
   [key: string]: string;
 }
