@@ -205,7 +205,6 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void captureEnvelope(PluginCall call) {
-        
         try {
             String envelope = call.getString("envelope");
             final String outboxPath = HubAdapter.getInstance().getOptions().getOutboxPath();
