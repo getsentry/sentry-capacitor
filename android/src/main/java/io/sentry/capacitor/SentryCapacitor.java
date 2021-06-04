@@ -100,26 +100,7 @@ public class SentryCapacitor extends Plugin {
 
                 options.setBeforeSend(
                     (event, hint) -> {
-                        // Add on the correct event.origin tag.
-                        // it needs to be here so we can determine where it originated from.
-                        SdkVersion sdkVersion = event.getSdk();
-                        if (sdkVersion != null) {
-                            String sdkName = sdkVersion.getName();
-                            if (sdkName != null) {
-                                if (sdkName.equals("sentry.javascript.capacitor")) {
-                                    event.setTag("event.origin", "javascript");
-                                } else if (sdkName.equals("sentry.java.android") || sdkName.equals("sentry.native")) {
-                                    event.setTag("event.origin", "android");
-
-                                    if (sdkName.equals("sentry.native")) {
-                                        event.setTag("event.environment", "native");
-                                    } else {
-                                        event.setTag("event.environment", "java");
-                                    }
-                                }
-                            }
-                        }
-
+                        setEventOriginTag(event);
                         addPackages(event, options.getSdkVersion());
 
                         return event;
@@ -336,7 +317,28 @@ public class SentryCapacitor extends Plugin {
         call.resolve();
     }
 
-    @PluginMethod
+    public void setEventOriginTag(SentryEvent event) {
+        SdkVersion sdk = event.getSdk();
+        if (sdk != null) {
+          switch (sdk.getName()) {
+          // If the event is from capacitor js, it gets set there and we do not handle it here.
+          case "sentry.native":
+            setEventEnvironmentTag(event, "android", "native");
+            break;
+          case "sentry.java.android":
+            setEventEnvironmentTag(event, "android", "java");
+            break;
+          default:
+            break;
+          }
+        }
+      }
+
+    private void setEventEnvironmentTag(SentryEvent event, String origin, String environment) {
+        event.setTag("event.origin", origin);
+        event.setTag("event.environment", environment);
+    }
+
     public void addPackages(SentryEvent event, SdkVersion sdk) {
         SdkVersion eventSdk = event.getSdk();
         if (eventSdk != null && eventSdk.getName().equals("sentry.javascript.capacitor") && sdk != null) {
