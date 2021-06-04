@@ -12,12 +12,13 @@ import io.sentry.HubAdapter;
 import io.sentry.Integration;
 import io.sentry.Sentry;
 import io.sentry.SentryLevel;
-import io.sentry.SentryOptions;
+import io.sentry.SentryEvent;
 import io.sentry.UncaughtExceptionHandlerIntegration;
 import io.sentry.android.core.AnrIntegration;
 import io.sentry.android.core.NdkIntegration;
 import io.sentry.android.core.SentryAndroid;
 import io.sentry.protocol.SdkVersion;
+import io.sentry.protocol.SentryPackage;
 import io.sentry.protocol.User;
 
 import java.io.File;
@@ -118,6 +119,8 @@ public class SentryCapacitor extends Plugin {
                                 }
                             }
                         }
+
+                        addPackages(event, options.getSdkVersion());
 
                         return event;
                     }
@@ -332,4 +335,26 @@ public class SentryCapacitor extends Plugin {
         }
         call.resolve();
     }
+
+    @PluginMethod
+    public void addPackages(SentryEvent event, SdkVersion sdk) {
+        SdkVersion eventSdk = event.getSdk();
+        if (eventSdk != null && eventSdk.getName().equals("sentry.javascript.capacitor") && sdk != null) {
+            List<SentryPackage> sentryPackages = sdk.getPackages();
+            if (sentryPackages != null) {
+                for (SentryPackage sentryPackage : sentryPackages) {
+                    eventSdk.addPackage(sentryPackage.getName(), sentryPackage.getVersion());
+                }
+            }
+
+            List<String> integrations = sdk.getIntegrations();
+            if (integrations != null) {
+                for (String integration : integrations) {
+                    eventSdk.addIntegration(integration);
+                }
+            }
+
+            event.setSdk(eventSdk);
+        }
+      }
 }
