@@ -8,6 +8,7 @@ import com.getcapacitor.PluginMethod;
 import com.google.gson.Gson;
 
 import io.sentry.Breadcrumb;
+import io.sentry.HubAdapter;
 import io.sentry.Integration;
 import io.sentry.Sentry;
 import io.sentry.SentryLevel;
@@ -38,7 +39,6 @@ import android.util.Log;
 public class SentryCapacitor extends Plugin {
 
     final static Logger logger = Logger.getLogger("capacitor-sentry");
-    private SentryOptions sentryOptions;
     private Context context;
     private static PackageInfo packageInfo;
 
@@ -137,7 +137,6 @@ public class SentryCapacitor extends Plugin {
                 }
 
                 logger.info(String.format("Native Integrations '%s'", options.getIntegrations().toString()));
-                sentryOptions = options;
             }
         );
 
@@ -206,9 +205,12 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void captureEnvelope(PluginCall call) {
-        String envelope = call.getString("envelope");
+        
         try {
-            File installation =  new File(sentryOptions.getOutboxPath(), UUID.randomUUID().toString());
+            String envelope = call.getString("envelope");
+            final String outboxPath = HubAdapter.getInstance().getOptions().getOutboxPath();
+            final File installation =  new File(outboxPath, UUID.randomUUID().toString());
+
             try (FileOutputStream out = new FileOutputStream(installation)) {
                 out.write(envelope.getBytes(Charset.forName("UTF-8")));
                 logger.info("Successfully captured envelope.");
@@ -216,7 +218,6 @@ public class SentryCapacitor extends Plugin {
                 JSObject resp = new JSObject();
                 resp.put("value", envelope);
                 call.resolve(resp);
-
             } catch (Exception e) {
                 logger.info("Error writing envelope.");
                 call.reject(String.valueOf(e));
@@ -229,7 +230,7 @@ public class SentryCapacitor extends Plugin {
             return;
         }
     }
-    
+
     @PluginMethod
     public void getStringBytesLength(PluginCall call) {
         if (call.getData().has("string")) {
@@ -316,7 +317,7 @@ public class SentryCapacitor extends Plugin {
                 String key = call.getString("key");
                 String extra = call.getString("extra");
                 scope.setExtra(key, extra);
-            });            
+            });
         }
         call.resolve();
     }
