@@ -192,6 +192,13 @@ public class SentryCapacitor extends Plugin {
         try {
             String envelope = call.getString("envelope");
             final String outboxPath = HubAdapter.getInstance().getOptions().getOutboxPath();
+
+            if (outboxPath != null && !outboxPath.trim().isEmpty()) {
+                logger.info("Error when writing envelope, no outbox path is present.");
+                call.reject("Missing outboxPath");
+                return;
+            }
+
             final File installation =  new File(outboxPath, UUID.randomUUID().toString());
 
             try (FileOutputStream out = new FileOutputStream(installation)) {
