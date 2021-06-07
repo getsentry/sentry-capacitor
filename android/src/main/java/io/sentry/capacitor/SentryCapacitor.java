@@ -5,7 +5,6 @@ import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
-import com.google.gson.Gson;
 
 import io.sentry.Breadcrumb;
 import io.sentry.HubAdapter;
@@ -26,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -272,12 +272,13 @@ public class SentryCapacitor extends Plugin {
 
             if (breadcrumb.getData().has("data")) {
                 JSObject data = breadcrumb.getObject("data");
-                HashMap<String, String> mappedData = new Gson().fromJson(data.toString(), HashMap.class);
+                Iterator<String> it = data.keys();
 
-                for ( HashMap.Entry<String, String> entry: mappedData.entrySet()) {
-                    String key = entry.getKey();
-                    String value = entry.getValue();
-                    breadcrumbInstance.setData(key, value);
+                while (it.hasNext()) {
+                  String key = it.next();
+                  String value = data.getString(key);
+
+                  breadcrumbInstance.setData(key, value);
                 }
             }
 
