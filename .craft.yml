@@ -1,0 +1,10 @@
+minVersion: 0.23.1
+changelogPolicy: simple
+preReleaseCommand: bash scripts/craft-pre-release.sh
+targets:
+  - name: npm
+  - name: github
+  - name: registry
+    sdks:
+      npm:@sentry/capacitor:
+        includeNames: /none/
