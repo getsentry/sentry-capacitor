@@ -10,7 +10,8 @@
   ],
   "include": [
     "src/**/*.ts",
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "capacitor.config.ts"
   ],
   "exclude": [
     "src/**/*.spec.ts"

@@ -15,12 +15,11 @@
       "es2018",
       "dom"
     ],
-    "paths": {
-      "@sentry/capacitor": [
-        "../../"
-      ]
-    }
   },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts"
+  ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
