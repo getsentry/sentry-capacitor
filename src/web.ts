@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-import { registerWebPlugin, WebPlugin } from '@capacitor/core';
+import { WebPlugin } from '@capacitor/core';
 import { Response, Status } from '@sentry/types';
 
-import { SentryCapacitorPlugin } from './definitions';
+import { ISentryCapacitorPlugin } from './definitions';
 import { CapacitorOptions } from './options';
 
 /**
@@ -10,7 +10,7 @@ import { CapacitorOptions } from './options';
  */
 export class SentryCapacitorWeb
   extends WebPlugin
-  implements SentryCapacitorPlugin {
+  implements ISentryCapacitorPlugin {
   constructor() {
     super({
       name: 'SentryCapacitor',
@@ -108,9 +108,3 @@ export class SentryCapacitorWeb
     // TODO integrate web
   }
 }
-
-const SentryCapacitor = new SentryCapacitorWeb();
-
-export { SentryCapacitor };
-
-registerWebPlugin(SentryCapacitor);
