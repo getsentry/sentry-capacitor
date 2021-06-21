@@ -1,10 +1,10 @@
 package io.sentry.capacitor;
 
 import com.getcapacitor.JSObject;
-import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
+import com.getcapacitor.annotation.CapacitorPlugin;
 
 import io.sentry.Breadcrumb;
 import io.sentry.HubAdapter;
@@ -36,7 +36,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.util.Log;
 
-@NativePlugin
+@CapacitorPlugin
 public class SentryCapacitor extends Plugin {
 
     final static Logger logger = Logger.getLogger("capacitor-sentry");
