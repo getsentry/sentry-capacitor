@@ -18,6 +18,17 @@ example/ionic-angular/www
 example/ionic-angular/.gradle
 example/ionic-angular/build
 example/ionic-angular/.ionic
+example/ionic-angular/.yalc
+
+example/ionic-angular-v2/dist
+example/ionic-angular-v2/node_modules
+example/ionic-angular-v2/platforms
+example/ionic-angular-v2/plugins
+example/ionic-angular-v2/www
+example/ionic-angular-v2/.gradle
+example/ionic-angular-v2/build
+example/ionic-angular-v2/.ionic
+example/ionic-angular-v2/.yalc
 
 # iOS files
 Pods
