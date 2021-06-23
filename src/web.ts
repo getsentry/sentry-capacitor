@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-import { WebPlugin } from '@capacitor/core';
+import { registerWebPlugin, WebPlugin } from '@capacitor/core';
 import { Response, Status } from '@sentry/types';
 
 import { ISentryCapacitorPlugin } from './definitions';
@@ -108,3 +108,11 @@ export class SentryCapacitorWeb
     // TODO integrate web
   }
 }
+
+const SentryCapacitor = new SentryCapacitorWeb();
+
+export { SentryCapacitor };
+
+// Left here to support capacitor v2
+// eslint-disable-next-line deprecation/deprecation
+registerWebPlugin(SentryCapacitor);

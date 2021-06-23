@@ -2,12 +2,6 @@ import { Breadcrumb, Response } from '@sentry/types';
 
 import { CapacitorOptions } from './options';
 
-// declare module '@capacitor/core' {
-//   interface PluginRegistry {
-//     SentryCapacitor: ISentryCapacitorPlugin;
-//   }
-// }
-
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface serializedObject {
   [key: string]: string;
