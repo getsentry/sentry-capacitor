@@ -18,8 +18,7 @@
     "test:watch": "jest --watch",
     "lint": "eslint .",
     "swiftlint": "node-swiftlint",
-    "prepublishOnly": "npm run build",
-    "refresh-example": "cd example/ionic-angular && yarn run refresh"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "capacitor",
