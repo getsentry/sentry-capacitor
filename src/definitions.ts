@@ -2,18 +2,12 @@ import { Breadcrumb, Response } from '@sentry/types';
 
 import { CapacitorOptions } from './options';
 
-declare module '@capacitor/core' {
-  interface PluginRegistry {
-    SentryCapacitor: SentryCapacitorPlugin;
-  }
-}
-
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface serializedObject {
   [key: string]: string;
 }
 
-export interface SentryCapacitorPlugin {
+export interface ISentryCapacitorPlugin {
   addBreadcrumb(breadcrumb: Breadcrumb): void;
   captureEnvelope(payload: { envelope: string }): PromiseLike<Response>;
   clearBreadcrumbs(): void;

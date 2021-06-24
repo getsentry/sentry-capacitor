@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import { Severity } from '@sentry/types';
 import { logger } from '@sentry/utils';
 
@@ -5,34 +6,44 @@ import { NATIVE } from '../src/wrapper';
 
 jest.mock(
   '@capacitor/core',
-  () => ({
-    Capacitor: {
-      isPluginAvailable: jest.fn(() => true),
-    },
-    Plugins: {
-      SentryCapacitor: {
-        addBreadcrumb: jest.fn(),
-        captureEnvelope: jest.fn(envelope => Promise.resolve(envelope)),
-        crash: jest.fn(),
-        fetchRelease: jest.fn(() =>
-          Promise.resolve({
-            build: '0.0.1',
-            id: 'test-mock',
-            version: '0.0.1',
-          }),
-        ),
-        getStringBytesLength: jest.fn(() => Promise.resolve({ value: 1 })),
-        sendEvent: jest.fn(() => Promise.resolve()),
-        setUser: jest.fn(() => {
-          return;
-        }),
-        startWithOptions: jest.fn(options => Promise.resolve(options)),
+  () => {
+    const original = jest.requireActual('@capacitor/core');
+
+    return {
+      WebPlugin: original.WebPlugin,
+      registerPlugin: jest.fn(),
+      Capacitor: {
+        isPluginAvailable: jest.fn(() => true),
       },
-    },
-  }),
+    };
+  },
   /* virtual allows us to mock modules that aren't in package.json */
   { virtual: true },
 );
+
+jest.mock('../src/plugin', () => {
+  return {
+    SentryCapacitor: {
+      addBreadcrumb: jest.fn(),
+      captureEnvelope: jest.fn(envelope => Promise.resolve(envelope)),
+      crash: jest.fn(),
+      fetchRelease: jest.fn(() =>
+        Promise.resolve({
+          build: '0.0.1',
+          id: 'test-mock',
+          version: '0.0.1',
+        }),
+      ),
+      getStringBytesLength: jest.fn(() => Promise.resolve({ value: 1 })),
+      setUser: jest.fn(() => {
+        return;
+      }),
+      startWithOptions: jest.fn(options => Promise.resolve(options)),
+    },
+  };
+});
+
+import { SentryCapacitor } from '../src/plugin';
 
 beforeEach(() => {
   NATIVE.enableNative = true;
@@ -45,26 +56,20 @@ afterEach(() => {
 describe('Tests Native Wrapper', () => {
   describe('startWithOptions', () => {
     test('calls plugin', async () => {
-      const Capacitor = require('@capacitor/core');
-
-      Capacitor.Plugins.SentryCapacitor.startWithOptions = jest.fn();
+      SentryCapacitor.startWithOptions = jest.fn();
 
       await NATIVE.initNativeSdk({ dsn: 'test', enableNative: true });
 
-      expect(Capacitor.Plugins.SentryCapacitor.startWithOptions).toBeCalled();
+      expect(SentryCapacitor.startWithOptions).toBeCalled();
     });
 
     test('warns if there is no dsn', async () => {
-      const Capacitor = require('@capacitor/core');
-
-      Capacitor.Plugins.SentryCapacitor.startWithOptions = jest.fn();
+      SentryCapacitor.startWithOptions = jest.fn();
       logger.warn = jest.fn();
 
       await NATIVE.initNativeSdk({ enableNative: true });
 
-      expect(
-        Capacitor.Plugins.SentryCapacitor.startWithOptions,
-      ).not.toBeCalled();
+      expect(SentryCapacitor.startWithOptions).not.toBeCalled();
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(logger.warn).toHaveBeenLastCalledWith(
         'Warning: No DSN was provided. The Sentry SDK will be disabled. Native SDK will also not be initalized.',
@@ -72,9 +77,7 @@ describe('Tests Native Wrapper', () => {
     });
 
     test('does not call native module with enableNative: false', async () => {
-      const Capacitor = require('@capacitor/core');
-
-      Capacitor.Plugins.SentryCapacitor.startWithOptions = jest.fn();
+      SentryCapacitor.startWithOptions = jest.fn();
       logger.warn = jest.fn();
 
       await NATIVE.initNativeSdk({
@@ -83,9 +86,7 @@ describe('Tests Native Wrapper', () => {
         enableNativeNagger: true,
       });
 
-      expect(
-        Capacitor.Plugins.SentryCapacitor.startWithOptions,
-      ).not.toBeCalled();
+      expect(SentryCapacitor.startWithOptions).not.toBeCalled();
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(logger.warn).toHaveBeenLastCalledWith(
         'Note: Native Sentry SDK is disabled.',
@@ -130,8 +131,6 @@ describe('Tests Native Wrapper', () => {
     });
 
     test('does not call Capacitor at all if enableNative is false', async () => {
-      const Capacitor = require('@capacitor/core');
-
       try {
         await NATIVE.initNativeSdk({ dsn: 'test-dsn', enableNative: false });
         await NATIVE.sendEvent({});
@@ -139,13 +138,8 @@ describe('Tests Native Wrapper', () => {
         expect(error.message).toMatch('Native is disabled');
       }
 
-      expect(Capacitor.Plugins.SentryCapacitor.sendEvent).not.toBeCalled();
-      expect(
-        Capacitor.Plugins.SentryCapacitor.getStringBytesLength,
-      ).not.toBeCalled();
-      expect(
-        Capacitor.Plugins.SentryCapacitor.captureEnvelope,
-      ).not.toBeCalled();
+      expect(SentryCapacitor.getStringBytesLength).not.toBeCalled();
+      expect(SentryCapacitor.captureEnvelope).not.toBeCalled();
     });
   });
 
@@ -168,18 +162,14 @@ describe('Tests Native Wrapper', () => {
 
   describe('crash', () => {
     test('calls the native crash', () => {
-      const Capacitor = require('@capacitor/core');
-
       NATIVE.crash();
 
-      expect(Capacitor.Plugins.SentryCapacitor.crash).toBeCalled();
+      expect(SentryCapacitor.crash).toBeCalled();
     });
   });
 
   describe('setUser', () => {
     test('serializes all user object keys', async () => {
-      const Capacitor = require('@capacitor/core');
-
       NATIVE.setUser({
         email: 'hello@sentry.io',
         // @ts-ignore Intentional incorrect type to simulate using a double as an id (We had a user open an issue because this didn't work before)
@@ -187,7 +177,7 @@ describe('Tests Native Wrapper', () => {
         unique: '123',
       });
 
-      expect(Capacitor.Plugins.SentryCapacitor.setUser).toBeCalledWith(
+      expect(SentryCapacitor.setUser).toBeCalledWith(
         {
           email: 'hello@sentry.io',
           id: '3.1234587',
@@ -199,13 +189,11 @@ describe('Tests Native Wrapper', () => {
     });
 
     test('calls native setUser with empty object as second param if no unique keys', async () => {
-      const Capacitor = require('@capacitor/core');
-
       NATIVE.setUser({
         id: 'Hello',
       });
 
-      expect(Capacitor.Plugins.SentryCapacitor.setUser).toBeCalledWith(
+      expect(SentryCapacitor.setUser).toBeCalledWith(
         {
           id: 'Hello',
         },

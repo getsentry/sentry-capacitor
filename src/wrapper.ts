@@ -1,11 +1,10 @@
 /* eslint-disable max-lines */
-import { Capacitor, Plugins } from '@capacitor/core';
+import { Capacitor } from '@capacitor/core';
 import { Breadcrumb, Event, Response, Severity, User } from '@sentry/types';
 import { logger, SentryError } from '@sentry/utils';
 
 import { CapacitorOptions } from './options';
-
-const { SentryCapacitor } = Plugins;
+import { SentryCapacitor } from './plugin';
 
 /**
  * Internal interface for calling native functions
