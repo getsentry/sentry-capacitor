@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.2.0
+
 - feat: Add support for Capacitor v3 #54
 
 ## 0.1.0
