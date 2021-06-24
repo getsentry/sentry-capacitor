@@ -20,13 +20,15 @@ Sentry.init(
       'https://4079af8b316240ea9453eb0a23b715cc@o447951.ingest.sentry.io/5522756',
     // An array of strings or regexps that'll be used to ignore specific errors based on their type/message
     ignoreErrors: [/MiddleEarth_\d\d/, 'RangeError'],
-    // Debug mode with valuable initialization/lifecycle information
+    // To see what the Sentry SDK is doing; Helps when setting things up
     debug: true,
     // Whether SDK should be enabled or not
     enabled: true,
+    // Use the tracing integration to see traces and add performance monitoring
     integrations: [new Integrations.BrowserTracing()],
     // A release identifier
     release: '1.0.0',
+    // A dist identifier
     dist: '1.0.0.1',
     // An environment identifier
     environment: 'staging',

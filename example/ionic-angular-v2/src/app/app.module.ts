@@ -24,9 +24,11 @@ Sentry.init(
     debug: true,
     // Whether SDK should be enabled or not
     enabled: true,
+    // Use the tracing integration to see traces and add performance monitoring
     integrations: [new Integrations.BrowserTracing()],
     // A release identifier
     release: '1.0.0',
+    // A dist identifier
     dist: '1.0.0.1',
     // An environment identifier
     environment: 'staging',
