@@ -14,6 +14,7 @@ import { NATIVE } from './wrapper';
 
 const DEFAULT_OPTIONS: CapacitorOptions = {
   enableNative: true,
+  enableAutoSessionTracking: true,
   enableNativeNagger: true,
 };
 
