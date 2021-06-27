@@ -96,7 +96,7 @@ export const NATIVE = {
       ...filteredOptions
     } = options;
 
-    return SentryCapacitor.startWithOptions(filteredOptions);
+    return SentryCapacitor.initNativeSdk({ options: filteredOptions });
   },
 
   /**
@@ -135,7 +135,7 @@ export const NATIVE = {
    * @param value string
    */
   setUser(user: User | null): void {
-    if (!this.enableNative) {
+    if (!this.enableNative || this.platform === 'ios') {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -165,7 +165,7 @@ export const NATIVE = {
    * @param value string
    */
   setTag(key: string, value: string): void {
-    if (!this.enableNative) {
+    if (!this.enableNative || this.platform === 'ios') {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -185,7 +185,7 @@ export const NATIVE = {
    * @param extra any
    */
   setExtra(key: string, extra: unknown): void {
-    if (!this.enableNative) {
+    if (!this.enableNative || this.platform === 'ios') {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -205,7 +205,7 @@ export const NATIVE = {
    * @param breadcrumb Breadcrumb
    */
   addBreadcrumb(breadcrumb: Breadcrumb): void {
-    if (!this.enableNative) {
+    if (!this.enableNative || this.platform === 'ios') {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -228,7 +228,7 @@ export const NATIVE = {
    * Clears breadcrumbs on the native scope.
    */
   clearBreadcrumbs(): void {
-    if (!this.enableNative) {
+    if (!this.enableNative || this.platform === 'ios') {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -314,4 +314,5 @@ export const NATIVE = {
     "Native Client is not available, can't start on native.",
   ),
   enableNative: true,
+  platform: Capacitor.getPlatform(),
 };

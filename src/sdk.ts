@@ -41,7 +41,8 @@ export function init<O>(
         if (frame.filename) {
           frame.filename = frame.filename
             .replace(/^http:\/\/localhost/, '')
-            .replace(/^ng:\/\//, '');
+            .replace(/^ng:\/\//, '')
+            .replace(/^capacitor:\/\/localhost/, '');
 
           if (
             frame.filename !== '[native code]' &&
