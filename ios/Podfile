@@ -5,6 +5,8 @@ def capacitor_pods
   use_frameworks!
   pod 'Capacitor', :path => '../node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../node_modules/@capacitor/ios'
+
+  pod 'Sentry', '7.1.3'
 end
 
 target 'Plugin' do
