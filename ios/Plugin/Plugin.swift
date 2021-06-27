@@ -36,15 +36,24 @@ public class SentryCapacitor: CAPPlugin {
     }
 
     @objc func initNativeSdk(_ call: CAPPluginCall) {
-        let _arguments = call.getObject("options")
+        let _optionsDict = call.getObject("options")
 
-        guard let arguments = _arguments else {
+        guard let optionsDict = _optionsDict else {
             return call.reject("options is null")
         }
 
         do {
-            let options = try Options.init(dict: arguments)
+            let options = try Options.init(dict: optionsDict)
+
+             // Note: For now, in sentry-cocoa, beforeSend is not called before captureEnvelope
+            options.beforeSend = { event in
+                self.setEventOriginTag(event: event)
+
+                return event
+            }
+
             SentrySDK.start(options: options)
+
 
             // checking enableAutoSessionTracking is actually not necessary, but we'd spare the sent bits.
             if didReceiveDidBecomeActiveNotification && sentryOptions?.enableAutoSessionTracking == true {
@@ -55,6 +64,8 @@ public class SentryCapacitor: CAPPlugin {
                didReceiveDidBecomeActiveNotification = false
             }
 
+            self.sentryOptions = options
+            
             call.resolve()
         } catch {
             call.reject("Failed to start native SDK")
@@ -66,7 +77,6 @@ public class SentryCapacitor: CAPPlugin {
             return
         }
         if isValidSdk(sdk: sdk) {
-
             switch sdk["name"] as? String {
             case "sentry.cocoa":
                 setEventEnvironmentTag(event: event, origin: "ios", environment: "native")
