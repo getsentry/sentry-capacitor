@@ -116,7 +116,7 @@ public class SentryCapacitor: CAPPlugin {
         call.resolve()
     }
 
-    @objc func fetchRelease(_ call: CAPPluginCall) {
+    @objc func fetchNativeRelease(_ call: CAPPluginCall) {
         let infoDict = Bundle.main.infoDictionary
 
         call.resolve([

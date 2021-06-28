@@ -6,6 +6,6 @@
 CAP_PLUGIN(SentryCapacitor, "SentryCapacitor",
            CAP_PLUGIN_METHOD(initNativeSdk, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(captureEnvelope, CAPPluginReturnPromise);
-           CAP_PLUGIN_METHOD(fetchRelease, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(fetchNativeRelease, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(fetchNativeSdkInfo, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(crash, CAPPluginReturnPromise);)

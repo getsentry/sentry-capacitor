@@ -14,6 +14,7 @@ jest.mock(
       registerPlugin: jest.fn(),
       Capacitor: {
         isPluginAvailable: jest.fn(() => true),
+        getPlatform: jest.fn(() => 'android'),
       },
     };
   },
@@ -27,7 +28,7 @@ jest.mock('../src/plugin', () => {
       addBreadcrumb: jest.fn(),
       captureEnvelope: jest.fn(envelope => Promise.resolve(envelope)),
       crash: jest.fn(),
-      fetchRelease: jest.fn(() =>
+      fetchNativeRelease: jest.fn(() =>
         Promise.resolve({
           build: '0.0.1',
           id: 'test-mock',
@@ -38,7 +39,7 @@ jest.mock('../src/plugin', () => {
       setUser: jest.fn(() => {
         return;
       }),
-      startWithOptions: jest.fn(options => Promise.resolve(options)),
+      initNativeSdk: jest.fn(options => Promise.resolve(options)),
     },
   };
 });
@@ -54,22 +55,22 @@ afterEach(() => {
 });
 
 describe('Tests Native Wrapper', () => {
-  describe('startWithOptions', () => {
+  describe('initNativeSdk', () => {
     test('calls plugin', async () => {
-      SentryCapacitor.startWithOptions = jest.fn();
+      SentryCapacitor.initNativeSdk = jest.fn();
 
       await NATIVE.initNativeSdk({ dsn: 'test', enableNative: true });
 
-      expect(SentryCapacitor.startWithOptions).toBeCalled();
+      expect(SentryCapacitor.initNativeSdk).toBeCalled();
     });
 
     test('warns if there is no dsn', async () => {
-      SentryCapacitor.startWithOptions = jest.fn();
+      SentryCapacitor.initNativeSdk = jest.fn();
       logger.warn = jest.fn();
 
       await NATIVE.initNativeSdk({ enableNative: true });
 
-      expect(SentryCapacitor.startWithOptions).not.toBeCalled();
+      expect(SentryCapacitor.initNativeSdk).not.toBeCalled();
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(logger.warn).toHaveBeenLastCalledWith(
         'Warning: No DSN was provided. The Sentry SDK will be disabled. Native SDK will also not be initalized.',
@@ -77,7 +78,7 @@ describe('Tests Native Wrapper', () => {
     });
 
     test('does not call native module with enableNative: false', async () => {
-      SentryCapacitor.startWithOptions = jest.fn();
+      SentryCapacitor.initNativeSdk = jest.fn();
       logger.warn = jest.fn();
 
       await NATIVE.initNativeSdk({
@@ -86,7 +87,7 @@ describe('Tests Native Wrapper', () => {
         enableNativeNagger: true,
       });
 
-      expect(SentryCapacitor.startWithOptions).not.toBeCalled();
+      expect(SentryCapacitor.initNativeSdk).not.toBeCalled();
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(logger.warn).toHaveBeenLastCalledWith(
         'Note: Native Sentry SDK is disabled.',

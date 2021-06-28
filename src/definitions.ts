@@ -20,7 +20,7 @@ export interface ISentryCapacitorPlugin {
   }): PromiseLike<Response>;
   clearBreadcrumbs(): void;
   crash(): void;
-  fetchRelease(): Promise<{
+  fetchNativeRelease(): Promise<{
     build: string;
     id: string;
     version: string;

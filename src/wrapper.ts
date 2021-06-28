@@ -102,7 +102,7 @@ export const NATIVE = {
   /**
    * Fetches the release from native
    */
-  async fetchRelease(): Promise<{
+  async fetchNativeRelease(): Promise<{
     build: string;
     id: string;
     version: string;
@@ -111,7 +111,7 @@ export const NATIVE = {
       throw this._DisabledNativeError;
     }
 
-    return SentryCapacitor.fetchRelease();
+    return SentryCapacitor.fetchNativeRelease();
   },
 
   async fetchNativeSdkInfo(): Promise<{
