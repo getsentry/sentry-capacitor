@@ -1,4 +1,4 @@
-import { Breadcrumb, Response } from '@sentry/types';
+import { Breadcrumb, Package, Response } from '@sentry/types';
 
 import { CapacitorOptions } from './options';
 
@@ -25,6 +25,7 @@ export interface ISentryCapacitorPlugin {
     id: string;
     version: string;
   }>;
+  fetchNativeSdkInfo(): Promise<Package>;
   getStringBytesLength(payload: { string: string }): Promise<{ value: number }>;
   initNativeSdk(payload: { options: CapacitorOptions }): Promise<boolean>;
   setUser(

@@ -65,7 +65,7 @@ public class SentryCapacitor: CAPPlugin {
             }
 
             self.sentryOptions = options
-            
+
             call.resolve()
         } catch {
             call.reject("Failed to start native SDK")
@@ -123,6 +123,17 @@ public class SentryCapacitor: CAPPlugin {
             "id": infoDict?["CFBundleIdentifier"] ?? "",
             "version": infoDict?["CFBundleShortVersionString"] ?? "",
             "build": infoDict?["CFBundleVersion"] ?? ""
+        ])
+    }
+
+    @objc func fetchNativeSdkInfo(_ call: CAPPluginCall) {
+        guard let options = self.sentryOptions else {
+            return call.reject("Called fetchSdkInfo without initializing cocoa SDK.")
+        }
+
+        call.resolve([
+            "name": options.sdkInfo.name,
+            "version": options.sdkInfo.version
         ])
     }
 

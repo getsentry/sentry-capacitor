@@ -114,6 +114,17 @@ export const NATIVE = {
     return SentryCapacitor.fetchRelease();
   },
 
+  async fetchNativeSdkInfo(): Promise<{
+    name: string;
+    version: string;
+  }> {
+    if (!this.enableNative) {
+      throw this._DisabledNativeError;
+    }
+
+    return SentryCapacitor.fetchNativeSdkInfo();
+  },
+
   /**
    * Triggers a native crash.
    * Use this only for testing purposes.

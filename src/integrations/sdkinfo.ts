@@ -1,6 +1,7 @@
-import { EventProcessor, Integration } from '@sentry/types';
+import { EventProcessor, Integration, Package } from '@sentry/types';
 
 import { SDK_NAME, SDK_VERSION } from '../version';
+import { NATIVE } from '../wrapper';
 
 /** Default SdkInfo instrumentation */
 export class SdkInfo implements Integration {
@@ -14,17 +15,30 @@ export class SdkInfo implements Integration {
    */
   public name: string = SdkInfo.id;
 
+  private _nativeSdkInfo: Package | null = null;
+
   /**
    * @inheritDoc
    */
   public setupOnce(addGlobalEventProcessor: (e: EventProcessor) => void): void {
-    addGlobalEventProcessor(event => {
+    addGlobalEventProcessor(async event => {
+      // The native SDK info package here is only used on iOS as `beforeSend` is not called on `captureEnvelope`.
+      // this._nativeSdkInfo should be defined a following time so this call won't always be awaited.
+      if (NATIVE.platform === 'ios' && this._nativeSdkInfo === null) {
+        try {
+          this._nativeSdkInfo = await NATIVE.fetchNativeSdkInfo();
+        } catch (_) {
+          // Do nothing if this fails, we would rather have the event be sent with a package missing.
+        }
+      }
+
       event.platform = event.platform || 'javascript';
       event.sdk = {
         ...event.sdk,
         name: SDK_NAME,
         packages: [
           ...((event.sdk && event.sdk.packages) || []),
+          ...((this._nativeSdkInfo && [this._nativeSdkInfo]) || []),
           {
             name: 'npm:@sentry/capacitor',
             version: SDK_VERSION,
