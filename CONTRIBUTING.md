@@ -6,6 +6,7 @@ You need:
 
 - nodejs 8 or higher
 - yarn 1 or higher
+- yalc
 
 ## Building
 
@@ -26,9 +27,14 @@ yarn build
 yarn watch
 ```
 
-## Running the example app
+## Running the example apps
 
-See [example/ionic-angular/README.md](example/ionic-angular/README.md)
+We use `yalc` to serve the local package builds to our example apps. You can run the `bump` scripts such as `bump:v3` to package the SDK and sync the latest version to the example apps.
+
+See the readmes in the specific example app folders for individual instructions:
+
+- [ionic-angular-v2](example/ionic-angular-v2/README.md)
+- [ionic-angular-v3](example/ionic-angular-v3/README.md)
 
 ## testing
 

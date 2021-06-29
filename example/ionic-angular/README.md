@@ -1,11 +1,12 @@
 # Instructions for using the example app
 
-Please use only `npm` for this example, as yarn will ignore the `files` and `.npmignore` when using a local module, causing this
-example to be copied into `node_modules` in a circular fashion.
+## Add the local SDK from yalc
+
+`yalc add @sentry/capacitor`
 
 ## Install dependencies
 
-`npm install`
+`yarn install`
 
 ## Build for native
 
