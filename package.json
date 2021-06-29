@@ -11,14 +11,14 @@
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
   "scripts": {
-    "build": "npm run clean && npm run lint && tsc -p tsconfig.build.json && rollup -c rollup.config.js",
+    "build": "yarn run clean && yarn run lint && tsc -p tsconfig.build.json && rollup -c rollup.config.js",
     "watch": "tsc --watch",
     "clean": "rimraf ./dist ./coverage",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint .",
     "swiftlint": "node-swiftlint",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "yarn run build",
     "bump:v3": "yalc publish && cd example/ionic-angular && yalc add @sentry/capacitor && ionic build && npx cap sync",
     "bump:v2": "yalc publish && cd example/ionic-angular-v2 && yalc add @sentry/capacitor && ionic build && npx cap sync"
   },
