@@ -146,7 +146,7 @@ export const NATIVE = {
    * @param value string
    */
   setUser(user: User | null): void {
-    if (!this.enableNative || this.platform === 'ios') {
+    if (!this.enableNative) {
       return;
     }
     if (!this.isNativeClientAvailable()) {

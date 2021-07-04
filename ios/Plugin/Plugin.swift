@@ -136,6 +136,36 @@ public class SentryCapacitor: CAPPlugin {
             "version": options.sdkInfo.version
         ])
     }
+    
+    @objc func setUser(_ call: CAPPluginCall) {
+        let defaultUserKeys = call.getObject("defaultUserKeys")
+        let otherUserKeys = call.getObject("otherUserKeys")
+        
+       
+        SentrySDK.configureScope { scope in
+            if (defaultUserKeys == nil && otherUserKeys == nil) {
+                scope.setUser(nil)
+            } else {
+                let user = User()
+                
+                
+                if let userId = defaultUserKeys?["id"] as? String {
+                    user.userId = userId
+                }
+                
+                user.email = defaultUserKeys?["email"] as! String?
+                user.username = defaultUserKeys?["username"] as! String?
+                user.ipAddress = defaultUserKeys?["ip_address"] as! String?
+                
+                user.data = otherUserKeys
+                
+                scope.setUser(user)
+            }
+        }
+        
+        
+        call.resolve()
+    }
 
     @objc func setTag(_ call: CAPPluginCall) {
         guard let key = call.getString("key"), let value = call.getString("value") else {
