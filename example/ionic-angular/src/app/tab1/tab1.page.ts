@@ -129,4 +129,10 @@ export class Tab1Page {
       scope.setUser(null);
     });
   }
+
+  public clearBreadcrumbs(): void {
+    Sentry.configureScope(scope => {
+      scope.clearBreadcrumbs();
+    });
+  }
 }

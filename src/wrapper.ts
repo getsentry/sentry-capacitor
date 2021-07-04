@@ -216,7 +216,7 @@ export const NATIVE = {
    * @param breadcrumb Breadcrumb
    */
   addBreadcrumb(breadcrumb: Breadcrumb): void {
-    if (!this.enableNative || this.platform === 'ios') {
+    if (!this.enableNative) {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -239,7 +239,7 @@ export const NATIVE = {
    * Clears breadcrumbs on the native scope.
    */
   clearBreadcrumbs(): void {
-    if (!this.enableNative || this.platform === 'ios') {
+    if (!this.enableNative) {
       return;
     }
     if (!this.isNativeClientAvailable()) {

@@ -136,34 +136,34 @@ public class SentryCapacitor: CAPPlugin {
             "version": options.sdkInfo.version
         ])
     }
-    
+
     @objc func setUser(_ call: CAPPluginCall) {
         let defaultUserKeys = call.getObject("defaultUserKeys")
         let otherUserKeys = call.getObject("otherUserKeys")
-        
-       
+
+
         SentrySDK.configureScope { scope in
             if (defaultUserKeys == nil && otherUserKeys == nil) {
                 scope.setUser(nil)
             } else {
                 let user = User()
-                
-                
+
+
                 if let userId = defaultUserKeys?["id"] as? String {
                     user.userId = userId
                 }
-                
+
                 user.email = defaultUserKeys?["email"] as! String?
                 user.username = defaultUserKeys?["username"] as! String?
                 user.ipAddress = defaultUserKeys?["ip_address"] as! String?
-                
+
                 user.data = otherUserKeys
-                
+
                 scope.setUser(user)
             }
         }
-        
-        
+
+
         call.resolve()
     }
 
@@ -183,7 +183,7 @@ public class SentryCapacitor: CAPPlugin {
         guard let key = call.getString("key") else {
             return call.reject("Error deserializing extra")
         }
-        
+
         let value = call.getString("value")
 
         SentrySDK.configureScope { scope in
@@ -193,7 +193,58 @@ public class SentryCapacitor: CAPPlugin {
         call.resolve()
     }
 
+    @objc func addBreadcrumb(_ call: CAPPluginCall) {
+        SentrySDK.configureScope { scope in
+            let breadcrumb = Breadcrumb()
+        
+            if let timestamp = call.getDouble("timestamp") {
+                breadcrumb.timestamp = Date(timeIntervalSince1970: timestamp)
+            }
+            
+            if let level = call.getString("level") {
+                breadcrumb.level = self.processLevel(level)
+            }
+            
+            if let category = call.getString("category") {
+                breadcrumb.category = category
+            }
+           
+            breadcrumb.type = call.getString("type")
+            breadcrumb.message = call.getString("message")
+            breadcrumb.data = call.getObject("data")
+            
+            scope.add(breadcrumb)
+        }
+
+        call.resolve()
+    }
+    
+    @objc func clearBreadcrumbs(_ call: CAPPluginCall) {
+        SentrySDK.configureScope { scope in
+            scope.clearBreadcrumbs()
+        }
+        
+        call.resolve()
+    }
+
     @objc func crash(_ call: CAPPluginCall) {
         SentrySDK.crash()
+    }
+    
+    private func processLevel(_ levelString: String) -> SentryLevel {
+        switch levelString {
+        case "fatal":
+            return SentryLevel.fatal
+        case "warning":
+            return SentryLevel.warning
+        case "debug":
+            return SentryLevel.debug
+        case "error":
+            return SentryLevel.error
+        case "info":
+            return SentryLevel.info
+        default:
+            return SentryLevel.info
+        }
     }
 }
