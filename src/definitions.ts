@@ -28,10 +28,10 @@ export interface ISentryCapacitorPlugin {
   fetchNativeSdkInfo(): Promise<Package>;
   getStringBytesLength(payload: { string: string }): Promise<{ value: number }>;
   initNativeSdk(payload: { options: CapacitorOptions }): Promise<boolean>;
-  setUser(
-    user: serializedObject | null,
-    otherUserKeys: serializedObject | null,
-  ): void;
-  setTag(key: string, value: string): void;
-  setExtra(key: string, value: string): void;
+  setUser(payload: {
+    defaultUserKeys: serializedObject | null;
+    otherUserKeys: serializedObject | null;
+  }): void;
+  setTag(payload: { key: string; value: string }): void;
+  setExtra(payload: { key: string; value: string }): void;
 }

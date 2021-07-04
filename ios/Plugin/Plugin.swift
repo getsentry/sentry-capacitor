@@ -137,6 +137,32 @@ public class SentryCapacitor: CAPPlugin {
         ])
     }
 
+    @objc func setTag(_ call: CAPPluginCall) {
+        guard let key = call.getString("key"), let value = call.getString("value") else {
+            return call.reject("Error deserializing tag")
+        }
+
+        SentrySDK.configureScope { scope in
+            scope.setTag(value: value, key: key)
+        }
+
+        call.resolve()
+    }
+
+    @objc func setExtra(_ call: CAPPluginCall) {
+        guard let key = call.getString("key") else {
+            return call.reject("Error deserializing extra")
+        }
+        
+        let value = call.getString("value")
+
+        SentrySDK.configureScope { scope in
+            scope.setExtra(value: value, key: key)
+        }
+
+        call.resolve()
+    }
+
     @objc func crash(_ call: CAPPluginCall) {
         SentrySDK.crash()
     }

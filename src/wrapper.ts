@@ -167,7 +167,7 @@ export const NATIVE = {
       otherUserKeys = this._serializeObject(otherKeys);
     }
 
-    SentryCapacitor.setUser(defaultUserKeys, otherUserKeys);
+    SentryCapacitor.setUser({ defaultUserKeys, otherUserKeys });
   },
 
   /**
@@ -176,7 +176,7 @@ export const NATIVE = {
    * @param value string
    */
   setTag(key: string, value: string): void {
-    if (!this.enableNative || this.platform === 'ios') {
+    if (!this.enableNative) {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -186,7 +186,7 @@ export const NATIVE = {
     const stringifiedValue =
       typeof value === 'string' ? value : JSON.stringify(value);
 
-    SentryCapacitor.setTag(key, stringifiedValue);
+    SentryCapacitor.setTag({ key, value: stringifiedValue });
   },
 
   /**
@@ -196,7 +196,7 @@ export const NATIVE = {
    * @param extra any
    */
   setExtra(key: string, extra: unknown): void {
-    if (!this.enableNative || this.platform === 'ios') {
+    if (!this.enableNative) {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -204,11 +204,11 @@ export const NATIVE = {
     }
 
     // we stringify the extra as native only takes in strings.
-    const stringifiedExtra =
+    const stringifiedValue =
       typeof extra === 'string' ? extra : JSON.stringify(extra);
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    SentryCapacitor.setExtra(key, stringifiedExtra);
+    SentryCapacitor.setExtra({ key, value: stringifiedValue });
   },
 
   /**
