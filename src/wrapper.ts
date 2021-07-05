@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { Capacitor } from '@capacitor/core';
 import { Breadcrumb, Event, Response, Severity, User } from '@sentry/types';
-import { logger, SentryError } from '@sentry/utils';
+import { dropUndefinedKeys, logger, SentryError } from '@sentry/utils';
 
 import { CapacitorOptions } from './options';
 import { SentryCapacitor } from './plugin';
@@ -158,13 +158,15 @@ export const NATIVE = {
     let otherUserKeys = null;
     if (user) {
       const { id, ip_address, email, username, ...otherKeys } = user;
-      defaultUserKeys = this._serializeObject({
-        email,
-        id,
-        ip_address,
-        username,
-      });
-      otherUserKeys = this._serializeObject(otherKeys);
+      defaultUserKeys = dropUndefinedKeys(
+        this._serializeObject({
+          email,
+          id,
+          ip_address,
+          username,
+        }),
+      );
+      otherUserKeys = dropUndefinedKeys(this._serializeObject(otherKeys));
     }
 
     SentryCapacitor.setUser({ defaultUserKeys, otherUserKeys });
