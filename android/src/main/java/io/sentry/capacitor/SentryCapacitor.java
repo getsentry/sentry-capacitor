@@ -60,101 +60,101 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void initNativeSdk(final PluginCall call) {
-        JSObject capOptions = call.getObject("options");
+      JSObject capOptions = call.getObject("options");
 
-        SentryAndroid.init(
-            this.getContext(),
-            options -> {
-                if (capOptions.getData().has("debug") && capOptions.getBoolean("debug")) {
-                    options.setDebug(true);
-                    logger.setLevel(Level.INFO);
-                }
+      SentryAndroid.init(
+          this.getContext(),
+          options -> {
+              if (capOptions.has("debug") && capOptions.getBool("debug")) {
+                  options.setDebug(true);
+                  logger.setLevel(Level.INFO);
+              }
 
-                String dsn = capOptions.getString("dsn") != null ? capOptions.getString("dsn") : "";
-                logger.info(String.format("Starting with DSN: '%s'", dsn));
-                options.setDsn(dsn);
+              String dsn = capOptions.getString("dsn") != null ? capOptions.getString("dsn") : "";
+              logger.info(String.format("Starting with DSN: '%s'", dsn));
+              options.setDsn(dsn);
 
-                if (capOptions.getData().has("environment") && capOptions.getString("environment") != null) {
-                    options.setEnvironment(capOptions.getString("environment"));
-                }
+              if (capOptions.has("environment") && capOptions.getString("environment") != null) {
+                  options.setEnvironment(capOptions.getString("environment"));
+              }
 
-                if (capOptions.getData().has("enableAutoSessionTracking")) {
-                    options.setEnableSessionTracking(capOptions.getBoolean("enableAutoSessionTracking"));
-                }
+              if (capOptions.has("enableAutoSessionTracking")) {
+                  options.setEnableAutoSessionTracking(capOptions.getBool("enableAutoSessionTracking"));
+              }
 
-                if (capOptions.getData().has("sessionTrackingIntervalMillis")) {
-                    options.setSessionTrackingIntervalMillis(capOptions.getInt("sessionTrackingIntervalMillis"));
-                }
+              if (capOptions.has("sessionTrackingIntervalMillis")) {
+                  options.setSessionTrackingIntervalMillis(capOptions.getInteger("sessionTrackingIntervalMillis"));
+              }
 
-                if (capOptions.getData().has("enableNdkScopeSync")) {
-                    options.setEnableScopeSync(capOptions.getBoolean("enableNdkScopeSync"));
-                }
+              if (capOptions.has("enableNdkScopeSync")) {
+                  options.setEnableScopeSync(capOptions.getBool("enableNdkScopeSync"));
+              }
 
-                if (capOptions.getData().has("attachStacktrace")) {
-                    options.setAttachStacktrace(capOptions.getBoolean("attachStacktrace"));
-                }
+              if (capOptions.has("attachStacktrace")) {
+                  options.setAttachStacktrace(capOptions.getBool("attachStacktrace"));
+              }
 
-                if (capOptions.getData().has("attachThreads")) {
-                    // JS use top level stacktraces and android attaches Threads which hides them so
-                    // by default we hide.
-                    options.setAttachThreads(capOptions.getBoolean("attachThreads"));
-                }
+              if (capOptions.has("attachThreads")) {
+                  // JS use top level stacktraces and android attaches Threads which hides them so
+                  // by default we hide.
+                  options.setAttachThreads(capOptions.getBool("attachThreads"));
+              }
 
-                options.setBeforeSend(
-                    (event, hint) -> {
-                        setEventOriginTag(event);
-                        addPackages(event, options.getSdkVersion());
+              options.setBeforeSend(
+                  (event, hint) -> {
+                      setEventOriginTag(event);
+                      addPackages(event, options.getSdkVersion());
 
-                        return event;
-                    }
-                );
+                      return event;
+                  }
+              );
 
-                if (capOptions.getData().has("enableNativeCrashHandling") && !capOptions.getBoolean("enableNativeCrashHandling")) {
-                    final List<Integration> integrations = options.getIntegrations();
-                    for (final Integration integration : integrations) {
-                        if (
-                            integration instanceof UncaughtExceptionHandlerIntegration ||
-                            integration instanceof AnrIntegration ||
-                            integration instanceof NdkIntegration
-                        ) {
-                            integrations.remove(integration);
-                        }
-                    }
-                }
+              if (capOptions.has("enableNativeCrashHandling") && !capOptions.getBool("enableNativeCrashHandling")) {
+                  final List<Integration> integrations = options.getIntegrations();
+                  for (final Integration integration : integrations) {
+                      if (
+                          integration instanceof UncaughtExceptionHandlerIntegration ||
+                          integration instanceof AnrIntegration ||
+                          integration instanceof NdkIntegration
+                      ) {
+                          integrations.remove(integration);
+                      }
+                  }
+              }
 
-                logger.info(String.format("Native Integrations '%s'", options.getIntegrations().toString()));
-            }
-        );
+              logger.info(String.format("Native Integrations '%s'", options.getIntegrations().toString()));
+          }
+      );
 
-        JSObject resp = new JSObject();
-        resp.put("value", true);
-        capOptions.resolve(resp);
-    }
+      JSObject resp = new JSObject();
+      resp.put("value", true);
+      call.resolve(resp);
+  }
 
     @PluginMethod
     public void setUser(PluginCall call) {
         Sentry.configureScope(scope -> {
-            if (!call.getData().has("user") && !call.getData().has("otherUserKeys")) {
+            if (!call.getData().has("defaultUserKeys") && !call.getData().has("otherUserKeys")) {
                 scope.setUser(null);
             } else {
                 User userInstance = new User();
 
-                if (call.getData().has("user")) {
-                    JSObject user = call.getObject("user");
-                    if (user.has("email")) {
-                        userInstance.setEmail(user.getString("email"));
+                if (call.getData().has("defaultUserKeys")) {
+                    JSObject defaultUserKeys = call.getObject("defaultUserKeys");
+                    if (defaultUserKeys.has("email")) {
+                        userInstance.setEmail(defaultUserKeys.getString("email"));
                     }
 
-                    if (user.has("id")) {
-                        userInstance.setId(user.getString("id"));
+                    if (defaultUserKeys.has("id")) {
+                        userInstance.setId(defaultUserKeys.getString("id"));
                     }
 
-                    if (user.has("username")) {
-                        userInstance.setUsername(user.getString("username"));
+                    if (defaultUserKeys.has("username")) {
+                        userInstance.setUsername(defaultUserKeys.getString("username"));
                     }
 
-                    if (user.has("ip_address")) {
-                        userInstance.setIpAddress(user.getString("ip_address"));
+                    if (defaultUserKeys.has("ip_address")) {
+                        userInstance.setIpAddress(defaultUserKeys.getString("ip_address"));
                     }
                 }
 
@@ -305,11 +305,11 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void setExtra(PluginCall call) {
-        if (call.getData().has("key") && call.getData().has("extra")) {
+        if (call.getData().has("key") && call.getData().has("value")) {
             Sentry.configureScope(scope -> {
                 String key = call.getString("key");
-                String extra = call.getString("extra");
-                scope.setExtra(key, extra);
+                String value = call.getString("value");
+                scope.setExtra(key, value);
             });
         }
         call.resolve();
