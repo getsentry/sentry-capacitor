@@ -173,7 +173,7 @@ public class SentryCapacitor: CAPPlugin {
         }
         
         SentrySDK.configureScope { scope in
-            scope.setContext(value: call.getObject("value", [:]), key: key)
+            scope.setContext(value: call.getObject("value") ?? [:], key: key)
         }
     }
 
