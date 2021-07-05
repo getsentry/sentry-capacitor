@@ -60,87 +60,89 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void initNativeSdk(final PluginCall call) {
-      JSObject capOptions = call.getObject("options");
+        JSObject capOptions = call.getObject("options");
 
-      SentryAndroid.init(
-          this.getContext(),
-          options -> {
-              if (capOptions.has("debug") && capOptions.getBool("debug")) {
-                  options.setDebug(true);
-                  logger.setLevel(Level.INFO);
-              }
+        SentryAndroid.init(
+            this.getContext(),
+            options -> {
+                if (capOptions.has("debug") && capOptions.getBool("debug")) {
+                    options.setDebug(true);
+                    logger.setLevel(Level.INFO);
+                }
 
-              String dsn = capOptions.getString("dsn") != null ? capOptions.getString("dsn") : "";
-              logger.info(String.format("Starting with DSN: '%s'", dsn));
-              options.setDsn(dsn);
+                String dsn = capOptions.getString("dsn") != null ? capOptions.getString("dsn") : "";
+                logger.info(String.format("Starting with DSN: '%s'", dsn));
+                options.setDsn(dsn);
 
-              if (capOptions.has("environment") && capOptions.getString("environment") != null) {
-                  options.setEnvironment(capOptions.getString("environment"));
-              }
+                if (capOptions.has("environment") && capOptions.getString("environment") != null) {
+                    options.setEnvironment(capOptions.getString("environment"));
+                }
 
-              if (capOptions.has("enableAutoSessionTracking")) {
-                  options.setEnableAutoSessionTracking(capOptions.getBool("enableAutoSessionTracking"));
-              }
+                if (capOptions.has("enableAutoSessionTracking")) {
+                    options.setEnableAutoSessionTracking(capOptions.getBool("enableAutoSessionTracking"));
+                }
 
-              if (capOptions.has("sessionTrackingIntervalMillis")) {
-                  options.setSessionTrackingIntervalMillis(capOptions.getInteger("sessionTrackingIntervalMillis"));
-              }
+                if (capOptions.has("sessionTrackingIntervalMillis")) {
+                    options.setSessionTrackingIntervalMillis(capOptions.getInteger("sessionTrackingIntervalMillis"));
+                }
 
-              if (capOptions.has("enableNdkScopeSync")) {
-                  options.setEnableScopeSync(capOptions.getBool("enableNdkScopeSync"));
-              }
+                if (capOptions.has("enableNdkScopeSync")) {
+                    options.setEnableScopeSync(capOptions.getBool("enableNdkScopeSync"));
+                }
 
-              if (capOptions.has("attachStacktrace")) {
-                  options.setAttachStacktrace(capOptions.getBool("attachStacktrace"));
-              }
+                if (capOptions.has("attachStacktrace")) {
+                    options.setAttachStacktrace(capOptions.getBool("attachStacktrace"));
+                }
 
-              if (capOptions.has("attachThreads")) {
-                  // JS use top level stacktraces and android attaches Threads which hides them so
-                  // by default we hide.
-                  options.setAttachThreads(capOptions.getBool("attachThreads"));
-              }
+                if (capOptions.has("attachThreads")) {
+                    // JS use top level stacktraces and android attaches Threads which hides them so
+                    // by default we hide.
+                    options.setAttachThreads(capOptions.getBool("attachThreads"));
+                }
 
-              options.setBeforeSend(
-                  (event, hint) -> {
-                      setEventOriginTag(event);
-                      addPackages(event, options.getSdkVersion());
+                options.setBeforeSend(
+                    (event, hint) -> {
+                        setEventOriginTag(event);
+                        addPackages(event, options.getSdkVersion());
 
-                      return event;
-                  }
-              );
+                        return event;
+                    }
+                );
 
-              if (capOptions.has("enableNativeCrashHandling") && !capOptions.getBool("enableNativeCrashHandling")) {
-                  final List<Integration> integrations = options.getIntegrations();
-                  for (final Integration integration : integrations) {
-                      if (
-                          integration instanceof UncaughtExceptionHandlerIntegration ||
-                          integration instanceof AnrIntegration ||
-                          integration instanceof NdkIntegration
-                      ) {
-                          integrations.remove(integration);
-                      }
-                  }
-              }
+                if (capOptions.has("enableNativeCrashHandling") && !capOptions.getBool("enableNativeCrashHandling")) {
+                    final List<Integration> integrations = options.getIntegrations();
+                    for (final Integration integration : integrations) {
+                        if (
+                            integration instanceof UncaughtExceptionHandlerIntegration ||
+                            integration instanceof AnrIntegration ||
+                            integration instanceof NdkIntegration
+                        ) {
+                            integrations.remove(integration);
+                        }
+                    }
+                }
 
-              logger.info(String.format("Native Integrations '%s'", options.getIntegrations().toString()));
-          }
-      );
+                logger.info(String.format("Native Integrations '%s'", options.getIntegrations().toString()));
+            }
+        );
 
-      JSObject resp = new JSObject();
-      resp.put("value", true);
-      call.resolve(resp);
-  }
+        JSObject resp = new JSObject();
+        resp.put("value", true);
+        call.resolve(resp);
+    }
 
     @PluginMethod
     public void setUser(PluginCall call) {
         Sentry.configureScope(scope -> {
-            if (!call.getData().has("defaultUserKeys") && !call.getData().has("otherUserKeys")) {
+            JSObject defaultUserKeys = call.getObject("defaultUserKeys");
+            JSObject otherUserKeys = call.getObject("otherUserKeys");
+
+            if (defaultUserKeys == null && otherUserKeys == null) {
                 scope.setUser(null);
             } else {
                 User userInstance = new User();
 
-                if (call.getData().has("defaultUserKeys")) {
-                    JSObject defaultUserKeys = call.getObject("defaultUserKeys");
+                if (defaultUserKeys != null) {
                     if (defaultUserKeys.has("email")) {
                         userInstance.setEmail(defaultUserKeys.getString("email"));
                     }
@@ -158,13 +160,15 @@ public class SentryCapacitor extends Plugin {
                     }
                 }
 
-                if (call.getData().has("otherUserKeys")) {
-                    Map<String, String> otherUserKeysMap = (Map<String, String>) call.getObject("otherUserKeys");
+                if (otherUserKeys != null) {
+                    Map<String, String> otherUserKeysMap = new HashMap<>();
+                    Iterator<String> it = otherUserKeys.keys();
 
-                    for (Map.Entry<String, String> entry: otherUserKeysMap.entrySet()) {
-                        String key = entry.getKey();
-                        String value = entry.getValue();
-                        otherUserKeysMap.put(key, value);
+                    while (it.hasNext()) {
+                      String key = it.next();
+                      String value = otherUserKeys.getString(key);
+
+                      otherUserKeysMap.put(key, value);
                     }
 
                     userInstance.setOthers(otherUserKeysMap);
@@ -297,7 +301,7 @@ public class SentryCapacitor extends Plugin {
     }
 
     @PluginMethod
-    public void clearBreadcrumbs() {
+    public void clearBreadcrumbs(PluginCall call) {
         Sentry.configureScope(scope -> {
             scope.clearBreadcrumbs();
         });
