@@ -250,6 +250,31 @@ export const NATIVE = {
   },
 
   /**
+   * Sets context on the native scope. Not implemented in Android yet.
+   * @param key string
+   * @param context key-value map
+   */
+  setContext(key: string, context: { [key: string]: unknown } | null): void {
+    if (!this.enableNative) {
+      return;
+    }
+    if (!this.isNativeClientAvailable()) {
+      throw this._NativeClientError;
+    }
+
+    if (this.platform === 'android') {
+      // setContext not available on the Android SDK yet.
+      this.setExtra(key, context);
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      SentryCapacitor.setContext({
+        key,
+        value: context !== null ? this._serializeObject(context) : null,
+      });
+    }
+  },
+
+  /**
    * Serializes all values of root-level keys into strings.
    * @param data key-value map.
    * @returns An object where all root-level values are strings.

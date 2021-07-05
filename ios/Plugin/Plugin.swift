@@ -226,6 +226,16 @@ public class SentryCapacitor: CAPPlugin {
         
         call.resolve()
     }
+    
+    @objc func setContext(_ call: CAPPluginCall) {
+        guard let key = call.getString("key") else {
+            return call.reject("Error deserializing context")
+        }
+        
+        SentrySDK.configureScope { scope in
+            scope.setContext(value: call.getObject("value", [:]), key: key)
+        }
+    }
 
     @objc func crash(_ call: CAPPluginCall) {
         SentrySDK.crash()

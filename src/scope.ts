@@ -57,6 +57,17 @@ export class CapacitorScope extends Scope {
   /**
    * @inheritDoc
    */
+  public setContext(
+    key: string,
+    context: { [key: string]: unknown } | null,
+  ): this {
+    NATIVE.setContext(key, context);
+    return super.setContext(key, context);
+  }
+
+  /**
+   * @inheritDoc
+   */
   public addBreadcrumb(breadcrumb: Breadcrumb, maxBreadcrumbs?: number): this {
     /* eslint-disable no-console */
     NATIVE.addBreadcrumb(breadcrumb);

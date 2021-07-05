@@ -34,4 +34,5 @@ export interface ISentryCapacitorPlugin {
   }): void;
   setTag(payload: { key: string; value: string }): void;
   setExtra(payload: { key: string; value: string }): void;
+  setContext(payload: { key: string; value: serializedObject | null }): void;
 }

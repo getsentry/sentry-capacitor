@@ -135,4 +135,10 @@ export class Tab1Page {
       scope.clearBreadcrumbs();
     });
   }
+
+  public clearTestContext(): void {
+    Sentry.configureScope(scope => {
+      scope.setContext('TEST-CONTEXT', null);
+    });
+  }
 }
