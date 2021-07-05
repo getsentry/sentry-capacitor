@@ -178,15 +178,15 @@ describe('Tests Native Wrapper', () => {
         unique: '123',
       });
 
-      expect(SentryCapacitor.setUser).toBeCalledWith(
-        {
+      expect(SentryCapacitor.setUser).toBeCalledWith({
+        defaultUserKeys: {
           email: 'hello@sentry.io',
           id: '3.1234587',
         },
-        {
+        otherUserKeys: {
           unique: '123',
         },
-      );
+      });
     });
 
     test('calls native setUser with empty object as second param if no unique keys', async () => {
@@ -194,12 +194,12 @@ describe('Tests Native Wrapper', () => {
         id: 'Hello',
       });
 
-      expect(SentryCapacitor.setUser).toBeCalledWith(
-        {
+      expect(SentryCapacitor.setUser).toBeCalledWith({
+        defaultUserKeys: {
           id: 'Hello',
         },
-        {},
-      );
+        otherUserKeys: {},
+      });
     });
   });
 
