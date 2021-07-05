@@ -35,11 +35,18 @@ jest.mock('../src/plugin', () => {
           version: '0.0.1',
         }),
       ),
-      getStringBytesLength: jest.fn(() => Promise.resolve({ value: 1 })),
+      getStringBytesLength: jest.fn(() =>
+        Promise.resolve({
+          value: 1,
+        }),
+      ),
+      initNativeSdk: jest.fn(options => Promise.resolve(options)),
+      setContext: jest.fn(() => Promise.resolve()),
+      setExtra: jest.fn(() => Promise.resolve()),
+      setTag: jest.fn(() => Promise.resolve()),
       setUser: jest.fn(() => {
         return;
       }),
-      initNativeSdk: jest.fn(options => Promise.resolve(options)),
     },
   };
 });
@@ -48,6 +55,7 @@ import { SentryCapacitor } from '../src/plugin';
 
 beforeEach(() => {
   NATIVE.enableNative = true;
+  NATIVE.platform = 'android';
 });
 
 afterEach(() => {
@@ -199,6 +207,83 @@ describe('Tests Native Wrapper', () => {
           id: 'Hello',
         },
         otherUserKeys: {},
+      });
+    });
+  });
+
+  describe('setTag', () => {
+    it('calls setTag', () => {
+      NATIVE.setTag('key', 'value');
+
+      expect(SentryCapacitor.setTag).toBeCalledWith({
+        key: 'key',
+        value: 'value',
+      });
+    });
+
+    it('serializes number', () => {
+      // @ts-ignore test number
+      NATIVE.setTag('key', 0);
+
+      expect(SentryCapacitor.setTag).toBeCalledWith({
+        key: 'key',
+        value: '0',
+      });
+    });
+
+    it('serializes object', () => {
+      // @ts-ignore test number
+      NATIVE.setTag('key', {});
+
+      expect(SentryCapacitor.setTag).toBeCalledWith({
+        key: 'key',
+        value: '{}',
+      });
+    });
+  });
+
+  describe('setExtra', () => {
+    it('calls setExtra', () => {
+      NATIVE.setExtra('key', { hello: 'world' });
+
+      expect(SentryCapacitor.setExtra).toBeCalledWith({
+        key: 'key',
+        value: '{"hello":"world"}',
+      });
+    });
+  });
+
+  describe('setContext', () => {
+    it('calls setContext', () => {
+      NATIVE.platform = 'ios';
+
+      NATIVE.setContext('key', { hello: 'world' });
+
+      expect(SentryCapacitor.setContext).toBeCalledWith({
+        key: 'key',
+        value: { hello: 'world' },
+      });
+    });
+
+    it('calls setContext with null', () => {
+      NATIVE.platform = 'ios';
+
+      NATIVE.setContext('key', null);
+
+      expect(SentryCapacitor.setContext).toBeCalledWith({
+        key: 'key',
+        value: null,
+      });
+    });
+
+    it('calls setExtra on android', () => {
+      NATIVE.platform = 'android';
+
+      NATIVE.setContext('key', { hello: 'world' });
+
+      expect(SentryCapacitor.setExtra).toBeCalledWith({
+        key: 'key',
+        value: '{"hello":"world"}',
       });
     });
   });
