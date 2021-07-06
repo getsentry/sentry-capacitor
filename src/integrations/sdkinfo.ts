@@ -1,4 +1,5 @@
 import { EventProcessor, Integration, Package } from '@sentry/types';
+import { logger } from '@sentry/utils';
 
 import { SDK_NAME, SDK_VERSION } from '../version';
 import { NATIVE } from '../wrapper';
@@ -28,7 +29,10 @@ export class SdkInfo implements Integration {
         try {
           this._nativeSdkInfo = await NATIVE.fetchNativeSdkInfo();
         } catch (_) {
-          // Do nothing if this fails, we would rather have the event be sent with a package missing.
+          // If this fails, go ahead as usual as we would rather have the event be sent with a package missing.
+          logger.warn(
+            '[SdkInfo] Native SDK Info retrieval failed...something could be wrong with your Sentry installation.',
+          );
         }
       }
 
