@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@sentry/capacitor": {
+      "signature": "58872588b4612ed22ce4359c54dbcdd0",
+      "file": true,
+      "replaced": "file:../.."
+    }
+  }
+}

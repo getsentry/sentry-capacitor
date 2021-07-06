@@ -14,6 +14,7 @@ import { NATIVE } from './wrapper';
 
 const DEFAULT_OPTIONS: CapacitorOptions = {
   enableNative: true,
+  enableAutoSessionTracking: true,
   enableNativeNagger: true,
 };
 
@@ -41,7 +42,8 @@ export function init<O>(
         if (frame.filename) {
           frame.filename = frame.filename
             .replace(/^http:\/\/localhost/, '')
-            .replace(/^ng:\/\//, '');
+            .replace(/^ng:\/\//, '')
+            .replace(/^capacitor:\/\/localhost/, '');
 
           if (
             frame.filename !== '[native code]' &&

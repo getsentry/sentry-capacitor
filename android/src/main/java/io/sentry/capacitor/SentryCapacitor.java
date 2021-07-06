@@ -59,7 +59,9 @@ public class SentryCapacitor extends Plugin {
     }
 
     @PluginMethod
-    public void startWithOptions(final PluginCall capOptions) {
+    public void initNativeSdk(final PluginCall call) {
+        JSObject capOptions = call.getObject("options");
+
         SentryAndroid.init(
             this.getContext(),
             options -> {
@@ -179,7 +181,7 @@ public class SentryCapacitor extends Plugin {
     }
 
     @PluginMethod
-    public void fetchRelease(PluginCall call) {
+    public void fetchNativeRelease(PluginCall call) {
         JSObject release = new JSObject();
         release.put("id", this.packageInfo.packageName);
         release.put("version", this.packageInfo.versionName);

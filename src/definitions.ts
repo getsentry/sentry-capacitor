@@ -1,4 +1,4 @@
-import { Breadcrumb, Response } from '@sentry/types';
+import { Breadcrumb, Package, Response } from '@sentry/types';
 
 import { CapacitorOptions } from './options';
 
@@ -9,16 +9,25 @@ interface serializedObject {
 
 export interface ISentryCapacitorPlugin {
   addBreadcrumb(breadcrumb: Breadcrumb): void;
-  captureEnvelope(payload: { envelope: string }): PromiseLike<Response>;
+  captureEnvelope(payload: {
+    envelope:
+      | string
+      | {
+          header: Record<string, unknown>;
+          item: Record<string, unknown>;
+          payload: Record<string, unknown>;
+        };
+  }): PromiseLike<Response>;
   clearBreadcrumbs(): void;
   crash(): void;
-  fetchRelease(): Promise<{
+  fetchNativeRelease(): Promise<{
     build: string;
     id: string;
     version: string;
   }>;
+  fetchNativeSdkInfo(): Promise<Package>;
   getStringBytesLength(payload: { string: string }): Promise<{ value: number }>;
-  startWithOptions(options: CapacitorOptions): Promise<boolean>;
+  initNativeSdk(payload: { options: CapacitorOptions }): Promise<boolean>;
   setUser(
     user: serializedObject | null,
     otherUserKeys: serializedObject | null,
