@@ -72,32 +72,6 @@ public class SentryCapacitor: CAPPlugin {
         }
     }
 
-    private func setEventOriginTag(event: Event) {
-        guard let sdk = event.sdk else {
-            return
-        }
-        if isValidSdk(sdk: sdk) {
-            switch sdk["name"] as? String {
-            case "sentry.cocoa":
-                setEventEnvironmentTag(event: event, origin: "ios", environment: "native")
-            default:
-                return
-            }
-        }
-    }
-
-    private func setEventEnvironmentTag(event: Event, origin: String, environment: String) {
-        event.tags?["event.origin"] = origin
-        event.tags?["event.environment"] = environment
-    }
-
-    private func isValidSdk(sdk: [String: Any]) -> Bool {
-        guard let name = sdk["name"] as? String else {
-            return false
-        }
-        return !name.isEmpty
-    }
-
     @objc func captureEnvelope(_ call: CAPPluginCall) {
         guard let data = call.getString("envelope")?.data(using: .utf8) else {
             print("Cannot parse the envelope data")
@@ -137,7 +111,150 @@ public class SentryCapacitor: CAPPlugin {
         ])
     }
 
+    @objc func setUser(_ call: CAPPluginCall) {
+        let defaultUserKeys = call.getObject("defaultUserKeys")
+        let otherUserKeys = call.getObject("otherUserKeys")
+
+
+        SentrySDK.configureScope { scope in
+            if (defaultUserKeys == nil && otherUserKeys == nil) {
+                scope.setUser(nil)
+            } else {
+                let user = User()
+
+
+                if let userId = defaultUserKeys?["id"] as? String {
+                    user.userId = userId
+                }
+
+                user.email = defaultUserKeys?["email"] as! String?
+                user.username = defaultUserKeys?["username"] as! String?
+                user.ipAddress = defaultUserKeys?["ip_address"] as! String?
+
+                user.data = otherUserKeys
+
+                scope.setUser(user)
+            }
+        }
+
+
+        call.resolve()
+    }
+
+    @objc func setTag(_ call: CAPPluginCall) {
+        guard let key = call.getString("key"), let value = call.getString("value") else {
+            return call.reject("Error deserializing tag")
+        }
+
+        SentrySDK.configureScope { scope in
+            scope.setTag(value: value, key: key)
+        }
+
+        call.resolve()
+    }
+
+    @objc func setExtra(_ call: CAPPluginCall) {
+        guard let key = call.getString("key") else {
+            return call.reject("Error deserializing extra")
+        }
+
+        let value = call.getString("value")
+
+        SentrySDK.configureScope { scope in
+            scope.setExtra(value: value, key: key)
+        }
+
+        call.resolve()
+    }
+    
+    @objc func setContext(_ call: CAPPluginCall) {
+        guard let key = call.getString("key") else {
+            return call.reject("Error deserializing context")
+        }
+        
+        SentrySDK.configureScope { scope in
+            scope.setContext(value: call.getObject("value") ?? [:], key: key)
+        }
+    }
+
+    @objc func addBreadcrumb(_ call: CAPPluginCall) {
+        SentrySDK.configureScope { scope in
+            let breadcrumb = Breadcrumb()
+        
+            if let timestamp = call.getDouble("timestamp") {
+                breadcrumb.timestamp = Date(timeIntervalSince1970: timestamp)
+            }
+            
+            if let level = call.getString("level") {
+                breadcrumb.level = self.processLevel(level)
+            }
+            
+            if let category = call.getString("category") {
+                breadcrumb.category = category
+            }
+           
+            breadcrumb.type = call.getString("type")
+            breadcrumb.message = call.getString("message")
+            breadcrumb.data = call.getObject("data")
+            
+            scope.add(breadcrumb)
+        }
+
+        call.resolve()
+    }
+    
+    @objc func clearBreadcrumbs(_ call: CAPPluginCall) {
+        SentrySDK.configureScope { scope in
+            scope.clearBreadcrumbs()
+        }
+        
+        call.resolve()
+    }
+
     @objc func crash(_ call: CAPPluginCall) {
         SentrySDK.crash()
+    }
+    
+    private func processLevel(_ levelString: String) -> SentryLevel {
+        switch levelString {
+        case "fatal":
+            return SentryLevel.fatal
+        case "warning":
+            return SentryLevel.warning
+        case "debug":
+            return SentryLevel.debug
+        case "error":
+            return SentryLevel.error
+        case "info":
+            return SentryLevel.info
+        default:
+            return SentryLevel.info
+        }
+    }
+    
+    private func setEventOriginTag(event: Event) {
+        guard let sdk = event.sdk else {
+            return
+        }
+        if isValidSdk(sdk: sdk) {
+            switch sdk["name"] as? String {
+            case "sentry.cocoa":
+                setEventEnvironmentTag(event: event, origin: "ios", environment: "native")
+            default:
+                return
+            }
+        }
+    }
+
+    private func setEventEnvironmentTag(event: Event, origin: String, environment: String) {
+        event.tags?["event.origin"] = origin
+        event.tags?["event.environment"] = environment
+    }
+
+    private func isValidSdk(sdk: [String: Any]) -> Bool {
+        guard let name = sdk["name"] as? String else {
+            return false
+        }
+        return !name.isEmpty
     }
 }

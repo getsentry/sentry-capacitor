@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { Capacitor } from '@capacitor/core';
 import { Breadcrumb, Event, Response, Severity, User } from '@sentry/types';
-import { logger, SentryError } from '@sentry/utils';
+import { dropUndefinedKeys, logger, SentryError } from '@sentry/utils';
 
 import { CapacitorOptions } from './options';
 import { SentryCapacitor } from './plugin';
@@ -146,7 +146,7 @@ export const NATIVE = {
    * @param value string
    */
   setUser(user: User | null): void {
-    if (!this.enableNative || this.platform === 'ios') {
+    if (!this.enableNative) {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -158,16 +158,18 @@ export const NATIVE = {
     let otherUserKeys = null;
     if (user) {
       const { id, ip_address, email, username, ...otherKeys } = user;
-      defaultUserKeys = this._serializeObject({
-        email,
-        id,
-        ip_address,
-        username,
-      });
-      otherUserKeys = this._serializeObject(otherKeys);
+      defaultUserKeys = dropUndefinedKeys(
+        this._serializeObject({
+          email,
+          id,
+          ip_address,
+          username,
+        }),
+      );
+      otherUserKeys = dropUndefinedKeys(this._serializeObject(otherKeys));
     }
 
-    SentryCapacitor.setUser(defaultUserKeys, otherUserKeys);
+    SentryCapacitor.setUser({ defaultUserKeys, otherUserKeys });
   },
 
   /**
@@ -176,7 +178,7 @@ export const NATIVE = {
    * @param value string
    */
   setTag(key: string, value: string): void {
-    if (!this.enableNative || this.platform === 'ios') {
+    if (!this.enableNative) {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -186,7 +188,7 @@ export const NATIVE = {
     const stringifiedValue =
       typeof value === 'string' ? value : JSON.stringify(value);
 
-    SentryCapacitor.setTag(key, stringifiedValue);
+    SentryCapacitor.setTag({ key, value: stringifiedValue });
   },
 
   /**
@@ -196,7 +198,7 @@ export const NATIVE = {
    * @param extra any
    */
   setExtra(key: string, extra: unknown): void {
-    if (!this.enableNative || this.platform === 'ios') {
+    if (!this.enableNative) {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -204,11 +206,11 @@ export const NATIVE = {
     }
 
     // we stringify the extra as native only takes in strings.
-    const stringifiedExtra =
+    const stringifiedValue =
       typeof extra === 'string' ? extra : JSON.stringify(extra);
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    SentryCapacitor.setExtra(key, stringifiedExtra);
+    SentryCapacitor.setExtra({ key, value: stringifiedValue });
   },
 
   /**
@@ -216,7 +218,7 @@ export const NATIVE = {
    * @param breadcrumb Breadcrumb
    */
   addBreadcrumb(breadcrumb: Breadcrumb): void {
-    if (!this.enableNative || this.platform === 'ios') {
+    if (!this.enableNative) {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -239,7 +241,7 @@ export const NATIVE = {
    * Clears breadcrumbs on the native scope.
    */
   clearBreadcrumbs(): void {
-    if (!this.enableNative || this.platform === 'ios') {
+    if (!this.enableNative) {
       return;
     }
     if (!this.isNativeClientAvailable()) {
@@ -247,6 +249,31 @@ export const NATIVE = {
     }
 
     SentryCapacitor.clearBreadcrumbs();
+  },
+
+  /**
+   * Sets context on the native scope. Not implemented in Android yet.
+   * @param key string
+   * @param context key-value map
+   */
+  setContext(key: string, context: { [key: string]: unknown } | null): void {
+    if (!this.enableNative) {
+      return;
+    }
+    if (!this.isNativeClientAvailable()) {
+      throw this._NativeClientError;
+    }
+
+    if (this.platform === 'android') {
+      // setContext not available on the Android SDK yet.
+      this.setExtra(key, context);
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      SentryCapacitor.setContext({
+        key,
+        value: context !== null ? this._serializeObject(context) : null,
+      });
+    }
   },
 
   /**

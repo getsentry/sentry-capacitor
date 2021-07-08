@@ -65,7 +65,7 @@ public class SentryCapacitor extends Plugin {
         SentryAndroid.init(
             this.getContext(),
             options -> {
-                if (capOptions.getData().has("debug") && capOptions.getBoolean("debug")) {
+                if (capOptions.has("debug") && capOptions.getBool("debug")) {
                     options.setDebug(true);
                     logger.setLevel(Level.INFO);
                 }
@@ -74,30 +74,30 @@ public class SentryCapacitor extends Plugin {
                 logger.info(String.format("Starting with DSN: '%s'", dsn));
                 options.setDsn(dsn);
 
-                if (capOptions.getData().has("environment") && capOptions.getString("environment") != null) {
+                if (capOptions.has("environment") && capOptions.getString("environment") != null) {
                     options.setEnvironment(capOptions.getString("environment"));
                 }
 
-                if (capOptions.getData().has("enableAutoSessionTracking")) {
-                    options.setEnableSessionTracking(capOptions.getBoolean("enableAutoSessionTracking"));
+                if (capOptions.has("enableAutoSessionTracking")) {
+                    options.setEnableAutoSessionTracking(capOptions.getBool("enableAutoSessionTracking"));
                 }
 
-                if (capOptions.getData().has("sessionTrackingIntervalMillis")) {
-                    options.setSessionTrackingIntervalMillis(capOptions.getInt("sessionTrackingIntervalMillis"));
+                if (capOptions.has("sessionTrackingIntervalMillis")) {
+                    options.setSessionTrackingIntervalMillis(capOptions.getInteger("sessionTrackingIntervalMillis"));
                 }
 
-                if (capOptions.getData().has("enableNdkScopeSync")) {
-                    options.setEnableScopeSync(capOptions.getBoolean("enableNdkScopeSync"));
+                if (capOptions.has("enableNdkScopeSync")) {
+                    options.setEnableScopeSync(capOptions.getBool("enableNdkScopeSync"));
                 }
 
-                if (capOptions.getData().has("attachStacktrace")) {
-                    options.setAttachStacktrace(capOptions.getBoolean("attachStacktrace"));
+                if (capOptions.has("attachStacktrace")) {
+                    options.setAttachStacktrace(capOptions.getBool("attachStacktrace"));
                 }
 
-                if (capOptions.getData().has("attachThreads")) {
+                if (capOptions.has("attachThreads")) {
                     // JS use top level stacktraces and android attaches Threads which hides them so
                     // by default we hide.
-                    options.setAttachThreads(capOptions.getBoolean("attachThreads"));
+                    options.setAttachThreads(capOptions.getBool("attachThreads"));
                 }
 
                 options.setBeforeSend(
@@ -109,7 +109,7 @@ public class SentryCapacitor extends Plugin {
                     }
                 );
 
-                if (capOptions.getData().has("enableNativeCrashHandling") && !capOptions.getBoolean("enableNativeCrashHandling")) {
+                if (capOptions.has("enableNativeCrashHandling") && !capOptions.getBool("enableNativeCrashHandling")) {
                     final List<Integration> integrations = options.getIntegrations();
                     for (final Integration integration : integrations) {
                         if (
@@ -128,43 +128,47 @@ public class SentryCapacitor extends Plugin {
 
         JSObject resp = new JSObject();
         resp.put("value", true);
-        capOptions.resolve(resp);
+        call.resolve(resp);
     }
 
     @PluginMethod
     public void setUser(PluginCall call) {
         Sentry.configureScope(scope -> {
-            if (!call.getData().has("user") && !call.getData().has("otherUserKeys")) {
+            JSObject defaultUserKeys = call.getObject("defaultUserKeys");
+            JSObject otherUserKeys = call.getObject("otherUserKeys");
+
+            if (defaultUserKeys == null && otherUserKeys == null) {
                 scope.setUser(null);
             } else {
                 User userInstance = new User();
 
-                if (call.getData().has("user")) {
-                    JSObject user = call.getObject("user");
-                    if (user.has("email")) {
-                        userInstance.setEmail(user.getString("email"));
+                if (defaultUserKeys != null) {
+                    if (defaultUserKeys.has("email")) {
+                        userInstance.setEmail(defaultUserKeys.getString("email"));
                     }
 
-                    if (user.has("id")) {
-                        userInstance.setId(user.getString("id"));
+                    if (defaultUserKeys.has("id")) {
+                        userInstance.setId(defaultUserKeys.getString("id"));
                     }
 
-                    if (user.has("username")) {
-                        userInstance.setUsername(user.getString("username"));
+                    if (defaultUserKeys.has("username")) {
+                        userInstance.setUsername(defaultUserKeys.getString("username"));
                     }
 
-                    if (user.has("ip_address")) {
-                        userInstance.setIpAddress(user.getString("ip_address"));
+                    if (defaultUserKeys.has("ip_address")) {
+                        userInstance.setIpAddress(defaultUserKeys.getString("ip_address"));
                     }
                 }
 
-                if (call.getData().has("otherUserKeys")) {
-                    Map<String, String> otherUserKeysMap = (Map<String, String>) call.getObject("otherUserKeys");
+                if (otherUserKeys != null) {
+                    Map<String, String> otherUserKeysMap = new HashMap<>();
+                    Iterator<String> it = otherUserKeys.keys();
 
-                    for (Map.Entry<String, String> entry: otherUserKeysMap.entrySet()) {
-                        String key = entry.getKey();
-                        String value = entry.getValue();
-                        otherUserKeysMap.put(key, value);
+                    while (it.hasNext()) {
+                      String key = it.next();
+                      String value = otherUserKeys.getString(key);
+
+                      otherUserKeysMap.put(key, value);
                     }
 
                     userInstance.setOthers(otherUserKeysMap);
@@ -297,7 +301,7 @@ public class SentryCapacitor extends Plugin {
     }
 
     @PluginMethod
-    public void clearBreadcrumbs() {
+    public void clearBreadcrumbs(PluginCall call) {
         Sentry.configureScope(scope -> {
             scope.clearBreadcrumbs();
         });
@@ -305,11 +309,11 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void setExtra(PluginCall call) {
-        if (call.getData().has("key") && call.getData().has("extra")) {
+        if (call.getData().has("key") && call.getData().has("value")) {
             Sentry.configureScope(scope -> {
                 String key = call.getString("key");
-                String extra = call.getString("extra");
-                scope.setExtra(key, extra);
+                String value = call.getString("value");
+                scope.setExtra(key, value);
             });
         }
         call.resolve();
