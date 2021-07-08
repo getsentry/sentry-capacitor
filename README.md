@@ -14,9 +14,6 @@ _Bad software is everywhere, and we're tired of it. Sentry is on a mission to he
 
 _Work in progress_ Sentry SDK for [Capacitor](https://capacitorjs.com/).
 
-**Release Stage**
-_Android alpha_
-
 ## Installation
 
 ```bash
