@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.3.0
+
+- feat: Add complete iOS support with scope sync #57, #61
+
 ## 0.2.1
 
 - fix: Update Podfile to target iOS 12 to match Capacitor 3 #56
