@@ -11,9 +11,6 @@ _Bad software is everywhere, and we're tired of it. Sentry is on a mission to he
 [![build](https://github.com/getsentry/sentry-capacitor/workflows/Build%20&%20Test/badge.svg?branch=main)](https://github.com/getsentry/sentry-capacitor/actions?query=branch%3Amain)
 [![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)
 
-
-_Work in progress_ Sentry SDK for [Capacitor](https://capacitorjs.com/).
-
 ## Installation
 
 ```bash
