@@ -12,7 +12,7 @@ import { CapacitorScope } from './scope';
 import { NativeTransport } from './transports/native';
 import { NATIVE } from './wrapper';
 
-const DEFAULT_OPTIONS_WEB: CapacitorOptions = {
+export const DEFAULT_OPTIONS_WEB: CapacitorOptions = {
   enableNativeNagger: false,
   enableNative: false,
 
@@ -21,7 +21,7 @@ const DEFAULT_OPTIONS_WEB: CapacitorOptions = {
   autoSessionTracking: true,
 };
 
-const DEFAULT_OPTIONS_MOBILE: CapacitorOptions = {
+export const DEFAULT_OPTIONS_MOBILE: CapacitorOptions = {
   enableNative: true,
   enableNativeNagger: true,
 
