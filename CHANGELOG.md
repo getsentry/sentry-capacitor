@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- fix: Export startTransaction
+- fix: Export startTransaction #71
 
 ## 0.3.0
 
