@@ -2,8 +2,8 @@
 
 ## Unreleased
 
-- build(js): Bump sentry-javascript dependencies to `6.11.0`
-- fix: Fix version mismatch issues with sentry-javascript dependencies with optional peerDependencies.
+- build(js): Bump sentry-javascript dependencies to `6.11.0`. #72
+- fix: Fix version mismatch issues with sentry-javascript dependencies with optional peerDependencies. #72
 
 ## 0.3.0
 
