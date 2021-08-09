@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@sentry/capacitor": {
-      "signature": "b1a6fdd0166b2fe57dbc432bb139dbdd",
+      "signature": "4c339f5880ca80f1a2c34dd4a4f78407",
       "file": true,
       "replaced": "file:../.."
     }
