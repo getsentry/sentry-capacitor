@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- fix: Fix the release and dist not being sent down to Android. #73
+- fix: Fix release health sessions not being logged on iOS. #73
+
 ## 0.3.0
 
 - feat: Add complete iOS support with scope sync #57, #61
