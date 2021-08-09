@@ -12,10 +12,22 @@ import { CapacitorScope } from './scope';
 import { NativeTransport } from './transports/native';
 import { NATIVE } from './wrapper';
 
-const DEFAULT_OPTIONS: CapacitorOptions = {
+const DEFAULT_OPTIONS_WEB: CapacitorOptions = {
+  enableNativeNagger: false,
+  enableNative: false,
+
+  // Use the browser's session tracking instrumentation on web.
+  enableAutoSessionTracking: false,
+  autoSessionTracking: true,
+};
+
+const DEFAULT_OPTIONS_MOBILE: CapacitorOptions = {
   enableNative: true,
-  enableAutoSessionTracking: true,
   enableNativeNagger: true,
+
+  // Use native mobile SDK's session tracking instead of browser.
+  enableAutoSessionTracking: true,
+  autoSessionTracking: false,
 };
 
 /**
@@ -28,7 +40,9 @@ export function init<O>(
   originalInit: (options: O) => void = browserInit,
 ): void {
   const finalOptions = {
-    ...DEFAULT_OPTIONS,
+    ...(NATIVE.platform === 'web'
+      ? DEFAULT_OPTIONS_WEB
+      : DEFAULT_OPTIONS_MOBILE),
     ...options,
   };
 
@@ -67,10 +81,6 @@ export function init<O>(
     new SdkInfo(),
     new EventOrigin(),
   ];
-
-  if (typeof finalOptions.enableNative === 'undefined') {
-    finalOptions.enableNative = true;
-  }
 
   if (finalOptions.enableNative && !options.transport) {
     finalOptions.transport = NativeTransport;

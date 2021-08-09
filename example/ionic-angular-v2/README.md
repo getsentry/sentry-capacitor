@@ -16,6 +16,16 @@
 
 `npx cap sync`
 
-## Open emulator
+## Running
+
+### Android
 
 `npx cap open android`
+
+### iOS
+
+`npx cap open ios`
+
+### Web
+
+`http-server ./www`
