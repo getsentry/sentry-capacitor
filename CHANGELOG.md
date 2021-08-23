@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- build(js): Bump sentry-javascript dependencies to `6.11.0`. #72
+- fix: Fix version mismatch issues with sentry-javascript dependencies with optional peerDependencies. #72
 - fix: Export startTransaction #71
 
 ## 0.3.0
