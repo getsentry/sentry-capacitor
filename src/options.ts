@@ -4,7 +4,8 @@ import { BrowserOptions } from '@sentry/browser';
  * Configuration options for the Sentry Capacitor SDK.
  */
 
-export interface CapacitorOptions extends BrowserOptions {
+export interface CapacitorOptions
+  extends Omit<BrowserOptions, 'autoSessionTracking'> {
   /**
    * Enables crash reporting for native crashes.
    * Defaults to `true`.

@@ -1,4 +1,5 @@
 import {
+  BrowserOptions,
   defaultIntegrations,
   init as browserInit,
   StackFrame,
@@ -12,24 +13,6 @@ import { CapacitorScope } from './scope';
 import { NativeTransport } from './transports/native';
 import { NATIVE } from './wrapper';
 
-export const DEFAULT_OPTIONS_WEB: CapacitorOptions = {
-  enableNativeNagger: false,
-  enableNative: false,
-
-  // Use the browser's session tracking instrumentation on web.
-  enableAutoSessionTracking: false,
-  autoSessionTracking: true,
-};
-
-export const DEFAULT_OPTIONS_MOBILE: CapacitorOptions = {
-  enableNative: true,
-  enableNativeNagger: true,
-
-  // Use native mobile SDK's session tracking instead of browser.
-  enableAutoSessionTracking: true,
-  autoSessionTracking: false,
-};
-
 /**
  * Initializes the Capacitor SDK alongside a sibling Sentry SDK
  * @param options Options for the SDK
@@ -40,11 +23,17 @@ export function init<O>(
   originalInit: (options: O) => void = browserInit,
 ): void {
   const finalOptions = {
-    ...(NATIVE.platform === 'web'
-      ? DEFAULT_OPTIONS_WEB
-      : DEFAULT_OPTIONS_MOBILE),
+    enableAutoSessionTracking: true,
     ...options,
   };
+
+  if (NATIVE.platform === 'web') {
+    finalOptions.enableNative = false;
+    finalOptions.enableNativeNagger = false;
+  } else {
+    finalOptions.enableNative = true;
+    finalOptions.enableNativeNagger = true;
+  }
 
   const capacitorHub = new Hub(undefined, new CapacitorScope());
   makeMain(capacitorHub);
@@ -86,9 +75,20 @@ export function init<O>(
     finalOptions.transport = NativeTransport;
   }
 
-  originalInit(finalOptions);
+  const browserOptions = {
+    ...finalOptions,
+    autoSessionTracking:
+      NATIVE.platform === 'web' && finalOptions.enableAutoSessionTracking,
+  } as O;
 
-  void NATIVE.initNativeSdk(finalOptions);
+  const mobileOptions = {
+    ...finalOptions,
+    enableAutoSessionTracking:
+      NATIVE.platform !== 'web' && finalOptions.enableAutoSessionTracking,
+  } as CapacitorOptions;
+
+  originalInit(browserOptions);
+  void NATIVE.initNativeSdk(mobileOptions);
 }
 
 /**
