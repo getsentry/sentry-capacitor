@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- fix: Export startTransaction #71
+
 ## 0.3.0
 
 - feat: Add complete iOS support with scope sync #57, #61
