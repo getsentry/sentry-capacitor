@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.4.0
+
 - feat: Officially support web #70
 - fix: Fix the release and dist not being sent down to Android. #73
 - fix: Fix release health sessions not being logged on iOS. #73
