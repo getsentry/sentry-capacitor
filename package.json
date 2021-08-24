@@ -33,16 +33,30 @@
   "author": "Sentry Team and Contributors",
   "license": "MIT",
   "peerDependencies": {
-    "@capacitor/core": ">=3.0.0"
+    "@capacitor/core": ">=3.0.0",
+    "@sentry/angular": "6.11.0",
+    "@sentry/react": "6.11.0",
+    "@sentry/vue": "6.11.0"
+  },
+  "peerDependenciesMeta": {
+    "@sentry/angular": {
+      "optional": true
+    },
+    "@sentry/react": {
+      "optional": true
+    },
+    "@sentry/vue": {
+      "optional": true
+    }
   },
   "dependencies": {
-    "@sentry/browser": "^6.5.0",
-    "@sentry/core": "^6.5.0",
-    "@sentry/hub": "^6.5.0",
-    "@sentry/integrations": "^6.5.0",
-    "@sentry/tracing": "^6.5.0",
-    "@sentry/types": "^6.5.0",
-    "@sentry/utils": "^6.5.0",
+    "@sentry/browser": "6.11.0",
+    "@sentry/core": "6.11.0",
+    "@sentry/hub": "6.11.0",
+    "@sentry/integrations": "6.11.0",
+    "@sentry/tracing": "6.11.0",
+    "@sentry/types": "6.11.0",
+    "@sentry/utils": "6.11.0",
     "@sentry/wizard": "^1.1.4",
     "promise": "^8.1.0"
   },
@@ -52,9 +66,9 @@
     "@capacitor/ios": "^3.0.1",
     "@ionic/prettier-config": "^1.0.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
-    "@sentry-internal/eslint-config-sdk": "^6.5.0",
-    "@sentry-internal/eslint-plugin-sdk": "^6.5.0",
-    "@sentry/typescript": "^5.20.1",
+    "@sentry-internal/eslint-config-sdk": "6.11.0",
+    "@sentry-internal/eslint-plugin-sdk": "6.11.0",
+    "@sentry/typescript": "5.20.1",
     "@types/jest": "^26.0.15",
     "eslint": "^7.13.0",
     "jest": "^26.6.3",
