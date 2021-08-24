@@ -18,7 +18,7 @@ beforeEach(() => {
 });
 
 describe('SDK Init', () => {
-  // [string, platform, options, autoSessionTracking, enableNative, enableAutoSessionTracking]
+  // [name, platform, options, autoSessionTracking, enableNative, enableAutoSessionTracking]
   const table: Array<[
     string,
     string,
