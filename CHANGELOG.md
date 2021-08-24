@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- feat: Officially support web #70
 - fix: Fix the release and dist not being sent down to Android. #73
 - fix: Fix release health sessions not being logged on iOS. #73
 - build(js): Bump sentry-javascript dependencies to `6.11.0`. #72

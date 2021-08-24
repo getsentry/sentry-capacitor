@@ -1,12 +1,13 @@
 # Contributing
 
-# Requirements
+## Requirements
 
 You need:
 
 - nodejs 8 or higher
 - yarn 1 or higher
 - yalc
+- http-server
 
 ## Building
 
@@ -34,9 +35,9 @@ We use `yalc` to serve the local package builds to our example apps. You can run
 See the readmes in the specific example app folders for individual instructions:
 
 - [ionic-angular-v2](example/ionic-angular-v2/README.md)
-- [ionic-angular-v3](example/ionic-angular-v3/README.md)
+- [ionic-angular-v3](example/ionic-angular/README.md)
 
-## testing
+## Testing
 
 ```sh
 yarn test

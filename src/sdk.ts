@@ -12,12 +12,6 @@ import { CapacitorScope } from './scope';
 import { NativeTransport } from './transports/native';
 import { NATIVE } from './wrapper';
 
-const DEFAULT_OPTIONS: CapacitorOptions = {
-  enableNative: true,
-  enableAutoSessionTracking: true,
-  enableNativeNagger: true,
-};
-
 /**
  * Initializes the Capacitor SDK alongside a sibling Sentry SDK
  * @param options Options for the SDK
@@ -28,9 +22,17 @@ export function init<O>(
   originalInit: (options: O) => void = browserInit,
 ): void {
   const finalOptions = {
-    ...DEFAULT_OPTIONS,
+    enableAutoSessionTracking: true,
     ...options,
   };
+
+  if (NATIVE.platform === 'web') {
+    finalOptions.enableNative = false;
+    finalOptions.enableNativeNagger = false;
+  } else {
+    finalOptions.enableNative = true;
+    finalOptions.enableNativeNagger = true;
+  }
 
   const capacitorHub = new Hub(undefined, new CapacitorScope());
   makeMain(capacitorHub);
@@ -68,17 +70,24 @@ export function init<O>(
     new EventOrigin(),
   ];
 
-  if (typeof finalOptions.enableNative === 'undefined') {
-    finalOptions.enableNative = true;
-  }
-
   if (finalOptions.enableNative && !options.transport) {
     finalOptions.transport = NativeTransport;
   }
 
-  originalInit(finalOptions);
+  const browserOptions = {
+    ...finalOptions,
+    autoSessionTracking:
+      NATIVE.platform === 'web' && finalOptions.enableAutoSessionTracking,
+  } as O;
 
-  void NATIVE.initNativeSdk(finalOptions);
+  const mobileOptions = {
+    ...finalOptions,
+    enableAutoSessionTracking:
+      NATIVE.platform !== 'web' && finalOptions.enableAutoSessionTracking,
+  } as CapacitorOptions;
+
+  originalInit(browserOptions);
+  void NATIVE.initNativeSdk(mobileOptions);
 }
 
 /**
