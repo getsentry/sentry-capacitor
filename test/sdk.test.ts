@@ -24,42 +24,70 @@ describe('SDK Init', () => {
     string,
     CapacitorOptions & BrowserOptions,
     boolean,
-    boolean,
-    boolean,
+    {
+      enableNative: boolean;
+      enableAutoSessionTracking: boolean;
+    },
   ]> = [
-    ['Uses default options on web', 'web', { dsn: '' }, true, false, false],
-    ['Uses default options on ios', 'ios', { dsn: '' }, false, true, true],
+    [
+      'Uses default options on web',
+      'web',
+      { dsn: '' },
+      true,
+      {
+        enableNative: false,
+        enableAutoSessionTracking: false,
+      },
+    ],
+    [
+      'Uses default options on ios',
+      'ios',
+      { dsn: '' },
+      false,
+      {
+        enableNative: true,
+        enableAutoSessionTracking: true,
+      },
+    ],
     [
       'Uses default options on android',
       'android',
       { dsn: '' },
       false,
-      true,
-      true,
+      {
+        enableNative: true,
+        enableAutoSessionTracking: true,
+      },
     ],
     [
       'enableAutoSessionTracking sets autoSessionTracking on web',
       'web',
       { dsn: '', enableAutoSessionTracking: false },
       false,
-      false,
-      false,
+      {
+        enableNative: false,
+        enableAutoSessionTracking: false,
+      },
     ],
     [
       'enableAutoSessionTracking sets enableAutoSessionTracking on android',
       'android',
       { dsn: '', enableAutoSessionTracking: false },
       false,
-      true,
-      false,
+      {
+        enableNative: true,
+        enableAutoSessionTracking: false,
+      },
     ],
     [
       'enableAutoSessionTracking sets enableAutoSessionTracking on ios',
       'ios',
       { dsn: '', enableAutoSessionTracking: false },
       false,
-      true,
-      false,
+      {
+        enableNative: true,
+        enableAutoSessionTracking: false,
+      },
     ],
   ];
 
@@ -72,10 +100,7 @@ describe('SDK Init', () => {
 
     // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(NATIVE.initNativeSdk).toBeCalledWith(
-      expect.objectContaining({
-        enableNative: test[4],
-        enableAutoSessionTracking: test[5],
-      }),
+      expect.objectContaining(test[4]),
     );
   });
 });

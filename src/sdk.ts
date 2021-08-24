@@ -1,5 +1,4 @@
 import {
-  BrowserOptions,
   defaultIntegrations,
   init as browserInit,
   StackFrame,
