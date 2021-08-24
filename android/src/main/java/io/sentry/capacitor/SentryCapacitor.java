@@ -78,6 +78,14 @@ public class SentryCapacitor extends Plugin {
                     options.setEnvironment(capOptions.getString("environment"));
                 }
 
+                if (capOptions.has("release") && capOptions.getString("release") != null) {
+                    options.setRelease(capOptions.getString("release"));
+                }
+
+                if (capOptions.has("dist") && capOptions.getString("dist") != null) {
+                    options.setDist(capOptions.getString("dist"));
+                }
+
                 if (capOptions.has("enableAutoSessionTracking")) {
                     options.setEnableAutoSessionTracking(capOptions.getBool("enableAutoSessionTracking"));
                 }

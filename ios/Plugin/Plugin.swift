@@ -53,7 +53,8 @@ public class SentryCapacitor: CAPPlugin {
             }
 
             SentrySDK.start(options: options)
-
+            
+            self.sentryOptions = options
 
             // checking enableAutoSessionTracking is actually not necessary, but we'd spare the sent bits.
             if didReceiveDidBecomeActiveNotification && sentryOptions?.enableAutoSessionTracking == true {
@@ -63,8 +64,6 @@ public class SentryCapacitor: CAPPlugin {
                // we reset the flag for the sake of correctness
                didReceiveDidBecomeActiveNotification = false
             }
-
-            self.sentryOptions = options
 
             call.resolve()
         } catch {
