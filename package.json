@@ -58,7 +58,8 @@
     "@sentry/types": "6.11.0",
     "@sentry/utils": "6.11.0",
     "@sentry/wizard": "^1.1.4",
-    "promise": "^8.1.0"
+    "promise": "^8.1.0",
+    "rollup-plugin-modify": "^3.0.0"
   },
   "devDependencies": {
     "@capacitor/android": "^3.0.1",

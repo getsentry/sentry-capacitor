@@ -1,4 +1,5 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
+import modify from 'rollup-plugin-modify';
 
 export default {
   input: 'dist/esm/index.js',
@@ -25,5 +26,9 @@ export default {
       // @see https://github.com/rollup/plugins/tree/master/packages/node-resolve#resolveonly
       resolveOnly: ['lodash'],
     }),
+    modify({
+      find: './',
+      replace: './esm/'
+    })
   ],
 };
