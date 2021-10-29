@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- build: Build into both commonjs and esm #99
+
 ## 0.4.0
 
 - feat: Officially support web #70
