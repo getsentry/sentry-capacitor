@@ -12,13 +12,12 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "dist/esm",
     "pretty": true,
     "sourceMap": true,
     "strict": true,
     "target": "es2015"
   },
-  "extends": "./node_modules/@sentry/typescript/tsconfig.json",
+  "extends": "./tsconfig.build.json",
   "include": [
     "src/**/*.ts",
     "test/**/*.ts"

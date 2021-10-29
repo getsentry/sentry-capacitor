@@ -2,8 +2,10 @@
   "extends": "./node_modules/@sentry/typescript/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "commonjs",
-    "outDir": "dist/build",
+    "outDir": "dist/esm",
+    "target": "es5",
+    "module": "es6",
+    "moduleResolution": "node",
   },
   "include": [
     "src/**/*"
