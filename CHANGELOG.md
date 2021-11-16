@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.4.1
+
 - build: Build into both commonjs and esm #99
 
 ## 0.4.0
