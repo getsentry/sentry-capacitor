@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- No longer export deprecated Status enum #111
+- Remove guard from transport sendEvent as it is redundant #111
+
 ## 0.4.1
 
 - build: Build into both commonjs and esm #99
