@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.4.2
 
 - No longer export deprecated Status enum #111
 - Remove guard from transport sendEvent as it is redundant #111
