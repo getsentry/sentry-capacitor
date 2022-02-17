@@ -43,20 +43,21 @@ export function init<O>(
       iteratee: (frame: StackFrame) => {
         if (frame.filename) {
           frame.filename = frame.filename
-            .replace(/^http:\/\/localhost/, '')
+            .replace(/^https?:\/\/localhost/, '')
             .replace(/^ng:\/\//, '')
             .replace(/^capacitor:\/\/localhost/, '');
+          
+          const isNativeFrame = frame.filename === '[native code]' || frame.filename === 'native';
+          const isReachableHost = /^https?:\/\//.test(frame.filename);
 
-          if (
-            frame.filename !== '[native code]' &&
-            frame.filename !== 'native'
-          ) {
-            const appPrefix = 'app://';
-            // We always want to have a triple slash
-            frame.filename =
-              frame.filename.indexOf('/') === 0
-                ? `${appPrefix}${frame.filename}`
-                : `${appPrefix}/${frame.filename}`;
+          if (!isNativeFrame) {
+            // We don't need to use `app://` protocol for http(s) based hosts
+            if (!isReachableHost) {
+              // We always want to have a triple slash
+              const filename = frame.filename.startsWith('/') ? frame.filename : `/${frame.filename}`;
+              const appPrefix = 'app://';
+              frame.filename = `${appPrefix}${filename}`;
+            }
 
             frame.in_app = true;
           } else {
