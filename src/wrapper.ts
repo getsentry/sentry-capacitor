@@ -40,7 +40,7 @@ export const NATIVE = {
     const payloadString: string = JSON.stringify(payload);
     let length = payloadString.length;
     try {
-      void SentryCapacitor.getStringBytesLength({ string: payloadString }).then(
+      await SentryCapacitor.getStringBytesLength({ string: payloadString }).then(
         resp => {
           length = resp.value;
         },
