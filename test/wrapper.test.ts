@@ -4,6 +4,8 @@ import { logger } from '@sentry/utils';
 
 import { NATIVE } from '../src/wrapper';
 
+let getStringBytesLengthValue = 1;
+
 jest.mock(
   '@capacitor/core',
   () => {
@@ -37,7 +39,7 @@ jest.mock('../src/plugin', () => {
       ),
       getStringBytesLength: jest.fn(() =>
         Promise.resolve({
-          value: 1,
+          value: getStringBytesLengthValue,
         }),
       ),
       initNativeSdk: jest.fn(options => Promise.resolve(options)),
@@ -54,6 +56,7 @@ jest.mock('../src/plugin', () => {
 import { SentryCapacitor } from '../src/plugin';
 
 beforeEach(() => {
+  getStringBytesLengthValue = 1;
   NATIVE.enableNative = true;
   NATIVE.platform = 'android';
 });
@@ -105,9 +108,12 @@ describe('Tests Native Wrapper', () => {
 
   describe('sendEvent', () => {
     test('calls getStringBytesLength and captureEnvelope', async () => {
+      const expectedNativeLength = 101;
+      getStringBytesLengthValue = expectedNativeLength;
+
       const event = {
         event_id: 'event0',
-        message: 'test',
+        message: 'test©',
         sdk: {
           name: 'test-sdk-name',
           version: '1.2.3',
@@ -128,7 +134,7 @@ describe('Tests Native Wrapper', () => {
 
       const item = JSON.stringify({
         content_type: 'application/json',
-        length: 99,
+        length: expectedNativeLength,
         type: 'event',
       });
 
