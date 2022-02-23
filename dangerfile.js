@@ -62,6 +62,7 @@ async function checkChangelog() {
 
   // Report missing changelog entry
   fail("Please consider adding a changelog entry for the next release.");
+  markdown(getChangelogDetailsHtml());
 }
 
 async function checkAll() {
