@@ -4,7 +4,6 @@
 
 ### Fixes
 
-- Add danger and update changelog ([#135](https://github.com/getsentry/sentry-capacitor/pull/135))
 - Use Native length for Envelopes when available ([#128](https://github.com/getsentry/sentry-capacitor/pull/128))
 
 ## 0.4.2
