@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.4.3
 
 - fix: Use Native length for Envelopes when available #128
 
