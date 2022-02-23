@@ -11,7 +11,7 @@
 ### Fixes
 
 - No longer export deprecated Status enum ([#111](https://github.com/getsentry/sentry-capacitor/pull/111))
-- Remove guard from transport sendEvent as it is redundant ([#11](https://github.com/getsentry/sentry-capacitor/pull/111))
+- Remove guard from transport sendEvent as it is redundant ([#111](https://github.com/getsentry/sentry-capacitor/pull/111))
 
 ## 0.4.1
 
