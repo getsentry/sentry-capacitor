@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- fix: Use Native length for Envelopes when available #128
+
 ## 0.4.2
 
 - No longer export deprecated Status enum #111
