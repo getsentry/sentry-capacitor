@@ -28,9 +28,7 @@ jest.mock('../src/plugin', () => {
   return {
     SentryCapacitor: {
       addBreadcrumb: jest.fn(),
-      captureEnvelope: jest.fn(envelope => {
-        return Promise.resolve(envelope);
-      }),
+      captureEnvelope: jest.fn(envelope => Promise.resolve(envelope)),
       crash: jest.fn(),
       fetchNativeRelease: jest.fn(() =>
         Promise.resolve({
