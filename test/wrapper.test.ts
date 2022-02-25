@@ -156,6 +156,26 @@ describe('Tests Native Wrapper', () => {
       expect(SentryCapacitor.getStringBytesLength).not.toBeCalled();
       expect(SentryCapacitor.captureEnvelope).not.toBeCalled();
     });
+
+    test('does not include sdkProcessingMetadata on event sent', async () => {
+      const event = {
+        event_id: 'event0',
+        message: 'test©',
+        sdk: {
+          name: 'test-sdk-name',
+          version: '1.2.3',
+        },
+        sdkProcessingMetadata: ["uneeeded data.", "xz"]
+      };
+      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
+
+      await NATIVE.initNativeSdk({ dsn: 'test-dsn', enableNative: true });
+      await NATIVE.sendEvent(event);
+
+      expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
+      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toContain(event.event_id);
+      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).not.toContain('sdkProcessingMetadata');
+    });
   });
 
   // TODO add this in when fetchRelease method is in progress
