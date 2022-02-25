@@ -24,6 +24,9 @@ export const NATIVE = {
 
     const event = this._processLevels(_event);
 
+    // Delete this metadata as this should not be sent to Sentry.
+    delete event.sdkProcessingMetadata;
+
     const header = {
       event_id: event.event_id,
       sdk: event.sdk,
