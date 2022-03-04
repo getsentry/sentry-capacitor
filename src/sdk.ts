@@ -26,12 +26,16 @@ export function init<O>(
     ...options,
   };
 
-  if (NATIVE.platform === 'web') {
+  if (finalOptions.enabled === false ||
+    NATIVE.platform === 'web') {
     finalOptions.enableNative = false;
     finalOptions.enableNativeNagger = false;
   } else {
-    finalOptions.enableNative = true;
     finalOptions.enableNativeNagger = true;
+
+    if (finalOptions.enableNative == null) {
+      finalOptions.enableNative = true;
+    }
   }
 
   const capacitorHub = new Hub(undefined, new CapacitorScope());
@@ -46,7 +50,7 @@ export function init<O>(
             .replace(/^https?:\/\/localhost/, '')
             .replace(/^ng:\/\//, '')
             .replace(/^capacitor:\/\/localhost/, '');
-          
+
           const isNativeFrame = frame.filename === '[native code]' || frame.filename === 'native';
           const isReachableHost = /^https?:\/\//.test(frame.filename);
 

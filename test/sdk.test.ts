@@ -103,4 +103,42 @@ describe('SDK Init', () => {
       expect.objectContaining(test[4]),
     );
   });
+
+
+  test('Does not Enable Native SDK if enabled is false', async () => {
+    NATIVE.platform = 'ios';
+
+    init({
+      enabled: false
+    }, (capacitorOptions: CapacitorOptions) => {
+      expect(capacitorOptions.enableNative).toBe(false);
+      expect(capacitorOptions.enableNativeNagger).toBe(false);
+    });
+  });
+
+  test('Keep enableNative if set on mobile', async () => {
+    NATIVE.platform = 'ios';
+
+    init({
+      enabled: true,
+      enableNative: false
+    }, (capacitorOptions: CapacitorOptions) => {
+      expect(capacitorOptions.enableNative).toBe(false);
+      expect(capacitorOptions.enableNativeNagger).toBe(true);
+      expect(capacitorOptions.enabled).toBe(true);
+    });
+  });
+
+  test('WEB has enableNative false by default', async () => {
+    NATIVE.platform = 'web';
+
+    init({
+      enabled: true,
+    }, (capacitorOptions: CapacitorOptions) => {
+      expect(capacitorOptions.enableNative).toBe(false);
+      expect(capacitorOptions.enableNativeNagger).toBe(false);
+      expect(capacitorOptions.enabled).toBe(true);
+    });
+  });
+
 });
