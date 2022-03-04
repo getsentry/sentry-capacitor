@@ -129,6 +129,20 @@ describe('SDK Init', () => {
     });
   });
 
+  test('Keep enableNativeNagger if set on mobile', async () => {
+    NATIVE.platform = 'ios';
+
+    init({
+      enabled: true,
+      enableNative: false,
+      enableNativeNagger: false
+    }, (capacitorOptions: CapacitorOptions) => {
+      expect(capacitorOptions.enableNative).toBe(false);
+      expect(capacitorOptions.enableNativeNagger).toBe(false);
+      expect(capacitorOptions.enabled).toBe(true);
+    });
+  });
+
   test('WEB has enableNative false by default', async () => {
     NATIVE.platform = 'web';
 

@@ -31,11 +31,9 @@ export function init<O>(
     finalOptions.enableNative = false;
     finalOptions.enableNativeNagger = false;
   } else {
-    finalOptions.enableNativeNagger = true;
-
-    if (finalOptions.enableNative == null) {
-      finalOptions.enableNative = true;
-    }
+    // keep the original value if user defined it.
+    finalOptions.enableNativeNagger ??= true;
+    finalOptions.enableNative ??= true;
   }
 
   const capacitorHub = new Hub(undefined, new CapacitorScope());
