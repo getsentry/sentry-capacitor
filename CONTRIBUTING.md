@@ -8,6 +8,7 @@ You need:
 - yarn 1 or higher
 - yalc
 - http-server
+- ionic
 
 ## Building
 
