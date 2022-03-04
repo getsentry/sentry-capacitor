@@ -4,7 +4,8 @@
 
 ### Fixes
 
-- remove sdkProcessingMetadata from native events ([#139](https://github.com/getsentry/sentry-capacitor/pull/139))
+- Disable native sdk when enabled/enablenative is set to false ([#145](https://github.com/getsentry/sentry-capacitor/pull/145))
+- Remove sdkProcessingMetadata from native events ([#139](https://github.com/getsentry/sentry-capacitor/pull/139))
 
 ## 0.4.3
 
