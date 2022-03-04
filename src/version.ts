@@ -1,2 +1,2 @@
 export const SDK_NAME = 'sentry.javascript.capacitor';
-export const SDK_VERSION = '0.4.3';
+export const SDK_VERSION = '0.4.4';
