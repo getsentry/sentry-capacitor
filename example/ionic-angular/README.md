@@ -2,6 +2,10 @@
 
 ## Add the local SDK from yalc
 
+On the Sentry Capacitor root folder
+`yalc publish`
+
+Then on the ionic-angular folder
 `yalc add @sentry/capacitor`
 
 ## Install dependencies
