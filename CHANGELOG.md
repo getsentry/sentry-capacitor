@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- (iOS) Missing config `enableOutOfMemoryTracking` on iOS/Mac
+
 ## 0.4.4
 
 ### Fixes

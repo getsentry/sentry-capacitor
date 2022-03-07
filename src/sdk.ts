@@ -23,6 +23,7 @@ export function init<O>(
 ): void {
   const finalOptions = {
     enableAutoSessionTracking: true,
+    enableOutOfMemoryTracking: true,
     ...options,
   };
 
