@@ -4,7 +4,7 @@
 
 ### Fixes
 
-- Fix iOS dropping events if envelope contains UTF16 character or higher
+- Fix iOS dropping events if envelope contains UTF16 character or higher ([#150](https://github.com/getsentry/sentry-capacitor/pull/150))
 
 ## 0.4.4
 
