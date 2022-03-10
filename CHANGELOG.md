@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- Fix iOS dropping events if envelope contains UTF16 character or higher
+
 ## 0.4.4
 
 ### Fixes
