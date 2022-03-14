@@ -35,4 +35,14 @@ export interface CapacitorOptions
 
   /** When enabled, all the threads are automatically attached to all logged events on Android */
   attachThreads?: boolean;
+
+  /**
+  * Enables Out of Memory Tracking for iOS and macCatalyst.
+  * See the following link for more information and possible restrictions:
+  * https://docs.sentry.io/platforms/apple/guides/ios/configuration/out-of-memory/
+  *
+  * @default true
+  * */
+  enableOutOfMemoryTracking?: boolean;
+
 }
