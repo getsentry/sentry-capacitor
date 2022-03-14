@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- (iOS) Missing config `enableOutOfMemoryTracking` on iOS/Mac ([#147](https://github.com/getsentry/sentry-capacitor/pull/147))
+
 ## 0.4.4
 
 ### Fixes
