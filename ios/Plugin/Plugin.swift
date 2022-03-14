@@ -53,7 +53,7 @@ public class SentryCapacitor: CAPPlugin {
             }
 
             SentrySDK.start(options: options)
-            
+
             self.sentryOptions = options
 
             // checking enableAutoSessionTracking is actually not necessary, but we'd spare the sent bits.
@@ -87,6 +87,16 @@ public class SentryCapacitor: CAPPlugin {
         PrivateSentrySDKOnly.capture(envelope)
 
         call.resolve()
+    }
+
+    @objc func getStringBytesLength(_ call: CAPPluginCall) {
+        let payloadSize = call.getString("string")?.utf8.count
+        if (payloadSize != nil) {
+            call.resolve(["value": payloadSize])
+        }
+        else {
+            call.reject("Coud not calculate string length.")
+        }
     }
 
     @objc func fetchNativeRelease(_ call: CAPPluginCall) {
@@ -165,12 +175,12 @@ public class SentryCapacitor: CAPPlugin {
 
         call.resolve()
     }
-    
+
     @objc func setContext(_ call: CAPPluginCall) {
         guard let key = call.getString("key") else {
             return call.reject("Error deserializing context")
         }
-        
+
         SentrySDK.configureScope { scope in
             scope.setContext(value: call.getObject("value") ?? [:], key: key)
         }
@@ -179,41 +189,41 @@ public class SentryCapacitor: CAPPlugin {
     @objc func addBreadcrumb(_ call: CAPPluginCall) {
         SentrySDK.configureScope { scope in
             let breadcrumb = Breadcrumb()
-        
+
             if let timestamp = call.getDouble("timestamp") {
                 breadcrumb.timestamp = Date(timeIntervalSince1970: timestamp)
             }
-            
+
             if let level = call.getString("level") {
                 breadcrumb.level = self.processLevel(level)
             }
-            
+
             if let category = call.getString("category") {
                 breadcrumb.category = category
             }
-           
+
             breadcrumb.type = call.getString("type")
             breadcrumb.message = call.getString("message")
             breadcrumb.data = call.getObject("data")
-            
+
             scope.add(breadcrumb)
         }
 
         call.resolve()
     }
-    
+
     @objc func clearBreadcrumbs(_ call: CAPPluginCall) {
         SentrySDK.configureScope { scope in
             scope.clearBreadcrumbs()
         }
-        
+
         call.resolve()
     }
 
     @objc func crash(_ call: CAPPluginCall) {
         SentrySDK.crash()
     }
-    
+
     private func processLevel(_ levelString: String) -> SentryLevel {
         switch levelString {
         case "fatal":
@@ -230,7 +240,7 @@ public class SentryCapacitor: CAPPlugin {
             return SentryLevel.info
         }
     }
-    
+
     private func setEventOriginTag(event: Event) {
         guard let sdk = event.sdk else {
             return
