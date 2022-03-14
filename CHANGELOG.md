@@ -5,6 +5,7 @@
 ### Fixes
 
 - Fix iOS dropping events if envelope contains UTF16 character or higher ([#150](https://github.com/getsentry/sentry-capacitor/pull/150))
+- (iOS) Missing config `enableOutOfMemoryTracking` on iOS/Mac ([#147](https://github.com/getsentry/sentry-capacitor/pull/147))
 
 ## 0.4.4
 
