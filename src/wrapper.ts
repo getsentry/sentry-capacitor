@@ -28,8 +28,6 @@ export const NATIVE = {
     delete event.sdkProcessingMetadata;
 
     if (NATIVE.platform === "android") {
-      // Android
-
       /*
         We do this to avoid duplicate breadcrumbs on Android as sentry-android applies the breadcrumbs
         from the native scope onto every envelope sent through it. This scope will contain the breadcrumbs
