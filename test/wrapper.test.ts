@@ -176,7 +176,169 @@ describe('Tests Native Wrapper', () => {
       expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toContain(event.event_id);
       expect(captureEnvelopeSpy.mock.calls[0][0].envelope).not.toContain('sdkProcessingMetadata');
     });
+
+    test("Clears breadcrumbs on Android if there is no exception", async () => {
+      NATIVE.platform = "android";
+
+      const event = {
+        event_id: "event0",
+        message: "test",
+        breadcrumbs: [
+          {
+            message: "crumb!",
+          },
+        ],
+        sdk: {
+          name: 'test-sdk-name',
+          version: '1.2.3',
+        },
+      };
+
+      const payload = JSON.stringify({
+        ...event,
+        breadcrumbs: [],
+        message: {
+          message: event.message,
+        },
+      });
+      const header = JSON.stringify({
+        event_id: event.event_id,
+        sdk: event.sdk,
+      });
+      const item = JSON.stringify({
+        content_type: "application/json",
+        length: 1,
+        type: "event",
+      });
+
+      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
+
+      await NATIVE.sendEvent(event);
+
+      expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
+      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toMatch(
+        `${header}\n${item}\n${payload}`);
+    });
+
+    test("Clears breadcrumbs on Android if there is a handled exception", async () => {
+      NATIVE.platform = "android";
+
+      const event = {
+        event_id: "event0",
+        message: "test",
+        breadcrumbs: [
+          {
+            message: "crumb!",
+          },
+        ],
+        exception: {
+          values: [{
+            mechanism: {
+              handled: true
+            }
+          }]
+        },
+        sdk: {
+          name: 'test-sdk-name',
+          version: '1.2.3',
+        },
+      };
+
+      const payload = JSON.stringify({
+        ...event,
+        breadcrumbs: [],
+        message: {
+          message: event.message,
+        },
+        exception: {
+          values: [{
+            mechanism: {
+              handled: true
+            }
+          }]
+        }
+      });
+      const header = JSON.stringify({
+        event_id: event.event_id,
+        sdk: event.sdk,
+      });
+      const item = JSON.stringify({
+        content_type: "application/json",
+        length: 1,
+        type: "event",
+      });
+
+      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
+
+      await NATIVE.sendEvent(event);
+
+      expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
+      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toMatch(
+        `${header}\n${item}\n${payload}`);
+    });
   });
+
+  test("Clears breadcrumbs on Android if there is a handled exception", async () => {
+    NATIVE.platform = "android";
+
+    const event = {
+      event_id: "event0",
+      message: "test",
+      breadcrumbs: [
+        {
+          message: "crumb!",
+        },
+      ],
+      exception: {
+        values: [{
+          mechanism: {
+            handled: false
+          }
+        }]
+      },
+      sdk: {
+        name: 'test-sdk-name',
+        version: '1.2.3',
+      },
+    };
+
+    const payload = JSON.stringify({
+      ...event,
+      breadcrumbs: [
+        {
+          message: "crumb!",
+        },
+      ],
+      message: {
+        message: event.message,
+      },
+      exception: {
+        values: [{
+          mechanism: {
+            handled: false
+          }
+        }]
+      }
+    });
+    const header = JSON.stringify({
+      event_id: event.event_id,
+      sdk: event.sdk,
+    });
+    const item = JSON.stringify({
+      content_type: "application/json",
+      length: 1,
+      type: "event",
+    });
+
+    const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
+
+    await NATIVE.sendEvent(event);
+
+    expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
+    expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toMatch(
+      `${header}\n${item}\n${payload}`);
+  });
+});
 
   // TODO add this in when fetchRelease method is in progress
   // describe("fetchRelease", () => {
