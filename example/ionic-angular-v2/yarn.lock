@@ -1561,9 +1561,9 @@
     "@angular-devkit/schematics" "13.3.0"
     jsonc-parser "3.0.0"
 
-"@sentry/angular@^6.17.4":
+"@sentry/angular@6.17.4":
   version "6.17.4"
-  resolved "https://registry.npmjs.org/@sentry/angular/-/angular-6.17.4.tgz"
+  resolved "https://registry.yarnpkg.com/@sentry/angular/-/angular-6.17.4.tgz#0cf5795ac304291e6c712667d6732e4847f2f929"
   integrity sha512-epDsodQHki9YcRl18YzZJER/esDjoB8/BR3VHAqFZdTDrH184G1ysm+pFzjI8dAwDfxYxrV+7Y2R9/3CqR83Sg==
   dependencies:
     "@sentry/browser" "6.17.4"
