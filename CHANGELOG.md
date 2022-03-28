@@ -4,7 +4,7 @@
 
 ### Fixes
 
-- build(js): Bump sentry-android dependencies to `5.7.0`. ([#72](https://github.com/getsentry/sentry-capacitor/pull/154))
+- build(android): Bump sentry-java dependencies to `5.7.0`. ([#154](https://github.com/getsentry/sentry-capacitor/pull/154))
   - [changelog](https://github.com/getsentry/sentry-java/releases/tag/5.7.0)
   - [diff](https://github.com/getsentry/sentry-java/compare/5.0.1...5.7.0)
 - Fix iOS dropping events if envelope contains UTF16 character or higher ([#150](https://github.com/getsentry/sentry-capacitor/pull/150))
