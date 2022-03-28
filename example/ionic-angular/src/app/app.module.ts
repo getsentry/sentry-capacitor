@@ -17,7 +17,7 @@ import { AppComponent } from './app.component';
 Sentry.init(
   {
     dsn:
-      'https://4079af8b316240ea9453eb0a23b715cc@o447951.ingest.sentry.io/55A22756',
+      'https://4079af8b316240ea9453eb0a23b715cc@o447951.ingest.sentry.io/5522756',
     // An array of strings or regexps that'll be used to ignore specific errors based on their type/message
     ignoreErrors: [/MiddleEarth_\d\d/, 'RangeError'],
     // To see what the Sentry SDK is doing; Helps when setting things up
