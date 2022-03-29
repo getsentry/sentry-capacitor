@@ -27,6 +27,20 @@ export const NATIVE = {
     // Delete this metadata as this should not be sent to Sentry.
     delete event.sdkProcessingMetadata;
 
+    if (NATIVE.platform === "android") {
+      /*
+        We do this to avoid duplicate breadcrumbs on Android as sentry-android applies the breadcrumbs
+        from the native scope onto every envelope sent through it. This scope will contain the breadcrumbs
+        sent through the scope sync feature. This causes duplicate breadcrumbs.
+        We then remove the breadcrumbs in all cases but if it is handled == false,
+        this is a signal that the app would crash and android would lose the breadcrumbs by the time the app is restarted to read
+        the envelope.
+      */
+      if (event.exception?.values?.[0]?.mechanism?.handled != false && event.breadcrumbs) {
+          event.breadcrumbs = [];
+      }
+    }
+
     const header = {
       event_id: event.event_id,
       sdk: event.sdk,
