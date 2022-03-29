@@ -40,19 +40,18 @@ Sentry.init(
 );
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    /* Provide the @sentry/angular error handler */
-    {
-      provide: ErrorHandler,
-      useValue: createErrorHandler(),
-    },
-  ],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        /* Provide the @sentry/angular error handler */
+        {
+            provide: ErrorHandler,
+            useValue: createErrorHandler(),
+        },
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
