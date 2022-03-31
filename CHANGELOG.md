@@ -2,22 +2,20 @@
 
 ## Unreleased
 
-### Fixes/Features
-
 ### Fixes
 
 - build(javascript): Bump sentry-javascript dependencies to `6.19.2`. ([#158](https://github.com/getsentry/sentry-capacitor/pull/158))
   - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/6.19.2)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/6.16.4...6.19.2)
+- build(ios): Bump sentry-cocoa dependencies to `7.11.0`. ([#157](https://github.com/getsentry/sentry-capacitor/pull/157))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/releases/tag/5.11.0)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/7.1.3...7.11.0)
 
 ## 0.5.0
 
 ### Fixes
 
 - Fix(Android): duplicated breadcrumbs ([#151](https://github.com/getsentry/sentry-capacitor/pull/151))
-- build(ios): Bump sentry-cocoa dependencies to `7.11.0`. ([#157](https://github.com/getsentry/sentry-capacitor/pull/157))
-  - [changelog](https://github.com/getsentry/sentry-cocoa/releases/tag/5.11.0)
-  - [diff](https://github.com/getsentry/sentry-cocoa/compare/7.1.3...7.11.0)
 - build(android): Bump sentry-java dependencies to `5.7.0`. ([#154](https://github.com/getsentry/sentry-capacitor/pull/154))
   - [changelog](https://github.com/getsentry/sentry-java/releases/tag/5.7.0)
   - [diff](https://github.com/getsentry/sentry-java/compare/5.0.1...5.7.0)

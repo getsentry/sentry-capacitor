@@ -37,9 +37,9 @@
   "license": "MIT",
   "peerDependencies": {
     "@capacitor/core": ">=3.0.0",
-    "@sentry/angular": "6.17.4",
-    "@sentry/react": "6.17.4",
-    "@sentry/vue": "6.17.4"
+    "@sentry/angular": "6.19.2",
+    "@sentry/react": "6.19.2",
+    "@sentry/vue": "6.19.2"
   },
   "peerDependenciesMeta": {
     "@sentry/angular": {
