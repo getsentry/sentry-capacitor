@@ -6,7 +6,7 @@
 
 - build(javascript): Bump sentry-javascript, sentry-vue, sentry-react and sentry-angular dependencies to `6.19.2`. ([#159](https://github.com/getsentry/sentry-capacitor/pull/159))
   - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/6.19.2)
-  - [diff](https://github.com/getsentry/sentry-javascript/compare/6.16.4...6.19.2)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/6.17.4...6.19.2)
 - build(ios): Bump sentry-cocoa dependencies to `7.11.0`. ([#157](https://github.com/getsentry/sentry-capacitor/pull/157))
   - [changelog](https://github.com/getsentry/sentry-cocoa/releases/tag/5.11.0)
   - [diff](https://github.com/getsentry/sentry-cocoa/compare/7.1.3...7.11.0)
