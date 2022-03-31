@@ -4,6 +4,9 @@
 
 ### Fixes
 
+- build(javascript): Bump sentry-javascript dependencies to `6.19.2`. ([#158](https://github.com/getsentry/sentry-capacitor/pull/158))
+  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/6.19.2)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/6.16.4...6.19.2)
 - Fix(Android): duplicated breadcrumbs ([#151](https://github.com/getsentry/sentry-capacitor/pull/151))
 - build(android): Bump sentry-java dependencies to `5.7.0`. ([#154](https://github.com/getsentry/sentry-capacitor/pull/154))
   - [changelog](https://github.com/getsentry/sentry-java/releases/tag/5.7.0)

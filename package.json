@@ -53,13 +53,13 @@
     }
   },
   "dependencies": {
-    "@sentry/browser": "6.17.4",
-    "@sentry/core": "6.17.4",
-    "@sentry/hub": "6.17.4",
-    "@sentry/integrations": "6.17.4",
-    "@sentry/tracing": "6.17.4",
-    "@sentry/types": "6.17.4",
-    "@sentry/utils": "6.17.4",
+    "@sentry/browser": "6.19.2",
+    "@sentry/core": "6.19.2",
+    "@sentry/hub": "6.19.2",
+    "@sentry/integrations": "6.19.2",
+    "@sentry/tracing": "6.19.2",
+    "@sentry/types": "6.19.2",
+    "@sentry/utils": "6.19.2",
     "@sentry/wizard": "^1.1.4",
     "promise": "^8.1.0"
   },
