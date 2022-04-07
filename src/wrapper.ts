@@ -1,10 +1,10 @@
 /* eslint-disable max-lines */
-import { Breadcrumb, Event, Response, Severity, User } from '@sentry/types';
-import { SentryError, dropUndefinedKeys, logger } from '@sentry/utils';
-
 import { Capacitor } from '@capacitor/core';
-import { CapacitorOptions } from './options';
+import { Breadcrumb, Event, Response, Severity, User } from '@sentry/types';
+import { dropUndefinedKeys, logger,SentryError } from '@sentry/utils';
+
 import { NativeDeviceContextsResponse } from './definitions';
+import { CapacitorOptions } from './options';
 import { SentryCapacitor } from './plugin';
 
 /**

@@ -6,7 +6,7 @@ import {
 import { Hub, makeMain } from '@sentry/hub';
 import { RewriteFrames } from '@sentry/integrations';
 
-import { EventOrigin, DeviceContext, SdkInfo } from './integrations';
+import { DeviceContext, EventOrigin, SdkInfo } from './integrations';
 import { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 import { NativeTransport } from './transports/native';
