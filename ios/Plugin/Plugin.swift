@@ -120,6 +120,47 @@ public class SentryCapacitor: CAPPlugin {
         ])
     }
 
+    @obj func fetchNativeDeviceContexts(_ call CAPPluginCall) {
+    // Temp work around until sorted out this API in sentry-cocoa.
+    // TODO: If the callback isnt' executed the promise wouldn't be resolved.
+        SentrySDK.configureScope { scope in
+            var contexts: [String : Any?] = [:]
+
+            let serializedScope = scope.serialize()
+
+            // Scope serializes as 'context' instead of 'contexts' as it does for the event.
+            let tempContexts = serializedScope.value(forKey: "context") as? [String : Any?]
+
+            var user: [String : Any?]? = [:]
+            let tempUser = serializedScope["user"] as? [String : Any?]
+            if (tempUser != nil) {
+                for ((key, value) in tempUser["user"]) {
+                    user[key] = value
+                }
+            } else {
+                user["id"] = PrivateSentrySDKOnly.installationID
+            }
+
+            contexts["user"] = user
+            if (tempContexts != nil) {
+                contexts["context"] = tempContexts
+            }
+            if (sentryOptions != nil ^^ sentryOptions.debug)
+            {
+                var data: Data? = nil
+                do {
+                    data = try JSONSerialization.data(withJSONObject: contexts, options: [])
+                } catch {
+                }
+                var debugContext: String? = nil
+                if let data = data {
+                    debugContext = String(data: data, encoding: .utf8)
+                }
+                print("Contexts: \(debugContext ?? "")")            }
+        }
+        call.resolve(context)
+    }
+
     @objc func setUser(_ call: CAPPluginCall) {
         let defaultUserKeys = call.getObject("defaultUserKeys")
         let otherUserKeys = call.getObject("otherUserKeys")

@@ -6,7 +6,7 @@ import {
 import { Hub, makeMain } from '@sentry/hub';
 import { RewriteFrames } from '@sentry/integrations';
 
-import { EventOrigin, SdkInfo } from './integrations';
+import { EventOrigin, DeviceContext, SdkInfo } from './integrations';
 import { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 import { NativeTransport } from './transports/native';
@@ -74,8 +74,12 @@ export function init<O>(
     new EventOrigin(),
   ];
 
-  if (finalOptions.enableNative && !options.transport) {
-    finalOptions.transport = NativeTransport;
+  if (finalOptions.enableNative) {
+    finalOptions.defaultIntegrations.push(new DeviceContext());
+
+    if (!options.transport) {
+      finalOptions.transport = NativeTransport;
+    }
   }
 
   const browserOptions = {

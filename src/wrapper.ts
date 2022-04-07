@@ -1,9 +1,10 @@
 /* eslint-disable max-lines */
-import { Capacitor } from '@capacitor/core';
 import { Breadcrumb, Event, Response, Severity, User } from '@sentry/types';
-import { dropUndefinedKeys, logger, SentryError } from '@sentry/utils';
+import { SentryError, dropUndefinedKeys, logger } from '@sentry/utils';
 
+import { Capacitor } from '@capacitor/core';
 import { CapacitorOptions } from './options';
+import { NativeDeviceContextsResponse } from './definitions';
 import { SentryCapacitor } from './plugin';
 
 /**
@@ -37,7 +38,7 @@ export const NATIVE = {
         the envelope.
       */
       if (event.exception?.values?.[0]?.mechanism?.handled != false && event.breadcrumbs) {
-          event.breadcrumbs = [];
+        event.breadcrumbs = [];
       }
     }
 
@@ -114,6 +115,25 @@ export const NATIVE = {
     } = options;
 
     return SentryCapacitor.initNativeSdk({ options: filteredOptions });
+  },
+
+  /**
+   * Fetches the device contexts. Not used on Android.
+   */
+  async fetchNativeDeviceContexts(): Promise<NativeDeviceContextsResponse> {
+    if (!this.enableNative) {
+      throw this._DisabledNativeError;
+    }
+    if (!this.isNativeClientAvailable()) {
+      throw this._NativeClientError;
+    }
+
+    if (this.platform !== 'ios') {
+      // Only ios uses deviceContexts, return an empty object.
+      return {};
+    }
+
+    return SentryCapacitor.fetchNativeDeviceContexts();
   },
 
   /**

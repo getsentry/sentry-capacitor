@@ -8,6 +8,7 @@ CAP_PLUGIN(SentryCapacitor, "SentryCapacitor",
            CAP_PLUGIN_METHOD(captureEnvelope, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(fetchNativeRelease, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(fetchNativeSdkInfo, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(fetchNativeDeviceContexts, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(getStringBytesLength, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(setTag, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(setExtra, CAPPluginReturnPromise);
