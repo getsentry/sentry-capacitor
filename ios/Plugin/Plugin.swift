@@ -120,22 +120,22 @@ public class SentryCapacitor: CAPPlugin {
         ])
     }
 
-    @obj func fetchNativeDeviceContexts(_ call CAPPluginCall) {
+    @objc func fetchNativeDeviceContexts(_ call: CAPPluginCall) {
     // Temp work around until sorted out this API in sentry-cocoa.
     // TODO: If the callback isnt' executed the promise wouldn't be resolved.
-        SentrySDK.configureScope { scope in
+        SentrySDK.configureScope { [self] scope in
             var contexts: [String : Any?] = [:]
 
             let serializedScope = scope.serialize()
 
             // Scope serializes as 'context' instead of 'contexts' as it does for the event.
-            let tempContexts = serializedScope.value(forKey: "context") as? [String : Any?]
+            let tempContexts = serializedScope["context"]
 
-            var user: [String : Any?]? = [:]
+            var user: [String : Any?] = [:]
             let tempUser = serializedScope["user"] as? [String : Any?]
             if (tempUser != nil) {
-                for ((key, value) in tempUser["user"]) {
-                    user[key] = value
+                for (key, value) in tempUser! {
+                    user[key] = value;
                 }
             } else {
                 user["id"] = PrivateSentrySDKOnly.installationID
@@ -145,7 +145,7 @@ public class SentryCapacitor: CAPPlugin {
             if (tempContexts != nil) {
                 contexts["context"] = tempContexts
             }
-            if (sentryOptions != nil ^^ sentryOptions.debug)
+            if (self.sentryOptions?.debug == true)
             {
                 var data: Data? = nil
                 do {
@@ -156,9 +156,10 @@ public class SentryCapacitor: CAPPlugin {
                 if let data = data {
                     debugContext = String(data: data, encoding: .utf8)
                 }
-                print("Contexts: \(debugContext ?? "")")            }
+                print("Contexts: \(debugContext ?? "")")
+            }
+            call.resolve(contexts as PluginResultData)
         }
-        call.resolve(context)
     }
 
     @objc func setUser(_ call: CAPPluginCall) {
