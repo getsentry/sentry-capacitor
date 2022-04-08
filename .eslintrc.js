@@ -27,6 +27,8 @@ module.exports = {
       files: ['*.test.ts', '*.test.js'],
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
       },
     },
     {
