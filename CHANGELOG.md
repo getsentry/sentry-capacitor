@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Features
+
+- Add iOS metadata to JavaScript events ([#161](https://github.com/getsentry/sentry-capacitor/pull/161))
+
 ### Fixes
 
 - build(javascript): Bump sentry-javascript, sentry-vue, sentry-react and sentry-angular dependencies to `6.19.2`. ([#159](https://github.com/getsentry/sentry-capacitor/pull/159))

@@ -7,16 +7,20 @@ interface serializedObject {
   [key: string]: string;
 }
 
+export type NativeDeviceContextsResponse = {
+  [key: string]: Record<string, unknown>;
+};
+
 export interface ISentryCapacitorPlugin {
   addBreadcrumb(breadcrumb: Breadcrumb): void;
   captureEnvelope(payload: {
     envelope:
-      | string
-      | {
-          header: Record<string, unknown>;
-          item: Record<string, unknown>;
-          payload: Record<string, unknown>;
-        };
+    | string
+    | {
+      header: Record<string, unknown>;
+      item: Record<string, unknown>;
+      payload: Record<string, unknown>;
+    };
   }): PromiseLike<Response>;
   clearBreadcrumbs(): void;
   crash(): void;
@@ -26,6 +30,7 @@ export interface ISentryCapacitorPlugin {
     version: string;
   }>;
   fetchNativeSdkInfo(): Promise<Package>;
+  fetchNativeDeviceContexts(): PromiseLike<NativeDeviceContextsResponse>;
   getStringBytesLength(payload: { string: string }): Promise<{ value: number }>;
   initNativeSdk(payload: { options: CapacitorOptions }): Promise<boolean>;
   setUser(payload: {

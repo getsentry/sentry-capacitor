@@ -37,6 +37,13 @@ jest.mock('../src/plugin', () => {
           version: '0.0.1',
         }),
       ),
+      fetchNativeDeviceContexts: jest.fn(() =>
+        Promise.resolve({
+          someContext: {
+            someValue: 0,
+          },
+        })
+      ),
       getStringBytesLength: jest.fn(() =>
         Promise.resolve({
           value: getStringBytesLengthValue,
@@ -492,6 +499,29 @@ describe('Tests Native Wrapper', () => {
   describe('isNativeClientAvailable', () => {
     test('checks if native client is available', () => {
       expect(NATIVE.isNativeClientAvailable()).toBe(true);
+    });
+  });
+
+  describe('deviceContexts', () => {
+    test('returns context object from native module on ios', async () => {
+      NATIVE.platform = 'ios';
+
+      await expect(NATIVE.fetchNativeDeviceContexts()).resolves.toMatchObject({
+        someContext: {
+          someValue: 0,
+        },
+      });
+
+      expect(SentryCapacitor.fetchNativeDeviceContexts).toBeCalled();
+    });
+    test('returns empty object on android', async () => {
+      NATIVE.platform = 'android';
+
+      await expect(NATIVE.fetchNativeDeviceContexts()).resolves.toMatchObject(
+        {}
+      );
+
+      expect(SentryCapacitor.fetchNativeDeviceContexts).not.toBeCalled();
     });
   });
 });
