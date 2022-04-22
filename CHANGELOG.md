@@ -8,6 +8,7 @@
 
 ### Fixes
 
+- Stack Trace when using localhost could get the wrong filename ([#162](https://github.com/getsentry/sentry-capacitor/pull/162))
 - build(javascript): Bump sentry-javascript, sentry-vue, sentry-react and sentry-angular dependencies to `6.19.2`. ([#159](https://github.com/getsentry/sentry-capacitor/pull/159))
   - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/6.19.2)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/6.17.4...6.19.2)
