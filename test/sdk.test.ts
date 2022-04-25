@@ -1,4 +1,6 @@
-import { BrowserOptions } from '@sentry/browser';
+import { BrowserOptions, StackFrame } from '@sentry/browser';
+import { RewriteFrames } from '@sentry/integrations';
+import { Integration } from '@sentry/types';
 
 import { CapacitorOptions } from '../src';
 import { init } from '../src/sdk';
@@ -29,67 +31,67 @@ describe('SDK Init', () => {
       enableAutoSessionTracking: boolean;
     },
   ]> = [
-    [
-      'Uses default options on web',
-      'web',
-      { dsn: '' },
-      true,
-      {
-        enableNative: false,
-        enableAutoSessionTracking: false,
-      },
-    ],
-    [
-      'Uses default options on ios',
-      'ios',
-      { dsn: '' },
-      false,
-      {
-        enableNative: true,
-        enableAutoSessionTracking: true,
-      },
-    ],
-    [
-      'Uses default options on android',
-      'android',
-      { dsn: '' },
-      false,
-      {
-        enableNative: true,
-        enableAutoSessionTracking: true,
-      },
-    ],
-    [
-      'enableAutoSessionTracking sets autoSessionTracking on web',
-      'web',
-      { dsn: '', enableAutoSessionTracking: false },
-      false,
-      {
-        enableNative: false,
-        enableAutoSessionTracking: false,
-      },
-    ],
-    [
-      'enableAutoSessionTracking sets enableAutoSessionTracking on android',
-      'android',
-      { dsn: '', enableAutoSessionTracking: false },
-      false,
-      {
-        enableNative: true,
-        enableAutoSessionTracking: false,
-      },
-    ],
-    [
-      'enableAutoSessionTracking sets enableAutoSessionTracking on ios',
-      'ios',
-      { dsn: '', enableAutoSessionTracking: false },
-      false,
-      {
-        enableNative: true,
-        enableAutoSessionTracking: false,
-      },
-    ],
-  ];
+      [
+        'Uses default options on web',
+        'web',
+        { dsn: '' },
+        true,
+        {
+          enableNative: false,
+          enableAutoSessionTracking: false,
+        },
+      ],
+      [
+        'Uses default options on ios',
+        'ios',
+        { dsn: '' },
+        false,
+        {
+          enableNative: true,
+          enableAutoSessionTracking: true,
+        },
+      ],
+      [
+        'Uses default options on android',
+        'android',
+        { dsn: '' },
+        false,
+        {
+          enableNative: true,
+          enableAutoSessionTracking: true,
+        },
+      ],
+      [
+        'enableAutoSessionTracking sets autoSessionTracking on web',
+        'web',
+        { dsn: '', enableAutoSessionTracking: false },
+        false,
+        {
+          enableNative: false,
+          enableAutoSessionTracking: false,
+        },
+      ],
+      [
+        'enableAutoSessionTracking sets enableAutoSessionTracking on android',
+        'android',
+        { dsn: '', enableAutoSessionTracking: false },
+        false,
+        {
+          enableNative: true,
+          enableAutoSessionTracking: false,
+        },
+      ],
+      [
+        'enableAutoSessionTracking sets enableAutoSessionTracking on ios',
+        'ios',
+        { dsn: '', enableAutoSessionTracking: false },
+        false,
+        {
+          enableNative: true,
+          enableAutoSessionTracking: false,
+        },
+      ],
+    ];
 
   it.each(table)('%s', (...test) => {
     NATIVE.platform = test[1];
@@ -155,4 +157,94 @@ describe('SDK Init', () => {
     });
   });
 
+  describe('RewriteFrames tests', () => {
+    // [test name, options, assert stack frame, expected stack frame]
+    const table: Array<[
+      string,
+      CapacitorOptions,
+      StackFrame,
+      StackFrame,
+    ]> = [
+        [
+          'format localhost',
+          { dsn: '', enableNative: false },
+          { filename: 'http://localhost/file.js' },
+          {
+            filename: '/file.js',
+            in_app: true
+          }
+        ],
+        [
+          'format secure localhost',
+          { dsn: '', enableNative: false },
+          { filename: 'https://localhost/file.js' },
+          {
+            filename: '/file.js',
+            in_app: true
+          }
+        ],
+        [
+          'format localhost with port',
+          { dsn: '', enableNative: false },
+          { filename: 'https://localhost:8080/file.js' },
+          {
+            filename: '/file.js',
+            in_app: true
+          }
+        ],
+        [
+          'format ip address',
+          { dsn: '', enableNative: false },
+          { filename: 'https://127.0.0.1/file.js' },
+          {
+            filename: 'https://127.0.0.1/file.js',
+            in_app: true
+          }
+        ],        [
+          'format ng url',
+          { dsn: '', enableNative: false },
+          { filename: 'ng://file.js' },
+          {
+            filename: 'app:///file.js',
+            in_app: true
+          }
+        ],
+        [
+          'format capacitor',
+          { dsn: '', enableNative: false },
+          { filename: 'capacitor://localhost:8080/file.js' },
+          {
+            filename: 'app:///file.js',
+            in_app: true
+          }
+        ],
+        [
+          'format native code',
+          { dsn: '', enableNative: false },
+          { filename: '[native code]' },
+          {
+            filename: '[native code]',
+            in_app: false
+          }
+        ],
+      ];
+
+    it.each(table)('%s', (...test) => {
+      let integrations = null as Integration[] | null;
+      const frame = test[2];
+      const expectedFrame = test[3];
+
+      init(test[1], (capacitorOptions: CapacitorOptions) => {
+        integrations = capacitorOptions.defaultIntegrations as Integration[] | null;
+      });
+      // eslint-disable-next-line @typescript-eslint/typedef
+      const frameIntegration = integrations?.filter(function (integration) {
+        return integration instanceof RewriteFrames;
+      })[0] as RewriteFrames;
+
+      frameIntegration.process({ stacktrace: { frames: [frame] } });
+      expect(frame.filename).toBe(expectedFrame.filename);
+      expect(frame.in_app).toBe(expectedFrame.in_app);
+    });
+  });
 });

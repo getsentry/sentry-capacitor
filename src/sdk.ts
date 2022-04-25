@@ -45,13 +45,14 @@ export function init<O>(
     new RewriteFrames({
       iteratee: (frame: StackFrame) => {
         if (frame.filename) {
+          const isReachableHost = /^https?:\/\//.test(frame.filename);
+
           frame.filename = frame.filename
-            .replace(/^https?:\/\/localhost/, '')
+            .replace(/^https?:\/\/localhost(:\d+)?/, '')
             .replace(/^ng:\/\//, '')
-            .replace(/^capacitor:\/\/localhost/, '');
+            .replace(/^capacitor:\/\/localhost(:\d+)?/, '');
 
           const isNativeFrame = frame.filename === '[native code]' || frame.filename === 'native';
-          const isReachableHost = /^https?:\/\//.test(frame.filename);
 
           if (!isNativeFrame) {
             // We don't need to use `app://` protocol for http(s) based hosts
