@@ -53,3 +53,27 @@ yarn test
 # Or the watcher when writing tests:
 yarn test:watch
 ```
+
+## Changelog
+
+We'd love for users to update the SDK everytime and as soon as we make a new release. But in reality most users rarely update the SDK.
+To help users see value in updating the SDK, we maintain a changelog file with entries split between two headings:
+
+1. `### Features` 
+2. `### Fixes`
+
+We add the heading in the first PR that's adding either a feature or fixes in the current release.
+After a release, the [changelog file will contain only the last release entries](https://github.com/getsentry/sentry-capacitor/blob/main/CHANGELOG.md).
+
+When you open a PR in such case, you need to add a heading 2 named `## Unreleased`, which is replaced during release with the version number chosen.
+Below that, you'll add the heading 3 mentioned above. For example, if you're adding a feature "Attach screenshots when capturing errors on iOS", right after a release, and the pull request number is `123`, you'd add to the changelog:
+
+```
+## Unreleased
+
+### Features
+
+* Attach screenshots when capturing errors on iOS ([#123](https://github.com/getsentry/sentry-capacitor/pull/123))
+```
+
+There's a GitHub action check to verify if an entry was added. If the entry isn't a user-facing change, you can skip the verification with `#skip-changelog` written to the PR description. The bot writes a comment in the PR with a suggestion entry to the changelog based on the PR title.
