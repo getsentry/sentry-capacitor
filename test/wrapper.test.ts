@@ -91,9 +91,9 @@ describe('Tests Native Wrapper', () => {
 
       const nativeOption = initNativeSdk.mock.calls[0][0].options;
       expect(SentryCapacitor.initNativeSdk).toBeCalledTimes(1);
-      // @ts-ignore
+      // @ts-ignore Not part of Capacitor Options but it is extended by Vue Options.
       expect(nativeOption.app).toBeUndefined();
-      // @ts-ignore
+      // @ts-ignore Not part of Capacitor Options but it is extended by Vue Options.
       expect(nativeOption.vue).toBeUndefined();
 
       expect(initNativeSdk).toBeCalled();
