@@ -86,14 +86,14 @@ describe('Tests Native Wrapper', () => {
 
       const initNativeSdk = jest.spyOn(SentryCapacitor, 'initNativeSdk');
 
-      //@ts-ignore ignore app and vue since they are part of Sentry/Vue and not Capacitor.
+      // @ts-ignore ignore app and vue since they are part of Sentry/Vue and not Capacitor.
       await NATIVE.initNativeSdk({ dsn: 'test', enableNative: true, app: 'test', vue: 'test' });
 
       const nativeOption = initNativeSdk.mock.calls[0][0].options;
       expect(SentryCapacitor.initNativeSdk).toBeCalledTimes(1);
-      //@ts-ignore
+      // @ts-ignore
       expect(nativeOption.app).toBeUndefined();
-      //@ts-ignore
+      // @ts-ignore
       expect(nativeOption.vue).toBeUndefined();
 
       expect(initNativeSdk).toBeCalled();
