@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- Fix Vue not working on iOS ([#170](https://github.com/getsentry/sentry-capacitor/pull/170))
+
 ## 0.6.0
 
 ### Features

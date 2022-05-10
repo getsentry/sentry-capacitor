@@ -82,6 +82,23 @@ describe('Tests Native Wrapper', () => {
       expect(SentryCapacitor.initNativeSdk).toBeCalled();
     });
 
+    test('Vue options to be removed', async () => {
+
+      const initNativeSdk = jest.spyOn(SentryCapacitor, 'initNativeSdk');
+
+      // @ts-ignore ignore app and vue since they are part of Sentry/Vue and not Capacitor.
+      await NATIVE.initNativeSdk({ dsn: 'test', enableNative: true, app: 'test', vue: 'test' });
+
+      const nativeOption = initNativeSdk.mock.calls[0][0].options;
+      expect(SentryCapacitor.initNativeSdk).toBeCalledTimes(1);
+      // @ts-ignore Not part of Capacitor Options but it is extended by Vue Options.
+      expect(nativeOption.app).toBeUndefined();
+      // @ts-ignore Not part of Capacitor Options but it is extended by Vue Options.
+      expect(nativeOption.vue).toBeUndefined();
+
+      expect(initNativeSdk).toBeCalled();
+    });
+
     test('warns if there is no dsn', async () => {
       SentryCapacitor.initNativeSdk = jest.fn();
       logger.warn = jest.fn();
