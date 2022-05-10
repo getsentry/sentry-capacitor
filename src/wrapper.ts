@@ -106,6 +106,10 @@ export const NATIVE = {
     // filter out all options that would crash native
     /* eslint-disable @typescript-eslint/unbound-method, @typescript-eslint/no-unused-vars */
     const {
+      // @ts-ignore Vue specific option.
+      app,
+      // @ts-ignore Vue specific option.
+      vue,
       beforeSend,
       beforeBreadcrumb,
       integrations,
