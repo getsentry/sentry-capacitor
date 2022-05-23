@@ -188,7 +188,7 @@ public class SentryCapacitor extends Plugin {
     }
 
     @PluginMethod
-    public void crash() {
+    public void crash(PluginCall call) {
         throw new RuntimeException("TEST - Sentry Client Crash (only works in release mode)");
     }
 
