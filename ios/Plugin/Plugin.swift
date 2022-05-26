@@ -155,7 +155,7 @@ public class SentryCapacitor: CAPPlugin {
                 }
                 print("Contexts: \(debugContext ?? "")")
             }
-            call.resolve(contexts as PluginResultData)
+            call.resolve(contexts as PluginCallResultData)
         }
     }
 
