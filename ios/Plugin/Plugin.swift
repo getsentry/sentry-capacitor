@@ -92,7 +92,7 @@ public class SentryCapacitor: CAPPlugin {
     @objc func getStringBytesLength(_ call: CAPPluginCall) {
         let payloadSize = call.getString("string")?.utf8.count
         if (payloadSize != nil) {
-            call.resolve(["value": payloadSize])
+            call.resolve(["value": payloadSize!])
         }
         else {
             call.reject("Coud not calculate string length.")
