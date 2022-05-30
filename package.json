@@ -59,9 +59,7 @@
     "@sentry/integrations": "6.19.2",
     "@sentry/tracing": "6.19.2",
     "@sentry/types": "6.19.2",
-    "@sentry/utils": "6.19.2",
-    "@sentry/wizard": "^1.1.4",
-    "promise": "^8.1.0"
+    "@sentry/utils": "6.19.2"
   },
   "devDependencies": {
     "@capacitor/android": "^3.0.1",
