@@ -227,6 +227,24 @@ describe('SDK Init', () => {
             in_app: false
           }
         ],
+        [
+          'in_app if js has polyfills',
+          { dsn: '', enableNative: false },
+          { filename: 'http://localhost/polyfills.js' },
+          {
+            filename: '/polyfills.js',
+            in_app: true
+          }
+        ],
+        [
+          'in_app if js has minified polyfills',
+          { dsn: '', enableNative: false },
+          { filename: 'http://localhost/polyfills.be636cf4b87265b8f6d0.js' },
+          {
+            filename: '/polyfills.be636cf4b87265b8f6d0.js',
+            in_app: true
+          }
+        ]
       ];
 
     it.each(table)('%s', (...test) => {
