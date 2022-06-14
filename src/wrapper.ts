@@ -25,7 +25,7 @@ export const NATIVE = {
 
     const header = envelope[0];
 
-    if (NATIVE.platform === "android") {
+    if (NATIVE.platform === 'android') {
       const headerString = JSON.stringify(header);
 
       let envelopeItemsBuilder = `${headerString}`;
