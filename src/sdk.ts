@@ -9,7 +9,7 @@ import { RewriteFrames } from '@sentry/integrations';
 import { DeviceContext, EventOrigin, SdkInfo } from './integrations';
 import { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
-import { NativeTransport } from './transports/native';
+import { makeCapacitorTransport } from './transports/native';
 import { NATIVE } from './wrapper';
 
 /**
@@ -79,7 +79,7 @@ export function init<O>(
     finalOptions.defaultIntegrations.push(new DeviceContext());
 
     if (!options.transport) {
-      finalOptions.transport = NativeTransport;
+      finalOptions.transport = options.transport || makeCapacitorTransport;
     }
   }
 

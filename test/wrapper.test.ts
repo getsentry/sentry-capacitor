@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { Severity } from '@sentry/types';
+import { SeverityLevel } from '@sentry/types';
 import { logger } from '@sentry/utils';
 
 import { NATIVE } from '../src/wrapper';
@@ -501,15 +501,15 @@ describe('Tests Native Wrapper', () => {
 
   describe('_processLevel', () => {
     test('converts deprecated levels', () => {
-      expect(NATIVE._processLevel(Severity.Log)).toBe(Severity.Debug);
-      expect(NATIVE._processLevel(Severity.Critical)).toBe(Severity.Fatal);
+      expect(NATIVE._processLevel('log' as SeverityLevel)).toBe('debug' as SeverityLevel);
+      expect(NATIVE._processLevel('critical' as SeverityLevel)).toBe('fatal' as SeverityLevel);
     });
     test('returns non-deprecated levels', () => {
-      expect(NATIVE._processLevel(Severity.Debug)).toBe(Severity.Debug);
-      expect(NATIVE._processLevel(Severity.Fatal)).toBe(Severity.Fatal);
-      expect(NATIVE._processLevel(Severity.Info)).toBe(Severity.Info);
-      expect(NATIVE._processLevel(Severity.Warning)).toBe(Severity.Warning);
-      expect(NATIVE._processLevel(Severity.Error)).toBe(Severity.Error);
+      expect(NATIVE._processLevel('debug' as SeverityLevel)).toBe('debug' as SeverityLevel);
+      expect(NATIVE._processLevel('fatal' as SeverityLevel)).toBe('fatal' as SeverityLevel);
+      expect(NATIVE._processLevel('info' as SeverityLevel)).toBe('info' as SeverityLevel);
+      expect(NATIVE._processLevel('warning' as SeverityLevel)).toBe('warning' as SeverityLevel);
+      expect(NATIVE._processLevel('error' as SeverityLevel)).toBe('error' as SeverityLevel);
     });
   });
 

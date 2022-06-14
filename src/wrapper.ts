@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { Capacitor } from '@capacitor/core';
-import { Breadcrumb, Event, Response, Severity, User } from '@sentry/types';
+import { AttachmentItem, BaseEnvelopeItemHeaders, Breadcrumb, ClientReportItem, Envelope, Event, EventItem, SessionItem, SeverityLevel, User, UserFeedbackItem } from '@sentry/types';
 import { dropUndefinedKeys, logger, SentryError } from '@sentry/utils';
 
 import { NativeDeviceContextsResponse } from './definitions';
@@ -15,7 +15,7 @@ export const NATIVE = {
    * Sending the event over the bridge to native
    * @param event Event
    */
-  async sendEvent(_event: Event): Promise<Response> {
+  async sendEnvelope(envelope: Envelope): Promise<void> {
     if (!this.enableNative) {
       throw this._DisabledNativeError;
     }
@@ -23,60 +23,80 @@ export const NATIVE = {
       throw this._NativeClientError;
     }
 
-    const event = this._processLevels(_event);
-
-    // Delete this metadata as this should not be sent to Sentry.
-    delete event.sdkProcessingMetadata;
+    const header = envelope[0];
 
     if (NATIVE.platform === "android") {
-      /*
+      const headerString = JSON.stringify(header);
+
+      let envelopeItemsBuilder = `${headerString}`;
+
+      for (const envelopeItems of envelope[1]) {
+
+        const event = this._getEvent(envelopeItems);
+        if (event != undefined) {
+
+          // @ts-ignore Android still uses the old message object, without this the serialization of events will break.
+          event.message = { message: event.message };
+
+          /*
         We do this to avoid duplicate breadcrumbs on Android as sentry-android applies the breadcrumbs
         from the native scope onto every envelope sent through it. This scope will contain the breadcrumbs
         sent through the scope sync feature. This causes duplicate breadcrumbs.
         We then remove the breadcrumbs in all cases but if it is handled == false,
         this is a signal that the app would crash and android would lose the breadcrumbs by the time the app is restarted to read
         the envelope.
-      */
-      if (event.exception?.values?.[0]?.mechanism?.handled != false && event.breadcrumbs) {
-        event.breadcrumbs = [];
+          */
+          if (event.exception?.values?.[0]?.mechanism?.handled != false && event.breadcrumbs) {
+            event.breadcrumbs = [];
+          }
+          envelopeItems[1] = event;
+        }
+
+        // Content type is not inside BaseEnvelopeItemHeaders.
+        (envelopeItems[0] as BaseEnvelopeItemHeaders).content_type = 'application/json';
+
+        const itemPayload = JSON.stringify(envelopeItems[1]);
+
+        let length = itemPayload.length;
+        try {
+          await SentryCapacitor.getStringBytesLength({ string: itemPayload }).then(
+            resp => {
+              length = resp.value;
+            })
+        } catch {
+          // The native call failed, we do nothing, we have payload.length as a fallback
+        }
+
+        (envelopeItems[0] as BaseEnvelopeItemHeaders).length = length;
+        const itemHeader = JSON.stringify(envelopeItems[0]);
+
+        envelopeItemsBuilder += `\n${itemHeader}\n${itemPayload}`;
+      }
+      await SentryCapacitor.captureEnvelope({ envelope: envelopeItemsBuilder });
+
+    }
+    else {
+      // iOS/Mac
+
+      for (const envelopeItems of envelope[1]) {
+        const event = this._getEvent(envelopeItems);
+        if (event != undefined) {
+          envelopeItems[1] = event;
+        }
+
+        const itemPayload = JSON.parse(JSON.stringify(envelopeItems[1]));
+
+        // The envelope item is created (and its length determined) on the iOS side of the native bridge.
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      await SentryCapacitor.captureEnvelope({
+        envelope: {
+        header: header,
+        payload: itemPayload,
+        }
+      });
+
       }
     }
-
-    const header = {
-      event_id: event.event_id,
-      sdk: event.sdk,
-    };
-
-    const payload = {
-      ...event,
-      message: {
-        message: event.message,
-      },
-    };
-
-    const headerString: string = JSON.stringify(header);
-    const payloadString: string = JSON.stringify(payload);
-    let length = payloadString.length;
-    try {
-      await SentryCapacitor.getStringBytesLength({ string: payloadString }).then(
-        resp => {
-          length = resp.value;
-        },
-      );
-    } catch {
-      // The native call failed, we do nothing, we have payload.length as a fallback
-    }
-
-    const item = {
-      content_type: 'application/json',
-      length,
-      type: payload.type ?? 'event',
-    };
-
-    const itemString = JSON.stringify(item);
-
-    const envelopeString = `${headerString}\n${itemString}\n${payloadString}`;
-    return SentryCapacitor.captureEnvelope({ envelope: envelopeString });
   },
 
   /**
@@ -317,6 +337,17 @@ export const NATIVE = {
     }
   },
 
+    /**
+   * Gets the event from envelopeItem and applies the level filter to the selected event.
+   * @param data An envelope item containing the event.
+   * @returns The event from envelopeItem or undefined.
+   */
+     _getEvent(envelopeItem: EventItem | AttachmentItem | UserFeedbackItem | SessionItem | ClientReportItem): Event | undefined {
+      if (envelopeItem[0].type == 'event' || envelopeItem[0].type == 'transaction') {
+        return this._processLevels(envelopeItem[1] as Event);
+      }
+      return undefined;
+  },
   /**
    * Serializes all values of root-level keys into strings.
    * @param data key-value map.
@@ -361,16 +392,18 @@ export const NATIVE = {
    * @param level
    * @returns More widely supported Severity level strings
    */
-  _processLevel(level: Severity): Severity {
-    if (level === Severity.Critical) {
-      return Severity.Fatal;
+
+   _processLevel(level: SeverityLevel): SeverityLevel {
+    if (level == 'log' as SeverityLevel) {
+      return 'debug' as SeverityLevel;
     }
-    if (level === Severity.Log) {
-      return Severity.Debug;
+    else if (level == 'critical' as SeverityLevel) {
+      return 'fatal' as SeverityLevel;
     }
 
     return level;
   },
+
 
   /**
    * Checks whether the SentryCapacitor module is loaded.

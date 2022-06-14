@@ -1,4 +1,4 @@
-import { Breadcrumb, Package, Response } from '@sentry/types';
+import { Breadcrumb, Package } from '@sentry/types';
 
 import { CapacitorOptions } from './options';
 
@@ -18,7 +18,6 @@ export interface ISentryCapacitorPlugin {
     | string
     | {
       header: Record<string, unknown>;
-      item: Record<string, unknown>;
       payload: Record<string, unknown>;
     };
   }): PromiseLike<Response>;
