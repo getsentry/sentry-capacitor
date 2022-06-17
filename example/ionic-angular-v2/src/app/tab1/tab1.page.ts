@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import * as Sentry from '@sentry/capacitor';
+import { SeverityLevel } from '@sentry/types';
 
 @Component({
   selector: 'app-tab1',
@@ -90,23 +91,23 @@ export class Tab1Page {
     });
 
     Sentry.addBreadcrumb({
-      level: Sentry.Severity.Info,
+      level: 'info' as SeverityLevel,
       message: `TEST-BREADCRUMB-INFO: ${dateString}`,
     });
     Sentry.addBreadcrumb({
-      level: Sentry.Severity.Debug,
+      level: 'debug' as SeverityLevel,
       message: `TEST-BREADCRUMB-DEBUG: ${dateString}`,
     });
     Sentry.addBreadcrumb({
-      level: Sentry.Severity.Error,
+      level: 'error' as SeverityLevel,
       message: `TEST-BREADCRUMB-ERROR: ${dateString}`,
     });
     Sentry.addBreadcrumb({
-      level: Sentry.Severity.Fatal,
+      level: 'fatal' as SeverityLevel,
       message: `TEST-BREADCRUMB-FATAL: ${dateString}`,
     });
     Sentry.addBreadcrumb({
-      level: Sentry.Severity.Info,
+      level: 'info' as SeverityLevel,
       message: `TEST-BREADCRUMB-DATA: ${dateString}`,
       data: {
         stringTest: 'Hello',

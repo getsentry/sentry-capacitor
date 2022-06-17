@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { SeverityLevel } from '@sentry/types';
-import { logger } from '@sentry/utils';
+import { Envelope, EventEnvelope, EventItem, SeverityLevel } from '@sentry/types';
+import { createEnvelope, logger } from '@sentry/utils';
 
 import { NATIVE } from '../src/wrapper';
 
@@ -130,7 +130,7 @@ describe('Tests Native Wrapper', () => {
     });
   });
 
-  describe('sendEvent', () => {
+  describe('sendEnvelope', () => {
     test('calls getStringBytesLength and captureEnvelope', async () => {
       const expectedNativeLength = 101;
       getStringBytesLengthValue = expectedNativeLength;
@@ -144,36 +144,39 @@ describe('Tests Native Wrapper', () => {
         },
       };
 
-      const payload = JSON.stringify({
+      const expectedHeader = JSON.stringify({
+        event_id: event.event_id,
+        sent_at: '123'
+      });
+      const expectedItem = JSON.stringify({
+        type: 'event',
+        content_type: 'application/json',
+        length: expectedNativeLength,
+      });
+      const expectedPayload = JSON.stringify({
         ...event,
         message: {
           message: event.message,
         },
       });
 
-      const header = JSON.stringify({
-        event_id: event.event_id,
-        sdk: event.sdk,
-      });
+      const expectedEnvelope = `${expectedHeader}\n${expectedItem}\n${expectedPayload}`;
 
-      const item = JSON.stringify({
-        content_type: 'application/json',
-        length: expectedNativeLength,
-        type: 'event',
-      });
+      const env = createEnvelope<EventEnvelope>({ event_id: event.event_id, sent_at: '123' }, [
+        [{ type: 'event' }, event] as EventItem,
+      ]);
 
-      const response = {
-        envelope: `${header}\n${item}\n${payload}`,
-      };
+      await NATIVE.sendEnvelope(env);
 
-      await expect(NATIVE.sendEvent(event)).resolves.toMatchObject(response);
+      expect(SentryCapacitor.captureEnvelope).toBeCalledWith({ envelope: expectedEnvelope });
     });
 
     test('does not call Capacitor at all if enableNative is false', async () => {
       try {
         await NATIVE.initNativeSdk({ dsn: 'test-dsn', enableNative: false });
-        await NATIVE.sendEvent({});
+        await NATIVE.sendEnvelope({} as Envelope);
       } catch (error) {
+        // @ts-ignore it is an error.
         expect(error.message).toMatch('Native is disabled');
       }
 
@@ -181,35 +184,15 @@ describe('Tests Native Wrapper', () => {
       expect(SentryCapacitor.captureEnvelope).not.toBeCalled();
     });
 
-    test('does not include sdkProcessingMetadata on event sent', async () => {
+    test('Clears breadcrumbs on Android if there is no exception', async () => {
+      NATIVE.platform = 'android';
+
       const event = {
         event_id: 'event0',
-        message: 'test©',
-        sdk: {
-          name: 'test-sdk-name',
-          version: '1.2.3',
-        },
-        sdkProcessingMetadata: ["uneeeded data.", "xz"]
-      };
-      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
-
-      await NATIVE.initNativeSdk({ dsn: 'test-dsn', enableNative: true });
-      await NATIVE.sendEvent(event);
-
-      expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
-      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toContain(event.event_id);
-      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).not.toContain('sdkProcessingMetadata');
-    });
-
-    test("Clears breadcrumbs on Android if there is no exception", async () => {
-      NATIVE.platform = "android";
-
-      const event = {
-        event_id: "event0",
-        message: "test",
+        message: 'test',
         breadcrumbs: [
           {
-            message: "crumb!",
+            message: 'crumb!',
           },
         ],
         sdk: {
@@ -218,41 +201,45 @@ describe('Tests Native Wrapper', () => {
         },
       };
 
-      const payload = JSON.stringify({
+      const expectedHeader = JSON.stringify({
+        event_id: event.event_id,
+        sent_at: '123'
+      });
+      const expectedItem = JSON.stringify({
+        type: 'event',
+        content_type: 'application/json',
+        length: 1,
+      });
+      const expectedPayload = JSON.stringify({
         ...event,
         breadcrumbs: [],
         message: {
           message: event.message,
         },
       });
-      const header = JSON.stringify({
-        event_id: event.event_id,
-        sdk: event.sdk,
-      });
-      const item = JSON.stringify({
-        content_type: "application/json",
-        length: 1,
-        type: "event",
-      });
+
+      const env = createEnvelope<EventEnvelope>({ event_id: event.event_id, sent_at: '123' }, [
+        [{ type: 'event' }, event] as EventItem,
+      ]);
 
       const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
 
-      await NATIVE.sendEvent(event);
+      await NATIVE.sendEnvelope(env);
 
       expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
       expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toMatch(
-        `${header}\n${item}\n${payload}`);
+        `${expectedHeader}\n${expectedItem}\n${expectedPayload}`);
     });
 
-    test("Clears breadcrumbs on Android if there is a handled exception", async () => {
-      NATIVE.platform = "android";
+    test('Clears breadcrumbs on Android if there is a handled exception', async () => {
+      NATIVE.platform = 'android';
 
       const event = {
-        event_id: "event0",
-        message: "test",
+        event_id: 'event0',
+        message: 'test',
         breadcrumbs: [
           {
-            message: "crumb!",
+            message: 'crumb!',
           },
         ],
         exception: {
@@ -268,7 +255,20 @@ describe('Tests Native Wrapper', () => {
         },
       };
 
-      const payload = JSON.stringify({
+      const env = createEnvelope<EventEnvelope>({ event_id: event.event_id, sent_at: '123' }, [
+        [{ type: 'event' }, event] as EventItem,
+      ]);
+
+      const expectedHeader = JSON.stringify({
+        event_id: event.event_id,
+        sent_at: '123'
+      });
+      const expectedItem = JSON.stringify({
+        type: 'event',
+        content_type: 'application/json',
+        length: 1,
+      });
+      const expectedPayload = JSON.stringify({
         ...event,
         breadcrumbs: [],
         message: {
@@ -282,34 +282,25 @@ describe('Tests Native Wrapper', () => {
           }]
         }
       });
-      const header = JSON.stringify({
-        event_id: event.event_id,
-        sdk: event.sdk,
-      });
-      const item = JSON.stringify({
-        content_type: "application/json",
-        length: 1,
-        type: "event",
-      });
 
       const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
 
-      await NATIVE.sendEvent(event);
+      await NATIVE.sendEnvelope(env);
 
       expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
       expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toMatch(
-        `${header}\n${item}\n${payload}`);
+        `${expectedHeader}\n${expectedItem}\n${expectedPayload}`);
     });
 
-    test("Clears breadcrumbs on Android if there is a handled exception", async () => {
-      NATIVE.platform = "android";
+    test('Clears breadcrumbs on Android if there is a handled exception', async () => {
+      NATIVE.platform = 'android';
 
       const event = {
-        event_id: "event0",
-        message: "test",
+        event_id: 'event0',
+        message: 'test',
         breadcrumbs: [
           {
-            message: "crumb!",
+            message: 'crumb!',
           },
         ],
         exception: {
@@ -325,11 +316,20 @@ describe('Tests Native Wrapper', () => {
         },
       };
 
-      const payload = JSON.stringify({
+      const expectedHeader = JSON.stringify({
+        event_id: event.event_id,
+        sent_at: '123'
+      });
+      const expectedItem = JSON.stringify({
+        type: 'event',
+        content_type: 'application/json',
+        length: 1,
+      });
+      const expectedPayload = JSON.stringify({
         ...event,
         breadcrumbs: [
           {
-            message: "crumb!",
+            message: 'crumb!',
           },
         ],
         message: {
@@ -343,29 +343,24 @@ describe('Tests Native Wrapper', () => {
           }]
         }
       });
-      const header = JSON.stringify({
-        event_id: event.event_id,
-        sdk: event.sdk,
-      });
-      const item = JSON.stringify({
-        content_type: "application/json",
-        length: 1,
-        type: "event",
-      });
+
+      const env = createEnvelope<EventEnvelope>({ event_id: event.event_id, sent_at: '123' }, [
+        [{ type: 'event' }, event] as EventItem,
+      ]);
 
       const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
 
-      await NATIVE.sendEvent(event);
+      await NATIVE.sendEnvelope(env);
 
       expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
       expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toMatch(
-        `${header}\n${item}\n${payload}`);
+        `${expectedHeader}\n${expectedItem}\n${expectedPayload}`);
     });
   });
 
   // TODO add this in when fetchRelease method is in progress
-  // describe("fetchRelease", () => {
-  //   test("fetches the release from native", async () => {
+  // describe('fetchRelease', () => {
+  //   test('fetches the release from native', async () => {
   //     await expect(NATIVE.fetchRelease()).resolves.toMatchObject({
   //       build: '0.0.1',
   //       id: 'test-mock',

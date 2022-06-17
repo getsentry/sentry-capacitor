@@ -90,23 +90,23 @@ export class Tab1Page {
     });
 
     Sentry.addBreadcrumb({
-      level: Sentry.Severity.Info,
+      level: 'info' as Sentry.SeverityLevel,
       message: `TEST-BREADCRUMB-INFO: ${dateString}`,
     });
     Sentry.addBreadcrumb({
-      level: Sentry.Severity.Debug,
+      level: 'debug' as Sentry.SeverityLevel,
       message: `TEST-BREADCRUMB-DEBUG: ${dateString}`,
     });
     Sentry.addBreadcrumb({
-      level: Sentry.Severity.Error,
+      level: 'error' as Sentry.SeverityLevel,
       message: `TEST-BREADCRUMB-ERROR: ${dateString}`,
     });
     Sentry.addBreadcrumb({
-      level: Sentry.Severity.Fatal,
+      level: 'fatal' as Sentry.SeverityLevel,
       message: `TEST-BREADCRUMB-FATAL: ${dateString}`,
     });
     Sentry.addBreadcrumb({
-      level: Sentry.Severity.Info,
+      level: 'info' as Sentry.SeverityLevel,
       message: `TEST-BREADCRUMB-DATA: ${dateString}`,
       data: {
         stringTest: 'Hello',
@@ -121,6 +121,7 @@ export class Tab1Page {
       category: 'TEST-CATEGORY',
     });
 
+    // eslint-disable-next-line no-console
     console.log('Test scope properties were set.');
   }
 
