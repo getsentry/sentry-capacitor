@@ -25,16 +25,15 @@ export const NATIVE = {
 
     const header = envelope[0];
 
-    if (NATIVE.platform === 'android') {
-      const headerString = JSON.stringify(header);
+    const headerString = JSON.stringify(header);
 
-      let envelopeItemsBuilder = `${headerString}`;
+    let envelopeItemsBuilder = `${headerString}`;
 
-      for (const envelopeItems of envelope[1]) {
+    for (const envelopeItems of envelope[1]) {
 
-        const event = this._getEvent(envelopeItems);
-        if (event != undefined) {
-
+      const event = this._getEvent(envelopeItems);
+      if (event != undefined) {
+        if (NATIVE.platform === 'android') {
           // @ts-ignore Android still uses the old message object, without this the serialization of events will break.
           event.message = { message: event.message };
 
@@ -49,54 +48,31 @@ export const NATIVE = {
           if (event.exception?.values?.[0]?.mechanism?.handled != false && event.breadcrumbs) {
             event.breadcrumbs = [];
           }
-          envelopeItems[1] = event;
         }
-
-        // Content type is not inside BaseEnvelopeItemHeaders.
-        (envelopeItems[0] as BaseEnvelopeItemHeaders).content_type = 'application/json';
-
-        const itemPayload = JSON.stringify(envelopeItems[1]);
-
-        let length = itemPayload.length;
-        try {
-          await SentryCapacitor.getStringBytesLength({ string: itemPayload }).then(
-            resp => {
-              length = resp.value;
-            })
-        } catch {
-          // The native call failed, we do nothing, we have payload.length as a fallback
-        }
-
-        (envelopeItems[0] as BaseEnvelopeItemHeaders).length = length;
-        const itemHeader = JSON.stringify(envelopeItems[0]);
-
-        envelopeItemsBuilder += `\n${itemHeader}\n${itemPayload}`;
+        envelopeItems[1] = event;
       }
-      await SentryCapacitor.captureEnvelope({ envelope: envelopeItemsBuilder });
 
-    }
-    else {
-      // iOS/Mac
+      // Content type is not inside BaseEnvelopeItemHeaders.
+      (envelopeItems[0] as BaseEnvelopeItemHeaders).content_type = 'application/json';
 
-      for (const envelopeItems of envelope[1]) {
-        const event = this._getEvent(envelopeItems);
-        if (event != undefined) {
-          envelopeItems[1] = event;
-        }
+      const itemPayload = JSON.stringify(envelopeItems[1]);
 
-        const itemPayload = JSON.parse(JSON.stringify(envelopeItems[1]));
-
-        // The envelope item is created (and its length determined) on the iOS side of the native bridge.
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      await SentryCapacitor.captureEnvelope({
-        envelope: {
-        header: header,
-        payload: itemPayload,
-        }
-      });
-
+      let length = itemPayload.length;
+      try {
+        await SentryCapacitor.getStringBytesLength({ string: itemPayload }).then(
+          resp => {
+            length = resp.value;
+          })
+      } catch {
+        // The native call failed, we do nothing, we have payload.length as a fallback
       }
+
+      (envelopeItems[0] as BaseEnvelopeItemHeaders).length = length;
+      const itemHeader = JSON.stringify(envelopeItems[0]);
+
+      envelopeItemsBuilder += `\n${itemHeader}\n${itemPayload}`;
     }
+    await SentryCapacitor.captureEnvelope({ envelope: envelopeItemsBuilder });
   },
 
   /**
@@ -337,16 +313,16 @@ export const NATIVE = {
     }
   },
 
-    /**
-   * Gets the event from envelopeItem and applies the level filter to the selected event.
-   * @param data An envelope item containing the event.
-   * @returns The event from envelopeItem or undefined.
-   */
-     _getEvent(envelopeItem: EventItem | AttachmentItem | UserFeedbackItem | SessionItem | ClientReportItem): Event | undefined {
-      if (envelopeItem[0].type == 'event' || envelopeItem[0].type == 'transaction') {
-        return this._processLevels(envelopeItem[1] as Event);
-      }
-      return undefined;
+  /**
+ * Gets the event from envelopeItem and applies the level filter to the selected event.
+ * @param data An envelope item containing the event.
+ * @returns The event from envelopeItem or undefined.
+ */
+  _getEvent(envelopeItem: EventItem | AttachmentItem | UserFeedbackItem | SessionItem | ClientReportItem): Event | undefined {
+    if (envelopeItem[0].type == 'event' || envelopeItem[0].type == 'transaction') {
+      return this._processLevels(envelopeItem[1] as Event);
+    }
+    return undefined;
   },
   /**
    * Serializes all values of root-level keys into strings.
@@ -393,7 +369,7 @@ export const NATIVE = {
    * @returns More widely supported Severity level strings
    */
 
-   _processLevel(level: SeverityLevel): SeverityLevel {
+  _processLevel(level: SeverityLevel): SeverityLevel {
     if (level == 'log' as SeverityLevel) {
       return 'debug' as SeverityLevel;
     }
