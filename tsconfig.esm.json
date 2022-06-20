@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist/esm",
-    "target": "es5",
+    "target": "es6",
     "module": "es6",
     "moduleResolution": "node",
   },

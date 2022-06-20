@@ -1,13 +1,11 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { ErrorHandler,NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { createErrorHandler,init as sentryAngularInit } from '@sentry/angular';
 import * as Sentry from '@sentry/capacitor';
-import { init as sentryAngularInit, createErrorHandler } from '@sentry/angular';
 import { Integrations } from '@sentry/tracing';
 
 import { AppRoutingModule } from './app-routing.module';
