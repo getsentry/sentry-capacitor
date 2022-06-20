@@ -5,6 +5,9 @@
 ### Fixes
 
 - SentryCapacitor.crash not working on Android ([#175](https://github.com/getsentry/sentry-capacitor/pull/175))
+- build(javascript): Bump sentry-javascript, sentry-vue, sentry-react and sentry-angular dependencies to `7.1.1`. ([#186](https://github.com/getsentry/sentry-capacitor/pull/186))
+  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.1.1)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/6.19.2...7.1.1)
 
 ## 0.6.1
 
