@@ -9,6 +9,11 @@
   - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.1.1)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/6.19.2...7.1.1)
 
+## Breaking changes
+
+By bumping Sentry Javascript, new breaking changes were introduced, to know more what was changed, check the [breaking changes changelog](https://github.com/getsentry/sentry-javascript/blob/7.0.0/CHANGELOG.md#breaking-changes) from Sentry Javascript.
+
+
 ## 0.6.1
 
 ### Fixes
