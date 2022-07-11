@@ -5,9 +5,9 @@
     "esModuleInterop": true,
     "lib": [
       "dom",
-      "es2015"
+      "es6"
     ],
-    "module": "es2015",
+    "module": "es6",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
@@ -15,7 +15,7 @@
     "pretty": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2015"
+    "target": "es6"
   },
   "extends": "./tsconfig.build.json",
   "include": [

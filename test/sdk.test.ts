@@ -260,7 +260,10 @@ describe('SDK Init', () => {
         return integration instanceof RewriteFrames;
       })[0] as RewriteFrames;
 
-      frameIntegration.process({ stacktrace: { frames: [frame] } });
+      frameIntegration.process({
+        exception:
+          { values: [{ stacktrace: { frames: [frame] } }] }
+      });
       expect(frame.filename).toBe(expectedFrame.filename);
       expect(frame.in_app).toBe(expectedFrame.in_app);
     });
