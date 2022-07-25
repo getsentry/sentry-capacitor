@@ -2,9 +2,9 @@
 
 ## Unreleased
 
-### Fixes/Features
+### Features
 
-- SDK not working on the WEB with Angular ([#199](https://github.com/getsentry/sentry-capacitor/pull/199))
+- Support for Angular Web ([#199](https://github.com/getsentry/sentry-capacitor/pull/199))
 
 ## 0.7.1
 
