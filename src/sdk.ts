@@ -78,7 +78,7 @@ export function init<O>(
   if (finalOptions.enableNative) {
     finalOptions.defaultIntegrations.push(new DeviceContext());
 
-    if (!options.transport) {
+    if (!options.transport && NATIVE.platform !== 'web') {
       finalOptions.transport = options.transport || makeCapacitorTransport;
     }
   }
@@ -95,8 +95,10 @@ export function init<O>(
       NATIVE.platform !== 'web' && finalOptions.enableAutoSessionTracking,
   } as CapacitorOptions;
 
-  originalInit(browserOptions);
+  // We first initialize the NATIVE SDK to avoid the Javascript SDK to invoke any
+  // feature from the NATIVE SDK without the options being set.
   void NATIVE.initNativeSdk(mobileOptions);
+  originalInit(browserOptions);
 }
 
 /**
