@@ -6,6 +6,12 @@
 
 - Add support for Capacitor 4.0.0 ([#201](https://github.com/getsentry/sentry-capacitor/pull/201))
 
+## 0.9.0
+
+### Fixes
+
+- Bump Sentry Javascript to fix incompatibility with Sentry Tracing ([#202](https://github.com/getsentry/sentry-capacitor/pull/202))
+
 ## 0.8.0
 
 ### Features
