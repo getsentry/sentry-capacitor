@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Features
+
+- Add support for Capacitor 4.0.0 ([#201](https://github.com/getsentry/sentry-capacitor/pull/201))
+
 ## 0.9.0
 
 ### Fixes
