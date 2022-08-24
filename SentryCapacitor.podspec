@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
     miniOSVersion = '13.0' # Required for Capacitor 4 and newer.
   end
   s.ios.deployment_target  = miniOSVersion
-  s.dependency 'Sentry', '~> 7.11.0'
+  s.dependency 'Sentry', '~> 7.23.0'
   s.dependency 'Capacitor'
   s.swift_version = '5.1'
 end
