@@ -8,7 +8,7 @@
 
 ### Fixes
 
-- build(javascript): Bump sentry-javascript, sentry-vue, sentry-react and sentry-angular dependencies to `7.12.1`. ([#???](https://github.com/getsentry/sentry-capacitor/pull/???))
+- build(javascript): Bump sentry-javascript, sentry-vue, sentry-react and sentry-angular dependencies to `7.12.1`. ([#214](https://github.com/getsentry/sentry-capacitor/pull/214s))
   - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.12.1)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/7.8.1...7.12.1)
 
