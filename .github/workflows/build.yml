@@ -94,9 +94,9 @@ jobs:
         # this file) to a constant and skip rebuilding all of the packages each time CI runs.
         if: steps.cache_built_packages.outputs.cache-hit == ''
         run: yarn build
-      - name: create sample uncommited
+      - name: Modify uncommited change
         shell: pwsh
-        run: New-Item test.txt
+        run: Get-Process | Out-File -FilePath .\yarn.lock
       - name: Check uncommited changes
         if: steps.cache_built_packages.outputs.cache-hit == ''
         shell: pwsh
