@@ -6,5 +6,5 @@ if ($output) {
   Write-Error "There are uncommited changes to your code, please revise the changes before commiting `n {$output}"
 }
 else {
-  Write-Information "All changes were commited."
+  Write-Host "All changes were commited."
 }
