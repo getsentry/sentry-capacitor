@@ -1,5 +1,5 @@
 #Resumed list of what changed
-$output = git status --porcelain
+[String]$output = git status --porcelain
 
 if ('' -ne $output) {
   Write-Warning "There are uncommited changes to your code, please revise the changes before commiting"
