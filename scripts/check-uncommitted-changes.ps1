@@ -1,3 +1,4 @@
+ls
 #Resumed list of what changed
 [String]$output = git status --porcelain
 
