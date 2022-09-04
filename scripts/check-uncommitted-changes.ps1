@@ -1,11 +1,9 @@
 #Resumed list of what changed
 [String]$output = git status --porcelain
 
-if ('' -ne $output) {
-  Write-Warning "There are uncommited changes to your code, please revise the changes before commiting"
-  $diffArray = git diff
-  $diff = [system.String]::Join("`n", $diffArray)
-  Write-Error $diff
+if ($output) {
+  git --no-pager diff
+  Write-Error "There are uncommited changes to your code, please revise the changes before commiting `n {$output}"
 }
 else {
   Write-Information "All changes were commited."
