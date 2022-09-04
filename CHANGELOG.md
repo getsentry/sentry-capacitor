@@ -8,15 +8,17 @@
 
 ## 0.9.0
 
-### Fixes
-
-- Bump Sentry Javascript to fix incompatibility with Sentry Tracing ([#202](https://github.com/getsentry/sentry-capacitor/pull/202))
-
-## 0.8.0
-
 ### Features
 
 - Support for Angular Web ([#199](https://github.com/getsentry/sentry-capacitor/pull/199))
+
+### Fixes
+
+- Bump Sentry Javascript to fix incompatibility with Sentry Tracing ([#202](https://github.com/getsentry/sentry-capacitor/pull/202))
+  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.8.1)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.6.0...7.8.1)
+
+## 0.8.0
 
 ## 0.7.1
 
