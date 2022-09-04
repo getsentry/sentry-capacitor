@@ -1,15 +1,15 @@
 PODS:
-  - Capacitor (3.0.1):
+  - Capacitor (4.1.0):
     - CapacitorCordova
-  - CapacitorCordova (3.0.1)
-  - Sentry (7.11.0):
-    - Sentry/Core (= 7.11.0)
-  - Sentry/Core (7.11.0)
+  - CapacitorCordova (4.1.0)
+  - Sentry (7.23.0):
+    - Sentry/Core (= 7.23.0)
+  - Sentry/Core (7.23.0)
 
 DEPENDENCIES:
   - "Capacitor (from `../node_modules/@capacitor/ios`)"
   - "CapacitorCordova (from `../node_modules/@capacitor/ios`)"
-  - Sentry (= 7.11.0)
+  - Sentry (= 7.23.0)
 
 SPEC REPOS:
   trunk:
@@ -22,10 +22,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@capacitor/ios"
 
 SPEC CHECKSUMS:
-  Capacitor: 92088387144015b95e369bd7840e8ef28b8fe9f3
-  CapacitorCordova: 624ae0d33d61b554eda6823da8ea6c3e5170f646
-  Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
+  Capacitor: 525c8f270214dea07bc75b5ca9dc10ac3c0f38d4
+  CapacitorCordova: 63c02d1f0b3b08ccddcbdcbab0087f54135e76b0
+  Sentry: a0d4563fa4ddacba31fdcc35daaa8573d87224d6
 
-PODFILE CHECKSUM: 2584eda3d7d638c17b4e602968d35f66eb0075c8
+PODFILE CHECKSUM: 14dc32b1c8f436a4553ada80b8106fef3580db75
 
 COCOAPODS: 1.11.2
