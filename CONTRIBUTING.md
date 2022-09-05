@@ -33,7 +33,7 @@ yarn watch
 
 ### iOS
 
-- Basically you'll need to edit SentryCapacitor.podspec and ios/Porfile updating the Sentry dependency and validate it on one of the examples apps on this proejct.
+- Basically you'll need to edit SentryCapacitor.podspec and ios/Porfile updating the Sentry dependency and validate it on one of the examples apps on this project.
 - Run 'pod install --repo-update' on the ios folder and then 'yarn build' on the root folder.
 
 ## Running the example apps
@@ -59,7 +59,7 @@ yarn test:watch
 We'd love for users to update the SDK everytime and as soon as we make a new release. But in reality most users rarely update the SDK.
 To help users see value in updating the SDK, we maintain a changelog file with entries split between two headings:
 
-1. `### Features` 
+1. `### Features`
 2. `### Fixes`
 
 We add the heading in the first PR that's adding either a feature or fixes in the current release.
