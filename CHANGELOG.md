@@ -11,6 +11,9 @@
 ### Fixes
 
 - Bump Sentry Javascript to fix incompatibility with Sentry Tracing ([#202](https://github.com/getsentry/sentry-capacitor/pull/202))
+- build(ios): Bump sentry-cocoa dependencies to `7.23.0`. ([#208](https://github.com/getsentry/sentry-capacitor/pull/208))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/releases/tag/7.23.0)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/7.11.0...7.23.0)
 
 ## 0.8.0
 
