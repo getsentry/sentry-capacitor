@@ -33,7 +33,7 @@ yarn watch
 
 ### iOS
 
-- Basically you'll need to edit SentryCapacitor.podspec and ios/Podfile updating the Sentry dependency and validate it on one of hte examples apps on this project.
+- Basically you'll need to edit SentryCapacitor.podspec and ios/Porfile updating the Sentry dependency and validate it on one of the examples apps on this project.
 - Run 'pod install --repo-update' on the ios folder and then 'yarn build' on the root folder.
 
 ## Running the example apps

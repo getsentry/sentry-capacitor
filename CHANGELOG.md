@@ -14,18 +14,20 @@
 
 ## 0.9.0
 
+### Features
+
+- Support for Angular Web ([#199](https://github.com/getsentry/sentry-capacitor/pull/199))
+
 ### Fixes
 
 - Bump Sentry Javascript to fix incompatibility with Sentry Tracing ([#202](https://github.com/getsentry/sentry-capacitor/pull/202))
+  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.8.1)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.6.0...7.8.1)
 - build(ios): Bump sentry-cocoa dependencies to `7.23.0`. ([#208](https://github.com/getsentry/sentry-capacitor/pull/208))
   - [changelog](https://github.com/getsentry/sentry-cocoa/releases/tag/7.23.0)
   - [diff](https://github.com/getsentry/sentry-cocoa/compare/7.11.0...7.23.0)
 
 ## 0.8.0
-
-### Features
-
-- Support for Angular Web ([#199](https://github.com/getsentry/sentry-capacitor/pull/199))
 
 ## 0.7.1
 
