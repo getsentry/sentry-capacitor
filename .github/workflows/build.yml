@@ -12,7 +12,7 @@ env:
 
   CACHED_BUILD_PATHS: |
     ${{ github.workspace }}/dist
-    
+
   BUILD_CACHE_KEY: ${{ github.sha }}
 
 jobs:
@@ -65,7 +65,7 @@ jobs:
           key: ${{ env.BUILD_CACHE_KEY }}
       - name: Run tests
         run: yarn test
-        
+
   job_build:
     name: Build
     needs: job_install_deps
@@ -94,6 +94,10 @@ jobs:
         # this file) to a constant and skip rebuilding all of the packages each time CI runs.
         if: steps.cache_built_packages.outputs.cache-hit == ''
         run: yarn build
+        # yarn.lock cannot be dirty when releasing a new version.
+      - name: Check if yarn.lock is dirty
+        if: steps.cache_built_packages.outputs.cache-hit == ''
+        run: yarn install --frozen-lockfile
     outputs:
       # this needs to be passed on, because the `needs` context only looks at direct ancestors (so steps which depend on
       # `job_build` can't see `job_install_deps` and what it returned)
