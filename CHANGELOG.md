@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- Fallback to iOS minimun version 13.0 if Capacitor package was not found.
+
 ## 0.10.0
 
 ### Features

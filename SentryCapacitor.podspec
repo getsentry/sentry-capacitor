@@ -11,12 +11,19 @@ Pod::Spec.new do |s|
   s.author = package['author']
   s.source = { :git => package['repository']['url'], :tag => s.version.to_s }
   s.source_files = 'ios/Plugin/**/*.{swift,h,m,c,cc,mm,cpp}'
-  capacitorPackage =  JSON.parse(File.read(File.join(__dir__, '../../@capacitor/core/package.json')))
-  capacitorVersion = capacitorPackage['version']
-  if capacitorVersion.start_with?("2.") or capacitorVersion.start_with?("3.")
-    miniOSVersion = '12.0'
+
+  if File.exist?('../../@capacitor/core/package.json') == false
+    # If Capacitor was not found (could happen when using Yarn PNP), fallback to the
+    # required minimun version of Capacitor 4.
+    miniOSVersion = '13.0'
   else
-    miniOSVersion = '13.0' # Required for Capacitor 4 and newer.
+    capacitorPackage =  JSON.parse(File.read(File.join(__dir__, '../../@capacitor/core/package.json')))
+    capacitorVersion = capacitorPackage['version']
+    if capacitorVersion.start_with?("2.") or capacitorVersion.start_with?("3.")
+      miniOSVersion = '12.0'
+    else
+      miniOSVersion = '13.0' # Required for Capacitor 4 and newer.
+    end
   end
   s.ios.deployment_target  = miniOSVersion
   s.dependency 'Sentry', '~> 7.23.0'
