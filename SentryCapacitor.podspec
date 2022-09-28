@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
 
   if File.exist?('../../@capacitor/core/package.json') == false
     # If Capacitor was not found (could happen when using Yarn PNP), fallback to the
-    # required minimun version of Capacitor 4.
+    # required minimum version of Capacitor 4.
     miniOSVersion = '13.0'
   else
     capacitorPackage =  JSON.parse(File.read(File.join(__dir__, '../../@capacitor/core/package.json')))
