@@ -4,7 +4,7 @@
 
 ### Fixes
 
-- Fallback to iOS minimun version 13.0 if Capacitor package was not found.
+- Fallback to iOS minimum version 13.0 if Capacitor package was not found ([#225](https://github.com/getsentry/sentry-capacitor/pull/225))
 
 ## 0.10.0
 
