@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixes
+
+- Fallback to iOS minimum version 13.0 if Capacitor package was not found ([#225](https://github.com/getsentry/sentry-capacitor/pull/225))
+
 ### Dependencies
 
 - Bump Sentry JavaScript SDK to `7.13.0` ([#222](https://github.com/getsentry/sentry-capacitor/pull/222))
