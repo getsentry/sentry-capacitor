@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Dependencies
+
+- Bump Sentry Android SDK to `6.4.3` ([#???](https://github.com/getsentry/sentry-capacitor/pull/???))
+  - [changelog](https://github.com/getsentry/sentry-java/releases/tag/6.4.3)
+  - [diff](https://github.com/getsentry/sentry-java/compare/5.7.0...6.4.3)
+
 ## 0.10.1
 
 ### Fixes

@@ -31,6 +31,10 @@ yarn watch
 
 ## Updating Sentry Native packages
 
+### Android
+
+- Go to android/build.gradle and update the version of `io.sentry:sentry-android`.
+
 ### iOS
 
 - Basically you'll need to edit SentryCapacitor.podspec and ios/Porfile updating the Sentry dependency and validate it on one of the examples apps on this project.
