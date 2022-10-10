@@ -4,7 +4,7 @@
 
 ### Dependencies
 
-- Bump Sentry iOS SDK to `2.27.1` ([#???](https://github.com/getsentry/sentry-capacitor/pull/???))
+- Bump Sentry iOS SDK to `2.27.1` ([#231](https://github.com/getsentry/sentry-capacitor/pull/231))
   - [changelog](https://github.com/getsentry/sentry-java/releases/tag/7.27.1)
   - [diff](https://github.com/getsentry/sentry-java/compare/7.23.0...7.27.1)
 
