@@ -12,7 +12,7 @@ end
 target 'Plugin' do
   capacitor_pods
 
-  pod 'Sentry', '7.23.0'
+  pod 'Sentry', '7.27.1'
 end
 
 target 'PluginTests' do

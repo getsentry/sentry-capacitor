@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Dependencies
+
+- Bump Sentry iOS SDK to `2.27.1` ([#???](https://github.com/getsentry/sentry-capacitor/pull/???))
+  - [changelog](https://github.com/getsentry/sentry-java/releases/tag/7.27.1)
+  - [diff](https://github.com/getsentry/sentry-java/compare/7.23.0...7.27.1)
+
 ## 0.10.1
 
 ### Fixes
