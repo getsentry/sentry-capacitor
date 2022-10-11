@@ -7,6 +7,9 @@
 - Bump Sentry iOS SDK to `2.27.1` ([#231](https://github.com/getsentry/sentry-capacitor/pull/231))
   - [changelog](https://github.com/getsentry/sentry-cocoa/releases/tag/7.27.1)
   - [diff](https://github.com/getsentry/sentry-cocoa/compare/7.23.0...7.27.1)
+- Bump Sentry Android SDK to `6.4.3` ([#230](https://github.com/getsentry/sentry-capacitor/pull/230))
+  - [changelog](https://github.com/getsentry/sentry-java/releases/tag/6.4.3)
+  - [diff](https://github.com/getsentry/sentry-java/compare/5.7.0...6.4.3)
 
 ## 0.10.1
 
