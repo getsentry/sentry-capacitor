@@ -10,6 +10,9 @@
 - Bump Sentry Android SDK to `6.4.3` ([#230](https://github.com/getsentry/sentry-capacitor/pull/230))
   - [changelog](https://github.com/getsentry/sentry-java/releases/tag/6.4.3)
   - [diff](https://github.com/getsentry/sentry-java/compare/5.7.0...6.4.3)
+- Bump Sentry JavaScript SDK to `7.15.0` ([#???](https://github.com/getsentry/sentry-capacitor/pull/???))
+  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.15.0)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.13.0...7.15.0)
 
 ## 0.10.1
 
