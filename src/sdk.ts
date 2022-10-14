@@ -3,7 +3,7 @@ import {
   init as browserInit,
   StackFrame,
 } from '@sentry/browser';
-import { Hub, makeMain } from '@sentry/hub';
+import { Hub, makeMain } from '@sentry/core';
 import { RewriteFrames } from '@sentry/integrations';
 
 import { DeviceContext, EventOrigin, SdkInfo } from './integrations';
