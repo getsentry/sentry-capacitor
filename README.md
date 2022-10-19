@@ -13,7 +13,7 @@ _Bad software is everywhere, and we're tired of it. Sentry is on a mission to he
 ## Installation
 
 ```bash
-yarn add @sentry/capacitor @sentry/angular
+yarn add @sentry/capacitor @sentry/angular --exact
 ```
 
 ## Usage
