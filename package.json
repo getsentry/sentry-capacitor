@@ -22,6 +22,7 @@
     "lint": "eslint .",
     "swiftlint": "node-swiftlint",
     "prepublishOnly": "yarn run build",
+    "postinstall": "node scripts/check-siblings.js",
     "bump:v3": "yalc publish && cd example/ionic-angular && yalc add @sentry/capacitor && ionic build && npx cap sync",
     "bump:v2": "yalc publish && cd example/ionic-angular-v2 && yalc add @sentry/capacitor && ionic build && npx cap sync"
   },
