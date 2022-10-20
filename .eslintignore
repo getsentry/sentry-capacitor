@@ -4,3 +4,4 @@ dist
 node_modules
 build
 dangerfile.js
+scripts/check-siblings.js
