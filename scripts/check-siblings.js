@@ -1,36 +1,145 @@
 const fs = require('fs');
 const path = require('path');
+const { env } = require('process');
+
+const updateArgument = '--update-sentry-capacitor';
+
+/**
+ * If user requested to ignore the post-install
+ * @return {Boolean} true if requested to skip the post-install check, false otherwise.
+ */
+function SkipPostInstall() {
+      if (env.npm_config_update_sentry_capacitor) {
+            //NPM.
+            return true;
+      }
+      else if (env.npm_config_argv && env.npm_config_argv.includes(updateArgument)) {
+            //YARN.
+            return true;
+      }
+      return false;
+}
+
+/**
+ * Gets the required sibling version for Sentry Capacitor.
+ * @return {String | undefined} The sibling version, undefined if not found.
+ */
+function GetRequiredSiblingVersion() {
+      if (env.npm_package_dependencies__sentry_browser) {
+            // Yarn.
+            return env.npm_package_dependencies__sentry_browser;
+      }
+
+      let capacitorPackagePath = '';
+      if (env.npm_package_json) {
+            // NPM.
+            capacitorPackagePath = env.npm_package_json;
+      }
+      else {
+            capacitorPackagePath = __dirname + '../Package.json';
+      }
+
+      const filter = /\"\@sentry\/browser\"\: \"(?<version>\d+\.\d+\.\d+)\"/;
+      const capacitorPackageJson = fs.readFileSync(capacitorPackagePath, 'utf8');
+
+      const version = capacitorPackageJson.match(jsonFilter);
+      if (version && version.groups['version']) {
+            return version.groups['version'];
+      }
+      return undefined;
+}
+
+function validSentryPackageParameters(packages) {
+      let errorMessages = "";
+
+      for (const argPackage of packages) {
+            if (argPackage.startsWith('@sentry') && !argPackage.includes("/capacitor")) {
+                  const installedVersion = String(argPackage);
+                  if (installedVersion.split('@').length === 2) {
+                        errorMessages += "You must specify the version to the package " + installedVersion + ". ( " + installedVersion + "@" + siblingVersion + ")\n";
+                  }
+                  else if (!installedVersion.endsWith(siblingVersion)) {
+                        errorMessages += "You tried to install " + installedVersion + ", but the current version of  @sentry/capacitor is only compatible with version " + siblingVersion + ". Please install the dependency with the correct version.\n";
+                  }
+            }
+      }
+
+      if (errorMessages.length > 0) {
+            throw errorMessages;
+      }
+}
+
+/**
+ * @return {String} The path where package.json is located.
+ */
+function GetPackageJsonRootPath() {
+      if (env.INIT_CWD) {
+            //Avaliable when using NPM.
+            return env.INIT_CWD + '/';
+      }
+      let packagePath = __dirname + '/../../';
+      while (!fs.existsSync(path.resolve(packagePath, 'package.json'))) {
+            packagePath += '../';
+      }
+      return packagePath;
+}
+
+/**
+ * @param {String} package The package.
+ * @return {String} The path where package.json is located.
+ */
+function FormatPackageInstallCommand(package) {
+      //Yarn
+      if (env.npm_config_argv) {
+            return "yarn add --exact " + package + " " + updateArgument;
+      }
+      else {
+            // NPM
+            return "npm install --save-exact " + package + " " + updateArgument;
+      }
+}
+
+if (SkipPostInstall()) {
+      return;
+}
 
 //Filters all Sentry packages but Capacitor itself.
 const jsonFilter = /\s*\"\@sentry\/(?!capacitor)(?<packageName>[a-zA-Z]+)\"\:\s*\"(?<version>.+)\"/;
-const siblingVersion = "7.15.0";
 
-/* TODO: Not valid for all the cases
-// const getDirectories = source =>
-//   fs.readdirSync(source, { withFileTypes: true })
-//     .filter(dirent => dirent.isDirectory())
-//     .map(dirent => dirent.name)
-//
-// Checks the node_modules folder @sentry/capacitor.
-// const capDirectories = getDirectories("node_modules");
-// if(!capDirectories.includes("@sentry")) {
-// There is not conflict with Sentry dependencies so we can skip the post install.
-//       return;
-// }
-*/
-
-// get the location of package.json from the project.
-let rootPath = __dirname + '/../../';
-while (!fs.existsSync(path.resolve(rootPath, 'package.json'))) {
-  rootPath += '../';
+const siblingVersion = GetRequiredSiblingVersion();
+if (siblingVersion === undefined) {
+      return;
 }
 
+//Method 1: Validate user parameters when requesting to install/update a new Package.
+if (env.npm_config_argv) {
+      // Only available on Yarn.
+      const npmAction = JSON.parse(env.npm_config_argv);
+      if (npmAction.original && npmAction.original.length > 1) {
+            validSentryPackageParameters(npmAction.original);
+            return;
+      }
+}
+
+//Method 2: Validate the Package.json
+let rootPath = GetPackageJsonRootPath();
+let incompatiblePackages = [];
 const packageJson = fs.readFileSync(rootPath + 'package.json', 'utf8').split("\n");
-for (const lineData of packageJson)
-{
+
+for (const lineData of packageJson) {
       let sentryRef = lineData.match(jsonFilter);
       if (sentryRef && sentryRef[2] !== siblingVersion) {
-            const depName = "@Sentry/" + sentryRef[1];
-            throw "This version of Sentry Capacitor is incompatible with " + depName + " version " + sentryRef[2] + ".\n Please update " + depName + " to version " + siblingVersion + ".";
+            incompatiblePackages.push(['@sentry/' + sentryRef[1], sentryRef[2]]);
       }
+}
+if (incompatiblePackages.length > 0) {
+      let IncompatibilityError = "This version of Sentry Capacitor is incompatible with the following installed packages: \n";
+      let packagesList = ''
+      for (const package of incompatiblePackages) {
+            IncompatibilityError += package[0] + ' version ' + package[1] + '\n';
+            packagesList += package[0] + '@' + siblingVersion + ' ';
+      }
+      IncompatibilityError += 'Please install the mentioned packages with exactly with version ' + siblingVersion + ' and with the argument ' + updateArgument + '\n';
+      IncompatibilityError += FormatPackageInstallCommand(packagesList) + '\n';
+      throw IncompatibilityError;
 }
