@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixes
+
+- Avoid duplicating Breadcrumbs on Android ([#254](https://github.com/getsentry/sentry-capacitor/pull/254))
+
 ### Dependencies
 
 - Bump Sentry JavaScript SDK to `7.15.0` ([#244](https://github.com/getsentry/sentry-capacitor/pull/244))
