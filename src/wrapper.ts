@@ -44,8 +44,10 @@ export const NATIVE = {
         We then remove the breadcrumbs in all cases but if it is handled == false,
         this is a signal that the app would crash and android would lose the breadcrumbs by the time the app is restarted to read
         the envelope.
+        Since unhandled errors from Javascript are not going to crash the App, we can't rely on the
+        handled flag for filtering breadcrumbs.
           */
-          if (event.exception?.values?.[0]?.mechanism?.handled != false && event.breadcrumbs) {
+          if (event.breadcrumbs) {
             event.breadcrumbs = [];
           }
         }
