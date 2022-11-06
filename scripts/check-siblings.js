@@ -139,7 +139,7 @@ if (incompatiblePackages.length > 0) {
             IncompatibilityError += package[0] + ' version ' + package[1] + '\n';
             packagesList += package[0] + '@' + siblingVersion + ' ';
       }
-      IncompatibilityError += 'Please install the mentioned packages with exactly with version ' + siblingVersion + ' and with the argument ' + updateArgument + '\n';
+      IncompatibilityError += 'Please install the mentioned packages exactly with version ' + siblingVersion + ' and with the argument ' + updateArgument + '\n';
       IncompatibilityError += FormatPackageInstallCommand(packagesList) + '\n';
       throw IncompatibilityError;
 }
