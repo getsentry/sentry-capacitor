@@ -306,7 +306,7 @@ describe('Tests Native Wrapper', () => {
         exception: {
           values: [{
             mechanism: {
-              handled: false
+              handled: true
             }
           }]
         },
@@ -327,18 +327,14 @@ describe('Tests Native Wrapper', () => {
       });
       const expectedPayload = JSON.stringify({
         ...event,
-        breadcrumbs: [
-          {
-            message: 'crumb!',
-          },
-        ],
+        breadcrumbs: [],
         message: {
           message: event.message,
         },
         exception: {
           values: [{
             mechanism: {
-              handled: false
+              handled: true
             }
           }]
         }
