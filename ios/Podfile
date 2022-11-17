@@ -12,7 +12,8 @@ end
 target 'Plugin' do
   capacitor_pods
 
-  pod 'Sentry/HybridSDK', '7.30.2'
+  pod 'SentryPrivate', :git => 'https://github.com/getsentry/sentry-cocoa/', :branch => 'feat/swift'
+  pod 'Sentry/HybridSDK', :git => 'https://github.com/getsentry/sentry-cocoa/', :branch => 'feat/swift'
 end
 
 target 'PluginTests' do
