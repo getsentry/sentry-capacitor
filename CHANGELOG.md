@@ -6,14 +6,18 @@
 
 - Add sibling check ([#248](https://github.com/getsentry/sentry-capacitor/pull/248))
 
+### Fixes
+
+- Avoid duplicating Breadcrumbs on Android ([#254](https://github.com/getsentry/sentry-capacitor/pull/254))
+
 ### Dependencies
 
 - Bump Sentry JavaScript SDK to `7.15.0` ([#244](https://github.com/getsentry/sentry-capacitor/pull/244))
   - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.15.0)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/7.13.0...7.15.0)
-- Bump Sentry iOS SDK to `7.27.1` ([#231](https://github.com/getsentry/sentry-capacitor/pull/231))
-  - [changelog](https://github.com/getsentry/sentry-cocoa/releases/tag/7.27.1)
-  - [diff](https://github.com/getsentry/sentry-cocoa/compare/7.23.0...7.27.1)
+- Bump Sentry iOS SDK to `7.30.2` ([#259](https://github.com/getsentry/sentry-capacitor/pull/259))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/releases/tag/7.30.2)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/7.23.0...7.30.2)
 - Bump Sentry Android SDK to `6.4.3` ([#230](https://github.com/getsentry/sentry-capacitor/pull/230))
   - [changelog](https://github.com/getsentry/sentry-java/releases/tag/6.4.3)
   - [diff](https://github.com/getsentry/sentry-java/compare/5.7.0...6.4.3)
