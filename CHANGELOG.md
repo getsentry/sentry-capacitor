@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Features
+
+- Add sibling check ([#248](https://github.com/getsentry/sentry-capacitor/pull/248))
+
 ### Fixes
 
 - Avoid duplicating Breadcrumbs on Android ([#254](https://github.com/getsentry/sentry-capacitor/pull/254))
