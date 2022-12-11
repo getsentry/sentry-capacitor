@@ -4,17 +4,20 @@ const { env } = require('process');
 
 const updateArgument = '--update-sentry-capacitor';
 
+// Filters all Sentry packages but Capacitor, CLI and Wizard.
+const jsonFilter = /\s*\"\@sentry\/(?!capacitor|wizard|cli)(?<packageName>[a-zA-Z]+)\"\:\s*\"(?<version>.+)\"/;
+
 /**
  * If user requested to ignore the post-install
  * @return {Boolean} true if requested to skip the post-install check, false otherwise.
  */
 function SkipPostInstall() {
   if (env.npm_config_update_sentry_capacitor) {
-    //NPM.
+    // NPM.
     return true;
   }
   else if (env.npm_config_argv && env.npm_config_argv.includes(updateArgument)) {
-    //YARN.
+    // YARN.
     return true;
   }
   return false;
@@ -39,7 +42,6 @@ function GetRequiredSiblingVersion() {
     capacitorPackagePath = __dirname + '../Package.json';
   }
 
-  const filter = /\"\@sentry\/browser\"\: \"(?<version>\d+\.\d+\.\d+)\"/;
   const capacitorPackageJson = fs.readFileSync(capacitorPackagePath, 'utf8');
 
   const version = capacitorPackageJson.match(jsonFilter);
@@ -50,15 +52,15 @@ function GetRequiredSiblingVersion() {
 }
 
 /**
- * Validete the arguments used to install Sentry Capacitor and it's siblings.
+ * Validate the arguments used to install Sentry Capacitor and it's siblings.
  * This function will throw if the paramater contains a sibling with different version to the one used
  * by the SDK or if no version were specified by the user.
  */
 function ValidateSentryPackageParameters(packages) {
   let errorMessages = [];
-
+  var packageFilter = /.*(capacitor|cli|wizard)/;
   for (const argPackage of packages) {
-    if (argPackage.startsWith('@sentry') && !argPackage.includes("/capacitor")) {
+    if (argPackage.startsWith('@sentry') && !packageFilter.test(argPackage)) {
       const installedVersion = String(argPackage);
       if (installedVersion.split('@').length === 2) {
         errorMessages.push("You must specify the version to the package " + installedVersion + ". ( " + installedVersion + "@" + siblingVersion + ")");
@@ -79,7 +81,7 @@ function ValidateSentryPackageParameters(packages) {
  */
 function GetPackageJsonRootPath() {
   if (env.INIT_CWD) {
-    //Avaliable when using NPM.
+    // Avaliable when using NPM.
     return env.INIT_CWD + '/';
   }
   let packagePath = __dirname + '/../../';
@@ -94,7 +96,7 @@ function GetPackageJsonRootPath() {
  * @return {String} The path where package.json is located.
  */
 function FormatPackageInstallCommand(package) {
-  //Yarn
+  // Yarn
   if (env.npm_config_argv) {
     return "yarn add --exact " + package + " " + updateArgument;
   }
@@ -108,15 +110,12 @@ if (SkipPostInstall()) {
   return;
 }
 
-//Filters all Sentry packages but Capacitor itself.
-const jsonFilter = /\s*\"\@sentry\/(?!capacitor)(?<packageName>[a-zA-Z]+)\"\:\s*\"(?<version>.+)\"/;
-
 const siblingVersion = GetRequiredSiblingVersion();
 if (siblingVersion === undefined) {
   return;
 }
 
-//Method 1: Validate user parameters when requesting to install/update a new Package.
+// Method 1: Validate user parameters when requesting to install/update a new Package.
 if (env.npm_config_argv) {
   // Only available on Yarn.
   const npmAction = JSON.parse(env.npm_config_argv);
@@ -126,7 +125,7 @@ if (env.npm_config_argv) {
   }
 }
 
-//Method 2: Validate the Package.json
+// Method 2: Validate the Package.json
 let rootPath = GetPackageJsonRootPath();
 let incompatiblePackages = [];
 const packageJson = fs.readFileSync(rootPath + 'package.json', 'utf8').split("\n");
