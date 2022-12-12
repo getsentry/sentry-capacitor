@@ -12,9 +12,9 @@
 
 ### Dependencies
 
-- Bump Sentry JavaScript SDK to `7.15.0` ([#244](https://github.com/getsentry/sentry-capacitor/pull/244))
-  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.15.0)
-  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.13.0...7.15.0)
+- Bump Sentry JavaScript SDK to `7.24.2` ([#277](https://github.com/getsentry/sentry-capacitor/pull/277))
+  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.24.2)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.13.0...7.24.2)
 - Bump Sentry iOS SDK to `7.30.2` ([#259](https://github.com/getsentry/sentry-capacitor/pull/259))
   - [changelog](https://github.com/getsentry/sentry-cocoa/releases/tag/7.30.2)
   - [diff](https://github.com/getsentry/sentry-cocoa/compare/7.23.0...7.30.2)
