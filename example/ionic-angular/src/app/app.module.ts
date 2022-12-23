@@ -10,6 +10,7 @@ import { Integrations } from '@sentry/tracing';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { Replay } from "@sentry/replay";
 
 // ATTENTION: Change the DSN below with your own to see the events in Sentry. Get one at sentry.io
 Sentry.init(
@@ -23,7 +24,16 @@ Sentry.init(
     // Whether SDK should be enabled or not
     enabled: true,
     // Use the tracing integration to see traces and add performance monitoring
-    integrations: [new Integrations.BrowserTracing()],
+    integrations: [
+      new Integrations.BrowserTracing(),
+      new Replay({
+        // Additional SDK configuration goes in here, for example:
+        maskAllText: false,
+        blockAllMedia: true,
+        // See below for all available options
+      }),
+
+    ],
     // A release identifier
     release: '1.0.0',
     // A dist identifier

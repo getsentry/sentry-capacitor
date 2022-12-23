@@ -1,17 +1,20 @@
 package io.sentry.capacitor;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.util.Log;
+import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
+import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
-import com.getcapacitor.NativePlugin;
-
 import io.sentry.Breadcrumb;
 import io.sentry.HubAdapter;
 import io.sentry.Integration;
 import io.sentry.Sentry;
-import io.sentry.SentryLevel;
 import io.sentry.SentryEvent;
+import io.sentry.SentryLevel;
 import io.sentry.UncaughtExceptionHandlerIntegration;
 import io.sentry.android.core.AnrIntegration;
 import io.sentry.android.core.NdkIntegration;
@@ -19,7 +22,6 @@ import io.sentry.android.core.SentryAndroid;
 import io.sentry.protocol.SdkVersion;
 import io.sentry.protocol.SentryPackage;
 import io.sentry.protocol.User;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -28,18 +30,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.UUID;
-
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.util.Log;
 
 @NativePlugin
 public class SentryCapacitor extends Plugin {
 
-    final static Logger logger = Logger.getLogger("capacitor-sentry");
+    static final Logger logger = Logger.getLogger("capacitor-sentry");
     private Context context;
     private static PackageInfo packageInfo;
 
@@ -141,50 +139,52 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void setUser(PluginCall call) {
-        Sentry.configureScope(scope -> {
-            JSObject defaultUserKeys = call.getObject("defaultUserKeys");
-            JSObject otherUserKeys = call.getObject("otherUserKeys");
+        Sentry.configureScope(
+            scope -> {
+                JSObject defaultUserKeys = call.getObject("defaultUserKeys");
+                JSObject otherUserKeys = call.getObject("otherUserKeys");
 
-            if (defaultUserKeys == null && otherUserKeys == null) {
-                scope.setUser(null);
-            } else {
-                User userInstance = new User();
+                if (defaultUserKeys == null && otherUserKeys == null) {
+                    scope.setUser(null);
+                } else {
+                    User userInstance = new User();
 
-                if (defaultUserKeys != null) {
-                    if (defaultUserKeys.has("email")) {
-                        userInstance.setEmail(defaultUserKeys.getString("email"));
+                    if (defaultUserKeys != null) {
+                        if (defaultUserKeys.has("email")) {
+                            userInstance.setEmail(defaultUserKeys.getString("email"));
+                        }
+
+                        if (defaultUserKeys.has("id")) {
+                            userInstance.setId(defaultUserKeys.getString("id"));
+                        }
+
+                        if (defaultUserKeys.has("username")) {
+                            userInstance.setUsername(defaultUserKeys.getString("username"));
+                        }
+
+                        if (defaultUserKeys.has("ip_address")) {
+                            userInstance.setIpAddress(defaultUserKeys.getString("ip_address"));
+                        }
                     }
 
-                    if (defaultUserKeys.has("id")) {
-                        userInstance.setId(defaultUserKeys.getString("id"));
+                    if (otherUserKeys != null) {
+                        Map<String, String> otherUserKeysMap = new HashMap<>();
+                        Iterator<String> it = otherUserKeys.keys();
+
+                        while (it.hasNext()) {
+                            String key = it.next();
+                            String value = otherUserKeys.getString(key);
+
+                            otherUserKeysMap.put(key, value);
+                        }
+
+                        userInstance.setOthers(otherUserKeysMap);
                     }
 
-                    if (defaultUserKeys.has("username")) {
-                        userInstance.setUsername(defaultUserKeys.getString("username"));
-                    }
-
-                    if (defaultUserKeys.has("ip_address")) {
-                        userInstance.setIpAddress(defaultUserKeys.getString("ip_address"));
-                    }
+                    scope.setUser(userInstance);
                 }
-
-                if (otherUserKeys != null) {
-                    Map<String, String> otherUserKeysMap = new HashMap<>();
-                    Iterator<String> it = otherUserKeys.keys();
-
-                    while (it.hasNext()) {
-                      String key = it.next();
-                      String value = otherUserKeys.getString(key);
-
-                      otherUserKeysMap.put(key, value);
-                    }
-
-                    userInstance.setOthers(otherUserKeysMap);
-                }
-
-                scope.setUser(userInstance);
             }
-        });
+        );
     }
 
     @PluginMethod
@@ -204,7 +204,12 @@ public class SentryCapacitor extends Plugin {
     @PluginMethod
     public void captureEnvelope(PluginCall call) {
         try {
-            String envelope = call.getString("envelope");
+            JSArray rawIntegers = call.getArray("envelope");
+            byte[] bytes = new byte[rawIntegers.length()];
+            for (int i = 0; i < bytes.length; i++) {
+                bytes[i] = (byte) rawIntegers.getInt(i);
+            }
+
             final String outboxPath = HubAdapter.getInstance().getOptions().getOutboxPath();
 
             if (outboxPath == null || outboxPath.isEmpty()) {
@@ -213,22 +218,17 @@ public class SentryCapacitor extends Plugin {
                 return;
             }
 
-            final File installation =  new File(outboxPath, UUID.randomUUID().toString());
+            final File installation = new File(outboxPath, UUID.randomUUID().toString());
 
             try (FileOutputStream out = new FileOutputStream(installation)) {
-                out.write(envelope.getBytes(Charset.forName("UTF-8")));
+                out.write(bytes);
                 logger.info("Successfully captured envelope.");
-
-                JSObject resp = new JSObject();
-                resp.put("value", envelope);
-                call.resolve(resp);
             } catch (Exception e) {
                 logger.info("Error writing envelope.");
                 call.reject(String.valueOf(e));
                 return;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.info("Error reading envelope.");
             call.reject(String.valueOf(e));
             return;
@@ -253,76 +253,82 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void addBreadcrumb(final PluginCall breadcrumb) {
-        Sentry.configureScope(scope -> {
-            Breadcrumb breadcrumbInstance = new Breadcrumb();
+        Sentry.configureScope(
+            scope -> {
+                Breadcrumb breadcrumbInstance = new Breadcrumb();
 
-            if (breadcrumb.getData().has("message")) {
-                breadcrumbInstance.setMessage(breadcrumb.getString("message"));
-            }
-
-            if (breadcrumb.getData().has("type")) {
-                breadcrumbInstance.setType(breadcrumb.getString("type"));
-            }
-
-            if (breadcrumb.getData().has("category")) {
-                breadcrumbInstance.setCategory(breadcrumb.getString("category"));
-            }
-
-            if (breadcrumb.getData().has("level")) {
-                switch (breadcrumb.getString("level")) {
-                    case "fatal":
-                        breadcrumbInstance.setLevel(SentryLevel.FATAL);
-                        break;
-                    case "warning":
-                        breadcrumbInstance.setLevel(SentryLevel.WARNING);
-                        break;
-                    case "info":
-                        breadcrumbInstance.setLevel(SentryLevel.INFO);
-                        break;
-                    case "debug":
-                        breadcrumbInstance.setLevel(SentryLevel.DEBUG);
-                        break;
-                    case "error":
-                        breadcrumbInstance.setLevel(SentryLevel.ERROR);
-                        break;
-                    default:
-                        breadcrumbInstance.setLevel(SentryLevel.ERROR);
-                        break;
+                if (breadcrumb.getData().has("message")) {
+                    breadcrumbInstance.setMessage(breadcrumb.getString("message"));
                 }
-            }
 
-            if (breadcrumb.getData().has("data")) {
-                JSObject data = breadcrumb.getObject("data");
-                Iterator<String> it = data.keys();
-
-                while (it.hasNext()) {
-                  String key = it.next();
-                  String value = data.getString(key);
-
-                  breadcrumbInstance.setData(key, value);
+                if (breadcrumb.getData().has("type")) {
+                    breadcrumbInstance.setType(breadcrumb.getString("type"));
                 }
-            }
 
-            scope.addBreadcrumb(breadcrumbInstance);
-        });
+                if (breadcrumb.getData().has("category")) {
+                    breadcrumbInstance.setCategory(breadcrumb.getString("category"));
+                }
+
+                if (breadcrumb.getData().has("level")) {
+                    switch (breadcrumb.getString("level")) {
+                        case "fatal":
+                            breadcrumbInstance.setLevel(SentryLevel.FATAL);
+                            break;
+                        case "warning":
+                            breadcrumbInstance.setLevel(SentryLevel.WARNING);
+                            break;
+                        case "info":
+                            breadcrumbInstance.setLevel(SentryLevel.INFO);
+                            break;
+                        case "debug":
+                            breadcrumbInstance.setLevel(SentryLevel.DEBUG);
+                            break;
+                        case "error":
+                            breadcrumbInstance.setLevel(SentryLevel.ERROR);
+                            break;
+                        default:
+                            breadcrumbInstance.setLevel(SentryLevel.ERROR);
+                            break;
+                    }
+                }
+
+                if (breadcrumb.getData().has("data")) {
+                    JSObject data = breadcrumb.getObject("data");
+                    Iterator<String> it = data.keys();
+
+                    while (it.hasNext()) {
+                        String key = it.next();
+                        String value = data.getString(key);
+
+                        breadcrumbInstance.setData(key, value);
+                    }
+                }
+
+                scope.addBreadcrumb(breadcrumbInstance);
+            }
+        );
         breadcrumb.resolve();
     }
 
     @PluginMethod
     public void clearBreadcrumbs(PluginCall call) {
-        Sentry.configureScope(scope -> {
-            scope.clearBreadcrumbs();
-        });
+        Sentry.configureScope(
+            scope -> {
+                scope.clearBreadcrumbs();
+            }
+        );
     }
 
     @PluginMethod
     public void setExtra(PluginCall call) {
         if (call.getData().has("key") && call.getData().has("value")) {
-            Sentry.configureScope(scope -> {
-                String key = call.getString("key");
-                String value = call.getString("value");
-                scope.setExtra(key, value);
-            });
+            Sentry.configureScope(
+                scope -> {
+                    String key = call.getString("key");
+                    String value = call.getString("value");
+                    scope.setExtra(key, value);
+                }
+            );
         }
         call.resolve();
     }
@@ -330,11 +336,13 @@ public class SentryCapacitor extends Plugin {
     @PluginMethod
     public void setTag(PluginCall call) {
         if (call.getData().has("key") && call.getData().has("value")) {
-            Sentry.configureScope(scope -> {
-                String key = call.getString("key");
-                String value = call.getString("value");
-                scope.setTag(key, value);
-            });
+            Sentry.configureScope(
+                scope -> {
+                    String key = call.getString("key");
+                    String value = call.getString("value");
+                    scope.setTag(key, value);
+                }
+            );
         }
         call.resolve();
     }
@@ -342,19 +350,19 @@ public class SentryCapacitor extends Plugin {
     public void setEventOriginTag(SentryEvent event) {
         SdkVersion sdk = event.getSdk();
         if (sdk != null) {
-          switch (sdk.getName()) {
-          // If the event is from capacitor js, it gets set there and we do not handle it here.
-          case "sentry.native":
-            setEventEnvironmentTag(event, "android", "native");
-            break;
-          case "sentry.java.android":
-            setEventEnvironmentTag(event, "android", "java");
-            break;
-          default:
-            break;
-          }
+            switch (sdk.getName()) {
+                // If the event is from capacitor js, it gets set there and we do not handle it here.
+                case "sentry.native":
+                    setEventEnvironmentTag(event, "android", "native");
+                    break;
+                case "sentry.java.android":
+                    setEventEnvironmentTag(event, "android", "java");
+                    break;
+                default:
+                    break;
+            }
         }
-      }
+    }
 
     private void setEventEnvironmentTag(SentryEvent event, String origin, String environment) {
         event.setTag("event.origin", origin);
@@ -380,5 +388,5 @@ public class SentryCapacitor extends Plugin {
 
             event.setSdk(eventSdk);
         }
-      }
+    }
 }

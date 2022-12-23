@@ -1,11 +1,12 @@
 /* eslint-disable max-lines */
 import { Capacitor } from '@capacitor/core';
-import { AttachmentItem, BaseEnvelopeItemHeaders, Breadcrumb, ClientReportItem, Envelope, Event, EventItem, SessionItem, SeverityLevel, User, UserFeedbackItem } from '@sentry/types';
+import { BaseEnvelopeItemHeaders, Breadcrumb, Envelope, EnvelopeItem, Event, SeverityLevel, User } from '@sentry/types';
 import { dropUndefinedKeys, logger, SentryError } from '@sentry/utils';
 
 import { NativeDeviceContextsResponse } from './definitions';
 import { CapacitorOptions } from './options';
 import { SentryCapacitor } from './plugin';
+import { utf8ToBytes } from './vendor';
 
 /**
  * Internal interface for calling native functions
@@ -23,58 +24,43 @@ export const NATIVE = {
       throw this._NativeClientError;
     }
 
-    const header = envelope[0];
+    const [EOL] = utf8ToBytes('\n');
+    const [envelopeHeader, envelopeItems] = envelope;
 
-    const headerString = JSON.stringify(header);
+    const headerString = JSON.stringify(envelopeHeader);
+    let envelopeBytes: number[] = utf8ToBytes(headerString);
+    envelopeBytes.push(EOL);
 
-    let envelopeItemsBuilder = `${headerString}`;
+    for (const rawItem of envelopeItems) {
 
-    for (const envelopeItems of envelope[1]) {
+      const [itemHeader, itemPayload] = this._processItem(rawItem);
 
-      const event = this._getEvent(envelopeItems);
-      if (event != undefined) {
-        if (NATIVE.platform === 'android') {
-          // @ts-ignore Android still uses the old message object, without this the serialization of events will break.
-          event.message = { message: event.message };
-
-          /*
-        We do this to avoid duplicate breadcrumbs on Android as sentry-android applies the breadcrumbs
-        from the native scope onto every envelope sent through it. This scope will contain the breadcrumbs
-        sent through the scope sync feature. This causes duplicate breadcrumbs.
-        We then remove the breadcrumbs in all cases but if it is handled == false,
-        this is a signal that the app would crash and android would lose the breadcrumbs by the time the app is restarted to read
-        the envelope.
-        Since unhandled errors from Javascript are not going to crash the App, we can't rely on the
-        handled flag for filtering breadcrumbs.
-          */
-          if (event.breadcrumbs) {
-            event.breadcrumbs = [];
-          }
-        }
-        envelopeItems[1] = event;
+      let bytesContentType: string;
+      let bytesPayload: number[] = [];
+        if (typeof itemPayload === 'string') {
+        bytesContentType = 'text/plain';
+        bytesPayload = utf8ToBytes(itemPayload);
+      } else if (itemPayload instanceof Uint8Array) {
+        bytesContentType = typeof itemHeader.content_type === 'string'
+          ? itemHeader.content_type
+          : 'application/octet-stream';
+        bytesPayload = [...itemPayload];
+      } else {
+        bytesContentType = 'application/json';
+        bytesPayload = utf8ToBytes(JSON.stringify(itemPayload));
       }
 
       // Content type is not inside BaseEnvelopeItemHeaders.
-      (envelopeItems[0] as BaseEnvelopeItemHeaders).content_type = 'application/json';
+      (itemHeader as BaseEnvelopeItemHeaders).content_type = bytesContentType;
+      (itemHeader as BaseEnvelopeItemHeaders).length = bytesPayload.length;
+      const serializedItemHeader = JSON.stringify(itemHeader);
 
-      const itemPayload = JSON.stringify(envelopeItems[1]);
-
-      let length = itemPayload.length;
-      try {
-        await SentryCapacitor.getStringBytesLength({ string: itemPayload }).then(
-          resp => {
-            length = resp.value;
-          })
-      } catch {
-        // The native call failed, we do nothing, we have payload.length as a fallback
-      }
-
-      (envelopeItems[0] as BaseEnvelopeItemHeaders).length = length;
-      const itemHeader = JSON.stringify(envelopeItems[0]);
-
-      envelopeItemsBuilder += `\n${itemHeader}\n${itemPayload}`;
+      envelopeBytes.push(...utf8ToBytes(serializedItemHeader));
+      envelopeBytes.push(EOL);
+      envelopeBytes = envelopeBytes.concat(bytesPayload);
+      envelopeBytes.push(EOL);
     }
-    await SentryCapacitor.captureEnvelope({ envelope: envelopeItemsBuilder });
+    await SentryCapacitor.captureEnvelope({ envelope: envelopeBytes });
   },
 
   /**
@@ -316,15 +302,38 @@ export const NATIVE = {
   },
 
   /**
- * Gets the event from envelopeItem and applies the level filter to the selected event.
- * @param data An envelope item containing the event.
- * @returns The event from envelopeItem or undefined.
- */
-  _getEvent(envelopeItem: EventItem | AttachmentItem | UserFeedbackItem | SessionItem | ClientReportItem): Event | undefined {
-    if (envelopeItem[0].type == 'event' || envelopeItem[0].type == 'transaction') {
-      return this._processLevels(envelopeItem[1] as Event);
+   * Gets the event from envelopeItem and applies the level filter to the selected event.
+   * @param data An envelope item containing the event.
+   * @returns The event from envelopeItem or undefined.
+   */
+  _processItem(item: EnvelopeItem): EnvelopeItem {
+    if (NATIVE.platform === 'android') {
+      const [itemHeader, itemPayload] = item;
+
+      if (itemHeader.type == 'event' || itemHeader.type == 'transaction') {
+        const event = this._processLevels(itemPayload as Event);
+        if ('message' in event) {
+          // @ts-ignore Android still uses the old message object, without this the serialization of events will break.
+          event.message = { message: event.message };
+        }
+        /*
+      We do this to avoid duplicate breadcrumbs on Android as sentry-android applies the breadcrumbs
+      from the native scope onto every envelope sent through it. This scope will contain the breadcrumbs
+      sent through the scope sync feature. This causes duplicate breadcrumbs.
+      We then remove the breadcrumbs in all cases but if it is handled == false,
+      this is a signal that the app would crash and android would lose the breadcrumbs by the time the app is restarted to read
+      the envelope.
+      Since unhandled errors from Javascript are not going to crash the App, we can't rely on the
+      handled flag for filtering breadcrumbs.
+        */
+        if (event.breadcrumbs) {
+          event.breadcrumbs = [];
+        }
+        return [itemHeader, event];
+      }
     }
-    return undefined;
+
+    return item;
   },
   /**
    * Serializes all values of root-level keys into strings.
