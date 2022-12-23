@@ -2,9 +2,14 @@
 import { Envelope, EventEnvelope, EventItem, SeverityLevel } from '@sentry/types';
 import { createEnvelope, logger } from '@sentry/utils';
 
+import { utf8ToBytes } from '../src/vendor';
 import { NATIVE } from '../src/wrapper';
 
 let getStringBytesLengthValue = 1;
+
+function NumberArrayToString(numberArray: number[]): string{
+  return new TextDecoder().decode(new Uint8Array(numberArray).buffer);
+}
 
 jest.mock(
   '@capacitor/core',
@@ -160,7 +165,7 @@ describe('Tests Native Wrapper', () => {
         },
       });
 
-      const expectedEnvelope = `${expectedHeader}\n${expectedItem}\n${expectedPayload}`;
+      const expectedEnvelope = `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`;
 
       const env = createEnvelope<EventEnvelope>({ event_id: event.event_id, sent_at: '123' }, [
         [{ type: 'event' }, event] as EventItem,
@@ -168,7 +173,7 @@ describe('Tests Native Wrapper', () => {
 
       await NATIVE.sendEnvelope(env);
 
-      expect(SentryCapacitor.captureEnvelope).toBeCalledWith({ envelope: expectedEnvelope });
+      expect(SentryCapacitor.captureEnvelope).toBeCalledWith({ envelope: utf8ToBytes(expectedEnvelope) });
     });
 
     test('does not call Capacitor at all if enableNative is false', async () => {
@@ -208,7 +213,7 @@ describe('Tests Native Wrapper', () => {
       const expectedItem = JSON.stringify({
         type: 'event',
         content_type: 'application/json',
-        length: 1,
+        length: 116,
       });
       const expectedPayload = JSON.stringify({
         ...event,
@@ -227,7 +232,7 @@ describe('Tests Native Wrapper', () => {
       await NATIVE.sendEnvelope(env);
 
       expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
-      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toMatch(
+      expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
         `${expectedHeader}\n${expectedItem}\n${expectedPayload}`);
     });
 
@@ -266,7 +271,7 @@ describe('Tests Native Wrapper', () => {
       const expectedItem = JSON.stringify({
         type: 'event',
         content_type: 'application/json',
-        length: 1,
+        length: 172,
       });
       const expectedPayload = JSON.stringify({
         ...event,
@@ -288,8 +293,8 @@ describe('Tests Native Wrapper', () => {
       await NATIVE.sendEnvelope(env);
 
       expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
-      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toMatch(
-        `${expectedHeader}\n${expectedItem}\n${expectedPayload}`);
+      expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
+        `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`);
     });
 
     test('Clears breadcrumbs on Android if there is a handled exception', async () => {
@@ -323,7 +328,7 @@ describe('Tests Native Wrapper', () => {
       const expectedItem = JSON.stringify({
         type: 'event',
         content_type: 'application/json',
-        length: 1,
+        length: 172,
       });
       const expectedPayload = JSON.stringify({
         ...event,
@@ -349,8 +354,8 @@ describe('Tests Native Wrapper', () => {
       await NATIVE.sendEnvelope(env);
 
       expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
-      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toMatch(
-        `${expectedHeader}\n${expectedItem}\n${expectedPayload}`);
+      expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
+        `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`);
     });
   });
 
