@@ -9,6 +9,7 @@
 
 ### Fixes
 
+- Removed JCenter reference ([#281](https://github.com/getsentry/sentry-capacitor/pull/281))
 - Avoid duplicating Breadcrumbs on Android ([#254](https://github.com/getsentry/sentry-capacitor/pull/254))
 
 ### Dependencies
