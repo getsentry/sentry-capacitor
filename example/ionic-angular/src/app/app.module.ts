@@ -30,7 +30,6 @@ Sentry.init(
         maskAllText: false,
         blockAllMedia: true,
       }),
-
     ],
     // A release identifier
     release: '1.0.0',

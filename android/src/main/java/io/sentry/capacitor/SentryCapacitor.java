@@ -171,10 +171,10 @@ public class SentryCapacitor extends Plugin {
                     Iterator<String> it = otherUserKeys.keys();
 
                     while (it.hasNext()) {
-                        String key = it.next();
-                        String value = otherUserKeys.getString(key);
+                      String key = it.next();
+                      String value = otherUserKeys.getString(key);
 
-                        otherUserKeysMap.put(key, value);
+                      otherUserKeysMap.put(key, value);
                     }
 
                     userInstance.setOthers(otherUserKeysMap);
@@ -294,10 +294,10 @@ public class SentryCapacitor extends Plugin {
                 Iterator<String> it = data.keys();
 
                 while (it.hasNext()) {
-                    String key = it.next();
-                    String value = data.getString(key);
+                  String key = it.next();
+                  String value = data.getString(key);
 
-                    breadcrumbInstance.setData(key, value);
+                  breadcrumbInstance.setData(key, value);
                 }
             }
 
