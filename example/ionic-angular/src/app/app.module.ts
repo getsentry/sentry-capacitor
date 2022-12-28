@@ -27,10 +27,8 @@ Sentry.init(
     integrations: [
       new Integrations.BrowserTracing(),
       new Replay({
-        // Additional SDK configuration goes in here, for example:
         maskAllText: false,
         blockAllMedia: true,
-        // See below for all available options
       }),
 
     ],

@@ -139,52 +139,50 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void setUser(PluginCall call) {
-        Sentry.configureScope(
-            scope -> {
-                JSObject defaultUserKeys = call.getObject("defaultUserKeys");
-                JSObject otherUserKeys = call.getObject("otherUserKeys");
+        Sentry.configureScope(scope -> {
+            JSObject defaultUserKeys = call.getObject("defaultUserKeys");
+            JSObject otherUserKeys = call.getObject("otherUserKeys");
 
-                if (defaultUserKeys == null && otherUserKeys == null) {
-                    scope.setUser(null);
-                } else {
-                    User userInstance = new User();
+            if (defaultUserKeys == null && otherUserKeys == null) {
+                scope.setUser(null);
+            } else {
+                User userInstance = new User();
 
-                    if (defaultUserKeys != null) {
-                        if (defaultUserKeys.has("email")) {
-                            userInstance.setEmail(defaultUserKeys.getString("email"));
-                        }
-
-                        if (defaultUserKeys.has("id")) {
-                            userInstance.setId(defaultUserKeys.getString("id"));
-                        }
-
-                        if (defaultUserKeys.has("username")) {
-                            userInstance.setUsername(defaultUserKeys.getString("username"));
-                        }
-
-                        if (defaultUserKeys.has("ip_address")) {
-                            userInstance.setIpAddress(defaultUserKeys.getString("ip_address"));
-                        }
+                if (defaultUserKeys != null) {
+                    if (defaultUserKeys.has("email")) {
+                        userInstance.setEmail(defaultUserKeys.getString("email"));
                     }
 
-                    if (otherUserKeys != null) {
-                        Map<String, String> otherUserKeysMap = new HashMap<>();
-                        Iterator<String> it = otherUserKeys.keys();
-
-                        while (it.hasNext()) {
-                            String key = it.next();
-                            String value = otherUserKeys.getString(key);
-
-                            otherUserKeysMap.put(key, value);
-                        }
-
-                        userInstance.setOthers(otherUserKeysMap);
+                    if (defaultUserKeys.has("id")) {
+                        userInstance.setId(defaultUserKeys.getString("id"));
                     }
 
-                    scope.setUser(userInstance);
+                    if (defaultUserKeys.has("username")) {
+                        userInstance.setUsername(defaultUserKeys.getString("username"));
+                    }
+
+                    if (defaultUserKeys.has("ip_address")) {
+                        userInstance.setIpAddress(defaultUserKeys.getString("ip_address"));
+                    }
                 }
+
+                if (otherUserKeys != null) {
+                    Map<String, String> otherUserKeysMap = new HashMap<>();
+                    Iterator<String> it = otherUserKeys.keys();
+
+                    while (it.hasNext()) {
+                        String key = it.next();
+                        String value = otherUserKeys.getString(key);
+
+                        otherUserKeysMap.put(key, value);
+                    }
+
+                    userInstance.setOthers(otherUserKeysMap);
+                }
+
+                scope.setUser(userInstance);
             }
-        );
+        });
     }
 
     @PluginMethod
@@ -253,82 +251,76 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void addBreadcrumb(final PluginCall breadcrumb) {
-        Sentry.configureScope(
-            scope -> {
-                Breadcrumb breadcrumbInstance = new Breadcrumb();
+        Sentry.configureScope(scope -> {
+            Breadcrumb breadcrumbInstance = new Breadcrumb();
 
-                if (breadcrumb.getData().has("message")) {
-                    breadcrumbInstance.setMessage(breadcrumb.getString("message"));
-                }
-
-                if (breadcrumb.getData().has("type")) {
-                    breadcrumbInstance.setType(breadcrumb.getString("type"));
-                }
-
-                if (breadcrumb.getData().has("category")) {
-                    breadcrumbInstance.setCategory(breadcrumb.getString("category"));
-                }
-
-                if (breadcrumb.getData().has("level")) {
-                    switch (breadcrumb.getString("level")) {
-                        case "fatal":
-                            breadcrumbInstance.setLevel(SentryLevel.FATAL);
-                            break;
-                        case "warning":
-                            breadcrumbInstance.setLevel(SentryLevel.WARNING);
-                            break;
-                        case "info":
-                            breadcrumbInstance.setLevel(SentryLevel.INFO);
-                            break;
-                        case "debug":
-                            breadcrumbInstance.setLevel(SentryLevel.DEBUG);
-                            break;
-                        case "error":
-                            breadcrumbInstance.setLevel(SentryLevel.ERROR);
-                            break;
-                        default:
-                            breadcrumbInstance.setLevel(SentryLevel.ERROR);
-                            break;
-                    }
-                }
-
-                if (breadcrumb.getData().has("data")) {
-                    JSObject data = breadcrumb.getObject("data");
-                    Iterator<String> it = data.keys();
-
-                    while (it.hasNext()) {
-                        String key = it.next();
-                        String value = data.getString(key);
-
-                        breadcrumbInstance.setData(key, value);
-                    }
-                }
-
-                scope.addBreadcrumb(breadcrumbInstance);
+            if (breadcrumb.getData().has("message")) {
+                breadcrumbInstance.setMessage(breadcrumb.getString("message"));
             }
-        );
+
+            if (breadcrumb.getData().has("type")) {
+                breadcrumbInstance.setType(breadcrumb.getString("type"));
+            }
+
+            if (breadcrumb.getData().has("category")) {
+                breadcrumbInstance.setCategory(breadcrumb.getString("category"));
+            }
+
+            if (breadcrumb.getData().has("level")) {
+                switch (breadcrumb.getString("level")) {
+                    case "fatal":
+                        breadcrumbInstance.setLevel(SentryLevel.FATAL);
+                        break;
+                    case "warning":
+                        breadcrumbInstance.setLevel(SentryLevel.WARNING);
+                        break;
+                    case "info":
+                        breadcrumbInstance.setLevel(SentryLevel.INFO);
+                        break;
+                    case "debug":
+                        breadcrumbInstance.setLevel(SentryLevel.DEBUG);
+                        break;
+                    case "error":
+                        breadcrumbInstance.setLevel(SentryLevel.ERROR);
+                        break;
+                    default:
+                        breadcrumbInstance.setLevel(SentryLevel.ERROR);
+                        break;
+                }
+            }
+
+            if (breadcrumb.getData().has("data")) {
+                JSObject data = breadcrumb.getObject("data");
+                Iterator<String> it = data.keys();
+
+                while (it.hasNext()) {
+                    String key = it.next();
+                    String value = data.getString(key);
+
+                    breadcrumbInstance.setData(key, value);
+                }
+            }
+
+            scope.addBreadcrumb(breadcrumbInstance);
+        });
         breadcrumb.resolve();
     }
 
     @PluginMethod
     public void clearBreadcrumbs(PluginCall call) {
-        Sentry.configureScope(
-            scope -> {
-                scope.clearBreadcrumbs();
-            }
-        );
+        Sentry.configureScope(scope -> {
+            scope.clearBreadcrumbs();
+        });
     }
 
     @PluginMethod
     public void setExtra(PluginCall call) {
         if (call.getData().has("key") && call.getData().has("value")) {
-            Sentry.configureScope(
-                scope -> {
-                    String key = call.getString("key");
-                    String value = call.getString("value");
-                    scope.setExtra(key, value);
-                }
-            );
+            Sentry.configureScope(scope -> {
+                String key = call.getString("key");
+                String value = call.getString("value");
+                scope.setExtra(key, value);
+            });
         }
         call.resolve();
     }
@@ -336,13 +328,11 @@ public class SentryCapacitor extends Plugin {
     @PluginMethod
     public void setTag(PluginCall call) {
         if (call.getData().has("key") && call.getData().has("value")) {
-            Sentry.configureScope(
-                scope -> {
-                    String key = call.getString("key");
-                    String value = call.getString("value");
-                    scope.setTag(key, value);
-                }
-            );
+            Sentry.configureScope(scope -> {
+                String key = call.getString("key");
+                String value = call.getString("value");
+                scope.setTag(key, value);
+            });
         }
         call.resolve();
     }
