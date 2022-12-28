@@ -81,3 +81,79 @@ Below that, you'll add the heading 3 mentioned above. For example, if you're add
 ```
 
 There's a GitHub action check to verify if an entry was added. If the entry isn't a user-facing change, you can skip the verification with `#skip-changelog` written to the PR description. The bot writes a comment in the PR with a suggestion entry to the changelog based on the PR title.
+
+## Develop with sentry-cocoa
+
+Here are step on how to test your changes in `sentry-cocoa` with `sentry-capacitor`. We assume you have both repositories cloned in siblings folders.
+
+1. Build `sentry-cocoa`.
+
+```sh
+cd sentry-cocoa
+make init
+make build-xcframework
+```
+
+2. Link local `sentry-cocoa` build in `sentry-capacitor`
+
+```sh
+cd sentry-capacitor
+```
+
+Comment out sentry dependency in `SentryCapacitor.podspec`.
+
+```diff
+-   s.dependency 'Sentry', '7.31.0'
++   # s.dependency 'Sentry', '7.31.0'
+```
+
+Add local pods to `example/ionic-angular/ios/App/Podfile`.
+
+```diff
+target 'sample' do
+
+  # ... capacitor config
+
++  pod 'Sentry/HybridSDK', :path => '../../../sentry-cocoa'
++  pod 'SentryPrivate', :path => '../../../sentry-cocoa/SentryPrivate.podspec'
+
+  # ... rest of the configuration
+
+end
+```
+
+## Develop with sentry-java
+
+Here are step on how to test your changes in `sentry-java` with `sentry-capacitor`. We assume that you have `sentry-java` setup, Android SDK installed, correct JAVA version etc.
+
+1. Build and publish `sentry-java` locally.
+
+```sh
+cd sentry-java
+make dryRelease
+ls ~/.m2/repository/io/sentry/sentry-android # check that `sentry-java` was published
+```
+
+2. Add local maven to the sample project.
+
+```sh
+cd sentry-capacitor/example
+```
+
+Add local maven to `example/sample-project/android/build.gradle`.
+
+```diff
+allprojects {
+    repositories {
++        mavenLocal()
+```
+
+Update `sentry-android` version, to the one locally published, in `android/build.gradle`.
+
+```diff
+dependencies {
+    implementation project(':capacitor-android')+'
+-    implementation 'io.sentry:sentry-android:5.4.0'
++    implementation 'io.sentry:sentry-android:6.7.7-my-local-version'
+}
+```
