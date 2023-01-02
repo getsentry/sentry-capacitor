@@ -27,7 +27,7 @@
 
 "@angular-devkit/build-angular@~13.3.0":
   version "13.3.0"
-  resolved "https://registry.npmjs.org/@angular-devkit/build-angular/-/build-angular-13.3.0.tgz"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-13.3.0.tgz#d8d07e0d167282e8cee165d700e4c9b0770417e0"
   integrity sha512-3Ji7EeqGHj7i1Jgmeo3aIEXsnfKyFeQPpl65gcYmHwj5dP4lZzLSU4rMaWWUKksccgqCUXgPI2vKePTPazmikg==
   dependencies:
     "@ampproject/remapping" "1.1.1"
