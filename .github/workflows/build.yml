@@ -125,7 +125,7 @@ jobs:
       - name: Pack
         run: yarn pack
       - name: Archive artifacts
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: ${{ github.sha }}
           path: |
