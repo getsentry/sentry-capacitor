@@ -1,17 +1,20 @@
 package io.sentry.capacitor;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.util.Log;
+import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
+import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
-import com.getcapacitor.NativePlugin;
-
 import io.sentry.Breadcrumb;
 import io.sentry.HubAdapter;
 import io.sentry.Integration;
 import io.sentry.Sentry;
-import io.sentry.SentryLevel;
 import io.sentry.SentryEvent;
+import io.sentry.SentryLevel;
 import io.sentry.UncaughtExceptionHandlerIntegration;
 import io.sentry.android.core.AnrIntegration;
 import io.sentry.android.core.NdkIntegration;
@@ -19,7 +22,6 @@ import io.sentry.android.core.SentryAndroid;
 import io.sentry.protocol.SdkVersion;
 import io.sentry.protocol.SentryPackage;
 import io.sentry.protocol.User;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -28,18 +30,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.UUID;
-
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.util.Log;
 
 @NativePlugin
 public class SentryCapacitor extends Plugin {
 
-    final static Logger logger = Logger.getLogger("capacitor-sentry");
+    static final Logger logger = Logger.getLogger("capacitor-sentry");
     private Context context;
     private static PackageInfo packageInfo;
 
@@ -204,7 +202,12 @@ public class SentryCapacitor extends Plugin {
     @PluginMethod
     public void captureEnvelope(PluginCall call) {
         try {
-            String envelope = call.getString("envelope");
+            JSArray rawIntegers = call.getArray("envelope");
+            byte[] bytes = new byte[rawIntegers.length()];
+            for (int i = 0; i < bytes.length; i++) {
+                bytes[i] = (byte) rawIntegers.getInt(i);
+            }
+
             final String outboxPath = HubAdapter.getInstance().getOptions().getOutboxPath();
 
             if (outboxPath == null || outboxPath.isEmpty()) {
@@ -213,22 +216,17 @@ public class SentryCapacitor extends Plugin {
                 return;
             }
 
-            final File installation =  new File(outboxPath, UUID.randomUUID().toString());
+            final File installation = new File(outboxPath, UUID.randomUUID().toString());
 
             try (FileOutputStream out = new FileOutputStream(installation)) {
-                out.write(envelope.getBytes(Charset.forName("UTF-8")));
+                out.write(bytes);
                 logger.info("Successfully captured envelope.");
-
-                JSObject resp = new JSObject();
-                resp.put("value", envelope);
-                call.resolve(resp);
             } catch (Exception e) {
                 logger.info("Error writing envelope.");
                 call.reject(String.valueOf(e));
                 return;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.info("Error reading envelope.");
             call.reject(String.valueOf(e));
             return;
@@ -342,19 +340,19 @@ public class SentryCapacitor extends Plugin {
     public void setEventOriginTag(SentryEvent event) {
         SdkVersion sdk = event.getSdk();
         if (sdk != null) {
-          switch (sdk.getName()) {
-          // If the event is from capacitor js, it gets set there and we do not handle it here.
-          case "sentry.native":
-            setEventEnvironmentTag(event, "android", "native");
-            break;
-          case "sentry.java.android":
-            setEventEnvironmentTag(event, "android", "java");
-            break;
-          default:
-            break;
-          }
+            switch (sdk.getName()) {
+                // If the event is from capacitor js, it gets set there and we do not handle it here.
+                case "sentry.native":
+                    setEventEnvironmentTag(event, "android", "native");
+                    break;
+                case "sentry.java.android":
+                    setEventEnvironmentTag(event, "android", "java");
+                    break;
+                default:
+                    break;
+            }
         }
-      }
+    }
 
     private void setEventEnvironmentTag(SentryEvent event, String origin, String environment) {
         event.setTag("event.origin", origin);
@@ -380,5 +378,5 @@ public class SentryCapacitor extends Plugin {
 
             event.setSdk(eventSdk);
         }
-      }
+    }
 }

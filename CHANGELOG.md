@@ -4,17 +4,19 @@
 
 ### Features
 
+- Support for Sentry Replay ([#281](https://github.com/getsentry/sentry-capacitor/pull/281))
 - Add sibling check ([#248](https://github.com/getsentry/sentry-capacitor/pull/248))
 
 ### Fixes
 
+- Removed JCenter reference ([#281](https://github.com/getsentry/sentry-capacitor/pull/281))
 - Avoid duplicating Breadcrumbs on Android ([#254](https://github.com/getsentry/sentry-capacitor/pull/254))
 
 ### Dependencies
 
-- Bump Sentry JavaScript SDK to `7.24.2` ([#277](https://github.com/getsentry/sentry-capacitor/pull/277))
-  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.24.2)
-  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.13.0...7.24.2)
+- Bump Sentry JavaScript SDK to `7.25.0` ([#281](https://github.com/getsentry/sentry-capacitor/pull/281))
+  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.25.0)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.13.0...7.25.0)
 - Bump Sentry iOS SDK to `7.30.2` ([#259](https://github.com/getsentry/sentry-capacitor/pull/259))
   - [changelog](https://github.com/getsentry/sentry-cocoa/releases/tag/7.30.2)
   - [diff](https://github.com/getsentry/sentry-cocoa/compare/7.23.0...7.30.2)

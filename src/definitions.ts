@@ -13,14 +13,9 @@ export type NativeDeviceContextsResponse = {
 
 export interface ISentryCapacitorPlugin {
   addBreadcrumb(breadcrumb: Breadcrumb): void;
-  captureEnvelope(payload: {
-    envelope:
-    | string
-    | {
-      header: Record<string, unknown>;
-      payload: Record<string, unknown>;
-    };
-  }): PromiseLike<Response>;
+  captureEnvelope(payload: { envelope: number[] }
+  ): PromiseLike<boolean>;
+
   clearBreadcrumbs(): void;
   crash(): void;
   fetchNativeRelease(): Promise<{
