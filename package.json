@@ -60,7 +60,7 @@
     "@sentry/integrations": "7.25.0",
     "@sentry/tracing": "7.25.0",
     "@sentry/types": "7.25.0",
-    "@sentry/utils": "7.25.0",
+    "@sentry/utils": "7.32.0",
     "@sentry/wizard": "^1.1.4",
     "promise": "^8.1.0"
   },
