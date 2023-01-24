@@ -1,10 +1,9 @@
-/* eslint-disable max-lines */
 import { Capacitor } from '@capacitor/core';
-import { BaseEnvelopeItemHeaders, Breadcrumb, Envelope, EnvelopeItem, Event, SeverityLevel, User } from '@sentry/types';
+import type { BaseEnvelopeItemHeaders, Breadcrumb, Envelope, EnvelopeItem, Event, SeverityLevel, User } from '@sentry/types';
 import { dropUndefinedKeys, logger, SentryError } from '@sentry/utils';
 
-import { NativeDeviceContextsResponse } from './definitions';
-import { CapacitorOptions } from './options';
+import type { NativeDeviceContextsResponse } from './definitions';
+import type { CapacitorOptions } from './options';
 import { SentryCapacitor } from './plugin';
 import { utf8ToBytes } from './vendor';
 

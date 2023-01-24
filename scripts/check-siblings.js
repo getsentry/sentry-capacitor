@@ -39,7 +39,7 @@ function GetRequiredSiblingVersion() {
     capacitorPackagePath = env.npm_package_json;
   }
   else {
-    capacitorPackagePath = __dirname + '../Package.json';
+    capacitorPackagePath = __dirname + '../package.json';
   }
 
   const capacitorPackageJson = fs.readFileSync(capacitorPackagePath, 'utf8');

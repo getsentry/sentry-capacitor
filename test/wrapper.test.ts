@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { Envelope, EventEnvelope, EventItem, SeverityLevel } from '@sentry/types';
+import type { Envelope, EventEnvelope, EventItem, SeverityLevel } from '@sentry/types';
 import { createEnvelope, logger } from '@sentry/utils';
 
 import { utf8ToBytes } from '../src/vendor';

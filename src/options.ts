@@ -1,4 +1,4 @@
-import { BrowserOptions } from '@sentry/browser';
+import type { BrowserOptions } from '@sentry/browser';
 
 /**
  * Configuration options for the Sentry Capacitor SDK.

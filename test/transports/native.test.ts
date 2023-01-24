@@ -1,8 +1,10 @@
-import { BrowserClient } from '@sentry/browser';
-import { BrowserClientOptions } from '@sentry/browser/types/client';
-import { BrowserTransportOptions } from '@sentry/browser/types/transports/types';
-import { FetchImpl } from '@sentry/browser/types/transports/utils';
-import { Event, Transport } from '@sentry/types';
+import { BrowserClient ,
+  defaultIntegrations,
+  } from '@sentry/browser';
+import type { BrowserClientOptions } from '@sentry/browser/types/client';
+import type { BrowserTransportOptions } from '@sentry/browser/types/transports/types';
+import type { FetchImpl } from '@sentry/browser/types/transports/utils';
+import type { Event,Transport } from '@sentry/types';
 
 import { NativeTransport } from '../../src/transports/native';
 import { NATIVE } from '../../src/wrapper';
@@ -31,11 +33,11 @@ describe('NativeTransport', () => {
 
     const nativeTransport = new NativeTransport();
     const transport = (_options: BrowserTransportOptions, _nativeFetch?: FetchImpl): Transport => nativeTransport;
-
     const x = new BrowserClient(
       {
         transport: transport,
         enabled: true,
+        integrations:defaultIntegrations,
         dsn: EXAMPLE_DSN
       } as BrowserClientOptions);
     x.captureEvent(event);

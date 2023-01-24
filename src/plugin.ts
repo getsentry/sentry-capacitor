@@ -1,6 +1,6 @@
 import { Plugins } from '@capacitor/core';
 
-import { ISentryCapacitorPlugin } from './definitions';
+import type { ISentryCapacitorPlugin } from './definitions';
 
 // Left here to support v2. This will be dropped in v4.
 // eslint-disable-next-line deprecation/deprecation
