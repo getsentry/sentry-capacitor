@@ -1,4 +1,4 @@
-import type { BaseTransportOptions, Envelope , Transport } from '@sentry/types';
+import type { BaseTransportOptions, Envelope, Transport } from '@sentry/types';
 import type { PromiseBuffer } from '@sentry/utils';
 import { makePromiseBuffer } from '@sentry/utils';
 

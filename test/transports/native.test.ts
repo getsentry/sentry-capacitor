@@ -37,7 +37,7 @@ describe('NativeTransport', () => {
       {
         transport: transport,
         enabled: true,
-        integrations:defaultIntegrations,
+        integrations: defaultIntegrations,
         dsn: EXAMPLE_DSN
       } as BrowserClientOptions);
     x.captureEvent(event);
