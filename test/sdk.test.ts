@@ -1,8 +1,8 @@
-import { BrowserOptions, StackFrame } from '@sentry/browser';
+import type { BrowserOptions, StackFrame} from '@sentry/browser';
 import { RewriteFrames } from '@sentry/integrations';
-import { Integration } from '@sentry/types';
+import type { Integration } from '@sentry/types';
 
-import { CapacitorOptions } from '../src';
+import type { CapacitorOptions } from '../src';
 import { init } from '../src/sdk';
 import { NATIVE } from '../src/wrapper';
 

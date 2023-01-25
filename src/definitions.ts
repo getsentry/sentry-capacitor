@@ -1,6 +1,6 @@
-import { Breadcrumb, Package } from '@sentry/types';
+import type { Breadcrumb, Package } from '@sentry/types';
 
-import { CapacitorOptions } from './options';
+import type { CapacitorOptions } from './options';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface serializedObject {

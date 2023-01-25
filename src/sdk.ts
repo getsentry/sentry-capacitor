@@ -1,13 +1,12 @@
+import type { StackFrame } from '@sentry/browser';
 import {
   defaultIntegrations,
-  init as browserInit,
-  StackFrame,
-} from '@sentry/browser';
+  init as browserInit } from '@sentry/browser';
 import { Hub, makeMain } from '@sentry/core';
 import { RewriteFrames } from '@sentry/integrations';
 
 import { DeviceContext, EventOrigin, SdkInfo } from './integrations';
-import { CapacitorOptions } from './options';
+import type { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 import { makeCapacitorTransport } from './transports/native';
 import { NATIVE } from './wrapper';
