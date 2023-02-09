@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes/Features
+
+- Fix incorrect reference to package.json under special cases ([#316](https://github.com/getsentry/sentry-capacitor/pull/316))
+
 ## 0.11.1
 
 ### Dependencies
