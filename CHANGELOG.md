@@ -6,6 +6,12 @@
 
 - Fix incorrect reference to package.json under special cases ([#316](https://github.com/getsentry/sentry-capacitor/pull/316))
 
+### Dependencies
+
+- Bump Sentry JavaScript SDK to `7.37.1` ([#???](https://github.com/getsentry/sentry-capacitor/pull/???))
+  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.37.1)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.31.1...7.37.1)
+
 ## 0.11.1
 
 ### Dependencies
