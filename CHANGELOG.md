@@ -2,8 +2,9 @@
 
 ## Unreleased
 
-### Fixes/Features
+### Fixes
 
+- Fix ignore sibling check on Sentry Electron ([#???](https://github.com/getsentry/sentry-capacitor/pull/???))
 - Fix incorrect reference to package.json under special cases ([#316](https://github.com/getsentry/sentry-capacitor/pull/316))
 
 ### Dependencies

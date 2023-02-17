@@ -5,7 +5,7 @@ const { env } = require('process');
 const updateArgument = '--update-sentry-capacitor';
 
 // Filters all Sentry packages but Capacitor, CLI and Wizard.
-const jsonFilter = /\s*\"\@sentry\/(?!capacitor|wizard|cli|typescript)(?<packageName>[a-zA-Z]+)\"\:\s*\"(?<version>.+)\"/;
+const jsonFilter = /\s*\"\@sentry\/(?!capacitor|wizard|cli|typescript|electron)(?<packageName>[a-zA-Z]+)\"\:\s*\"(?<version>.+)\"/;
 
 /**
  * If user requested to ignore the post-install
