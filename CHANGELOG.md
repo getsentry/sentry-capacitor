@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- Fix CSP Errors on Replay when using ([#333](https://github.com/getsentry/sentry-capacitor/pull/333))
+
+### Dependencies
+
+- Bump Sentry JavaScript SDK to `7.42.0` ([#333](https://github.com/getsentry/sentry-capacitor/pull/333))
+  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.42.0)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.25.0...7.42.0)
+
 ## 0.11.2
 
 ### Fixes
