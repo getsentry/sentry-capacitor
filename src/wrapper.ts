@@ -36,7 +36,7 @@ export const NATIVE = {
 
       let bytesContentType: string;
       let bytesPayload: number[] = [];
-        if (typeof itemPayload === 'string') {
+      if (typeof itemPayload === 'string') {
         bytesContentType = 'text/plain';
         bytesPayload = utf8ToBytes(itemPayload);
       } else if (itemPayload instanceof Uint8Array) {
@@ -98,6 +98,7 @@ export const NATIVE = {
       integrations,
       defaultIntegrations,
       transport,
+      tracesSampler,
       ...filteredOptions
     } = options;
 
