@@ -4,6 +4,7 @@
 
 ### Fixes
 
+- Fix Sentry not properly initializing when tracesSampler was used on Sentry options.
 - Fix CSP Errors on Replay when using ([#333](https://github.com/getsentry/sentry-capacitor/pull/333))
 
 ### Dependencies
