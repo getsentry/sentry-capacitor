@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Features
+
+- Support for Capacitor 5 ([#356](https://github.com/getsentry/sentry-capacitor/pull/356))
+
 ## 0.11.3
 
 ### Fixes
