@@ -1,5 +1,5 @@
 import { Capacitor } from '@capacitor/core';
-import type { BaseEnvelopeItemHeaders, Breadcrumb, Envelope, EnvelopeItem, Event, SeverityLevel, User } from '@sentry/types';
+import type { BaseEnvelopeItemHeaders, Breadcrumb, Envelope, EnvelopeItem, Event, SeverityLevel, TransportMakeRequestResponse, User } from '@sentry/types';
 import { dropUndefinedKeys, logger, SentryError } from '@sentry/utils';
 
 import type { NativeDeviceContextsResponse } from './definitions';
@@ -15,7 +15,7 @@ export const NATIVE = {
    * Sending the event over the bridge to native
    * @param event Event
    */
-  async sendEnvelope(envelope: Envelope): Promise<void> {
+  async sendEnvelope(envelope: Envelope): Promise<TransportMakeRequestResponse | void> {
     if (!this.enableNative) {
       throw this._DisabledNativeError;
     }
@@ -59,7 +59,18 @@ export const NATIVE = {
       envelopeBytes = envelopeBytes.concat(bytesPayload);
       envelopeBytes.push(EOL);
     }
-    await SentryCapacitor.captureEnvelope({ envelope: envelopeBytes });
+
+    let transportStatusCode = 0;
+    await SentryCapacitor.captureEnvelope({ envelope: envelopeBytes })
+      .then(_ => {
+        transportStatusCode = 500;
+      }
+        , failed => {
+          logger.error('Failed to capture Envelope: ', failed);
+          transportStatusCode = 500;
+        });
+
+    return { statusCode: transportStatusCode } as TransportMakeRequestResponse;
   },
 
   /**

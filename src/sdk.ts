@@ -1,14 +1,16 @@
 import type { StackFrame } from '@sentry/browser';
 import {
   defaultIntegrations,
-  init as browserInit } from '@sentry/browser';
+  init as browserInit
+} from '@sentry/browser';
 import { Hub, makeMain } from '@sentry/core';
 import { RewriteFrames } from '@sentry/integrations';
 
 import { DeviceContext, EventOrigin, SdkInfo } from './integrations';
 import type { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
-import { makeCapacitorTransport } from './transports/native';
+import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
+import { makeUtf8TextEncoder } from './transports/TextEncoder';
 import { NATIVE } from './wrapper';
 
 /**
@@ -17,15 +19,17 @@ import { NATIVE } from './wrapper';
  * @param originalInit The init function of the sibling SDK, leave blank to initialize with `@sentry/browser`
  */
 export function init<O>(
-  options: CapacitorOptions & O,
-  originalInit: (options: O) => void = browserInit,
+  passedOptions: CapacitorOptions & O,
+  originalInit: (passedOptions: O) => void = browserInit,
 ): void {
   const finalOptions = {
     enableAutoSessionTracking: true,
     enableOutOfMemoryTracking: true,
-    ...options,
+    transportOptions: {
+      textEncoder: makeUtf8TextEncoder(),
+    },
+    ...passedOptions,
   };
-
   if (finalOptions.enabled === false ||
     NATIVE.platform === 'web') {
     finalOptions.enableNative = false;
@@ -77,8 +81,15 @@ export function init<O>(
   if (finalOptions.enableNative) {
     finalOptions.defaultIntegrations.push(new DeviceContext());
 
-    if (!options.transport && NATIVE.platform !== 'web') {
-      finalOptions.transport = options.transport || makeCapacitorTransport;
+    if (!passedOptions.transport && NATIVE.platform !== 'web') {
+      finalOptions.transport = passedOptions.transport
+        || makeNativeTransport;
+
+      finalOptions.transportOptions = {
+        ...{ textEncoder: makeUtf8TextEncoder() },
+        ...(passedOptions.transportOptions ?? {}),
+        bufferSize: DEFAULT_BUFFER_SIZE,
+      };
     }
   }
 
