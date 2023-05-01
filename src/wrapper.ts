@@ -60,11 +60,9 @@ export const NATIVE = {
       envelopeBytes.push(EOL);
     }
 
-    let transportStatusCode = 0;
+    let transportStatusCode = 200;
     await SentryCapacitor.captureEnvelope({ envelope: envelopeBytes })
-      .then(_ => {
-        transportStatusCode = 200;
-      }
+      .then(_ => _ // We only want to know if it failed.
         , failed => {
           logger.error('Failed to capture Envelope: ', failed);
           transportStatusCode = 500;
