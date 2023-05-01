@@ -25,9 +25,6 @@ export function init<O>(
   const finalOptions = {
     enableAutoSessionTracking: true,
     enableOutOfMemoryTracking: true,
-    transportOptions: {
-      textEncoder: makeUtf8TextEncoder(),
-    },
     ...passedOptions,
   };
   if (finalOptions.enabled === false ||
