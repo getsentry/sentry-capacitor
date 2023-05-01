@@ -63,7 +63,7 @@ export const NATIVE = {
     let transportStatusCode = 0;
     await SentryCapacitor.captureEnvelope({ envelope: envelopeBytes })
       .then(_ => {
-        transportStatusCode = 500;
+        transportStatusCode = 200;
       }
         , failed => {
           logger.error('Failed to capture Envelope: ', failed);
