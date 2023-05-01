@@ -84,3 +84,6 @@ yalc.lock
 android/gradle/wrapper/gradle-wrapper.properties
 example/ionic-angular/android/capacitor.settings.gradle
 example/ionic-angular/android/app/capacitor.build.gradle
+
+#yarn pack files
+sentry-capacitor-v*.tgz
