@@ -229,7 +229,7 @@ public class SentryCapacitor extends Plugin {
         } catch (Exception e) {
             logger.info("Error reading envelope.");
             call.reject(String.valueOf(e));
-                return;
+            return;
         }
         call.resolve();
     }
