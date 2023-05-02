@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import type { Envelope, EventEnvelope, EventItem, SeverityLevel } from '@sentry/types';
+import type { Envelope, EventEnvelope, EventItem, SeverityLevel, TransportMakeRequestResponse } from '@sentry/types';
 import { createEnvelope, logger } from '@sentry/utils';
 
 import { utf8ToBytes } from '../src/vendor';
@@ -7,7 +7,7 @@ import { NATIVE } from '../src/wrapper';
 
 let getStringBytesLengthValue = 1;
 
-function NumberArrayToString(numberArray: number[]): string{
+function NumberArrayToString(numberArray: number[]): string {
   return new TextDecoder().decode(new Uint8Array(numberArray).buffer);
 }
 
@@ -357,6 +357,56 @@ describe('Tests Native Wrapper', () => {
       expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
         `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`);
     });
+
+    test('has statusCode 200 on success', async () => {
+      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
+      captureEnvelopeSpy.mockResolvedValue(true);
+
+      const event = {
+        event_id: 'event0',
+        message: 'test',
+        sdk: {
+          name: 'test-sdk-name',
+          version: '2.1.3',
+        },
+      };
+
+      const env = createEnvelope<EventEnvelope>({ event_id: event.event_id, sent_at: '123' }, [
+        [{ type: 'event' }, event] as EventItem,
+      ]);
+
+      const expectedReturn = {
+        statusCode: 200,
+      } as TransportMakeRequestResponse;
+      NATIVE.enableNative = true;
+      const result = await NATIVE.sendEnvelope(env);
+      expect(result).toMatchObject(expectedReturn);
+    });
+
+    test('has statusCode 500 if failed', async () => {
+      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
+      captureEnvelopeSpy.mockRejectedValue(false);
+
+      const event = {
+        event_id: 'event0',
+        message: 'test',
+        sdk: {
+          name: 'test-sdk-name',
+          version: '2.1.3',
+        },
+      };
+
+      const env = createEnvelope<EventEnvelope>({ event_id: event.event_id, sent_at: '123' }, [
+        [{ type: 'event' }, event] as EventItem,
+      ]);
+
+      const expectedReturn = {
+        statusCode: 500,
+      } as TransportMakeRequestResponse;
+      NATIVE.enableNative = true;
+      const result = await NATIVE.sendEnvelope(env);
+      expect(result).toMatchObject(expectedReturn);
+    })
   });
 
   // TODO add this in when fetchRelease method is in progress

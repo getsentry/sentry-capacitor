@@ -231,6 +231,7 @@ public class SentryCapacitor extends Plugin {
             call.reject(String.valueOf(e));
             return;
         }
+        call.resolve();
     }
 
     @PluginMethod

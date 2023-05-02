@@ -1,10 +1,10 @@
-import { ErrorHandler,NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { createErrorHandler,init as sentryAngularInit } from '@sentry/angular';
+import { createErrorHandler, init as sentryAngularInit } from '@sentry/angular';
 import * as Sentry from '@sentry/capacitor';
 import { Integrations } from '@sentry/tracing';
 
@@ -51,18 +51,18 @@ Sentry.init(
 );
 
 @NgModule({
-    declarations: [AppComponent],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-    providers: [
-        StatusBar,
-        SplashScreen,
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        /* Provide the @sentry/angular error handler */
-        {
-            provide: ErrorHandler,
-            useValue: createErrorHandler(),
-        },
-    ],
-    bootstrap: [AppComponent]
+  declarations: [AppComponent],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    /* Provide the @sentry/angular error handler */
+    {
+      provide: ErrorHandler,
+      useValue: createErrorHandler(),
+    },
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
