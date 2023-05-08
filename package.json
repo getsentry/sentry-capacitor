@@ -61,7 +61,7 @@
     "@sentry/tracing": "7.50.0",
     "@sentry/types": "7.50.0",
     "@sentry/utils": "7.50.0",
-    "@sentry/wizard": "^1.1.4",
+    "@sentry/wizard": "^3.2.1",
     "promise": "^8.1.0"
   },
   "devDependencies": {
