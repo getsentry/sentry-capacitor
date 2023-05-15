@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- Fix iOS not Sending events ([#370](https://github.com/getsentry/sentry-capacitor/pull/370))
+
 ## 0.11.3
 
 ### Fixes
