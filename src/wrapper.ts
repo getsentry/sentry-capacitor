@@ -3,6 +3,7 @@ import type { BaseEnvelopeItemHeaders, Breadcrumb, Envelope, EnvelopeItem, Event
 import { dropUndefinedKeys, logger, SentryError } from '@sentry/utils';
 
 import type { NativeDeviceContextsResponse } from './definitions';
+import { FilterNativeOptions } from './nativeOptions';
 import type { CapacitorOptions } from './options';
 import { SentryCapacitor } from './plugin';
 import { utf8ToBytes } from './vendor';
@@ -96,21 +97,7 @@ export const NATIVE = {
     }
 
     // filter out all options that would crash native
-    /* eslint-disable @typescript-eslint/unbound-method, @typescript-eslint/no-unused-vars */
-    const {
-      // @ts-ignore Vue specific option.
-      app,
-      // @ts-ignore Vue specific option.
-      vue,
-      beforeSend,
-      beforeBreadcrumb,
-      integrations,
-      defaultIntegrations,
-      transport,
-      tracesSampler,
-      ...filteredOptions
-    } = options;
-
+    const filteredOptions = FilterNativeOptions(options);
     return SentryCapacitor.initNativeSdk({ options: filteredOptions });
   },
 
