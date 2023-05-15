@@ -66,7 +66,6 @@ jest.mock('../src/plugin', () => {
 });
 
 import { SentryCapacitor } from '../src/plugin';
-import { transcode } from 'buffer';
 
 beforeEach(() => {
   getStringBytesLengthValue = 1;
