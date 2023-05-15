@@ -87,7 +87,7 @@ describe('Tests Native Wrapper', () => {
       expect(SentryCapacitor.initNativeSdk).toBeCalled();
     });
 
-    test('Vue options to be removed', async () => {
+    test('Vue and App options to be removed', async () => {
 
       const initNativeSdk = jest.spyOn(SentryCapacitor, 'initNativeSdk');
 
@@ -100,6 +100,35 @@ describe('Tests Native Wrapper', () => {
       expect(nativeOption.app).toBeUndefined();
       // @ts-ignore Not part of Capacitor Options but it is extended by Vue Options.
       expect(nativeOption.vue).toBeUndefined();
+
+      expect(initNativeSdk).toBeCalled();
+    });
+
+
+    test('default options to be removed', async () => {
+      const initNativeSdk = jest.spyOn(SentryCapacitor, 'initNativeSdk');
+      await NATIVE.initNativeSdk(
+        {
+          dsn: 'test',
+          enableNative: true,
+          integrations: [],
+          defaultIntegrations: [],
+          beforeSend: ((event) => event),
+          beforeBreadcrumb: ((breadcrumb) => breadcrumb),
+          transport: jest.fn(),
+          tracesSampler: jest.fn(),
+        });
+
+      const nativeOption = initNativeSdk.mock.calls[0][0].options;
+      expect(SentryCapacitor.initNativeSdk).toBeCalledTimes(1);
+      // @ts-ignore Not part of Capacitor Options but it is extended by Vue Options.
+      expect(nativeOption.integrations).toBeUndefined();
+      expect(nativeOption.defaultIntegrations).toBeUndefined();
+      expect(nativeOption.beforeSend).toBeUndefined();
+      expect(nativeOption.beforeBreadcrumb).toBeUndefined();
+      expect(nativeOption.beforeBreadcrumb).toBeUndefined();
+      expect(nativeOption.transport).toBeUndefined();
+      expect(nativeOption.tracesSampler).toBeUndefined();
 
       expect(initNativeSdk).toBeCalled();
     });
