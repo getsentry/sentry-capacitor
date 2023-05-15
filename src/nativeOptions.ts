@@ -7,11 +7,11 @@ import type { CapacitorOptions } from './options';
  */
 export function FilterNativeOptions(options: CapacitorOptions): CapacitorOptions {
   return {
-    //allowUrls: Only available on the JavaScript Layer.
+    // allowUrls: Only available on the JavaScript Layer.
     attachStacktrace: options.attachStacktrace,
     attachThreads: options.attachThreads,
     debug: options.debug,
-    //denyUrls Only available on the JavaScript Layer.
+    // denyUrls Only available on the JavaScript Layer.
     dist: options.dist,
     dsn: options.dsn,
     enabled: options.enabled,

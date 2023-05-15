@@ -1,4 +1,5 @@
-import { Instrumenter, StackParser } from '@sentry/types';
+import type { Instrumenter, StackParser } from '@sentry/types';
+
 import { FilterNativeOptions } from '../src/nativeOptions';
 import { makeCapacitorTransport } from '../src/transports/native';
 
