@@ -66,6 +66,7 @@ jest.mock('../src/plugin', () => {
 });
 
 import { SentryCapacitor } from '../src/plugin';
+import { transcode } from 'buffer';
 
 beforeEach(() => {
   getStringBytesLengthValue = 1;
@@ -115,6 +116,7 @@ describe('Tests Native Wrapper', () => {
           defaultIntegrations: [],
           beforeSend: ((event) => event),
           beforeBreadcrumb: ((breadcrumb) => breadcrumb),
+          beforeSendTransaction: (transaction) => transaction,
           transport: jest.fn(),
           tracesSampler: jest.fn(),
         });
@@ -125,7 +127,7 @@ describe('Tests Native Wrapper', () => {
       expect(nativeOption.integrations).toBeUndefined();
       expect(nativeOption.defaultIntegrations).toBeUndefined();
       expect(nativeOption.beforeSend).toBeUndefined();
-      expect(nativeOption.beforeBreadcrumb).toBeUndefined();
+      expect(nativeOption.beforeSendTransaction).toBeUndefined();
       expect(nativeOption.beforeBreadcrumb).toBeUndefined();
       expect(nativeOption.transport).toBeUndefined();
       expect(nativeOption.tracesSampler).toBeUndefined();
