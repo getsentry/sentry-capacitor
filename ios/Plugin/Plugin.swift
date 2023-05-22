@@ -119,13 +119,9 @@ public class SentryCapacitor: CAPPlugin {
     }
 
     @objc func fetchNativeSdkInfo(_ call: CAPPluginCall) {
-        guard let options = self.sentryOptions else {
-            return call.reject("Called fetchSdkInfo without initializing cocoa SDK.")
-        }
-
         call.resolve([
-            "name": options.sdkInfo.name,
-            "version": options.sdkInfo.version
+            "name": PrivateSentrySDKOnly.getSdkName(),
+            "version": PrivateSentrySDKOnly.getSdkVersionString()
         ])
     }
 
