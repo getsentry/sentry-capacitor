@@ -6,6 +6,13 @@
 
 - Support for Capacitor 5 ([#356](https://github.com/getsentry/sentry-capacitor/pull/356))
 
+## 0.11.4
+
+### Fixes
+
+- Fix Deprecated references to Sdk Info ([#376](https://github.com/getsentry/sentry-capacitor/pull/376))
+- Fix iOS not Sending events ([#370](https://github.com/getsentry/sentry-capacitor/pull/370))
+
 ## 0.11.3
 
 ### Fixes
