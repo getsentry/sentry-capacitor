@@ -271,22 +271,22 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@capacitor/android@^3.0.1 || ^4.0.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-4.1.0.tgz#d4f4a84213b948911757a00a58255418f126f2c7"
-  integrity sha512-aYHvpYVlS6WC+bG9jJfwqgHMxTw3e8f3taNnl/y9qCjglmMmtFcZWFAVLlOleVK4Q7olSirqjx37f0ppvxRTLg==
+"@capacitor/android@^3.0.1 || ^4.0.0 || ^5.0.0":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-5.0.4.tgz#aa6497782bae0851553682126a6051157fe932b5"
+  integrity sha512-WtXmjRQ0bCtFkwBID/jVEPbqnh0uR9wTSgkW7QNzogDuA0iyJJI2nxDfT9knUmg6mne/CnfTXg093zzdc13C0w==
 
-"@capacitor/core@^3.0.1 || ^4.0.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-4.1.0.tgz#4f5b80cd9cbf65bfc5a203082399fa794ffc5f45"
-  integrity sha512-bMYFnC5l5n11D/kLTz9TOOJfUH+nQqYRwzG7h5h4AXIm8aFxH5ZY3iFlDZd7R4xcyrlnfxzfoooSH9trPjRBLA==
+"@capacitor/core@^3.0.1 || ^4.0.0 || ^5.0.0":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-5.0.4.tgz#70c5551a34657482042c351cbadac0fd9aba53a7"
+  integrity sha512-BFvziz9jM87pLHW2sXPNIzwrdmI5mAP0tBsBHgXoCO2+wVdpvIMYCpcst5BuTULaMz5JBFZZ6g6nqwgfs+SMCA==
   dependencies:
     tslib "^2.1.0"
 
-"@capacitor/ios@^3.0.1 || ^4.0.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-4.1.0.tgz#db3ca463611dccda03244ca4dac41d3b6f69e79c"
-  integrity sha512-zkv48Xc5QwdL7TIT4YpXwgISrA5Cuy59KyN+uq3ovr+L/y5SgtKAOg7pATRBYT7CFgFLqkey/PQKcTjbcxhyaA==
+"@capacitor/ios@^3.0.1 || ^4.0.0 || ^5.0.0":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-5.0.4.tgz#337a5a917b75a5b5d257bb0b08b6f1d7bb396241"
+  integrity sha512-JVyggBTbHR1OWqxTRysgGKhZHDuM0AQwCIbylvEpza5X0zmaltbQxVC83abcwOKsgNJnrcuv+HUgV+LXg8Dk4Q==
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
