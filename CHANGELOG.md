@@ -4,7 +4,7 @@
 
 ### Features
 
-- Support for Capacitor 5 ([#356](https://github.com/getsentry/sentry-capacitor/pull/356))
+- Support for Capacitor 5 ([#356](https://github.com/getsentry/sentry-capacitor/pull/356)),([#386](https://github.com/getsentry/sentry-capacitor/pull/386))
 
 ## 0.11.4
 
