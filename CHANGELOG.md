@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Features
+
+- Support for Capacitor 5 ([#356](https://github.com/getsentry/sentry-capacitor/pull/356)),([#386](https://github.com/getsentry/sentry-capacitor/pull/386))
+
 ### Dependencies
 
 - Bump Sentry Android SDK to `6.17.0` ([#385](https://github.com/getsentry/sentry-capacitor/pull/385))
