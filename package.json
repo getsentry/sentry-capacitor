@@ -38,9 +38,9 @@
   "license": "MIT",
   "peerDependencies": {
     "@capacitor/core": ">=3.0.0",
-    "@sentry/angular": "7.50.0",
-    "@sentry/react": "7.50.0",
-    "@sentry/vue": "7.50.0"
+    "@sentry/angular": "7.54.0",
+    "@sentry/react": "7.54.0",
+    "@sentry/vue": "7.54.0"
   },
   "peerDependenciesMeta": {
     "@sentry/angular": {
@@ -54,13 +54,13 @@
     }
   },
   "dependencies": {
-    "@sentry/browser": "7.50.0",
-    "@sentry/core": "7.50.0",
-    "@sentry/hub": "7.50.0",
-    "@sentry/integrations": "7.50.0",
-    "@sentry/tracing": "7.50.0",
-    "@sentry/types": "7.50.0",
-    "@sentry/utils": "7.50.0",
+    "@sentry/browser": "7.54.0",
+    "@sentry/core": "7.54.0",
+    "@sentry/hub": "7.54.0",
+    "@sentry/integrations": "7.54.0",
+    "@sentry/tracing": "7.54.0",
+    "@sentry/types": "7.54.0",
+    "@sentry/utils": "7.54.0",
     "@sentry/wizard": "^1.1.4",
     "promise": "^8.1.0"
   },
@@ -69,8 +69,8 @@
     "@capacitor/core": "^3.0.1 || ^4.0.0 || ^5.0.0",
     "@capacitor/ios": "^3.0.1 || ^4.0.0 || ^5.0.0",
     "@ionic/prettier-config": "^1.0.0",
-    "@sentry-internal/eslint-config-sdk": "7.50.0",
-    "@sentry-internal/eslint-plugin-sdk": "7.50.0",
+    "@sentry-internal/eslint-config-sdk": "7.54.0",
+    "@sentry-internal/eslint-plugin-sdk": "7.54.0",
     "@sentry/typescript": "5.20.1",
     "@types/jest": "^26.0.15",
     "eslint": "^7.13.0",
