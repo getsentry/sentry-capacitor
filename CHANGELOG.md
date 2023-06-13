@@ -4,7 +4,7 @@
 
 ### Dependencies
 
-- Bump Sentry JavaScript SDK to `7.54.0` ([#???](https://github.com/getsentry/sentry-capacitor/pull/???))
+- Bump Sentry JavaScript SDK to `7.54.0` ([#389](https://github.com/getsentry/sentry-capacitor/pull/389))
   - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.54.0)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/7.50.0...7.54.0)
 
