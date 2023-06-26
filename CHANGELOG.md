@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Bump sentry-cocoa SDK to `8.8.0` ([#397](https://github.com/getsentry/sentry-capacitor/pull/397))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/releases/tag/8.8.0)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/7.27.1...8.8.0)
+
+
 ## 0.12.1
 
 ### Dependencies
