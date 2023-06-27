@@ -4,7 +4,7 @@
 
 ### Fixes
 
-- Removed promises and wizard from dependencies ([#400](https://github.com/getsentry/sentry-capacitor/pull/400))
+- Removed promise and wizard from dependencies ([#400](https://github.com/getsentry/sentry-capacitor/pull/400)) - special thanks to @olivier-blanc-openit
 
 ### Dependencies
 
