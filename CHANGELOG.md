@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Bump Sentry JavaScript SDK to `7.56.0` ([#398](https://github.com/getsentry/sentry-capacitor/pull/398))
+  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.56.0)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.54.0...7.56.0)
+
 ## 0.12.1
 
 ### Dependencies
