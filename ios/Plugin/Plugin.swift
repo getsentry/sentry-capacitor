@@ -71,7 +71,7 @@ public class SentryCapacitor: CAPPlugin {
     }
 
     @objc func captureEnvelope(_ call: CAPPluginCall) {
-        guard let bytes = call.getArray("envelope") as? [NSNumber] else {
+        guard let bytes = call.getArray("envelope", Array<NSNumber>.Type.self) as? [NSNumber] else {
             print("Cannot parse the envelope data")
             call.reject("Envelope is null or empty")
             return
@@ -83,7 +83,7 @@ public class SentryCapacitor: CAPPlugin {
            pointer[index] = UInt8(number.intValue)
         }
 
-        let data = Data(buffer: UnsafeMutableBufferPointer(start: pointer, count: bytes.count))
+        let data = Data(buffer: UnsafeMutableBufferPointer<UInt8>(start: pointer, count: bytes.count))
 
         guard let envelope = PrivateSentrySDKOnly.envelope(with: data) else {
             call.reject("SentryCapacitor", "Failed to parse envelope from byte array.", nil)
@@ -143,10 +143,10 @@ public class SentryCapacitor: CAPPlugin {
                   print("Contexts: \(debugContext ?? "")")
                 }
             }
-            
+
             let extraContext = PrivateSentrySDKOnly.getExtraContext()
             var context = contexts["context"] as? [String: Any] ?? [:]
-            
+
             if let deviceExtraContext = extraContext["device"] as? [String: Any] {
                 var deviceContext = context["device"] as? [String: Any] ?? [:]
                 for (key, value) in deviceExtraContext {
@@ -154,7 +154,7 @@ public class SentryCapacitor: CAPPlugin {
                 }
                 context["device"] = deviceContext
             }
-            
+
             if let appExtraContext = extraContext["app"] as? [String: Any] {
                 var appContext = context["app"] as? [String: Any] ?? [:]
                 for (key, value) in appExtraContext {
@@ -162,10 +162,10 @@ public class SentryCapacitor: CAPPlugin {
                 }
                 context["app"] = appContext
             }
-            
+
             contexts["context"] = context
-        
-            call.resolve(contexts as PluginCallResultData)
+
+            call.resolve(contexts as PluginResultData)
         }
     }
 
