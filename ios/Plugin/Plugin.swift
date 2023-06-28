@@ -71,7 +71,7 @@ public class SentryCapacitor: CAPPlugin {
     }
 
     @objc func captureEnvelope(_ call: CAPPluginCall) {
-        guard let bytes = call.getArray("envelope", Array<NSNumber>.Type.self) as? [NSNumber] else {
+        guard let bytes = call.getArray("envelope", NSNumber.self) else {
             print("Cannot parse the envelope data")
             call.reject("Envelope is null or empty")
             return
