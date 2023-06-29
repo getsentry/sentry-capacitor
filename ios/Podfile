@@ -1,6 +1,6 @@
 require_relative '../node_modules/@capacitor/ios/scripts/pods_helpers'
 
-platform :ios, '13.0'
+platform :ios, '11.0'
 
 def capacitor_pods
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -12,7 +12,7 @@ end
 target 'Plugin' do
   capacitor_pods
 
-  pod 'Sentry/HybridSDK', '7.30.2'
+  pod 'Sentry/HybridSDK', '8.8.0'
 end
 
 target 'PluginTests' do

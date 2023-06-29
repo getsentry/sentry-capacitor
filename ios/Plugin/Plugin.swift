@@ -16,7 +16,7 @@ public class SentryCapacitor: CAPPlugin {
     private var didReceiveDidBecomeActiveNotification = false
 
     public override func load() {
-      self.registerObserver()
+      registerObserver()
     }
 
     private func registerObserver() {
@@ -46,15 +46,14 @@ public class SentryCapacitor: CAPPlugin {
             let options = try Options.init(dict: optionsDict)
 
              // Note: For now, in sentry-cocoa, beforeSend is not called before captureEnvelope
-            options.beforeSend = { event in
-                self.setEventOriginTag(event: event)
-
+            options.beforeSend = { [weak self] event in
+                self?.setEventOriginTag(event: event)
                 return event
             }
 
             SentrySDK.start(options: options)
 
-            self.sentryOptions = options
+            sentryOptions = options
 
             // checking enableAutoSessionTracking is actually not necessary, but we'd spare the sent bits.
             if didReceiveDidBecomeActiveNotification && sentryOptions?.enableAutoSessionTracking == true {
@@ -72,20 +71,19 @@ public class SentryCapacitor: CAPPlugin {
     }
 
     @objc func captureEnvelope(_ call: CAPPluginCall) {
-        guard let bytes = call.getArray("envelope") as? [NSNumber] else {
+        guard let bytes = call.getArray("envelope", NSNumber.self) else {
             print("Cannot parse the envelope data")
             call.reject("Envelope is null or empty")
             return
         }
 
         let pointer = UnsafeMutablePointer<UInt8>.allocate(capacity: bytes.count)
-        for (index, number) in bytes.enumerated()
-        {
+        for (index, number) in bytes.enumerated() {
            // The numbers are stored as int32/64 but only the initial bits contains the number so this conversion is safe
            pointer[index] = UInt8(number.intValue)
         }
 
-        var data = Data(buffer: UnsafeMutableBufferPointer(start: pointer, count: bytes.count))
+        let data = Data(buffer: UnsafeMutableBufferPointer<UInt8>(start: pointer, count: bytes.count))
 
         guard let envelope = PrivateSentrySDKOnly.envelope(with: data) else {
             call.reject("SentryCapacitor", "Failed to parse envelope from byte array.", nil)
@@ -99,11 +97,9 @@ public class SentryCapacitor: CAPPlugin {
     }
 
     @objc func getStringBytesLength(_ call: CAPPluginCall) {
-        let payloadSize = call.getString("string")?.utf8.count
-        if (payloadSize != nil) {
-            call.resolve(["value": payloadSize!])
-        }
-        else {
+        if let payloadSize = call.getString("string")?.utf8.count {
+            call.resolve(["value": payloadSize])
+        } else {
             call.reject("Coud not calculate string length.")
         }
     }
@@ -127,40 +123,49 @@ public class SentryCapacitor: CAPPlugin {
 
     @objc func fetchNativeDeviceContexts(_ call: CAPPluginCall) {
     // Based on: https://github.com/getsentry/sentry-react-native/blob/a8d5ac86e3c53c90ef8e190cc082bdac440bd2a7/ios/RNSentry.m#L156-L188
+    // Updated with: https://github.com/getsentry/sentry-react-native/blob/241b7c2831f1bb5691c735058d8dc3de61c40fac/ios/RNSentry.mm#L190-L228
     // Temp work around until sorted out this API in sentry-cocoa.
     // TODO: If the callback isnt' executed the promise wouldn't be resolved.
-        SentrySDK.configureScope { [self] scope in
+        SentrySDK.configureScope { [weak self] scope in
             var contexts: [String : Any?] = [:]
-
             let serializedScope = scope.serialize()
-
-            // Scope serializes as 'context' instead of 'contexts' as it does for the event.
-            let tempContexts = serializedScope["context"]
-
-            var user: [String : Any?] = [:]
-            let tempUser = serializedScope["user"] as? [String : Any?]
-            if (tempUser != nil) {
-                for (key, value) in tempUser! {
-                    user[key] = value;
-                }
-            } else {
-                user["id"] = PrivateSentrySDKOnly.installationID
+            for (key, value) in serializedScope {
+                contexts[key] = value
+            }
+            if contexts["user"] == nil {
+                contexts["user"] = ["id" : PrivateSentrySDKOnly.installationID]
             }
 
-            contexts["user"] = user
-            if (tempContexts != nil) {
-                contexts["context"] = tempContexts
-            }
-            if (self.sentryOptions?.debug == true)
-            {
+            if self?.sentryOptions?.debug == true {
                 let data: Data? = try? JSONSerialization.data(withJSONObject: contexts, options: [])
-                var debugContext: String?
                 if let data = data {
-                    debugContext = String(data: data, encoding: .utf8)
+                  let debugContext = String(data: data, encoding: .utf8)
+                  print("Contexts: \(debugContext ?? "")")
                 }
-                print("Contexts: \(debugContext ?? "")")
             }
-            call.resolve(contexts as PluginCallResultData)
+
+            let extraContext = PrivateSentrySDKOnly.getExtraContext()
+            var context = contexts["context"] as? [String: Any] ?? [:]
+
+            if let deviceExtraContext = extraContext["device"] as? [String: Any] {
+                var deviceContext = context["device"] as? [String: Any] ?? [:]
+                for (key, value) in deviceExtraContext {
+                    deviceContext[key] = value
+                }
+                context["device"] = deviceContext
+            }
+
+            if let appExtraContext = extraContext["app"] as? [String: Any] {
+                var appContext = context["app"] as? [String: Any] ?? [:]
+                for (key, value) in appExtraContext {
+                    appContext[key] = value
+                }
+                context["app"] = appContext
+            }
+
+            contexts["context"] = context
+
+            call.resolve(contexts as PluginResultData)
         }
     }
 
@@ -174,7 +179,6 @@ public class SentryCapacitor: CAPPlugin {
                 scope.setUser(nil)
             } else {
                 let user = User()
-
 
                 if let userId = defaultUserKeys?["id"] as? String {
                     user.userId = userId
@@ -231,15 +235,15 @@ public class SentryCapacitor: CAPPlugin {
     }
 
     @objc func addBreadcrumb(_ call: CAPPluginCall) {
-        SentrySDK.configureScope { scope in
+        SentrySDK.configureScope { [weak self] scope in
             let breadcrumb = Breadcrumb()
 
             if let timestamp = call.getDouble("timestamp") {
                 breadcrumb.timestamp = Date(timeIntervalSince1970: timestamp)
             }
 
-            if let level = call.getString("level") {
-                breadcrumb.level = self.processLevel(level)
+            if let level = call.getString("level"), let processedLevel = self?.processLevel(level) {
+                breadcrumb.level = processedLevel
             }
 
             if let category = call.getString("category") {
@@ -250,7 +254,7 @@ public class SentryCapacitor: CAPPlugin {
             breadcrumb.message = call.getString("message")
             breadcrumb.data = call.getObject("data")
 
-            scope.add(breadcrumb)
+            scope.addBreadcrumb(breadcrumb)
         }
 
         call.resolve()
@@ -286,17 +290,10 @@ public class SentryCapacitor: CAPPlugin {
     }
 
     private func setEventOriginTag(event: Event) {
-        guard let sdk = event.sdk else {
+        guard let sdk = event.sdk, isValidSdk(sdk: sdk), let name = sdk["name"] as? String, name == "sentry.cocoa"  else {
             return
         }
-        if isValidSdk(sdk: sdk) {
-            switch sdk["name"] as? String {
-            case "sentry.cocoa":
-                setEventEnvironmentTag(event: event, origin: "ios", environment: "native")
-            default:
-                return
-            }
-        }
+        setEventEnvironmentTag(event: event, origin: "ios", environment: "native")
     }
 
     private func setEventEnvironmentTag(event: Event, origin: String, environment: String) {
