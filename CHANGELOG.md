@@ -8,6 +8,10 @@
 
 ### Dependencies
 
+- Bump sentry-cocoa SDK to `8.8.0` ([#397](https://github.com/getsentry/sentry-capacitor/pull/397))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/releases/tag/8.8.0)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/7.27.1...8.8.0)
+  - Improved capacitor plugin file (added weak self, updated workaround from sentry-react-native)
 - Bump Sentry JavaScript SDK to `7.56.0` ([#398](https://github.com/getsentry/sentry-capacitor/pull/398))
   - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.56.0)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/7.54.0...7.56.0)
