@@ -21,7 +21,6 @@ import io.sentry.android.core.NdkIntegration;
 import io.sentry.android.core.SentryAndroid;
 import io.sentry.protocol.SdkVersion;
 import io.sentry.protocol.SentryPackage;
-
 import io.sentry.protocol.User;
 import java.io.File;
 import java.io.FileOutputStream;
