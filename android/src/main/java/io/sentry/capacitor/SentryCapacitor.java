@@ -2,7 +2,6 @@ package io.sentry.capacitor;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.util.Log;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
@@ -16,16 +15,17 @@ import io.sentry.Sentry;
 import io.sentry.SentryEvent;
 import io.sentry.SentryLevel;
 import io.sentry.UncaughtExceptionHandlerIntegration;
+import io.sentry.android.core.BuildConfig;
 import io.sentry.android.core.AnrIntegration;
 import io.sentry.android.core.NdkIntegration;
 import io.sentry.android.core.SentryAndroid;
 import io.sentry.protocol.SdkVersion;
 import io.sentry.protocol.SentryPackage;
+
 import io.sentry.protocol.User;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,6 +36,9 @@ import java.util.logging.Logger;
 
 @NativePlugin
 public class SentryCapacitor extends Plugin {
+
+    private static final String NATIVE_SDK_NAME = "sentry.native.android.capacitor";
+    private static final String ANDROID_SDK_NAME = "sentry.java.android.capacitor";
 
     static final Logger logger = Logger.getLogger("capacitor-sentry");
     private Context context;
@@ -63,10 +66,20 @@ public class SentryCapacitor extends Plugin {
         SentryAndroid.init(
             this.getContext(),
             options -> {
+                SdkVersion sdkVersion = options.getSdkVersion();
+                if (sdkVersion == null) {
+                    sdkVersion = new SdkVersion(ANDROID_SDK_NAME, BuildConfig.VERSION_NAME);
+                } else {
+                    sdkVersion.setName(ANDROID_SDK_NAME);
+                }
+
                 if (capOptions.has("debug") && capOptions.getBool("debug")) {
                     options.setDebug(true);
                     logger.setLevel(Level.INFO);
                 }
+
+                options.setSentryClientName(sdkVersion.getName() + "/" + sdkVersion.getVersion());
+                options.setNativeSdkName(NATIVE_SDK_NAME);
 
                 String dsn = capOptions.getString("dsn") != null ? capOptions.getString("dsn") : "";
                 logger.info(String.format("Starting with DSN: '%s'", dsn));
@@ -343,11 +356,11 @@ public class SentryCapacitor extends Plugin {
         if (sdk != null) {
             switch (sdk.getName()) {
                 // If the event is from capacitor js, it gets set there and we do not handle it here.
-                case "sentry.native":
-                    setEventEnvironmentTag(event, "android", "native");
+                case NATIVE_SDK_NAME:
+                    setEventEnvironmentTag(event, "native");
                     break;
-                case "sentry.java.android":
-                    setEventEnvironmentTag(event, "android", "java");
+                case ANDROID_SDK_NAME:
+                    setEventEnvironmentTag(event, "java");
                     break;
                 default:
                     break;
@@ -355,10 +368,9 @@ public class SentryCapacitor extends Plugin {
         }
     }
 
-    private void setEventEnvironmentTag(SentryEvent event, String origin, String environment) {
-        event.setTag("event.origin", origin);
-        event.setTag("event.environment", environment);
-    }
+    private void setEventEnvironmentTag(SentryEvent event, String environment) {
+        event.setTag("event.origin", "android");
+        event.setTag("event.environment", environment);    }
 
     public void addPackages(SentryEvent event, SdkVersion sdk) {
         SdkVersion eventSdk = event.getSdk();

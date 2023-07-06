@@ -9,6 +9,8 @@ import Sentry
 @objc(SentryCapacitor)
 public class SentryCapacitor: CAPPlugin {
 
+    private let nativeSdkName = @"sentry.cocoa.capacitor";
+
     private var sentryOptions: Options?
 
     // The Cocoa SDK is init. after the notification didBecomeActiveNotification is registered.
@@ -44,6 +46,9 @@ public class SentryCapacitor: CAPPlugin {
 
         do {
             let options = try Options.init(dict: optionsDict)
+
+            let sdkVersion PrivateSentrySDKOnly.getSdkVersionString()
+            PrivateSentrySDKOnly.set(setSdkName: nativeSdkName, andVersionString: sdkVersion);
 
              // Note: For now, in sentry-cocoa, beforeSend is not called before captureEnvelope
             options.beforeSend = { [weak self] event in
@@ -290,15 +295,26 @@ public class SentryCapacitor: CAPPlugin {
     }
 
     private func setEventOriginTag(event: Event) {
-        guard let sdk = event.sdk, isValidSdk(sdk: sdk), let name = sdk["name"] as? String, name == "sentry.cocoa"  else {
+        guard let sdk = event.sdk, isValidSdk(sdk: sdk), let name = sdk["name"] as? String, name == nativeSdkName  else {
             return
         }
-        setEventEnvironmentTag(event: event, origin: "ios", environment: "native")
+        setEventEnvironmentTag(event: event, environment: "native")
     }
 
-    private func setEventEnvironmentTag(event: Event, origin: String, environment: String) {
-        event.tags?["event.origin"] = origin
-        event.tags?["event.environment"] = environment
+    private func setEventEnvironmentTag(event: Event, environment: String) {
+        var newTags = [String: Any]()
+
+        if let tags = event.tags, !tags.isEmpty {
+            newTags.merge(tags) { (_, new) in new }
+        }
+
+        newTags["event.origin"] = "ios"
+
+        if let environment = environment {
+            newTags["event.environment"] = environment
+        }
+
+        event.tags = newTags
     }
 
     private func isValidSdk(sdk: [String: Any]) -> Bool {
