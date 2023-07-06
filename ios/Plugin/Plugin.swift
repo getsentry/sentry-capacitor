@@ -9,7 +9,7 @@ import Sentry
 @objc(SentryCapacitor)
 public class SentryCapacitor: CAPPlugin {
 
-    private let nativeSdkName = @"sentry.cocoa.capacitor";
+    private let nativeSdkName = "sentry.cocoa.capacitor";
 
     private var sentryOptions: Options?
 
@@ -47,8 +47,8 @@ public class SentryCapacitor: CAPPlugin {
         do {
             let options = try Options.init(dict: optionsDict)
 
-            let sdkVersion PrivateSentrySDKOnly.getSdkVersionString()
-            PrivateSentrySDKOnly.set(setSdkName: nativeSdkName, andVersionString: sdkVersion);
+            let sdkVersion = PrivateSentrySDKOnly.getSdkVersionString()
+            PrivateSentrySDKOnly.setSdkName(nativeSdkName, andVersionString: sdkVersion)
 
              // Note: For now, in sentry-cocoa, beforeSend is not called before captureEnvelope
             options.beforeSend = { [weak self] event in
@@ -302,7 +302,7 @@ public class SentryCapacitor: CAPPlugin {
     }
 
     private func setEventEnvironmentTag(event: Event, environment: String) {
-        var newTags = [String: Any]()
+        var newTags = [String: String]()
 
         if let tags = event.tags, !tags.isEmpty {
             newTags.merge(tags) { (_, new) in new }
@@ -310,7 +310,7 @@ public class SentryCapacitor: CAPPlugin {
 
         newTags["event.origin"] = "ios"
 
-        if let environment = environment {
+        if !environment.isEmpty {
             newTags["event.environment"] = environment
         }
 
