@@ -79,6 +79,7 @@ public class SentryCapacitor extends Plugin {
 
                 options.setSentryClientName(sdkVersion.getName() + "/" + sdkVersion.getVersion());
                 options.setNativeSdkName(NATIVE_SDK_NAME);
+                options.setSdkVersion(sdkVersion);
 
                 String dsn = capOptions.getString("dsn") != null ? capOptions.getString("dsn") : "";
                 logger.info(String.format("Starting with DSN: '%s'", dsn));
