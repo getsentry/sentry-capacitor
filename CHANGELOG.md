@@ -4,7 +4,7 @@
 
 ### Dependencies
 
-- Bump Sentry Android SDK to `6.97.0` ([#406](https://github.com/getsentry/sentry-capacitor/pull/406))
+- Bump Sentry Android SDK to `6.19.0` ([#406](https://github.com/getsentry/sentry-capacitor/pull/406))
   - [changelog](https://github.com/getsentry/sentry-java/releases/tag/6.19.0)
   - [diff](https://github.com/getsentry/sentry-java/compare/6.17.0...6.19.0)
 - Bump sentry-cocoa SDK to `8.8.0` ([#397](https://github.com/getsentry/sentry-capacitor/pull/397))
