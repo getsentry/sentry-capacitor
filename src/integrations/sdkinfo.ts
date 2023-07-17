@@ -55,6 +55,10 @@ export class SdkInfo implements Integration {
         // default packages are added by baseclient and should not be added here
         ...(event.sdk.packages || []),
         ...((this._nativeSdkPackage && [this._nativeSdkPackage]) || []),
+        {
+          name: 'npm:@sentry/capacitor',
+          version: SDK_VERSION,
+        },
       ];
 
       return event;
