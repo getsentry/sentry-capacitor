@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixes
+
+- Removed promise and wizard from dependencies ([#400](https://github.com/getsentry/sentry-capacitor/pull/400)) - special thanks to @olivier-blanc-openit
+
 ### Dependencies
 
 - Bump sentry-cocoa SDK to `8.8.0` ([#397](https://github.com/getsentry/sentry-capacitor/pull/397))

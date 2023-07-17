@@ -60,9 +60,7 @@
     "@sentry/integrations": "7.56.0",
     "@sentry/tracing": "7.56.0",
     "@sentry/types": "7.56.0",
-    "@sentry/utils": "7.56.0",
-    "@sentry/wizard": "^1.1.4",
-    "promise": "^8.1.0"
+    "@sentry/utils": "7.56.0"
   },
   "devDependencies": {
     "@capacitor/android": "^3.0.1 || ^4.0.0 || ^5.0.0",
@@ -72,6 +70,7 @@
     "@sentry-internal/eslint-config-sdk": "7.56.0",
     "@sentry-internal/eslint-plugin-sdk": "7.56.0",
     "@sentry/typescript": "5.20.1",
+    "@sentry/wizard": "3.2.3",
     "@types/jest": "^26.0.15",
     "eslint": "^7.13.0",
     "jest": "^26.6.3",
