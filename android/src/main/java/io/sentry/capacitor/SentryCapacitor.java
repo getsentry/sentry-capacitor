@@ -370,7 +370,8 @@ public class SentryCapacitor extends Plugin {
 
     private void setEventEnvironmentTag(SentryEvent event, String environment) {
         event.setTag("event.origin", "android");
-        event.setTag("event.environment", environment);    }
+        event.setTag("event.environment", environment);
+    }
 
     public void addPackages(SentryEvent event, SdkVersion sdk) {
         SdkVersion eventSdk = event.getSdk();

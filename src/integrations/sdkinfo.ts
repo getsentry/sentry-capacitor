@@ -1,19 +1,8 @@
 import type { EventProcessor, Integration, Package } from '@sentry/types';
 import { logger } from '@sentry/utils';
 
-import { SDK_NAME, SDK_PACKAGE_NAME, SDK_VERSION } from '../version';
+import { SDK_NAME, SDK_VERSION } from '../version';
 import { NATIVE } from '../wrapper';
-
-export const defaultSdkInfo = {
-  name: SDK_NAME,
-  packages: [
-    {
-      name: SDK_PACKAGE_NAME,
-      version: SDK_VERSION,
-    },
-  ],
-  version: SDK_VERSION,
-};
 
 /** Default SdkInfo instrumentation */
 export class SdkInfo implements Integration {
@@ -49,8 +38,8 @@ export class SdkInfo implements Integration {
 
       event.platform = event.platform || 'javascript';
       event.sdk = event.sdk || {};
-      event.sdk.name = event.sdk.name || defaultSdkInfo.name;
-      event.sdk.version = event.sdk.version || defaultSdkInfo.version;
+      event.sdk.name = event.sdk.name || SDK_NAME;
+      event.sdk.version = event.sdk.version || SDK_VERSION;
       event.sdk.packages = [
         // default packages are added by baseclient and should not be added here
         ...(event.sdk.packages || []),
