@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+This release does not include changes.
+It only fixes NPM's `latest` pointer to correctly point to version 12.x instead of 11.x.
+
 ## 0.11.5
 
 ### Fixes
