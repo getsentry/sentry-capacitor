@@ -339,12 +339,29 @@ export const NATIVE = {
   _serializeObject(data: {
     [key: string]: unknown;
   }): { [key: string]: string } {
+
+    // safely handles circular references
+    const safeStringify = (obj) => {
+        let cache = [];
+        const retVal = JSON.stringify(
+            obj,
+            (key, value) =>
+                typeof value === "object" && value !== null
+                    ? cache.includes(value)
+                        ? '[Circular ...]' // Duplicate reference found, discard key
+                        : cache.push(value) && value // Store value in our collection
+                    : value
+        );
+        cache = null;
+        return retVal;
+    };
+    // deserialize
     const serialized: { [key: string]: string } = {};
 
     Object.keys(data).forEach(dataKey => {
       const value = data[dataKey];
       serialized[dataKey] =
-        typeof value === 'string' ? value : JSON.stringify(value);
+        typeof value === 'string' ? value : JSON.safeStringify(value);
     });
 
     return serialized;
