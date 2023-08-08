@@ -349,7 +349,7 @@ export const NATIVE = {
         (_key, value) =>
           typeof value === 'object' && value !== null
             ? cache.includes(value)
-              ? '[Circular ...]' // Duplicate reference found, discard key
+              ? '[Circular...]' // Duplicate reference found, discard key
               : cache.push(value) && value // Store value in our collection
             : value
       );
