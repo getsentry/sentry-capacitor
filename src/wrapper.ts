@@ -357,7 +357,7 @@ export const NATIVE = {
       return retVal;
     };
 
-    // deserialize
+    // serialize
     const serialized: { [key: string]: string } = {};
 
     Object.keys(data).forEach(dataKey => {
