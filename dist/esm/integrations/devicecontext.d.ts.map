@@ -1,0 +1,1 @@
+{"version":3,"file":"devicecontext.d.ts","sourceRoot":"","sources":["../../../src/integrations/devicecontext.ts"],"names":[],"mappings":"AACA,OAAO,KAAK,EAAmB,WAAW,EAAE,MAAM,eAAe,CAAC;AAKlE,uCAAuC;AACvC,qBAAa,aAAc,YAAW,WAAW;IAC/C;;OAEG;IACH,OAAc,EAAE,EAAE,MAAM,CAAmB;IAE3C;;OAEG;IACI,IAAI,EAAE,MAAM,CAAoB;IAEvC;;OAEG;IACI,SAAS,IAAI,IAAI;CAyBzB"}

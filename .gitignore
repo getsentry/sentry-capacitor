@@ -3,7 +3,6 @@
 # And the CLI then renames it
 
 # node files
-dist/
 node_modules/
 
 # Jest generated folder
@@ -28,8 +27,6 @@ xcuserdata
 
 # macOS files
 .DS_Store
-
-
 
 # Based on Android gitignore template: https://github.com/github/gitignore/blob/master/Android.gitignore
 

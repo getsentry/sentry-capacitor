@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/vendor/index.ts"],"names":[],"mappings":"AACA,OAAO,EACL,WAAW,GACZ,MAAM,UAAU,CAAC","sourcesContent":["\nexport {\n  utf8ToBytes,\n} from './buffer';\n"]}
