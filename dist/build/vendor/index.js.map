@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/vendor/index.ts"],"names":[],"mappings":";;AACA,mCAEkB;AADhB,qGAAA,WAAW,OAAA","sourcesContent":["\nexport {\n  utf8ToBytes,\n} from './buffer';\n"]}

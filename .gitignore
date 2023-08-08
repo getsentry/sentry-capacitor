@@ -47,7 +47,6 @@ out/
 
 # Gradle files
 .gradle/
-build/
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -84,3 +83,4 @@ example/ionic-angular/android/app/capacitor.build.gradle
 
 #yarn pack files
 sentry-capacitor-v*.tgz
+!dist/**/*
