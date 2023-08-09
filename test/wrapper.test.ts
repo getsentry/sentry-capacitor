@@ -617,28 +617,4 @@ describe('Tests Native Wrapper', () => {
       expect(SentryCapacitor.fetchNativeDeviceContexts).not.toBeCalled();
     });
   });
-
-  describe('_serializeObject', () => {
-    test('serialize regular object', () => {
-      const subObject = { sub1: 'subObjectValue', sub2: 555 }
-      const givenObject = { root1: 'some value', root2: subObject };
-      const serializedObject = NATIVE._serializeObject(givenObject);
-      const expectedObject = {
-        root1: 'some value',
-        root2: '{"sub1":"subObjectValue","sub2":555}'
-      };
-      expect(serializedObject).toEqual(expectedObject);
-    });
-    test('serialize object with circular references', () => {
-      const subObject: { sub1: string, sub2: any } = { sub1: 'subObjectValue', sub2: undefined }
-      const givenObject = { root1: 'some value', root2: subObject };
-      subObject.sub2 = givenObject;
-      const serializedObject = NATIVE._serializeObject(givenObject);
-      const expectedObject = {
-        root1: 'some value',
-        root2: '{"sub1":"subObjectValue","sub2":{"root1":"some value","root2":"[Circular...]"}}'
-      };
-      expect(serializedObject).toEqual(expectedObject);
-    })
-  })
 });

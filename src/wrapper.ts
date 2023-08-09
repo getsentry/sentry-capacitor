@@ -6,6 +6,7 @@ import type { NativeDeviceContextsResponse } from './definitions';
 import { FilterNativeOptions } from './nativeOptions';
 import type { CapacitorOptions } from './options';
 import { SentryCapacitor } from './plugin';
+import { convertToNormalizedObject } from './utils/normalize';
 import { utf8ToBytes } from './vendor';
 
 /**
@@ -253,7 +254,7 @@ export const NATIVE = {
         ? this._processLevel(breadcrumb.level)
         : undefined,
       data: breadcrumb.data
-        ? this._serializeObject(breadcrumb.data)
+        ? convertToNormalizedObject(breadcrumb.data)
         : undefined,
     });
   },
@@ -339,31 +340,12 @@ export const NATIVE = {
   _serializeObject(data: {
     [key: string]: unknown;
   }): { [key: string]: string } {
-
-    // safely handles circular references
-    const safeStringify = (obj: unknown): string => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let cache: any[] = [];
-      const retVal = JSON.stringify(
-        obj,
-        (_key, value) =>
-          typeof value === 'object' && value !== null
-            ? cache.includes(value)
-              ? '[Circular...]' // Duplicate reference found, discard key
-              : cache.push(value) && value // Store value in our collection
-            : value
-      );
-      cache = [];
-      return retVal;
-    };
-
-    // serialize
     const serialized: { [key: string]: string } = {};
 
     Object.keys(data).forEach(dataKey => {
       const value = data[dataKey];
       serialized[dataKey] =
-        typeof value === 'string' ? value : safeStringify(value);
+        typeof value === 'string' ? value : JSON.stringify(value);
     });
 
     return serialized;

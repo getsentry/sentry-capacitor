@@ -1,6 +1,7 @@
 import { Scope } from '@sentry/core';
 import type { Breadcrumb, User } from '@sentry/types';
 
+import { convertToNormalizedObject } from './utils/normalize';
 import { NATIVE } from './wrapper';
 
 /**
@@ -69,9 +70,13 @@ export class CapacitorScope extends Scope {
    * @inheritDoc
    */
   public addBreadcrumb(breadcrumb: Breadcrumb, maxBreadcrumbs?: number): this {
-    /* eslint-disable no-console */
-    NATIVE.addBreadcrumb(breadcrumb);
-    return super.addBreadcrumb(breadcrumb, maxBreadcrumbs);
+    const mergedBreadcrumb: Breadcrumb = {
+      ...breadcrumb,
+      data: breadcrumb.data ? convertToNormalizedObject(breadcrumb.data) : undefined,
+    };
+
+    NATIVE.addBreadcrumb(mergedBreadcrumb);
+    return super.addBreadcrumb(mergedBreadcrumb, maxBreadcrumbs);
   }
 
   /**
