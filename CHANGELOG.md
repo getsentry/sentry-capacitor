@@ -1,5 +1,7 @@
 # Changelog
 
+## Unreleased
+
 ### Fixes
 
 - Fix error when serializing objects with circular referencing ([#438](https://github.com/getsentry/sentry-capacitor/pull/438))
