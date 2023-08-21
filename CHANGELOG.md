@@ -6,6 +6,12 @@
 
 - Fix error when serializing objects with circular referencing ([#438](https://github.com/getsentry/sentry-capacitor/pull/438))
 
+### Dependencies
+
+- Bump Sentry javascript 7.64.0 ([#444](https://github.com/getsentry/sentry-capacitor/pull/444))
+  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.64.0)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.56.0...7.64.0)
+
 ## 0.12.2
 
 This release does not include changes.
