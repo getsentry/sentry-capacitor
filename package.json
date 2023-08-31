@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/getsentry/sentry-capacitor"
   },
-  "version": "0.12.2",
+  "version": "0.12.3",
   "description": "Official Sentry SDK for Capacitor",
   "types": "dist/esm/index.d.ts",
   "main": "dist/build/index.js",
@@ -23,8 +23,10 @@
     "swiftlint": "node-swiftlint",
     "prepack": "yarn run build",
     "postinstall": "node scripts/check-siblings.js",
-    "bump:v3": "yalc publish && cd example/ionic-angular && yalc add @sentry/capacitor && ionic build && npx cap sync",
-    "bump:v2": "yalc publish && cd example/ionic-angular-v2 && yalc add @sentry/capacitor && ionic build && npx cap sync"
+    "bump:v5": "cd example/ionic-angular-v5 && yalc add @sentry/capacitor && yarn install && ionic build && npx cap sync",
+    "bump:v3": "cd example/ionic-angular && yalc add @sentry/capacitor && yarn install && ionic build && npx cap sync",
+    "bump:v2": "cd example/ionic-angular-v2 && yalc add @sentry/capacitor && yarn install && ionic build && npx cap sync",
+    "bump:samples": "yalc publish && yarn run bump:v5 && yarn run bump:v3 && yarn run bump:v2"
   },
   "keywords": [
     "capacitor",
@@ -38,9 +40,9 @@
   "license": "MIT",
   "peerDependencies": {
     "@capacitor/core": ">=3.0.0",
-    "@sentry/angular": "7.56.0",
-    "@sentry/react": "7.56.0",
-    "@sentry/vue": "7.56.0"
+    "@sentry/angular": "7.64.0",
+    "@sentry/react": "7.64.0",
+    "@sentry/vue": "7.64.0"
   },
   "peerDependenciesMeta": {
     "@sentry/angular": {
@@ -54,21 +56,21 @@
     }
   },
   "dependencies": {
-    "@sentry/browser": "7.56.0",
-    "@sentry/core": "7.56.0",
-    "@sentry/hub": "7.56.0",
-    "@sentry/integrations": "7.56.0",
-    "@sentry/tracing": "7.56.0",
-    "@sentry/types": "7.56.0",
-    "@sentry/utils": "7.56.0"
+    "@sentry/browser": "7.64.0",
+    "@sentry/core": "7.64.0",
+    "@sentry/hub": "7.64.0",
+    "@sentry/integrations": "7.64.0",
+    "@sentry/tracing": "7.64.0",
+    "@sentry/types": "7.64.0",
+    "@sentry/utils": "7.64.0"
   },
   "devDependencies": {
     "@capacitor/android": "^3.0.1 || ^4.0.0 || ^5.0.0",
     "@capacitor/core": "^3.0.1 || ^4.0.0 || ^5.0.0",
     "@capacitor/ios": "^3.0.1 || ^4.0.0 || ^5.0.0",
     "@ionic/prettier-config": "^1.0.0",
-    "@sentry-internal/eslint-config-sdk": "7.56.0",
-    "@sentry-internal/eslint-plugin-sdk": "7.56.0",
+    "@sentry-internal/eslint-config-sdk": "7.64.0",
+    "@sentry-internal/eslint-plugin-sdk": "7.64.0",
     "@sentry/typescript": "5.20.1",
     "@sentry/wizard": "3.9.0",
     "@types/jest": "^26.0.15",

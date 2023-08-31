@@ -23,5 +23,5 @@
         "editor.formatOnPaste": false,
         "editor.formatOnSave": false
     },
-    "react-native-tools.projectRoot": "./sample"
+    "files.eol": "\n"
 }

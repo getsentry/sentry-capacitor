@@ -6,6 +6,7 @@ import type { NativeDeviceContextsResponse } from './definitions';
 import { FilterNativeOptions } from './nativeOptions';
 import type { CapacitorOptions } from './options';
 import { SentryCapacitor } from './plugin';
+import { convertToNormalizedObject } from './utils/normalize';
 import { utf8ToBytes } from './vendor';
 
 /**
@@ -253,7 +254,7 @@ export const NATIVE = {
         ? this._processLevel(breadcrumb.level)
         : undefined,
       data: breadcrumb.data
-        ? this._serializeObject(breadcrumb.data)
+        ? convertToNormalizedObject(breadcrumb.data)
         : undefined,
     });
   },
