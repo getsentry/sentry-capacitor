@@ -24,7 +24,7 @@ export function init<O>(
 ): void {
   const finalOptions = {
     enableAutoSessionTracking: true,
-    enableOutOfMemoryTracking: true,
+    enableWatchdogTerminationTracking: true,
     ...passedOptions,
   };
   if (finalOptions.enabled === false ||

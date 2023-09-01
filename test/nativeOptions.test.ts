@@ -3,6 +3,31 @@ import type { Instrumenter, StackParser } from '@sentry/types';
 import { FilterNativeOptions } from '../src/nativeOptions';
 
 describe('nativeOptions', () => {
+
+  test('Use value of enableOutOfMemoryTracking on enableWatchdogTerminationTracking when set true', async () => {
+    const nativeOptions = FilterNativeOptions(
+      {
+        enableOutOfMemoryTracking: true
+      });
+    expect(nativeOptions.enableWatchdogTerminationTracking).toBeTruthy();
+  });
+
+  test('Use value of enableOutOfMemoryTracking on enableWatchdogTerminationTracking when set false', async () => {
+    const nativeOptions = FilterNativeOptions(
+      {
+        enableOutOfMemoryTracking: false
+      });
+    expect(nativeOptions.enableWatchdogTerminationTracking).toBeFalsy();
+  });
+
+  test('enableWatchdogTerminationTracking is set when defined', async () => {
+    const nativeOptions = FilterNativeOptions(
+      {
+        enableWatchdogTerminationTracking: true
+      });
+    expect(nativeOptions.enableWatchdogTerminationTracking).toBeTruthy();
+  });
+
   test('invalid types not included', async () => {
     const nativeOptions = FilterNativeOptions(
       {

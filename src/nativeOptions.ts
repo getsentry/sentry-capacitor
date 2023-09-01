@@ -16,7 +16,8 @@ export function FilterNativeOptions(options: CapacitorOptions): CapacitorOptions
     dsn: options.dsn,
     enabled: options.enabled,
     enableNdkScopeSync: options.enableNdkScopeSync,
-    enableOutOfMemoryTracking: options.enableOutOfMemoryTracking,
+    // eslint-disable-next-line deprecation/deprecation
+    enableWatchdogTerminationTracking: options.enableOutOfMemoryTracking ?? options.enableWatchdogTerminationTracking,
     enableTracing: options.enableTracing,
     environment: options.environment,
     // ignoreErrors: Only available on the JavaScript Layer.
