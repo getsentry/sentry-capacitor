@@ -56,7 +56,9 @@ public class SentryCapacitor: CAPPlugin {
                 return event
             }
 
-            SentrySDK.start(options: options)
+            DispatchQueue.main.async { [] in
+                SentrySDK.start(options: options)
+            }
 
             sentryOptions = options
 
