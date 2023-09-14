@@ -13,7 +13,11 @@ _Bad software is everywhere, and we're tired of it. Sentry is on a mission to he
 ## Installation
 
 ```bash
-yarn add @sentry/capacitor @sentry/angular --exact
+#Angular 12 and newer:
+npm install --save @sentry/capacitor @sentry/angular-ivy
+
+#Angular 10 and 11:
+npm install --save @sentry/capacitor @sentry/angular
 ```
 
 ## Usage
