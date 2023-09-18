@@ -58,7 +58,7 @@
   "dependencies": {
     "@sentry/browser": "7.64.0",
     "@sentry/core": "7.64.0",
-    "@sentry/hub": "7.64.0",
+    "@sentry/hub": "7.69.0",
     "@sentry/integrations": "7.64.0",
     "@sentry/tracing": "7.64.0",
     "@sentry/types": "7.64.0",
