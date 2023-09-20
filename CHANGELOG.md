@@ -7,6 +7,13 @@
 - (iOS) UI API called on a background thread ([#448](https://github.com/getsentry/sentry-capacitor/pull/448))
 - enableWatchdogTerminationTracking (replaces enableOutOfMemoryTracking) is now properly set on iOS. ([#454](https://github.com/getsentry/sentry-capacitor/pull/454))
 
+### Dependencies
+
+- Bump Sentry javascript 7.70.0-beta.1 ([#444](https://github.com/getsentry/sentry-capacitor/pull/444))
+  - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.70.0-beta.1)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.64.0...7.70.0-beta.1)
+  - feat(replay): Upgrade to rrweb2.0
+
 ## 0.12.3
 
 ### Fixes
