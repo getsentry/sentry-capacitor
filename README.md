@@ -14,10 +14,10 @@ _Bad software is everywhere, and we're tired of it. Sentry is on a mission to he
 
 ```bash
 # Angular 12 and newer:
-yarn add --exact @sentry/capacitor @sentry/angular-ivy
+yarn add @sentry/capacitor @sentry/angular-ivy --exact
 
 # Angular 10 and 11:
-yarn add --exact @sentry/capacitor @sentry/angular
+yarn add @sentry/capacitor @sentry/angular --exact
 ```
 
 ## Usage
