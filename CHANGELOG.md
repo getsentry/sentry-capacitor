@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- Add sentry-angular-ivy to optional dependencies ([#469](https://github.com/getsentry/sentry-capacitor/pull/469))
+
 ## 0.13.0-beta.1
 
 ### Fixes
