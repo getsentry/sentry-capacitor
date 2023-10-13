@@ -6,16 +6,16 @@
 
 - Add Native Release information if not defined by the user ([#480](https://github.com/getsentry/sentry-capacitor/pull/480))
 
-The release data comes from the following parameters:
-Android
+  The release data comes from the following parameters:
+  Android
 
-- release: `packageInfo.packageName` + `packageInfo.versionName` + `packageInfo.versionCode`
-- dist: `packageInfo.versionCode`
+  - release: `PackageInfo.packageName` + `PackageInfo.versionName` + `PackageInfo.versionCode`
+  - dist: `PackageInfo.versionCode`
 
-iOS:
+  iOS:
 
-- release: `CFBundleIdentifier` + `CFBundleShortVersionString` + `CFBundleVersion`
-- dist: `CFBundleVersion`
+  - release: `CFBundleIdentifier` + `CFBundleShortVersionString` + `CFBundleVersion`
+  - dist: `CFBundleVersion`
 
 ### Fixes
 
