@@ -4,7 +4,14 @@
 
 ### Fixes
 
+- op and breadcrumb errors on Android ([#478](https://github.com/getsentry/sentry-capacitor/pull/478))
 - Add sentry-angular-ivy to optional dependencies ([#469](https://github.com/getsentry/sentry-capacitor/pull/469))
+
+### Dependencies
+
+- Bump Sentry Android SDK to `6.31.0` ([#478](https://github.com/getsentry/sentry-capacitor/pull/478))
+  - [changelog](https://github.com/getsentry/sentry-java/releases/tag/6.31.0)
+  - [diff](https://github.com/getsentry/sentry-java/compare/6.19.0...6.31.0)
 
 ## 0.13.0-beta.1
 
