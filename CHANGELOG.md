@@ -4,8 +4,15 @@
 
 ### Fixes
 
+- op and breadcrumb errors on Android ([#478](https://github.com/getsentry/sentry-capacitor/pull/478))
 - (iOS) UI API called on a background thread ([#448](https://github.com/getsentry/sentry-capacitor/pull/448))
 - enableWatchdogTerminationTracking (replaces enableOutOfMemoryTracking) is now properly set on iOS. ([#454](https://github.com/getsentry/sentry-capacitor/pull/454))
+
+### Dependencies
+
+- Bump Sentry Android SDK to `6.31.0` ([#478](https://github.com/getsentry/sentry-capacitor/pull/478))
+  - [changelog](https://github.com/getsentry/sentry-java/releases/tag/6.31.0)
+  - [diff](https://github.com/getsentry/sentry-java/compare/6.19.0...6.31.0)
 
 ## 0.12.3
 
