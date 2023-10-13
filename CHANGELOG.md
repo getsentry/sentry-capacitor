@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### Features
+
+- Add Native Release information if not defined by the user ([#480](https://github.com/getsentry/sentry-capacitor/pull/480))
+
+The release data comes from the following parameters:
+Android
+
+- release: `packageInfo.packageName` + `packageInfo.versionName` + `packageInfo.versionCode`
+- dist: `packageInfo.versionCode`
+
+iOS:
+
+- release: `CFBundleIdentifier` + `CFBundleShortVersionString` + `CFBundleVersion`
+- dist: `CFBundleVersion`
+
 ### Fixes
 
 - Add sentry-angular-ivy to optional dependencies ([#469](https://github.com/getsentry/sentry-capacitor/pull/469))
