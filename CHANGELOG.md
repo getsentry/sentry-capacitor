@@ -21,6 +21,8 @@
 
 - op and breadcrumb errors on Android ([#478](https://github.com/getsentry/sentry-capacitor/pull/478))
 - Add sentry-angular-ivy to optional dependencies ([#469](https://github.com/getsentry/sentry-capacitor/pull/469))
+- (iOS) UI API called on a background thread ([#448](https://github.com/getsentry/sentry-capacitor/pull/448))
+- enableWatchdogTerminationTracking (replaces enableOutOfMemoryTracking) is now properly set on iOS. ([#454](https://github.com/getsentry/sentry-capacitor/pull/454))
 
 ### Dependencies
 
