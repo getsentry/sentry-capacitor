@@ -6,7 +6,7 @@ import {
 import { Hub, makeMain } from '@sentry/core';
 import { RewriteFrames } from '@sentry/integrations';
 
-import { DeviceContext, EventOrigin, Release,SdkInfo,   } from './integrations';
+import { DeviceContext, EventOrigin, Release, SdkInfo } from './integrations';
 import type { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
