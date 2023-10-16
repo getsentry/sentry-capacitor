@@ -27,18 +27,14 @@ export class Release implements Integration {
       const options = getCurrentHub().getClient()?.getOptions();
 
       /*
-        __sentry_release and __sentry_dist is set by the user with setRelease and setDist. If this is used then this is the strongest.
-        Otherwise we check for the release and dist in the options passed on init, as this is stronger than the release/dist from the native build.
+        Check for the release and dist in the options passed on init.
+        Otherwise, we get the release and dist from the native package.
       */
-      if (typeof event.extra?.__sentry_release === 'string') {
-        event.release = `${event.extra.__sentry_release}`;
-      } else if (typeof options?.release === 'string') {
+      if (typeof options?.release === 'string') {
         event.release = options.release;
       }
 
-      if (typeof event.extra?.__sentry_dist === 'string') {
-        event.dist = `${event.extra.__sentry_dist}`;
-      } else if (typeof options?.dist === 'string') {
+      if (typeof options?.dist === 'string') {
         event.dist = options.dist;
       }
 
