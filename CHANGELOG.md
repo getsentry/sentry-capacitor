@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Features
+
+- Expose Replay and BrowserTracing on `@sentry/capacitor` ([#489](https://github.com/getsentry/sentry-capacitor/pull/489))
+
 ## 0.14.0
 
 ### Features

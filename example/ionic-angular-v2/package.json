@@ -49,7 +49,7 @@
   "name": "ionic-angular",
   "private": true,
   "scripts": {
-    "build": "ng build && yarn run sentry:sourcemaps",
+    "build": "ionic build && yarn run sentry:sourcemaps",
     "e2e": "ng e2e",
     "lint": "ng lint",
     "ng": "ng",
