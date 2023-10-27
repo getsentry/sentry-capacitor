@@ -55,7 +55,7 @@
     "ng": "ng",
     "start": "ng serve",
     "test": "ng test",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org sentry-sdks --project aspnet-core ./www && sentry-cli sourcemaps upload --org sentry-sdks --project aspnet-core ./www"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org sentry-sdks --project sentry-capacitor ./www && sentry-cli sourcemaps upload --org sentry-sdks --project sentry-capacitor ./www"
   },
   "version": "0.0.1"
 }
