@@ -7,8 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import * as Sentry from '@sentry/capacitor';
-import { init as sentryAngularInit, createErrorHandler } from '@sentry/angular';
-import { Integrations } from '@sentry/tracing';
+import { init as sentryAngularInit, createErrorHandler } from '@sentry/angular-ivy';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +24,7 @@ Sentry.init(
     // Whether SDK should be enabled or not
     enabled: true,
     // Use the tracing integration to see traces and add performance monitoring
-    integrations: [new Integrations.BrowserTracing()],
+    integrations: [new Sentry.BrowserTracing()],
     // A release identifier
     release: '1.0.0',
     // A dist identifier
