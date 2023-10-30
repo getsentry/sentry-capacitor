@@ -24,7 +24,7 @@ jobs:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         # we use a hash of yarn.lock as our cache key, because if it hasn't changed, our dependencies haven't changed,
         # so no need to reinstall them
       - name: Compute dependency cache key
@@ -52,7 +52,7 @@ jobs:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
       - name: Check dependency cache
         uses: actions/cache@v3.3.1
         with:
@@ -75,7 +75,7 @@ jobs:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
       - name: Check dependency cache
         uses: actions/cache@v3.3.1
         with:
@@ -111,7 +111,7 @@ jobs:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
       - name: Check dependency cache
         uses: actions/cache@v3.3.1
         with:
