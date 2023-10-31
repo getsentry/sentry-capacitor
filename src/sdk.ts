@@ -1,4 +1,4 @@
-import type { StackFrame } from '@sentry/browser';
+import type { BrowserOptions, StackFrame } from '@sentry/browser';
 import {
   defaultIntegrations,
   init as browserInit
@@ -18,7 +18,7 @@ import { NATIVE } from './wrapper';
  * @param options Options for the SDK
  * @param originalInit The init function of the sibling SDK, leave blank to initialize with `@sentry/browser`
  */
-export function init<O>(
+export function init<O extends BrowserOptions>(
   passedOptions: CapacitorOptions & O,
   originalInit: (passedOptions: O) => void = browserInit,
 ): void {
