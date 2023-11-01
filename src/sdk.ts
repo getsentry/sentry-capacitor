@@ -46,12 +46,10 @@ export function init<O>(
       iteratee: (frame: StackFrame) => {
         if (frame.filename) {
           const isReachableHost = /^https?:\/\//.test(frame.filename);
-
           frame.filename = frame.filename
-            .replace(/^https?:\/\/localhost(:\d+)?/, '')
-            .replace(/^ng:\/\//, '')
-            .replace(/^capacitor:\/\/localhost(:\d+)?/, '');
-
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any, no-restricted-globals
+            .replace((window as any).WEBVIEW_SERVER_URL, '')
+            .replace(/^ng:\/\//, '');
           const isNativeFrame = frame.filename === '[native code]' || frame.filename === 'native';
 
           if (!isNativeFrame) {
