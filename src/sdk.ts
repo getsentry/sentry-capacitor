@@ -11,6 +11,7 @@ import type { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
 import { makeUtf8TextEncoder } from './transports/TextEncoder';
+import { getCurrentServerUrl } from './utils/webViewUrl';
 import { NATIVE } from './wrapper';
 
 /**
@@ -46,10 +47,15 @@ export function init<O>(
       iteratee: (frame: StackFrame) => {
         if (frame.filename) {
           const isReachableHost = /^https?:\/\//.test(frame.filename);
-          frame.filename = frame.filename
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any, no-restricted-globals
-            .replace((window as any).WEBVIEW_SERVER_URL, '')
-            .replace(/^ng:\/\//, '');
+          const serverUrl = getCurrentServerUrl();
+          if (serverUrl) {
+            frame.filename = frame.filename.replace(serverUrl, '');
+          } else {
+            frame.filename = frame.filename.replace(/^https?:\/\/localhost(:\d+)?/, '')
+              .replace(/^capacitor:\/\/localhost(:\d+)?/, '');
+          }
+          frame.filename = frame.filename.replace(/^ng:\/\//, '');
+
           const isNativeFrame = frame.filename === '[native code]' || frame.filename === 'native';
 
           if (!isNativeFrame) {
