@@ -1,6 +1,6 @@
 export * from './definitions';
 
-export {
+export type {
   Breadcrumb,
   Request,
   SdkInfo,
@@ -35,5 +35,5 @@ export {
 } from '@sentry/core';
 
 export { SDK_NAME, SDK_VERSION } from './version';
-export { CapacitorOptions } from './options';
+export type { CapacitorOptions } from './options';
 export { init, nativeCrash } from './sdk';

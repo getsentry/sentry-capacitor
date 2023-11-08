@@ -75,7 +75,7 @@
     "@ionic/prettier-config": "^1.0.0",
     "@sentry-internal/eslint-config-sdk": "7.73.0",
     "@sentry-internal/eslint-plugin-sdk": "7.73.0",
-    "@sentry/typescript": "5.20.1",
+    "@sentry-internal/typescript": "7.73.0",
     "@sentry/wizard": "3.9.0",
     "@types/jest": "^26.0.15",
     "eslint": "^7.13.0",
