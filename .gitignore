@@ -87,3 +87,6 @@ example/ionic-angular/android/app/capacitor.build.gradle
 
 #yarn pack files
 sentry-capacitor-v*.tgz
+
+#sentry tokens
+*.sentryclirc

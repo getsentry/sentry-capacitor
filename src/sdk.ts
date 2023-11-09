@@ -1,17 +1,16 @@
-import type { BrowserOptions, StackFrame } from '@sentry/browser';
+import type { BrowserOptions } from '@sentry/browser';
 import {
   defaultIntegrations,
   init as browserInit
 } from '@sentry/browser';
 import { Hub, makeMain } from '@sentry/core';
-import { RewriteFrames } from '@sentry/integrations';
 
 import { DeviceContext, EventOrigin, Release, SdkInfo } from './integrations';
+import { createCapacitorRewriteFrames } from './integrations/rewriteframes';
 import type { CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
 import { makeUtf8TextEncoder } from './transports/TextEncoder';
-import { getCurrentServerUrl } from './utils/webViewUrl';
 import { NATIVE } from './wrapper';
 
 /**
@@ -43,38 +42,7 @@ export function init<O extends BrowserOptions>(
 
   finalOptions.defaultIntegrations = [
     ...defaultIntegrations,
-    new RewriteFrames({
-      iteratee: (frame: StackFrame) => {
-        if (frame.filename) {
-          const isReachableHost = /^https?:\/\//.test(frame.filename);
-          const serverUrl = getCurrentServerUrl();
-          if (serverUrl) {
-            frame.filename = frame.filename.replace(serverUrl, '');
-          } else {
-            frame.filename = frame.filename.replace(/^https?:\/\/localhost(:\d+)?/, '')
-              .replace(/^capacitor:\/\/localhost(:\d+)?/, '');
-          }
-          frame.filename = frame.filename.replace(/^ng:\/\//, '');
-
-          const isNativeFrame = frame.filename === '[native code]' || frame.filename === 'native';
-
-          if (!isNativeFrame) {
-            // We don't need to use `app://` protocol for http(s) based hosts
-            if (!isReachableHost) {
-              // We always want to have a triple slash
-              const filename = frame.filename.startsWith('/') ? frame.filename : `/${frame.filename}`;
-              const appPrefix = 'app://';
-              frame.filename = `${appPrefix}${filename}`;
-            }
-
-            frame.in_app = true;
-          } else {
-            frame.in_app = false;
-          }
-        }
-        return frame;
-      },
-    }),
+    createCapacitorRewriteFrames(),
     new Release(),
     new SdkInfo(),
     new EventOrigin(),

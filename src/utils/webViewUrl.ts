@@ -6,5 +6,8 @@ interface GlobalObject extends Window {
  * Return the current webview url if found.
  */
 export function getCurrentServerUrl(): string | undefined {
-  return (self as GlobalObject).WEBVIEW_SERVER_URL;
+  if (typeof self !== 'undefined') {
+    return (self as GlobalObject).WEBVIEW_SERVER_URL;
+  }
+  return undefined;
 }
