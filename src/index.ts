@@ -33,6 +33,7 @@ export {
   startTransaction,
   withScope,
 } from '@sentry/core';
+export { Replay, BrowserTracing } from '@sentry/browser'
 
 export { SDK_NAME, SDK_VERSION } from './version';
 export type { CapacitorOptions } from './options';
