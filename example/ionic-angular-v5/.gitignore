@@ -1,5 +1,9 @@
 .vscode/
 typings/
 
+<<<<<<< HEAD
 # Sentry Config File
+=======
+# Sentry Auth Token
+>>>>>>> 1a8e6c75a17242740c170abc01fe9cda47794378
 .sentryclirc
