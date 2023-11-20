@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Features
+
+- Expose Replay and BrowserTracing on `@sentry/capacitor` ([#489](https://github.com/getsentry/sentry-capacitor/pull/489))
+
 ### Fixes
 
 - Fixed sourcemaps for stacktraces other than localhost ([#494](https://github.com/getsentry/sentry-capacitor/pull/494))

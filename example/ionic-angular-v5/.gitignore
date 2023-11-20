@@ -1,5 +1,5 @@
 .vscode/
 typings/
 
-# Sentry Config File
+# Sentry Auth Token
 .sentryclirc
