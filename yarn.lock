@@ -723,13 +723,13 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@sentry-internal/eslint-config-sdk@7.80.0":
-  version "7.80.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-config-sdk/-/eslint-config-sdk-7.80.0.tgz#100f164097aaeac99db2e88d8f87e4667920b9ed"
-  integrity sha512-2jHITL4JQPfKUNIB49Mmcc3NRXIcQoeIYWTeIEldm7BQlWr0H3eMMnd6QdQ8VIXC6t1LAve9See1zB0bqDitlw==
+"@sentry-internal/eslint-config-sdk@7.81.0":
+  version "7.81.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-config-sdk/-/eslint-config-sdk-7.81.0.tgz#edcbe4aa4e74847a70765cff73c780e3c72aa245"
+  integrity sha512-tml0qHJzCNDBTj2n4oCiKsCxWA5HsfQf7MMV2nif929VJ1GG5MXWr2Cx5ROeiaPQMLycVBXHPezJxkVl2AKzXw==
   dependencies:
-    "@sentry-internal/eslint-plugin-sdk" "7.80.0"
-    "@sentry-internal/typescript" "7.80.0"
+    "@sentry-internal/eslint-plugin-sdk" "7.81.0"
+    "@sentry-internal/typescript" "7.81.0"
     "@typescript-eslint/eslint-plugin" "^5.48.0"
     "@typescript-eslint/parser" "^5.48.0"
     eslint-config-prettier "^6.11.0"
@@ -743,6 +743,13 @@
   version "7.80.0"
   resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-plugin-sdk/-/eslint-plugin-sdk-7.80.0.tgz#4824350ea3cd9bc0656398384724745e17291231"
   integrity sha512-AmfeuXMjOp3MA6BM3xaAhRDQVtXz0lDjg9ACi7s/mgF2oJm12gkqZ/QJNDtyNOldIlo/UfCcQRPeu7zSNBWOng==
+  dependencies:
+    requireindex "~1.1.0"
+
+"@sentry-internal/eslint-plugin-sdk@7.81.0":
+  version "7.81.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-plugin-sdk/-/eslint-plugin-sdk-7.81.0.tgz#8e7942183be129001abba93054314f9dcf8eab6b"
+  integrity sha512-44UT6C+bP01BwEua4/jeXwT1FP09OuIMDjs+kaqVLBzZjxmOf5JLx1U6Qo6AeLPUkU4jU4YaEYPeyNpQ5kqh9A==
   dependencies:
     requireindex "~1.1.0"
 
@@ -768,6 +775,11 @@
   version "7.80.0"
   resolved "https://registry.yarnpkg.com/@sentry-internal/typescript/-/typescript-7.80.0.tgz#30cae7c5bd8049f1a4083de351f396091d749e60"
   integrity sha512-CXXh8vm4a0ZJhlMv4YcapeDmJh1pGtlO7wsdmur4Pu2YF+32z8lDxE5sKrItSdgu7RX5eR7aGQGiJI+YKZgsDQ==
+
+"@sentry-internal/typescript@7.81.0":
+  version "7.81.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/typescript/-/typescript-7.81.0.tgz#ffc041671b8e02902e51d40b0c724ac8e72371d2"
+  integrity sha512-jPv8ZN3g7ZgDdLoJFbp0QmWOpc51qu5sa0GVoqsSwN9tfEayHvyMyUO80O9octfyC5kyTEF+08oD0e9I3ZDNSw==
 
 "@sentry/browser@7.80.0":
   version "7.80.0"
