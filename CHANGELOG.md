@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Features
+
+- Expose Replay and BrowserTracing on `@sentry/capacitor` ([#489](https://github.com/getsentry/sentry-capacitor/pull/489))
+
 ### Fixes
 
 - Fixed sourcemaps for stacktraces other than localhost ([#494](https://github.com/getsentry/sentry-capacitor/pull/494))
@@ -11,10 +15,6 @@
 - Bump Sentry javascript 7.80.0 ([#499](https://github.com/getsentry/sentry-capacitor/pull/499))
   - [changelog](https://github.com/getsentry/sentry-javascript/releases/tag/7.80.0)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/7.73.0...7.80.0)
-
-### Features
-
-- Expose Replay and BrowserTracing on `@sentry/capacitor` ([#489](https://github.com/getsentry/sentry-capacitor/pull/489))
 
 ## 0.14.0
 
