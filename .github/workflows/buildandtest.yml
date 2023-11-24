@@ -66,8 +66,8 @@ jobs:
           key: ${{ env.BUILD_CACHE_KEY }}
       - name: Install yalc
         run: yarn  global add yalc
-      #      - name: Install Ionic
-      #        run: yarn  global add @ionic/cli
+           - name: Install Ionic
+             run: yarn  global add @ionic/cli
       #      - name: Install Angular CLI
       #        run: yarn  global add rimraf
       - name: Install Packages
