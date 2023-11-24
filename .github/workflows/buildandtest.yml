@@ -47,7 +47,8 @@ jobs:
     needs: job_build
     continue-on-error: true
     timeout-minutes: 30
-    runs-on: ubuntu-latest
+    # macos required for the xcode build.
+    runs-on: macos-latest
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v3
