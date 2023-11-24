@@ -63,6 +63,8 @@ jobs:
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
+      - name: add yalc
+        run: yarn  global add yalc
       - name: Update SDK & build samples
         run: yarn bump:samples
 
