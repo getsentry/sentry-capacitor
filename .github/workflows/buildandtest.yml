@@ -63,8 +63,10 @@ jobs:
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
-      - name: add yalc
+      - name: Install yalc
         run: yarn  global add yalc
+      - name: Install Ionic
+        run: yarn  global add @ionic/cli
       - name: Update SDK & build samples
         run: yarn bump:samples
 
