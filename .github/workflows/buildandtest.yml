@@ -68,6 +68,8 @@ jobs:
         run: yarn  global add yalc
       - name: Install Ionic
         run: yarn  global add @ionic/cli
+      - name: Install Angular CLI
+        run: yarn  global add @angular/cli
       - name: Update SDK & build samples
         run: yarn bump:samples
 
