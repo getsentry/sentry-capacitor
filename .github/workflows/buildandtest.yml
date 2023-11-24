@@ -70,6 +70,8 @@ jobs:
         run: yarn  global add @ionic/cli
       - name: Install Angular CLI
         run: yarn  global add rimraf
+      - name: Install Packages
+        run: yarn install
       - name: Update SDK & build samples
         run: yarn bump:samples
 
