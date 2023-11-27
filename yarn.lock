@@ -386,10 +386,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@ionic/prettier-config@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@ionic/prettier-config/-/prettier-config-1.0.1.tgz#791a95b061a4efdd7651396e6b5334a29ad18ff8"
-  integrity sha512-/v8UOW7rxkw/hvrRe/QfjlQsdjkm3sfAHoE3uqffO5BoNGijQMARrT32JT9Ei0g6KySXPyxxW+7LzPHrQmfzCw==
+"@ionic/prettier-config@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@ionic/prettier-config/-/prettier-config-4.0.0.tgz#32bcc3a536e785cc5be8e3c4d429a6f7bcb7b1fe"
+  integrity sha512-0DqL6CggVdgeJAWOLPUT73rF1VD5p0tVlCpC5GXz5vTIUBxNwsJ5085Q7wXjKiE5Odx3aOHGTcuRWCawFsLFag==
 
 "@ionic/utils-array@2.1.5":
   version "2.1.5"
