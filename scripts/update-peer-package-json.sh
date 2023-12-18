@@ -2,5 +2,5 @@
 
 echo "Updating peerDependencies"
 packages=peerPackages
-update-peer-packages=true
+updatePeerPackages=true
 . $(dirname "$0")/update-package-json.sh
