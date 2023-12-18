@@ -2,6 +2,7 @@
 set -euo pipefail
 
 tagPrefix=''
+updatePeerPackages=0
 repo="https://github.com/getsentry/sentry-javascript.git"
 packages=('@sentry/browser' '@sentry/core' '@sentry/integrations' '@sentry/types' '@sentry/utils')
 #TODO: remove @sentry/hub and @sentry/tracing on next major release.
