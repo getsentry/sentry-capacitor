@@ -27,7 +27,7 @@ set-version)
     done
     (
         cd "$(dirname "$file")"
-        if [ "$updatePeerPackages" = true]; then
+        if [ -n "$updatePeerPackages" ] && [ "$updatePeerPackages" -eq 1 ]; then
             #upgrade doesn't support peerDependencies so we'll use the yarn option.
             yarn add --peer $list --update-sentry-capacitor
         else
