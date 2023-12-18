@@ -42,6 +42,37 @@ jobs:
     outputs:
       dependency_cache_key: ${{ steps.compute_lockfile_hash.outputs.hash }}
 
+  job_sample_test:
+    name: Sample Build Test
+    needs: job_build
+    continue-on-error: true
+    timeout-minutes: 30
+    # macos required for the xcode build.
+    runs-on: macos-latest
+    steps:
+      - name: Check out current commit (${{ github.sha }})
+        uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+      - name: Check dependency cache
+        uses: actions/cache@v3.3.1
+        with:
+          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
+          key: ${{ needs.job_build.outputs.dependency_cache_key }}
+      - name: Check build cache
+        uses: actions/cache@v3.3.1
+        with:
+          path: ${{ env.CACHED_BUILD_PATHS }}
+          key: ${{ env.BUILD_CACHE_KEY }}
+      - name: Install yalc
+        run: yarn  global add yalc
+      - name: Install Ionic
+        run: yarn  global add @ionic/cli
+      - name: Install Packages
+        run: yarn install
+      - name: Update SDK & build samples
+        run: yarn bump:samples
+
   job_unit_test:
     name: Test
     needs: job_build
