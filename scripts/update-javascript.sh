@@ -4,10 +4,10 @@ set -euo pipefail
 
 tagPrefix=''
 repo="https://github.com/getsentry/sentry-javascript.git"
+pp=('@sentry/react' '@sentry/vue' '@sentry/angular' '@sentry/angular-ivy')
 packages=('@sentry/browser' '@sentry/core' '@sentry/integrations' '@sentry/types' '@sentry/utils')
 #TODO: remove @sentry/hub and @sentry/tracing on next major release.
 #https://github.com/getsentry/sentry-capacitor/issues/511
 packages+=('@sentry/hub' '@sentry/tracing')
 packages+=('@sentry-internal/eslint-config-sdk' '@sentry-internal/eslint-plugin-sdk' '@sentry-internal/typescript')
-peerPackages=('@sentry/react' '@sentry/vue' '@sentry/angular' '@sentry/angular-ivy')
 . $(dirname "$0")/update-package-json.sh && . $(dirname "$0")/update-peer-package-json.sh
