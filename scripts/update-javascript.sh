@@ -10,5 +10,4 @@ packages=('@sentry/browser' '@sentry/core' '@sentry/integrations' '@sentry/types
 packages+=('@sentry/hub' '@sentry/tracing')
 packages+=('@sentry-internal/eslint-config-sdk' '@sentry-internal/eslint-plugin-sdk' '@sentry-internal/typescript')
 peerPackages=('@sentry/react' '@sentry/vue' '@sentry/angular' '@sentry/angular-ivy')
-. $(dirname "$0")/update-package-json.sh
-. $(dirname "$0")/update-peer-package-json.sh
+. $(dirname "$0")/update-package-json.sh && . $(dirname "$0")/update-peer-package-json.sh
