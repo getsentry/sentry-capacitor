@@ -2,6 +2,7 @@
 
 file="$(dirname "$0")/../package.json"
 content=$(cat $file)
+updatePeerPackages=${updatePeerPackages:-0}
 
 case $1 in
 get-version)
