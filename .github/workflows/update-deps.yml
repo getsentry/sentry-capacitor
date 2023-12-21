@@ -8,8 +8,6 @@ on:
   push:
     branches:
       - main
-      # Temporary for testing.
-      - feat/auto-bump=dep
 
 jobs:
   android:
