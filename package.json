@@ -64,7 +64,7 @@
     "@sentry/core": "7.81.1",
     "@sentry/hub": "7.81.1",
     "@sentry/integrations": "7.81.1",
-    "@sentry/tracing": "7.81.1",
+    "@sentry/tracing": "7.93.0",
     "@sentry/types": "7.81.1",
     "@sentry/utils": "7.81.1"
   },

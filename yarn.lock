@@ -841,12 +841,12 @@
     "@sentry/types" "7.81.1"
     "@sentry/utils" "7.81.1"
 
-"@sentry/tracing@7.81.1":
-  version "7.81.1"
-  resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-7.81.1.tgz#274f76119cdc3e58a4767ce8085cfc73cea13330"
-  integrity sha512-of9WMu0XgEBl9onTEk8SMaxj4BUadaUvHH96T1OpRMjdyuCM/3u2mjCkh3ekINr3Fu/uT2kJ/kO3goUxfcdXIQ==
+"@sentry/tracing@7.93.0":
+  version "7.93.0"
+  resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-7.93.0.tgz#9785773049ae645cd0ee5b471e83a4dc9a79229c"
+  integrity sha512-n4XbAQ7e098Jzv4ZvpXAsFgM+XFfjhKci18r7s3UfDMnrB4FTCwhHZoeiygO8PZhB944mEFbNXNFhHkb8nTDbA==
   dependencies:
-    "@sentry-internal/tracing" "7.81.1"
+    "@sentry-internal/tracing" "7.93.0"
 
 "@sentry/types@7.81.1":
   version "7.81.1"
