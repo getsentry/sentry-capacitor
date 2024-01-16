@@ -60,22 +60,22 @@
     }
   },
   "dependencies": {
-    "@sentry/browser": "7.81.1",
-    "@sentry/core": "7.81.1",
-    "@sentry/hub": "7.81.1",
-    "@sentry/integrations": "7.81.1",
+    "@sentry/browser": "7.93.0",
+    "@sentry/core": "7.93.0",
+    "@sentry/hub": "7.93.0",
+    "@sentry/integrations": "7.93.0",
     "@sentry/tracing": "7.93.0",
-    "@sentry/types": "7.81.1",
-    "@sentry/utils": "7.81.1"
+    "@sentry/types": "7.93.0",
+    "@sentry/utils": "7.93.0"
   },
   "devDependencies": {
     "@capacitor/android": "^3.0.1 || ^4.0.0 || ^5.0.0",
     "@capacitor/core": "^3.0.1 || ^4.0.0 || ^5.0.0",
     "@capacitor/ios": "^3.0.1 || ^4.0.0 || ^5.0.0",
     "@ionic/prettier-config": "^1.0.0",
-    "@sentry-internal/eslint-config-sdk": "7.81.1",
-    "@sentry-internal/eslint-plugin-sdk": "7.81.1",
-    "@sentry-internal/typescript": "7.81.1",
+    "@sentry-internal/eslint-config-sdk": "7.93.0",
+    "@sentry-internal/eslint-plugin-sdk": "7.93.0",
+    "@sentry-internal/typescript": "7.93.0",
     "@sentry/wizard": "3.20.2",
     "@types/jest": "^26.0.15",
     "eslint": "^7.13.0",
