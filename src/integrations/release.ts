@@ -1,4 +1,4 @@
-import { addGlobalEventProcessor, getCurrentHub } from '@sentry/core';
+import { addEventProcessor, getCurrentHub } from '@sentry/core';
 import type { Event, Integration } from '@sentry/types';
 
 import { NATIVE } from '../wrapper';
@@ -18,7 +18,7 @@ export class Release implements Integration {
    * @inheritDoc
    */
   public setupOnce(): void {
-    addGlobalEventProcessor(async (event: Event) => {
+    addEventProcessor(async (event: Event) => {
       const self = getCurrentHub().getIntegration(Release);
       if (!self) {
         return event;

@@ -15,8 +15,8 @@ export class EventOrigin implements Integration {
   /**
    * @inheritDoc
    */
-  public setupOnce(addGlobalEventProcessor: (e: EventProcessor) => void): void {
-    addGlobalEventProcessor(event => {
+  public setupOnce(addEventProcessor: (e: EventProcessor) => void): void {
+    addEventProcessor(event => {
       event.tags = event.tags ?? {};
 
       event.tags['event.origin'] = 'javascript';
