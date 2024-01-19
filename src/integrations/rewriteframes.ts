@@ -1,5 +1,5 @@
 import { RewriteFrames } from '@sentry/integrations';
-import type { StackFrame } from '@sentry/types';
+import type { Integration, StackFrame } from '@sentry/types';
 
 import { getCurrentServerUrl } from '../utils/webViewUrl';
 
@@ -8,7 +8,7 @@ import { getCurrentServerUrl } from '../utils/webViewUrl';
  * which appends app:// to the beginning of the filename
  * and removes the local server url prefixes.
  */
-export function createCapacitorRewriteFrames(): RewriteFrames {
+export function createCapacitorRewriteFrames(): Integration {
   const rewriteFrames = new RewriteFrames({
     iteratee: (frame: StackFrame) => {
       if (frame.filename) {

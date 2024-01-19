@@ -1,11 +1,8 @@
 import type { BrowserOptions } from '@sentry/browser';
+import type { BrowserTransportOptions } from '@sentry/browser/types/transports/types';
+import type { ClientOptions } from '@sentry/types';
 
-/**
- * Configuration options for the Sentry Capacitor SDK.
- */
-
-export interface CapacitorOptions
-  extends Omit<BrowserOptions, 'autoSessionTracking'> {
+export interface BaseCapacitorOptions{
   /**
    * Enables crash reporting for native crashes.
    * Defaults to `true`.
@@ -17,6 +14,15 @@ export interface CapacitorOptions
    * Defaults to `true`.
    */
   enableNativeCrashHandling?: boolean;
+
+  /**
+   * Callback that is called after the Capacitor SDK on the JS Layer has made contact with the Native Layer.
+   */
+  onReady?: (response: {
+    /** `true` if the native SDK has been initialized, `false` otherwise.  */
+    didCallNativeInit: boolean;
+  }) => void;
+
 
   /** Maximum time to wait to drain the request queue, before the process is allowed to exit. */
   shutdownTimeout?: number;
@@ -55,3 +61,20 @@ export interface CapacitorOptions
   * */
   enableOutOfMemoryTracking?: boolean;
 }
+
+/**
+ * Configuration options for the Sentry Capacitor SDK.
+ */
+export interface CapacitorOptions extends Omit<BrowserOptions, 'autoSessionTracking'>, BaseCapacitorOptions { }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface CapacitorTransportOptions extends BrowserTransportOptions{
+  /**
+   * @deprecated use `maxQueueSize` in the root of the SDK options.
+   */
+  bufferSize?: number;
+}
+
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface CapacitorClientOptions extends ClientOptions<CapacitorTransportOptions>, BaseCapacitorOptions { }

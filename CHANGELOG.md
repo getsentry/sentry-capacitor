@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Features
+
+- Add onReady callback that gets called after Native SDK init is called.
+
 ### Dependencies
 
 - Bump Cocoa SDK from v8.8.0 to v8.18.0 ([#526](https://github.com/getsentry/sentry-capacitor/pull/526))
