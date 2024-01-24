@@ -1,6 +1,8 @@
 import { eventFromException, eventFromMessage } from '@sentry/browser';
 import { BaseClient } from '@sentry/core';
 import type {
+  ClientReportEnvelope,
+  ClientReportItem,
   Envelope,
   Event,
   EventHint,
@@ -10,10 +12,13 @@ import type {
   Thread,
   UserFeedback,
 } from '@sentry/types';
-import { logger, SentryError } from '@sentry/utils';
+import { dateTimestampInSeconds, logger, SentryError } from '@sentry/utils';
 
 import type { CapacitorClientOptions } from './options';
+import { mergeOutcomes } from './utils/outcome';
 import { NATIVE } from './wrapper';
+
+export const EnvelopeitemsIndex = 1;
 
 /**
  * The Sentry Capacitor SDK Client.
@@ -107,8 +112,7 @@ export class CapacitorClient extends BaseClient<CapacitorClientOptions> {
     this._outcomesBuffer = mergeOutcomes(this._outcomesBuffer, outcomes);
 
     if (this._options.sendClientReports) {
-      // TODO: Implement Cleint Report.
-      // this._attachClientReportTo(this._outcomesBuffer, envelope as ClientReportEnvelope);
+      this._attachClientReportTo(this._outcomesBuffer, envelope as ClientReportEnvelope);
     }
 
     let shouldClearOutcomesBuffer = true;
@@ -162,12 +166,20 @@ export class CapacitorClient extends BaseClient<CapacitorClientOptions> {
       console.log('Sentry Warning, could not connect to Sentry native SDK.\nIf you do not want to use the native component please pass `enableNative: false` in the options.\nVisit: https://docs.sentry.io/platforms/javascript/guides/capacitor/configuration/options/#hybrid-sdk-options for more details.');
     }
   }
+  /**
+   * Attaches a client report from outcomes to the envelope.
+   */
+  private _attachClientReportTo(outcomes: Outcome[], envelope: ClientReportEnvelope): void {
+    if (outcomes.length > 0) {
+      const clientReportItem: ClientReportItem = [
+        { type: 'client_report' },
+        {
+          timestamp: dateTimestampInSeconds(),
+          discarded_events: outcomes,
+        },
+      ];
 
-// TODO: implement Attaches clients report.
+      envelope[EnvelopeitemsIndex].push(clientReportItem);
+    }
+  }
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function mergeOutcomes(_outcomesBuffer: Outcome[], outcomes: Outcome[]): Outcome[] {
-  // TODO: Implement mergeOutComes.
-  throw new Error('Function not implemented.');
-}
-

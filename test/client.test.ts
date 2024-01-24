@@ -1,9 +1,16 @@
-import type { Envelope, Transport } from '@sentry/types';
+import type { Envelope, Outcome, Transport } from '@sentry/types';
 
 import { CapacitorClient } from '../src/client';
 import type { CapacitorClientOptions } from '../src/options';
 import { NativeTransport } from '../src/transports/native';
 import { NATIVE } from '../src/wrapper';
+import {
+  envelopeItemHeader,
+  envelopeItemPayload,
+  envelopeItems,
+  firstArg,
+  getSyncPromiseRejectOnFirstCall,
+} from './testutils';
 
 interface MockedCapacitor {
   Platform: {
@@ -67,6 +74,8 @@ jest.mock('../src/plugin', () => {
     },
   };
 });
+
+import { rejectedSyncPromise,SentryError } from '@sentry/utils';
 
 import * as Plugin from '../src/plugin';
 
@@ -294,35 +303,35 @@ describe('Tests CapacitorClient', () => {
     });
   });
 */
-    /* TODO: Fix SDKInfo
-  describe('event data enhancement', () => {
-    test('event contains sdk default information', async () => {
-      const mockedSend = jest.fn<PromiseLike<void>, [Envelope]>().mockResolvedValue(undefined);
-      const mockedTransport = (): Transport => ({
-        send: mockedSend,
-        flush: jest.fn().mockResolvedValue(true),
-      });
-      const client = new CapacitorClient({
-        ...DEFAULT_OPTIONS,
-        dsn: EXAMPLE_DSN,
-        transport: mockedTransport,
-      });
-
-      client.captureEvent({ message: 'test event' });
-
-      expect(mockedSend).toBeCalled();
-      const actualEvent: Event | undefined = <Event>(
-        mockedSend.mock.calls[0][firstArg][envelopeItems][0][envelopeItemPayload]
-      );
-      expect(actualEvent?.sdk?.packages).toEqual([
-        {
-          name: SDK_PACKAGE_NAME,
-          version: SDK_VERSION,
-        },
-      ]);
+  /* TODO: Fix SDKInfo
+describe('event data enhancement', () => {
+  test('event contains sdk default information', async () => {
+    const mockedSend = jest.fn<PromiseLike<void>, [Envelope]>().mockResolvedValue(undefined);
+    const mockedTransport = (): Transport => ({
+      send: mockedSend,
+      flush: jest.fn().mockResolvedValue(true),
+    });
+    const client = new CapacitorClient({
+      ...DEFAULT_OPTIONS,
+      dsn: EXAMPLE_DSN,
+      transport: mockedTransport,
     });
 
+    client.captureEvent({ message: 'test event' });
+
+    expect(mockedSend).toBeCalled();
+    const actualEvent: Event | undefined = <Event>(
+      mockedSend.mock.calls[0][firstArg][envelopeItems][0][envelopeItemPayload]
+    );
+    expect(actualEvent?.sdk?.packages).toEqual([
+      {
+        name: SDK_PACKAGE_NAME,
+        version: SDK_VERSION,
+      },
+    ]);
   });
+
+});
 */
   describe('normalizes events', () => {
     /* TODO: Fix later
@@ -359,7 +368,6 @@ describe('Tests CapacitorClient', () => {
     */
   });
 
-  /* TODO: To be fixed on Client Report implementation.
   describe('clientReports', () => {
     test('does not send client reports if disabled', () => {
       const mockTransportSend = jest.fn((_envelope: Envelope) => Promise.resolve());
@@ -380,7 +388,6 @@ describe('Tests CapacitorClient', () => {
       expectOnlyMessageEventInEnvelope(mockTransportSend);
     });
 
-    /* TODO: Implement Client Report
     test('send client reports on event envelope', () => {
       const mockTransportSend = jest.fn((_envelope: Envelope) => Promise.resolve());
       const client = new CapacitorClient({
@@ -431,9 +438,7 @@ describe('Tests CapacitorClient', () => {
 
       expectOnlyMessageEventInEnvelope(mockTransportSend);
     });
-*/
-    /*
-    TODO: To be implemented
+
     test('keeps outcomes in case envelope fails to send', () => {
       const mockTransportSend = jest.fn((_envelope: Envelope) => rejectedSyncPromise(new SentryError('Test')));
       const client = new CapacitorClient({
@@ -454,10 +459,7 @@ describe('Tests CapacitorClient', () => {
         { reason: 'before_send', category: 'error', quantity: 1 },
       ]);
     });
-    */
 
-    /*
-    TODO: To be implemented.
     test('sends buffered client reports on second try', () => {
       const mockTransportSend = getSyncPromiseRejectOnFirstCall<[Envelope]>(new SentryError('Test'));
       const client = new CapacitorClient({
@@ -493,9 +495,19 @@ describe('Tests CapacitorClient', () => {
       );
       expect((client as unknown as { _outcomesBuffer: Outcome[] })._outcomesBuffer).toEqual(<Outcome[]>[]);
     });
-    */
-  });
 
+    function expectOnlyMessageEventInEnvelope(transportSend: jest.Mock) {
+      expect(transportSend).toBeCalledTimes(1);
+      expect(transportSend.mock.calls[0][firstArg][envelopeItems]).toHaveLength(1);
+      expect(transportSend.mock.calls[0][firstArg][envelopeItems][0][envelopeItemHeader]).toEqual(
+        expect.objectContaining({ type: 'event' }),
+      );
+    }
+
+    function mockDroppedEvent(client: CapacitorClient) {
+      client.recordDroppedEvent('before_send', 'error');
+    }
+  });
 
   function mockedOptions(options: Partial<CapacitorClientOptions>): CapacitorClientOptions {
     return {
@@ -508,3 +520,4 @@ describe('Tests CapacitorClient', () => {
       ...options,
     };
   }
+});
