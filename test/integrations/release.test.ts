@@ -1,11 +1,11 @@
-import { addGlobalEventProcessor, getCurrentHub } from '@sentry/core';
+import { addGlobalEventProcessor, getCurrentHub } from '@sentry/browser';
 import type { EventProcessor } from '@sentry/types';
 
 import { Release } from '../../src/integrations/release';
 
 const mockRelease = Release;
 
-jest.mock('@sentry/core', () => {
+jest.mock('@sentry/browser', () => {
   const client = {
     getOptions: jest.fn(),
   };
