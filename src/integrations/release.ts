@@ -1,4 +1,4 @@
-import { addGlobalEventProcessor, getCurrentHub } from '@sentry/core';
+import { addGlobalEventProcessor, getCurrentHub } from '@sentry/browser';
 import type { Event, Integration } from '@sentry/types';
 
 import { NATIVE } from '../wrapper';
