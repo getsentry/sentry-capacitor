@@ -17,7 +17,7 @@ export default defineConfig({
     sentryVitePlugin({
       org: "sentry-sdks",
       project: "capacitor",
-      authToken: "TOKEN",
+      authToken: "",
     }),
 
   ],
