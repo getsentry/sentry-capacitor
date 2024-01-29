@@ -1,0 +1,43 @@
+<!-- SentryCapacitorVue.vue -->
+<script lang="ts">
+import { IonButton, IonContent, IonFooter, IonHeader, IonTitle, IonToolbar, IonPage  } from '@ionic/vue';
+
+import * as Sentry from "@sentry/capacitor"
+
+  export default {
+  name: 'HomePageView',
+  components: { IonButton, IonContent, IonFooter, IonHeader, IonTitle, IonToolbar, IonPage },
+  methods: {
+    createMessage() {
+      Sentry.captureMessage('Hello VUE');
+    },
+    handledError() {
+      try {
+        throw Error("A handled error");
+      } catch (ex) {
+        Sentry.captureException(ex);
+      }
+    },
+    crash() {
+      Sentry.nativeCrash();
+    }
+  }
+};
+
+
+</script>
+
+<template>
+  <ion-page>
+  <ion-header :translucent="true">
+    <ion-toolbar>
+      <ion-title>Sentry Capacitor Vue</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content :fullscreen="true" class="ion-padding">
+      <ion-button  @click="createMessage">Create Message</ion-button>
+      <ion-button  @click="handledError">Handled Error</ion-button>
+      <ion-button  @click="crash">Crash</ion-button>
+  </ion-content>
+  </ion-page>
+</template>

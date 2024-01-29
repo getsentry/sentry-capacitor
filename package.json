@@ -26,6 +26,7 @@
     "bump:v5": "cd example/ionic-angular-v5 && yalc add @sentry/capacitor && yarn install && ionic build && npx cap sync",
     "bump:v3": "cd example/ionic-angular && yalc add @sentry/capacitor && yarn install && ionic build && npx cap sync",
     "bump:v2": "cd example/ionic-angular-v2 && yalc add @sentry/capacitor && yarn install && ionic build && npx cap sync",
+    "bump:sample-vue": "cd example/ionic-vue3 && yalc add @sentry/capacitor && yarn install && ionic build && npx cap sync",
     "bump:samples": "yalc publish && yarn run bump:v5 && yarn run bump:v3 && yarn run bump:v2"
   },
   "keywords": [
@@ -40,10 +41,10 @@
   "license": "MIT",
   "peerDependencies": {
     "@capacitor/core": ">=3.0.0",
-    "@sentry/angular": "7.93.0",
-    "@sentry/angular-ivy": "7.93.0",
-    "@sentry/react": "7.93.0",
-    "@sentry/vue": "7.93.0"
+    "@sentry/angular": "7.81.1",
+    "@sentry/angular-ivy": "7.81.1",
+    "@sentry/react": "7.81.1",
+    "@sentry/vue": "7.81.1"
   },
   "peerDependenciesMeta": {
     "@sentry/angular-ivy": {
@@ -64,7 +65,7 @@
     "@sentry/core": "7.81.1",
     "@sentry/hub": "7.81.1",
     "@sentry/integrations": "7.81.1",
-    "@sentry/tracing": "7.93.0",
+    "@sentry/tracing": "7.81.1",
     "@sentry/types": "7.81.1",
     "@sentry/utils": "7.81.1"
   },
