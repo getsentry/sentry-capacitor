@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixes
+
+- Vue projects weren't able to reference the VUE app ([#559](https://github.com/getsentry/sentry-capacitor/pull/559))
+
 ### Dependencies
 
 - Bump JavaScript Sibling SDKs from v7.81.1 to v7.93.0 ([#527](https://github.com/getsentry/sentry-capacitor/pull/527))
