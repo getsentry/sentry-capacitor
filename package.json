@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/getsentry/sentry-capacitor"
   },
-  "version": "0.15.0",
+  "version": "0.15.1",
   "description": "Official Sentry SDK for Capacitor",
   "types": "dist/esm/index.d.ts",
   "main": "dist/build/index.js",
