@@ -172,7 +172,7 @@ public class SentryCapacitor: CAPPlugin {
 
             contexts["context"] = context
 
-            call.resolve(contexts as PluginResultData)
+            call.resolve(contexts as PluginCallResultData)
         }
     }
 
