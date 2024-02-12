@@ -70,14 +70,11 @@ jobs:
         run: yarn  global add @ionic/cli
       - name: Install Packages
         run: yarn install
-      - name: TEST.
-        working-directory: example
-        run: ls
       - name: Publish test broken node.
         working-directory: example/broken_node_module
         run: yalc publish
       - name: Install broken node module on Sample
-        working-directory: example/ionic_angular
+        working-directory: example/ionic-angular
         run: yalc add broken_module
       - name: Update SDK & build samples
         run: yarn bump:samples
