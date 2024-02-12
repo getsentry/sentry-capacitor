@@ -12,17 +12,25 @@ export function createCapacitorRewriteFrames(): Integration {
   const rewriteFrames = new RewriteFrames({
     iteratee: (frame: StackFrame) => {
       if (frame.filename) {
+
+        if (frame.platform === 'java' || frame.platform === 'cocoa') {
+          // Because platform is not required in StackFrame type
+          // we assume that if not set it's javascript
+          return frame;
+        }
+
         const isReachableHost = /^https?:\/\//.test(frame.filename);
         const serverUrl = getCurrentServerUrl();
         if (serverUrl) {
           frame.filename = frame.filename.replace(serverUrl, '');
         } else {
-          frame.filename = frame.filename.replace(/^https?:\/\/localhost(:\d+)?/, '')
-            .replace(/^capacitor:\/\/localhost(:\d+)?/, '');
-        }
+          frame.filename = frame.filename
+            .replace(/^https?:\/\/localhost(:\d+)?/, '')
+            .replace(/^capacitor:\/\/localhost(:\d+)?/, '')
+          }
         frame.filename = frame.filename.replace(/^ng:\/\//, '');
 
-        const isNativeFrame = frame.filename === '[native code]' || frame.filename === 'native';
+        const isNativeFrame = frame.filename === '[native code]' || frame.filename === 'native' || frame.filename.endsWith('.kt') ;
 
         if (!isNativeFrame) {
           // We don't need to use `app://` protocol for http(s) based hosts

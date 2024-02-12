@@ -7,7 +7,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { Router } from "@angular/router";
 import { createErrorHandler, TraceService, routingInstrumentation, init as sentryAngularInit } from '@sentry/angular-ivy';
 import * as Sentry from '@sentry/capacitor';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import * as Sentry from '@sentry/capacitor';
-
+import * as derp from 'broken_module';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -13,6 +13,11 @@ export class Tab1Page {
   public throwUnhandledException(): void {
     // @ts-ignore intentionally calling to demonstrate global error handling
     undefinedMethod();
+  }
+
+  public throwUnhandledNodeException(): void {
+    derp.sayHello();
+    derp.throw_error();
   }
 
   public regularException(): void {

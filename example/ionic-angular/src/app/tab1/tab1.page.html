@@ -26,6 +26,13 @@
     </label>
 
     <label>
+      Throws an unhandled exception from Node library
+      <ion-button (click)="throwUnhandledNodeException()"
+        >Throw unhandled exception from node library.</ion-button
+      >
+    </label>
+
+    <label>
       Throws an error that is NOT captured by Sentry
       <ion-button (click)="regularException()"
         >Throw regular exception</ion-button
