@@ -18,7 +18,7 @@ example/ionic-angular*/www
 example/ionic-angular*/.gradle
 example/ionic-angular*/build
 example/ionic-angular*/.ionic
-example/ionic-angular*/.yalc
+example/ionic-*/.yalc
 example/ionic-angular*/.angular
 
 # iOS files
