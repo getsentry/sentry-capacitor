@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.15.1
+
+### Fixes
+
+- Vue projects weren't able to reference the VUE app ([#559](https://github.com/getsentry/sentry-capacitor/pull/559))
 
 ### Features
 

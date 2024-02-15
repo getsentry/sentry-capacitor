@@ -1871,6 +1871,7 @@
     proxy-from-env "^1.1.0"
     which "^2.0.2"
   optionalDependencies:
+<<<<<<< HEAD
     "@sentry/cli-darwin" "2.25.2"
     "@sentry/cli-linux-arm" "2.25.2"
     "@sentry/cli-linux-arm64" "2.25.2"
@@ -1878,6 +1879,15 @@
     "@sentry/cli-linux-x64" "2.25.2"
     "@sentry/cli-win32-i686" "2.25.2"
     "@sentry/cli-win32-x64" "2.25.2"
+=======
+    "@sentry/cli-darwin" "2.26.0"
+    "@sentry/cli-linux-arm" "2.26.0"
+    "@sentry/cli-linux-arm64" "2.26.0"
+    "@sentry/cli-linux-i686" "2.26.0"
+    "@sentry/cli-linux-x64" "2.26.0"
+    "@sentry/cli-win32-i686" "2.26.0"
+    "@sentry/cli-win32-x64" "2.26.0"
+>>>>>>> 6f4f717abcd6e1e593fd058d9a0e911b0b8524ef
 
 "@sentry/core@7.93.0":
   version "7.93.0"
