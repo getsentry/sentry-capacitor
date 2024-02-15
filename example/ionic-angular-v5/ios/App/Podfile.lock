@@ -31,11 +31,7 @@ SPEC CHECKSUMS:
   Capacitor: 9da0a2415e3b6098511f8b5ffdb578d91ee79f8f
   CapacitorCordova: e128cc7688c070ca0bfa439898a5f609da8dbcfe
   Sentry: 8984a4ffb2b9bd2894d74fb36e6f5833865bc18e
-<<<<<<< HEAD
-  SentryCapacitor: 3d455b5caf47b8f210bee64d8eaa796bebc96c03
-=======
   SentryCapacitor: 5c27da09956d89b0ba715071f6a37c137d9aea50
->>>>>>> af52a0d1aa6f34fa8c4fb265a34bd67a98f647f2
   SentryPrivate: 2f0c9ba4c3fc993f70eab6ca95673509561e0085
 
 PODFILE CHECKSUM: 618eb4d85f9b0c9e5a37fffa86a92d1569bd6800

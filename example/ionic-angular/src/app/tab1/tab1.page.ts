@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import * as Sentry from '@sentry/capacitor';
-import * as derp from 'broken_module';
+import * as broken from 'broken_module';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -16,8 +16,7 @@ export class Tab1Page {
   }
 
   public throwUnhandledNodeException(): void {
-    derp.sayHello();
-    derp.throw_error();
+    broken.throw_error();
   }
 
   public regularException(): void {
