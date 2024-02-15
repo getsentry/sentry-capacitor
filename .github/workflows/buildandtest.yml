@@ -72,10 +72,10 @@ jobs:
         run: yarn install
       - name: Publish test broken node.
         working-directory: example/broken_node_module
-          run: |
-            yarn install
-            yarn build
-            yalc publish
+        run: |
+          yarn install
+          yarn build
+          yalc publish
       - name: Update SDK & build samples
         run: yarn bump:samples
 
