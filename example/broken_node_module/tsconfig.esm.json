@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist/esm",
+    "target": "es6",
+    "module": "es6",
+    "moduleResolution": "node"
+  },
+  "include": ["src/*"]
+}
