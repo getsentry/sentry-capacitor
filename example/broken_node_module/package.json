@@ -2,13 +2,13 @@
   "name": "broken_module",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "/dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.esm.json"
+    "build": "tsc -p tsconfig.json"
   },
   "keywords": [],
   "license": "MIT",
