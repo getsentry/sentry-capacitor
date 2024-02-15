@@ -19,9 +19,9 @@ import { NATIVE } from './wrapper';
  * @param options Options for the SDK
  * @param originalInit The init function of the sibling SDK, leave blank to initialize with `@sentry/browser`
  */
-export function init<O extends BrowserOptions>(
-  passedOptions: CapacitorOptions & O,
-  originalInit: (passedOptions: O) => void = browserInit,
+export function init<T>(
+  passedOptions: CapacitorOptions & T,
+  originalInit: (passedOptions: T & BrowserOptions) => void = browserInit,
 ): void {
   const finalOptions = {
     enableAutoSessionTracking: true,
@@ -68,7 +68,7 @@ export function init<O extends BrowserOptions>(
     ...finalOptions,
     autoSessionTracking:
       NATIVE.platform === 'web' && finalOptions.enableAutoSessionTracking,
-  } as O;
+  } as BrowserOptions & T;
 
   const mobileOptions = {
     ...finalOptions,

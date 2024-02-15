@@ -10,16 +10,16 @@ node_modules/
 coverage/
 
 # example files
-example/ionic-angular*/dist
-example/ionic-angular*/node_modules
-example/ionic-angular*/platforms
-example/ionic-angular*/plugins
-example/ionic-angular*/www
-example/ionic-angular*/.gradle
-example/ionic-angular*/build
-example/ionic-angular*/.ionic
-example/ionic-*/.yalc
-example/ionic-angular*/.angular
+example/*/dist
+example/*/node_modules
+example/*/platforms
+example/*/plugins
+example/*/www
+example/*/.gradle
+example/*/build
+example/*/.ionic
+example/*/.yalc
+example/*/.angular
 
 # iOS files
 Pods
@@ -82,8 +82,8 @@ captures/
 yalc.lock
 
 android/gradle/wrapper/gradle-wrapper.properties
-example/ionic-angular/android/capacitor.settings.gradle
-example/ionic-angular/android/app/capacitor.build.gradle
+example/*/android/capacitor.settings.gradle
+example/*/android/app/capacitor.build.gradle
 
 #yarn pack files
 sentry-capacitor-v*.tgz
