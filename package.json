@@ -24,7 +24,7 @@
     "prepack": "yarn run build",
     "postinstall": "node scripts/check-siblings.js",
     "bump:v5": "cd example/ionic-angular-v5 && yalc add @sentry/capacitor && yarn install && yarn build && npx cap sync",
-    "bump:v3": "cd example/ionic-angular && yalc add @sentry/capacitor && yarn install && yarn build && npx cap sync",
+    "bump:v3": "cd example/ionic-angular && yalc add @sentry/capacitor && yalc add broken_module && yarn install && yarn build && npx cap sync",
     "bump:v2": "cd example/ionic-angular-v2 && yalc add @sentry/capacitor && yarn install && yarn build && npx cap sync",
     "bump:samples": "yalc publish && yarn run bump:v5 && yarn run bump:v3 && yarn run bump:v2"
   },
