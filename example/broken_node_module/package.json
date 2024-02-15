@@ -2,7 +2,7 @@
   "name": "broken_module",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "index.js",
   "types": "dist/index.d.ts",
   "files": [
     "/dist"
