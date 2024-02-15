@@ -5,7 +5,7 @@ import { Release } from '../../src/integrations/release';
 
 const mockRelease = Release;
 
-jest.mock('@sentry/browser', () => {
+jest.mock('@sentry/core', () => {
   const client = {
     getOptions: jest.fn(),
   };
