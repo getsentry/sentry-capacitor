@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Dependencies
+
+- Bump JavaScript SDK from v7.81.1 to v7.93.0 ([#573](https://github.com/getsentry/sentry-capacitor/pull/573))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#7930)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.81.1...7.93.0)
+
+## 0.15.1
+
+### Fixes
+
+- Vue projects weren't able to reference the VUE app ([#559](https://github.com/getsentry/sentry-capacitor/pull/559))
+
 ### Features
 
 - Add onReady callback that gets called after Native SDK init is called.

@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/getsentry/sentry-capacitor"
   },
-  "version": "0.15.0",
+  "version": "0.15.1",
   "description": "Official Sentry SDK for Capacitor",
   "types": "dist/esm/index.d.ts",
   "main": "dist/build/index.js",
@@ -26,7 +26,8 @@
     "bump:v5": "cd example/ionic-angular-v5 && yalc add @sentry/capacitor && yarn install && ionic build && npx cap sync",
     "bump:v3": "cd example/ionic-angular && yalc add @sentry/capacitor && yarn install && ionic build && npx cap sync",
     "bump:v2": "cd example/ionic-angular-v2 && yalc add @sentry/capacitor && yarn install && ionic build && npx cap sync",
-    "bump:samples": "yalc publish && yarn run bump:v5 && yarn run bump:v3 && yarn run bump:v2"
+    "bump:sample-vue": "cd example/ionic-vue3 && yalc add @sentry/capacitor && yarn install && ionic build && npx cap sync",
+    "bump:samples": "yalc publish && yarn run bump:sample-vue && yarn run bump:v5 && yarn run bump:v3 && yarn run bump:v2"
   },
   "keywords": [
     "capacitor",
