@@ -12,13 +12,6 @@ export function createCapacitorRewriteFrames(): Integration {
   const rewriteFrames = new RewriteFrames({
     iteratee: (frame: StackFrame) => {
       if (frame.filename) {
-
-        if (frame.platform === 'java' || frame.platform === 'cocoa') {
-          // Because platform is not required in StackFrame type
-          // we assume that if not set it's javascript
-          return frame;
-        }
-
         const isReachableHost = /^https?:\/\//.test(frame.filename);
         const serverUrl = getCurrentServerUrl();
         if (serverUrl) {

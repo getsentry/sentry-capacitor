@@ -81,41 +81,6 @@ describe('RewriteFrames', () => {
     expect(event.exception?.values?.[0]).toEqual(EXPECTED_SENTRY_COCOA_EXCEPTION);
   });
 
-  it('should not change jvm frames', async () => {
-    const EXPECTED_SENTRY_JVM_EXCEPTION = {
-      type: 'java.lang.RuntimeException',
-      value: 'Java error message.',
-      stacktrace: {
-        frames: [
-          {
-            platform: 'java',
-            module: 'com.example.modules.Crash',
-            filename: 'Crash.kt',
-            lineno: 10,
-            function: 'getDataCrash',
-          },
-          {
-            platform: 'java',
-            module: 'com.facebook.jni.NativeRunnable',
-            filename: 'NativeRunnable.java',
-            lineno: 2,
-            function: 'run',
-          },
-        ],
-      },
-    };
-
-    const SENTRY_JVM_EXCEPTION_EVENT: Event = {
-      exception: {
-        values: [JSON.parse(JSON.stringify(EXPECTED_SENTRY_JVM_EXCEPTION))],
-      },
-    };
-
-    const event = processEvent(SENTRY_JVM_EXCEPTION_EVENT) as Event;
-    expect(event.exception?.values?.[0]).toEqual(EXPECTED_SENTRY_JVM_EXCEPTION);
-  });
-
-
   it('should parse Capacitor errors on Android', async () => {
     const ANDROID_capacitor_NATIVE = {
       message: 'Error: test',
