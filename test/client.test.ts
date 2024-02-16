@@ -70,8 +70,7 @@ jest.mock('../src/plugin', () => {
 });
 
 import * as Plugin from '../src/plugin';
-import { envelopeHeader, envelopeItemPayload, envelopeItems, firstArg, getMockSession, getMockUserFeedback } from './testutils';
-
+import { envelopeHeader, envelopeItemHeader, envelopeItemPayload, envelopeItems, firstArg, getMockSession, getMockUserFeedback } from './testutils';
 
 const EXAMPLE_DSN = 'https://6890c2f6677340daa4804f8194804ea2@o19635.ingest.sentry.io/148053';
 
@@ -211,7 +210,6 @@ describe('Tests CapacitorClient', () => {
     });
   });
 
-  /* TODO: To be implemented
   describe('UserFeedback', () => {
     test('sends UserFeedback to native Layer', () => {
       const mockTransportSend: jest.Mock = jest.fn(() => Promise.resolve());
@@ -243,7 +241,6 @@ describe('Tests CapacitorClient', () => {
       });
     });
   });
-*/
 
   describe('envelopeHeader SdkInfo', () => {
     let mockTransportSend: jest.Mock;
