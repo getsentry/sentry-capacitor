@@ -12,7 +12,9 @@ import type {
 } from '@sentry/types';
 import { logger, SentryError } from '@sentry/utils';
 
+import { defaultSdkInfo } from './integrations/sdkinfo';
 import type { CapacitorClientOptions } from './options';
+import { mergeOutcomes } from './utils/outcome';
 import { NATIVE } from './wrapper';
 
 /**
@@ -31,7 +33,7 @@ export class CapacitorClient extends BaseClient<CapacitorClientOptions> {
   public constructor(options: CapacitorClientOptions) {
     options._metadata = options._metadata || {};
     // TODO: Implement defaultSdkInfo.
-    // options._metadata.sdk = options._metadata.sdk; || defaultSdkInfo;
+     options._metadata.sdk = options._metadata.sdk  || defaultSdkInfo;
     super(options);
 
     this._outcomesBuffer = [];
@@ -165,9 +167,3 @@ export class CapacitorClient extends BaseClient<CapacitorClientOptions> {
 
 // TODO: implement Attaches clients report.
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function mergeOutcomes(_outcomesBuffer: Outcome[], outcomes: Outcome[]): Outcome[] {
-  // TODO: Implement mergeOutComes.
-  throw new Error('Function not implemented.');
-}
-
