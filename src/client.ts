@@ -18,7 +18,7 @@ import type { CapacitorClientOptions } from './options';
 import { mergeOutcomes } from './utils/outcome';
 import { NATIVE } from './wrapper';
 
-export const EnvelopeitemsIndex = 1;
+const EnvelopeItemsIndex = 1;
 
 /**
  * The Sentry Capacitor SDK Client.
@@ -179,7 +179,7 @@ export class CapacitorClient extends BaseClient<CapacitorClientOptions> {
         },
       ];
 
-      envelope[EnvelopeitemsIndex].push(clientReportItem);
+      envelope[EnvelopeItemsIndex].push(clientReportItem);
     }
   }
 }
