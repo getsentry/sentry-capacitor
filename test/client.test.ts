@@ -313,7 +313,7 @@ describe('Tests CapacitorClient', () => {
       const actualEvent: Event | undefined = <Event>(
         mockedSend.mock.calls[0][firstArg][envelopeItems][0][envelopeItemPayload]
       );
-      // @ts-ignore idk.
+      // @ts-ignore SDK is not inside the event by default.
       expect(actualEvent?.sdk?.packages).toEqual([
         {
           name: SDK_PACKAGE_NAME,
