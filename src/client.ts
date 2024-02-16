@@ -32,7 +32,6 @@ export class CapacitorClient extends BaseClient<CapacitorClientOptions> {
    */
   public constructor(options: CapacitorClientOptions) {
     options._metadata = options._metadata || {};
-    // TODO: Implement defaultSdkInfo.
      options._metadata.sdk = options._metadata.sdk  || defaultSdkInfo;
     super(options);
 
