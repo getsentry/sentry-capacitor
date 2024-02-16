@@ -4,20 +4,21 @@ import type { Outcome } from '@sentry/types';
  * Merges buffer with new outcomes.
  */
 export function mergeOutcomes(...merge: Outcome[][]): Outcome[] {
-  const map = new Map<string, Outcome>();
+  let counter = 0;
+  const map = new Map<string, number>();
+  const outcomes: Outcome[] = [];
 
   const process = (outcome: Outcome): void => {
     const key = `${outcome.reason}:${outcome.category}`;
-    const existing = map.get(key);
-    if (existing) {
-      existing.quantity += outcome.quantity;
+    const index = map.get(key);
+    if (typeof(index) !== "undefined") {
+      outcomes[index].quantity += outcome.quantity;
     } else {
-      map.set(key, outcome);
+      map.set(key, counter++);
+      outcomes.push(outcome);
     }
   };
 
   merge.forEach(outcomes => outcomes.forEach(process));
-
-  // eslint-disable-next-line @sentry-internal/sdk/no-unsupported-es6-methods
-  return [...map.values()];
+  return outcomes;
 }
