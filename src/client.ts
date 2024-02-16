@@ -1,4 +1,4 @@
-import { eventFromException, eventFromMessage } from '@sentry/browser';
+import { createUserFeedbackEnvelope, eventFromException, eventFromMessage } from '@sentry/browser';
 import { BaseClient } from '@sentry/core';
 import type {
   Envelope,
@@ -96,8 +96,12 @@ export class CapacitorClient extends BaseClient<CapacitorClientOptions> {
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public captureUserFeedback(feedback: UserFeedback): void {
-    // TODO: Implement capture user feedback
-    throw new Error(`${feedback} captureUserFeedback not implemented.`);
+    const envelope = createUserFeedbackEnvelope(feedback, {
+      metadata: this._options._metadata,
+      dsn: this.getDsn(),
+      tunnel: this._options.tunnel,
+    });
+    this._sendEnvelope(envelope);
   }
 
   /**
