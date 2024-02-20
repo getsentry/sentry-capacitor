@@ -23,7 +23,7 @@ export function createCapacitorRewriteFrames(): Integration {
           }
         frame.filename = frame.filename.replace(/^ng:\/\//, '');
 
-        const isNativeFrame = frame.filename === '[native code]' || frame.filename === 'native' || frame.filename.endsWith('.kt') ;
+        const isNativeFrame = frame.filename === '[native code]' || frame.filename === 'native';
 
         if (!isNativeFrame) {
           // We don't need to use `app://` protocol for http(s) based hosts

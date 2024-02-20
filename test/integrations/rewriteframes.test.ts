@@ -96,7 +96,7 @@ describe('RewriteFrames', () => {
         'at children(/home/username/sample-workspace/sampleapp.collect.capacitor/node_modules/capacitor/Libraries/Renderer/src/renderers/shared/stack/reconciler/capacitorMultiChild.js:264:10)\n' +
         'at this(/home/username/sample-workspace/sampleapp.collect.capacitor/node_modules/capacitor/Libraries/Renderer/src/renderers/native/capacitorNativeBaseComponent.js:74:41)\n',
     };
-    const exception = await exceptionFromError(ANDROID_capacitor_NATIVE);
+    const exception = await exceptionFromError(ANDROID_CAPACITOR_NATIVE);
 
     expect(exception).toEqual({
       value: 'Error: test',
