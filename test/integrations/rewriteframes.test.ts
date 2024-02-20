@@ -531,7 +531,7 @@ describe('RewriteFrames', () => {
       expect(firstFrame).toMatchObject(expectedFrame);;
     });
 
-  it('should do something with the mocked url', async () => {
+  it('should remove current server url from frame filename', async () => {
     const serverUrl = 'https://sentry.io';
     getCurrentServerUrlSpy.mockImplementation(() => serverUrl);
     const frame = { filename: `${serverUrl}/polyfills.js` };
