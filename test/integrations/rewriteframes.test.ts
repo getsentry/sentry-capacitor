@@ -82,7 +82,7 @@ describe('RewriteFrames', () => {
   });
 
   it('should parse Capacitor errors on Android', async () => {
-    const ANDROID_capacitor_NATIVE = {
+    const ANDROID_CAPACITOR_NATIVE = {
       message: 'Error: test',
       name: 'Error',
       stack:
