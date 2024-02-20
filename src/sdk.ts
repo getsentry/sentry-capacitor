@@ -3,9 +3,8 @@ import {
   defaultIntegrations,
   init as browserInit
 } from '@sentry/browser';
-import { Hub, initAndBind, makeMain } from '@sentry/core';
+import { Hub, makeMain } from '@sentry/core';
 
-import { CapacitorClient } from './client';
 import { DeviceContext, EventOrigin, Release, SdkInfo } from './integrations';
 // TODO: Fix RewriteFrames.
 // import { createCapacitorRewriteFrames } from './integrations/rewriteframes';
@@ -80,7 +79,8 @@ export function init<T>(
 
   // We first initialize the NATIVE SDK to avoid the Javascript SDK to invoke any
   // feature from the NATIVE SDK without the options being set.
-  initAndBind(CapacitorClient, mobileOptions);
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  void NATIVE.initNativeSdk(mobileOptions);
   originalInit(browserOptions);
 }
 
