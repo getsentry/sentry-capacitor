@@ -3,6 +3,7 @@ import type { Envelope, Transport } from '@sentry/types';
 import { CapacitorClient } from '../src/client';
 import type { CapacitorClientOptions } from '../src/options';
 import { NativeTransport } from '../src/transports/native';
+import { SDK_NAME, SDK_PACKAGE_NAME, SDK_VERSION } from '../src/version';
 import { NATIVE } from '../src/wrapper';
 
 interface MockedCapacitor {
@@ -69,7 +70,7 @@ jest.mock('../src/plugin', () => {
 });
 
 import * as Plugin from '../src/plugin';
-
+import { envelopeHeader, envelopeItemHeader, envelopeItemPayload, envelopeItems, firstArg, getMockSession, getMockUserFeedback } from './testutils';
 
 const EXAMPLE_DSN = 'https://6890c2f6677340daa4804f8194804ea2@o19635.ingest.sentry.io/148053';
 
@@ -209,7 +210,6 @@ describe('Tests CapacitorClient', () => {
     });
   });
 
-  /* TODO: To be implemented
   describe('UserFeedback', () => {
     test('sends UserFeedback to native Layer', () => {
       const mockTransportSend: jest.Mock = jest.fn(() => Promise.resolve());
@@ -241,10 +241,7 @@ describe('Tests CapacitorClient', () => {
       });
     });
   });
-*/
 
-  /*
-  TODO: FIX SdkInfo
   describe('envelopeHeader SdkInfo', () => {
     let mockTransportSend: jest.Mock;
     let client: CapacitorClient;
@@ -293,8 +290,7 @@ describe('Tests CapacitorClient', () => {
       expect(getSdkInfoFrom(mockTransportSend)).toStrictEqual(expectedSdkInfo);
     });
   });
-*/
-    /* TODO: Fix SDKInfo
+
   describe('event data enhancement', () => {
     test('event contains sdk default information', async () => {
       const mockedSend = jest.fn<PromiseLike<void>, [Envelope]>().mockResolvedValue(undefined);
@@ -314,6 +310,7 @@ describe('Tests CapacitorClient', () => {
       const actualEvent: Event | undefined = <Event>(
         mockedSend.mock.calls[0][firstArg][envelopeItems][0][envelopeItemPayload]
       );
+      // @ts-ignore SDK is not inside the event by default.
       expect(actualEvent?.sdk?.packages).toEqual([
         {
           name: SDK_PACKAGE_NAME,
@@ -323,7 +320,7 @@ describe('Tests CapacitorClient', () => {
     });
 
   });
-*/
+
   describe('normalizes events', () => {
     /* TODO: Fix later
     test('handles circular input', async () => {

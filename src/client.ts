@@ -1,4 +1,4 @@
-import { eventFromException, eventFromMessage } from '@sentry/browser';
+import { createUserFeedbackEnvelope, eventFromException, eventFromMessage } from '@sentry/browser';
 import { BaseClient } from '@sentry/core';
 import type {
   Envelope,
@@ -12,6 +12,7 @@ import type {
 } from '@sentry/types';
 import { logger, SentryError } from '@sentry/utils';
 
+import { defaultSdkInfo } from './integrations/sdkinfo';
 import type { CapacitorClientOptions } from './options';
 import { mergeOutcomes } from './utils/outcome';
 import { NATIVE } from './wrapper';
@@ -31,8 +32,7 @@ export class CapacitorClient extends BaseClient<CapacitorClientOptions> {
    */
   public constructor(options: CapacitorClientOptions) {
     options._metadata = options._metadata || {};
-    // TODO: Implement defaultSdkInfo.
-    // options._metadata.sdk = options._metadata.sdk; || defaultSdkInfo;
+     options._metadata.sdk = options._metadata.sdk  || defaultSdkInfo;
     super(options);
 
     this._outcomesBuffer = [];
@@ -96,8 +96,12 @@ export class CapacitorClient extends BaseClient<CapacitorClientOptions> {
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public captureUserFeedback(feedback: UserFeedback): void {
-    // TODO: Implement capture user feedback
-    throw new Error(`${feedback} captureUserFeedback not implemented.`);
+    const envelope = createUserFeedbackEnvelope(feedback, {
+      metadata: this._options._metadata,
+      dsn: this.getDsn(),
+      tunnel: this._options.tunnel,
+    });
+    this._sendEnvelope(envelope);
   }
 
   /**
