@@ -177,6 +177,140 @@ describe('RewriteFrames', () => {
     });
   });
 
+  it('should parse Capacitor errors in development', async () => {
+    const CAPACITOR_PROD = {
+      message: 'Error: test',
+      name: 'Error',
+      stack:
+      'at Tab1Page.throwUnhandledException (http://localhost/src_app_tab1_tab1_module_ts.js:111:9)\n' +
+      'at Tab1Page_Template_ion_button_click_15_listener (ng:///Tab1Page.js:22:22)\n' +
+      'at executeListenerWithErrorHandling (http://localhost/vendor.js:95129:16)\n' +
+      'at wrapListenerIn_markDirtyAndPreventDefault (http://localhost/vendor.js:95167:22)\n' +
+      'at HostElement.<anonymous> (http://localhost/vendor.js:117909:34)\n' +
+      'at HostElement.sentryWrapped (http://localhost/vendor.js:17598:17)\n' +
+      'at _ZoneDelegate.invokeTask (http://localhost/polyfills.js:497:31)\n' +
+      'at Object.onInvokeTask (http://localhost/vendor.js:105694:33)\n' +
+      'at _ZoneDelegate.invokeTask (http://localhost/polyfills.js:496:60)\n' +
+      'at Zone.runTask (http://localhost/polyfills.js:269:47)\n' +
+      'at ZoneTask.invokeTask [as invoke] (http://localhost/polyfills.js:578:34)\n' +
+      'at invokeTask (http://localhost/polyfills.js:1752:18)\n' +
+      'at globalCallback (http://localhost/polyfills.js:1795:33)\n' +
+      'at HostElement.globalZoneAwareCallback (http://localhost/polyfills.js:1816:16)'
+    };
+    const exception = await exceptionFromError(CAPACITOR_PROD);
+
+    expect(exception).toEqual({
+      value: 'Error: test',
+      type: 'Error',
+      mechanism: {
+        handled: true,
+        type: 'generic',
+      },
+      stacktrace: {
+        frames: [
+          {
+            filename: '/polyfills.js',
+            function: 'HostElement.globalZoneAwareCallback',
+            lineno: 1816,
+            colno: 16,
+            in_app: true,
+          },
+          {
+            filename: '/polyfills.js',
+            function: 'globalCallback',
+            lineno: 1795,
+            colno: 33,
+            in_app: true,
+          },
+          {
+            filename: '/polyfills.js',
+            function: 'invokeTask',
+            lineno: 1752,
+            colno: 18,
+            in_app: true,
+          },
+          {
+            filename: '/polyfills.js',
+            function: 'ZoneTask.invokeTask [as invoke]',
+            lineno: 578,
+            colno: 34,
+            in_app: true,
+          },
+          {
+            filename: '/polyfills.js',
+            function: 'Zone.runTask',
+            lineno: 269,
+            colno: 47,
+            in_app: true,
+          },
+          {
+            filename: '/polyfills.js',
+            function: '_ZoneDelegate.invokeTask',
+            lineno: 496,
+            colno: 60,
+            in_app: true,
+          },
+          {
+            filename: '/vendor.js',
+            function: 'Object.onInvokeTask',
+            lineno: 105694,
+            colno: 33,
+            in_app: true,
+          },
+          {
+            filename: '/polyfills.js',
+            function: '_ZoneDelegate.invokeTask',
+            lineno: 497,
+            colno: 31,
+            in_app: true,
+          },
+          {
+            filename: '/vendor.js',
+            function: 'HostElement.sentryWrapped',
+            lineno: 17598,
+            colno: 17,
+            in_app: true,
+          },
+          {
+            filename: '/vendor.js',
+            function: 'HostElement.<anonymous>',
+            lineno: 117909,
+            colno: 34,
+            in_app: true,
+          },
+          {
+            filename: '/vendor.js',
+            function: 'wrapListenerIn_markDirtyAndPreventDefault',
+            lineno: 95167,
+            colno: 22,
+            in_app: true,
+          },
+          {
+            filename: '/vendor.js',
+            function: 'executeListenerWithErrorHandling',
+            lineno: 95129,
+            colno: 16,
+            in_app: true,
+          },
+          {
+            filename: 'app:///Tab1Page.js',
+            function: 'Tab1Page_Template_ion_button_click_15_listener',
+            lineno: 22,
+            colno: 22,
+            in_app: true,
+          },
+          {
+            filename: '/src_app_tab1_tab1_module_ts.js',
+            function: 'Tab1Page.throwUnhandledException',
+            lineno: 111,
+            colno: 9,
+            in_app: true,
+          },
+        ],
+      },
+    });
+  });
+
   it.each(
     [[
       'format localhost',
