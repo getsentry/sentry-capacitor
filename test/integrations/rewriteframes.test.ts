@@ -168,50 +168,27 @@ describe('RewriteFrames', () => {
     });
   });
 
-  it('should parse Capacitor errors on Android Production', async () => {
-    const ANDROID_CAPACITOR_PROD = {
+  it('should parse Capacitor errors on Production', async () => {
+    const CAPACITOR_PROD = {
       message: 'Error: test',
       name: 'Error',
       stack:
-        'value@index.android.bundle:12:1917\n' +
-        'onPress@index.android.bundle:12:2336\n' +
-        'touchableHandlePress@index.android.bundle:258:1497\n' +
-        '[native code]\n' +
-        '_performSideEffectsForTransition@index.android.bundle:252:8508\n' +
-        '[native code]\n' +
-        '_receiveSignal@index.android.bundle:252:7291\n' +
-        '[native code]\n' +
-        'touchableHandleResponderRelease@index.android.bundle:252:4735\n' +
-        '[native code]\n' +
-        'u@index.android.bundle:79:142\n' +
-        'invokeGuardedCallback@index.android.bundle:79:459\n' +
-        'invokeGuardedCallbackAndCatchFirstError@index.android.bundle:79:580\n' +
-        'c@index.android.bundle:95:365\n' +
-        'a@index.android.bundle:95:567\n' +
-        'v@index.android.bundle:146:501\n' +
-        'g@index.android.bundle:146:604\n' +
-        'forEach@[native code]\n' +
-        'i@index.android.bundle:149:80\n' +
-        'processEventQueue@index.android.bundle:146:1432\n' +
-        's@index.android.bundle:157:88\n' +
-        'handleTopLevel@index.android.bundle:157:174\n' +
-        'index.android.bundle:156:572\n' +
-        'a@index.android.bundle:93:276\n' +
-        'c@index.android.bundle:93:60\n' +
-        'perform@index.android.bundle:177:596\n' +
-        'batchedUpdates@index.android.bundle:188:464\n' +
-        'i@index.android.bundle:176:358\n' +
-        'i@index.android.bundle:93:90\n' +
-        'u@index.android.bundle:93:150\n' +
-        '_receiveRootNodeIDEvent@index.android.bundle:156:544\n' +
-        'receiveTouches@index.android.bundle:156:918\n' +
-        'value@index.android.bundle:29:3016\n' +
-        'index.android.bundle:29:955\n' +
-        'value@index.android.bundle:29:2417\n' +
-        'value@index.android.bundle:29:927\n' +
-        '[native code]',
+      'at n.throwUnhandledException (http://localhost/1835.53a456a58b808362.js:1:283)\n' +
+      'at http://localhost/1835.53a456a58b808362.js:1:2867\n' +
+      'at wg (http://localhost/main.bc0e3714db64c955.js:1:494047)\n' +
+      'at a (http://localhost/main.bc0e3714db64c955.js:1:494209)\n' +
+      'at _o.<anonymous> (http://localhost/main.bc0e3714db64c955.js:1:5698)\n' +
+      'at _o.x (http://localhost/main.bc0e3714db64c955.js:1:151119)\n' +
+      'at v.invokeTask (http://localhost/polyfills.931b4c31969683ac.js:1:7233)\n' +
+      'at Object.onInvokeTask (http://localhost/main.bc0e3714db64c955.js:1:524207)\n' +
+      'at v.invokeTask (http://localhost/polyfills.931b4c31969683ac.js:1:7154)\n' +
+      'at M.runTask (http://localhost/polyfills.931b4c31969683ac.js:1:2628)\n' +
+      'at m.invokeTask [as invoke] (http://localhost/polyfills.931b4c31969683ac.js:1:8)\n' +
+      'at Z (http://localhost/polyfills.931b4c31969683ac.js:1:20899)\n' +
+      'at N (http://localhost/polyfills.931b4c31969683ac.js:1:21294)\n' +
+      'at _o.F (http://localhost/polyfills.931b4c31969683ac.js:1:21458)',
     };
-    const exception = await exceptionFromError(ANDROID_CAPACITOR_PROD);
+    const exception = await exceptionFromError(CAPACITOR_PROD);
 
     expect(exception).toEqual({
       value: 'Error: test',
@@ -222,227 +199,102 @@ describe('RewriteFrames', () => {
       },
       stacktrace: {
         frames: [
-          { filename: '[native code]', function: '?', in_app: false },
           {
-            filename: 'app:///index.android.bundle',
-            function: 'value',
-            lineno: 29,
-            colno: 927,
+            filename: '/polyfills.931b4c31969683ac.js',
+            function: '_o.F',
+            lineno: 1,
+            colno: 21458,
             in_app: true,
           },
           {
-            filename: 'app:///index.android.bundle',
-            function: 'value',
-            lineno: 29,
-            colno: 2417,
+            filename: '/polyfills.931b4c31969683ac.js',
+            function: 'N',
+            lineno: 1,
+            colno: 21294,
             in_app: true,
           },
           {
-            filename: 'app:///index.android.bundle',
-            function: '?',
-            lineno: 29,
-            colno: 955,
+            filename: '/polyfills.931b4c31969683ac.js',
+            function: 'Z',
+            lineno: 1,
+            colno: 20899,
             in_app: true,
           },
           {
-            filename: 'app:///index.android.bundle',
-            function: 'value',
-            lineno: 29,
-            colno: 3016,
+            filename: '/polyfills.931b4c31969683ac.js',
+            function: 'm.invokeTask [as invoke]',
+            lineno: 1,
+            colno: 8,
             in_app: true,
           },
           {
-            filename: 'app:///index.android.bundle',
-            function: 'receiveTouches',
-            lineno: 156,
-            colno: 918,
+            filename: '/polyfills.931b4c31969683ac.js',
+            function: 'M.runTask',
+            lineno: 1,
+            colno: 2628,
             in_app: true,
           },
           {
-            filename: 'app:///index.android.bundle',
-            function: '_receiveRootNodeIDEvent',
-            lineno: 156,
-            colno: 544,
+            filename: '/polyfills.931b4c31969683ac.js',
+            function: 'v.invokeTask',
+            lineno: 1,
+            colno: 7154,
             in_app: true,
           },
           {
-            filename: 'app:///index.android.bundle',
-            function: 'u',
-            lineno: 93,
-            colno: 150,
+            filename: '/main.bc0e3714db64c955.js',
+            function: 'Object.onInvokeTask',
+            lineno: 1,
+            colno: 524207,
             in_app: true,
           },
           {
-            filename: 'app:///index.android.bundle',
-            function: 'i',
-            lineno: 93,
-            colno: 90,
+            filename: '/polyfills.931b4c31969683ac.js',
+            function: 'v.invokeTask',
+            lineno: 1,
+            colno: 7233,
             in_app: true,
           },
           {
-            filename: 'app:///index.android.bundle',
-            function: 'i',
-            lineno: 176,
-            colno: 358,
+            filename: '/main.bc0e3714db64c955.js',
+            function: '_o.x',
+            lineno: 1,
+            colno: 151119,
             in_app: true,
           },
           {
-            filename: 'app:///index.android.bundle',
-            function: 'batchedUpdates',
-            lineno: 188,
-            colno: 464,
+            filename: '/main.bc0e3714db64c955.js',
+            function: '_o.<anonymous>',
+            lineno: 1,
+            colno: 5698,
             in_app: true,
           },
           {
-            filename: 'app:///index.android.bundle',
-            function: 'perform',
-            lineno: 177,
-            colno: 596,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'c',
-            lineno: 93,
-            colno: 60,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
+            filename: '/main.bc0e3714db64c955.js',
             function: 'a',
-            lineno: 93,
-            colno: 276,
+            lineno: 1,
+            colno: 494209,
             in_app: true,
           },
           {
-            filename: 'app:///index.android.bundle',
+            filename: '/main.bc0e3714db64c955.js',
+            function: 'wg',
+            lineno: 1,
+            colno: 494047,
+            in_app: true,
+          },
+          {
+            filename: '/1835.53a456a58b808362.js',
             function: '?',
-            lineno: 156,
-            colno: 572,
+            lineno: 1,
+            colno: 2867,
             in_app: true,
           },
           {
-            filename: 'app:///index.android.bundle',
-            function: 'handleTopLevel',
-            lineno: 157,
-            colno: 174,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 's',
-            lineno: 157,
-            colno: 88,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'processEventQueue',
-            lineno: 146,
-            colno: 1432,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'i',
-            lineno: 149,
-            colno: 80,
-            in_app: true,
-          },
-          { filename: '[native code]', function: 'forEach', in_app: false },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'g',
-            lineno: 146,
-            colno: 604,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'v',
-            lineno: 146,
-            colno: 501,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'a',
-            lineno: 95,
-            colno: 567,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'c',
-            lineno: 95,
-            colno: 365,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'invokeGuardedCallbackAndCatchFirstError',
-            lineno: 79,
-            colno: 580,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'invokeGuardedCallback',
-            lineno: 79,
-            colno: 459,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'u',
-            lineno: 79,
-            colno: 142,
-            in_app: true,
-          },
-          { filename: '[native code]', function: '?', in_app: false },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'touchableHandleResponderRelease',
-            lineno: 252,
-            colno: 4735,
-            in_app: true,
-          },
-          { filename: '[native code]', function: '?', in_app: false },
-          {
-            filename: 'app:///index.android.bundle',
-            function: '_receiveSignal',
-            lineno: 252,
-            colno: 7291,
-            in_app: true,
-          },
-          { filename: '[native code]', function: '?', in_app: false },
-          {
-            filename: 'app:///index.android.bundle',
-            function: '_performSideEffectsForTransition',
-            lineno: 252,
-            colno: 8508,
-            in_app: true,
-          },
-          { filename: '[native code]', function: '?', in_app: false },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'touchableHandlePress',
-            lineno: 258,
-            colno: 1497,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'onPress',
-            lineno: 12,
-            colno: 2336,
-            in_app: true,
-          },
-          {
-            filename: 'app:///index.android.bundle',
-            function: 'value',
-            lineno: 12,
-            colno: 1917,
+            filename: '/1835.53a456a58b808362.js',
+            function: 'n.throwUnhandledException',
+            lineno: 1,
+            colno: 283,
             in_app: true,
           },
         ],
