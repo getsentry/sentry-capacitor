@@ -15,15 +15,6 @@ export interface BaseCapacitorOptions{
    */
   enableNativeCrashHandling?: boolean;
 
-  /**
-   * Callback that is called after the Capacitor SDK on the JS Layer has made contact with the Native Layer.
-   */
-  onReady?: (response: {
-    /** `true` if the native SDK has been initialized, `false` otherwise.  */
-    didCallNativeInit: boolean;
-  }) => void;
-
-
   /** Maximum time to wait to drain the request queue, before the process is allowed to exit. */
   shutdownTimeout?: number;
 
@@ -68,12 +59,8 @@ export interface BaseCapacitorOptions{
 export interface CapacitorOptions extends Omit<BrowserOptions, 'autoSessionTracking'>, BaseCapacitorOptions { }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CapacitorTransportOptions extends BrowserTransportOptions{
-  /**
-   * @deprecated use `maxQueueSize` in the root of the SDK options.
-   */
-  bufferSize?: number;
-}
+export interface CapacitorTransportOptions extends BrowserTransportOptions { }
+
 
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

@@ -99,8 +99,7 @@ export const NATIVE = {
 
     // filter out all options that would crash native
     const filteredOptions = FilterNativeOptions(options);
-    const nativeIsReady = await SentryCapacitor.initNativeSdk({ options: filteredOptions });
-    return nativeIsReady;
+    return SentryCapacitor.initNativeSdk({ options: filteredOptions });
   },
 
   /**
