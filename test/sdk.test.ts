@@ -1,4 +1,5 @@
-import type { BrowserOptions } from '@sentry/browser';
+import type { BrowserOptions} from '@sentry/browser';
+import type { Integration } from '@sentry/types';
 
 import type { CapacitorOptions } from '../src';
 import { init } from '../src/sdk';
@@ -155,118 +156,16 @@ describe('SDK Init', () => {
     });
   });
 
-  /*
-  TODO: FIX on another PR
-  describe('RewriteFrames tests', () => {
-    // [test name, options, assert stack frame, expected stack frame]
-    const table: Array<[
-      string,
-      CapacitorOptions,
-      StackFrame,
-      StackFrame,
-    ]> = [
-        [
-          'format localhost',
-          { dsn: '', enableNative: false },
-          { filename: 'http://localhost/file.js' },
-          {
-            filename: '/file.js',
-            in_app: true
-          }
-        ],
-        [
-          'format secure localhost',
-          { dsn: '', enableNative: false },
-          { filename: 'https://localhost/file.js' },
-          {
-            filename: '/file.js',
-            in_app: true
-          }
-        ],
-        [
-          'format localhost with port',
-          { dsn: '', enableNative: false },
-          { filename: 'https://localhost:8080/file.js' },
-          {
-            filename: '/file.js',
-            in_app: true
-          }
-        ],
-        [
-          'format ip address',
-          { dsn: '', enableNative: false },
-          { filename: 'https://127.0.0.1/file.js' },
-          {
-            filename: 'https://127.0.0.1/file.js',
-            in_app: true
-          }
-        ],        [
-          'format ng url',
-          { dsn: '', enableNative: false },
-          { filename: 'ng://file.js' },
-          {
-            filename: 'app:///file.js',
-            in_app: true
-          }
-        ],
-        [
-          'format capacitor',
-          { dsn: '', enableNative: false },
-          { filename: 'capacitor://localhost:8080/file.js' },
-          {
-            filename: 'app:///file.js',
-            in_app: true
-          }
-        ],
-        [
-          'format native code',
-          { dsn: '', enableNative: false },
-          { filename: '[native code]' },
-          {
-            filename: '[native code]',
-            in_app: false
-          }
-        ],
-        [
-          'in_app if js has polyfills',
-          { dsn: '', enableNative: false },
-          { filename: 'http://localhost/polyfills.js' },
-          {
-            filename: '/polyfills.js',
-            in_app: true
-          }
-        ],
-        [
-          'in_app if js has minified polyfills',
-          { dsn: '', enableNative: false },
-          { filename: 'http://localhost/polyfills.be636cf4b87265b8f6d0.js' },
-          {
-            filename: '/polyfills.be636cf4b87265b8f6d0.js',
-            in_app: true
-          }
-        ]
-      ];
+  test('RewriteFrames to be added by default', async () => {
+    NATIVE.platform = 'web';
 
-    it.each(table)('%s', (...test) => {
-      let integrations = null as Integration[] | null;
-      const frame = test[2];
-      const expectedFrame = test[3];
-
-      init(test[1], (capacitorOptions: CapacitorOptions) => {
-        integrations = capacitorOptions.defaultIntegrations as Integration[] | null;
-      });
-      // eslint-disable-next-line @typescript-eslint/typedef
-      const frameIntegration = integrations?.filter(function (integration) {
-        return integration instanceof RewriteFrames;
-      })[0] as RewriteFrames;
-
-      frameIntegration.process({
-        exception:
-          { values: [{ stacktrace: { frames: [frame] } }] }
-      });
-      expect(frame.filename).toBe(expectedFrame.filename);
-      expect(frame.in_app).toBe(expectedFrame.in_app);
+    init({ enabled: true }, (capacitorOptions: CapacitorOptions) => {
+      expect(capacitorOptions).toBeDefined();
+      const expectedName = 'Capacitor RewriteFrames';
+      const rewriteFrames = (capacitorOptions.defaultIntegrations as Integration[]).find(function (integration) {
+        return integration.name === expectedName;
+      }) as Integration;
+      expect(rewriteFrames.name).toBe(expectedName);
     });
   });
-  */
 });

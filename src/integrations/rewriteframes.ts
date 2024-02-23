@@ -17,8 +17,9 @@ export function createCapacitorRewriteFrames(): Integration {
         if (serverUrl) {
           frame.filename = frame.filename.replace(serverUrl, '');
         } else {
-          frame.filename = frame.filename.replace(/^https?:\/\/localhost(:\d+)?/, '')
-            .replace(/^capacitor:\/\/localhost(:\d+)?/, '');
+          frame.filename = frame.filename
+            .replace(/^https?:\/\/localhost(:\d+)?/, '')
+            .replace(/^capacitor:\/\/localhost(:\d+)?/, '')
         }
         frame.filename = frame.filename.replace(/^ng:\/\//, '');
 

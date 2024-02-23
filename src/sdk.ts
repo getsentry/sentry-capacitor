@@ -6,8 +6,7 @@ import {
 import { Hub, makeMain } from '@sentry/core';
 
 import { DeviceContext, EventOrigin, Release, SdkInfo } from './integrations';
-// TODO: Fix RewriteFrames.
-// import { createCapacitorRewriteFrames } from './integrations/rewriteframes';
+import { createCapacitorRewriteFrames } from './integrations/rewriteframes';
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
@@ -43,8 +42,7 @@ export function init<T>(
 
   finalOptions.defaultIntegrations = [
     ...defaultIntegrations,
-    // TODO: Fix Rewrite Frames.
-    // createCapacitorRewriteFrames(),
+    createCapacitorRewriteFrames(),
     new Release(),
     new SdkInfo(),
     new EventOrigin(),
