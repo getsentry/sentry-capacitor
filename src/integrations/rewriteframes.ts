@@ -20,7 +20,7 @@ export function createCapacitorRewriteFrames(): Integration {
           frame.filename = frame.filename
             .replace(/^https?:\/\/localhost(:\d+)?/, '')
             .replace(/^capacitor:\/\/localhost(:\d+)?/, '')
-          }
+        }
         frame.filename = frame.filename.replace(/^ng:\/\//, '');
 
         const isNativeFrame = frame.filename === '[native code]' || frame.filename === 'native';
