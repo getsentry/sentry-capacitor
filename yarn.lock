@@ -784,6 +784,14 @@
     proxy-from-env "^1.1.0"
     which "^2.0.2"
 
+"@sentry/core@7.102.1":
+  version "7.102.1"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.102.1.tgz#855d37b6bba9986a9380864c823e696d3fc5aa01"
+  integrity sha512-QjY+LSP3du3J/C8x/FfEbRxgZgsWd0jfTJ4P7s9f219I1csK4OeBMC3UA1HwEa0pY/9OF6H/egW2CjOcMM5Pdg==
+  dependencies:
+    "@sentry/types" "7.102.1"
+    "@sentry/utils" "7.102.1"
+
 "@sentry/core@7.81.1":
   version "7.81.1"
   resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.81.1.tgz#082fd9122bf9a488c8e05b1754724ddbc2d5cf30"
@@ -809,14 +817,14 @@
     "@sentry/types" "7.81.1"
     "@sentry/utils" "7.81.1"
 
-"@sentry/integrations@7.81.1":
-  version "7.81.1"
-  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-7.81.1.tgz#1b12c0cf3a7fa88224e86c0be46523ed7e3f3a43"
-  integrity sha512-DN5ONn0/LX5HHVPf1EBGHFssIZaZmLgkqUIeMqCNYBpB4DiOrJANnGwTcWKDPphqhdPxjnPv9AGRLaU0PdvvZQ==
+"@sentry/integrations@7.102.1":
+  version "7.102.1"
+  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-7.102.1.tgz#2c236adcb586935b8bdc9ccb4d9c3a2a07b4e39a"
+  integrity sha512-Its3Ru6xCAqpaLE3cTxW/b91js2SIFoXa8LWtQDJ7tmTdwPAbT8Pij1F4bOhhaqLYbjLtCXGl/NR2cffsiRLww==
   dependencies:
-    "@sentry/core" "7.81.1"
-    "@sentry/types" "7.81.1"
-    "@sentry/utils" "7.81.1"
+    "@sentry/core" "7.102.1"
+    "@sentry/types" "7.102.1"
+    "@sentry/utils" "7.102.1"
     localforage "^1.8.1"
 
 "@sentry/node@^7.69.0":
@@ -847,6 +855,11 @@
   dependencies:
     "@sentry-internal/tracing" "7.81.1"
 
+"@sentry/types@7.102.1":
+  version "7.102.1"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.102.1.tgz#18c35f32ecbd12afb9860ca2de7bfff542d10b27"
+  integrity sha512-htKorf3t/D0XYtM7foTcmG+rM47rDP6XdbvCcX5gBCuCYlzpM1vqCt2rl3FLktZC6TaIpFRJw1TLfx6m+x5jdA==
+
 "@sentry/types@7.81.1":
   version "7.81.1"
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.81.1.tgz#2b2551fc291e1089651fd574a68f7c4175878bd5"
@@ -856,6 +869,13 @@
   version "7.93.0"
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.93.0.tgz#d76d26259b40cd0688e1d634462fbff31476c1ec"
   integrity sha512-UnzUccNakhFRA/esWBWP+0v7cjNg+RilFBQC03Mv9OEMaZaS29zSbcOGtRzuFOXXLBdbr44BWADqpz3VW0XaNw==
+
+"@sentry/utils@7.102.1":
+  version "7.102.1"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.102.1.tgz#45ddcdf2e700d40160347bbdf4233aff3179d398"
+  integrity sha512-+8WcFjHVV/HROXSAwMuUzveElBFC43EiTG7SNEBNgOUeQzQVTmbUZXyTVgLrUmtoWqvnIxCacoLxtZo1o67kdg==
+  dependencies:
+    "@sentry/types" "7.102.1"
 
 "@sentry/utils@7.81.1":
   version "7.81.1"
