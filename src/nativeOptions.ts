@@ -33,5 +33,6 @@ export function FilterNativeOptions(options: CapacitorOptions): CapacitorOptions
     sessionTrackingIntervalMillis: options.sessionTrackingIntervalMillis,
     tracesSampleRate: options.tracesSampleRate,
     // tunnel: options.tunnel: Only handled on the JavaScript Layer.
+    enableCaptureFailedRequests: options.enableCaptureFailedRequests,
   };
 }

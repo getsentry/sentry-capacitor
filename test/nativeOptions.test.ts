@@ -52,6 +52,7 @@ describe('nativeOptions', () => {
         enableNdkScopeSync: true,
         enableOutOfMemoryTracking: true,
         enableTracing: true,
+        enableCaptureFailedRequests: true,
         environment: 'Prod',
         ignoreErrors: ['test'],
         ignoreTransactions: ['test'],

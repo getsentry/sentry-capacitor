@@ -23,6 +23,14 @@ export class Tab1Page {
     Sentry.captureException(new Error(`${Date.now()}: a test error occurred`));
   }
 
+  public httpException(): void {
+    try {
+      fetch('http://localhost:8081/not-found');
+    } catch (error) {
+      //ignore the error, it will be send to Sentry
+    }
+  }
+
   public errorWithUserData(): void {
     Sentry.setUser({
       id: '42',

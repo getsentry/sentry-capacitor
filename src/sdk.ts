@@ -25,6 +25,7 @@ export function init<T>(
   const finalOptions = {
     enableAutoSessionTracking: true,
     enableWatchdogTerminationTracking: true,
+    enableCaptureFailedRequests: false,
     ...passedOptions,
   };
   if (finalOptions.enabled === false ||
