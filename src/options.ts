@@ -61,5 +61,4 @@ export interface CapacitorOptions
    * @default false
    */
   enableCaptureFailedRequests?: boolean;
-
 }
