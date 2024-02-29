@@ -28,6 +28,14 @@ describe('nativeOptions', () => {
     expect(nativeOptions.enableWatchdogTerminationTracking).toBeTruthy();
   });
 
+  test('enableCaptureFailedRequests is set when defined', async () => {
+    const nativeOptions = FilterNativeOptions(
+      {
+        enableCaptureFailedRequests: true
+      });
+    expect(nativeOptions.enableCaptureFailedRequests).toBeTruthy();
+  });
+
   test('invalid types not included', async () => {
     const nativeOptions = FilterNativeOptions(
       {
