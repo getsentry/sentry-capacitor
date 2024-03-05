@@ -54,4 +54,11 @@ export interface CapacitorOptions
   * @deprecated The method will be removed on a major update, instead, use enableWatchdogTerminationTracking for the same result.
   * */
   enableOutOfMemoryTracking?: boolean;
+
+  /**
+   * When enabled, Sentry will capture failed XHR/Fetch requests. This option also enabled HTTP Errors on iOS.
+   *
+   * @default false
+   */
+  enableCaptureFailedRequests?: boolean;
 }

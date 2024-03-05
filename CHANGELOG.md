@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Features
+
+- Add option for iOS: enableCaptureFailedRequests. Allowing users to ignore native Http Request errors. ([#585](https://github.com/getsentry/sentry-capacitor/pull/585))
+
 ## 0.15.1
 
 ### Fixes
