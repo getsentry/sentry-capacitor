@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Features
+
+- Add option for iOS: enableCaptureFailedRequests. Allowing users to ignore native Http Request errors. ([#585](https://github.com/getsentry/sentry-capacitor/pull/585))
+
 ### Dependencies
 
 - Bump JavaScript SDK from v7.81.1 to v7.93.0 ([#573](https://github.com/getsentry/sentry-capacitor/pull/573))
