@@ -7,7 +7,7 @@ import { Hub, makeMain } from '@sentry/core';
 
 import { DeviceContext, EventOrigin, Release, SdkInfo } from './integrations';
 import { createCapacitorRewriteFrames } from './integrations/rewriteframes';
-import type { CapacitorOptions } from './options';
+import type { CapacitorClientOptions, CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
 import { makeUtf8TextEncoder } from './transports/TextEncoder';
@@ -74,10 +74,11 @@ export function init<T>(
     ...finalOptions,
     enableAutoSessionTracking:
       NATIVE.platform !== 'web' && finalOptions.enableAutoSessionTracking,
-  } as CapacitorOptions;
+  } as CapacitorClientOptions;
 
   // We first initialize the NATIVE SDK to avoid the Javascript SDK to invoke any
   // feature from the NATIVE SDK without the options being set.
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   void NATIVE.initNativeSdk(mobileOptions);
   originalInit(browserOptions);
 }

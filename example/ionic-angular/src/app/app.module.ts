@@ -5,7 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { Router } from "@angular/router";
-
 import { createErrorHandler, TraceService, routingInstrumentation, init as sentryAngularInit } from '@sentry/angular-ivy';
 import * as Sentry from '@sentry/capacitor';
 

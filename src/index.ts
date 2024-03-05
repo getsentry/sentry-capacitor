@@ -14,12 +14,16 @@ export type {
 } from '@sentry/types';
 
 export {
+  // eslint-disable-next-line deprecation/deprecation
   addGlobalEventProcessor,
+  addEventProcessor,
   addBreadcrumb,
   captureException,
   captureEvent,
   captureMessage,
+  // eslint-disable-next-line deprecation/deprecation
   configureScope,
+  getCurrentScope,
   getHubFromCarrier,
   getCurrentHub,
   Hub,
@@ -30,7 +34,11 @@ export {
   setTag,
   setTags,
   setUser,
+  // eslint-disable-next-line deprecation/deprecation
   startTransaction,
+  startSpan,
+  startSpanManual,
+  startInactiveSpan,
   withScope,
 } from '@sentry/core';
 export { Replay, BrowserTracing } from '@sentry/browser'

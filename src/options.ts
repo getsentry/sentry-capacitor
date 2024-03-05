@@ -1,11 +1,8 @@
 import type { BrowserOptions } from '@sentry/browser';
+import type { BrowserTransportOptions } from '@sentry/browser/types/transports/types';
+import type { ClientOptions } from '@sentry/types';
 
-/**
- * Configuration options for the Sentry Capacitor SDK.
- */
-
-export interface CapacitorOptions
-  extends Omit<BrowserOptions, 'autoSessionTracking'> {
+export interface BaseCapacitorOptions{
   /**
    * Enables crash reporting for native crashes.
    * Defaults to `true`.
@@ -62,3 +59,16 @@ export interface CapacitorOptions
    */
   enableCaptureFailedRequests?: boolean;
 }
+
+/**
+ * Configuration options for the Sentry Capacitor SDK.
+ */
+export interface CapacitorOptions extends Omit<BrowserOptions, 'autoSessionTracking'>, BaseCapacitorOptions { }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface CapacitorTransportOptions extends BrowserTransportOptions { }
+
+
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface CapacitorClientOptions extends ClientOptions<CapacitorTransportOptions>, BaseCapacitorOptions { }

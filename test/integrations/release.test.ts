@@ -1,11 +1,11 @@
-import { addGlobalEventProcessor, getCurrentHub } from '@sentry/browser';
+import { addEventProcessor , getCurrentHub } from '@sentry/core';
 import type { EventProcessor } from '@sentry/types';
 
 import { Release } from '../../src/integrations/release';
 
 const mockRelease = Release;
 
-jest.mock('@sentry/browser', () => {
+jest.mock('@sentry/core', () => {
   const client = {
     getOptions: jest.fn(),
   };
@@ -17,7 +17,7 @@ jest.mock('@sentry/browser', () => {
   };
 
   return {
-    addGlobalEventProcessor: jest.fn(),
+    addEventProcessor : jest.fn(),
     getCurrentHub: () => hub,
   };
 });
@@ -39,10 +39,10 @@ describe('Tests the Release integration', () => {
     let eventProcessor: EventProcessor = () => null;
 
     // @ts-expect-error Mock
-    addGlobalEventProcessor.mockImplementation(e => (eventProcessor = e));
+    addEventProcessor .mockImplementation(e => (eventProcessor = e));
     releaseIntegration.setupOnce();
 
-    expect(addGlobalEventProcessor).toBeCalled();
+    expect(addEventProcessor ).toBeCalled();
 
     const client = getCurrentHub().getClient();
 
@@ -61,7 +61,7 @@ describe('Tests the Release integration', () => {
     let eventProcessor: EventProcessor = () => null;
 
     // @ts-expect-error Mock
-    addGlobalEventProcessor.mockImplementation(e => (eventProcessor = e));
+    addEventProcessor .mockImplementation(e => (eventProcessor = e));
     releaseIntegration.setupOnce();
 
     const client = getCurrentHub().getClient();
@@ -83,7 +83,7 @@ describe('Tests the Release integration', () => {
     let eventProcessor: EventProcessor = () => null;
 
     // @ts-expect-error Mock
-    addGlobalEventProcessor.mockImplementation(e => (eventProcessor = e));
+    addEventProcessor .mockImplementation(e => (eventProcessor = e));
     releaseIntegration.setupOnce();
 
     const client = getCurrentHub().getClient();
@@ -105,10 +105,10 @@ describe('Tests the Release integration', () => {
     let eventProcessor: EventProcessor = () => null;
 
     // @ts-expect-error Mock
-    addGlobalEventProcessor.mockImplementation(e => (eventProcessor = e));
+    addEventProcessor .mockImplementation(e => (eventProcessor = e));
     releaseIntegration.setupOnce();
 
-    expect(addGlobalEventProcessor).toBeCalled();
+    expect(addEventProcessor ).toBeCalled();
 
     const client = getCurrentHub().getClient();
 
