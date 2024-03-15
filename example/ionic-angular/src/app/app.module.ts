@@ -5,11 +5,12 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { Router } from "@angular/router";
-import { createErrorHandler, TraceService, routingInstrumentation, init as sentryAngularInit } from '@sentry/angular-ivy';
+import { createErrorHandler, TraceService, routingInstrumentation, init as sentryAngularInit, makeBrowserOfflineTransport, makeFetchTransport } from '@sentry/angular-ivy';
 import * as Sentry from '@sentry/capacitor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { Envelope } from "@sentry/types";
 
 // ATTENTION: Change the DSN below with your own to see the events in Sentry. Get one at sentry.io
 Sentry.init(
