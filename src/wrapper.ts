@@ -82,6 +82,8 @@ export const NATIVE = {
       logger.warn(
         'Warning: No DSN was provided. The Sentry SDK will be disabled. Native SDK will also not be initalized.',
       );
+
+      this.enableNative = false;
       return false;
     }
 

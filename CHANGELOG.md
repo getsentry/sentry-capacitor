@@ -4,7 +4,11 @@
 
 ### Features
 
--Add options for iOS: enableAppHangTracking and appHangTimeoutInterval, allowing users to define the App hang timeout or completly disabling it. ([#602](https://github.com/getsentry/sentry-capacitor/pull/602))
+- Add options for iOS: enableAppHangTracking and appHangTimeoutInterval, allowing users to define the App hang timeout or completly disabling it. ([#602](https://github.com/getsentry/sentry-capacitor/pull/602))
+
+### Fixes
+
+- Native integration would not properly disable when no DSN was provided ([#584](https://github.com/getsentry/sentry-capacitor/pull/584))
 
 ## 0.16.0
 

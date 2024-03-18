@@ -163,6 +163,14 @@ describe('Tests Native Wrapper', () => {
         'Note: Native Sentry SDK is disabled.',
       );
     });
+
+    test('sets enableNative: false when dsn is undefined', async () => {
+      await NATIVE.initNativeSdk({
+        dsn: undefined,
+      });
+
+      expect(NATIVE.enableNative).toBe(false);
+    });
   });
 
   describe('sendEnvelope', () => {
