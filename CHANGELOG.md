@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- Native integration would not properly disable when no DSN was provided ([#584](https://github.com/getsentry/sentry-capacitor/pull/584))
+
 ## 0.16.0
 
 ### Features
