@@ -4,7 +4,7 @@
 
 ### Features
 
-- Add enableAppHangTracking to Capacitor Options. ([#602](https://github.com/getsentry/sentry-capacitor/pull/602))
+-Add options for iOS: enableAppHangTracking and appHangTimeoutInterval, allowing users to define the App hang timeout or completly disabling it. ([#602](https://github.com/getsentry/sentry-capacitor/pull/602))
 
 ## 0.16.0
 
