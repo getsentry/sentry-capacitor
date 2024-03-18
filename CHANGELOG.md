@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Features
+
+- Add enableAppHangTracking to Capacitor Options. ([#602](https://github.com/getsentry/sentry-capacitor/pull/602))
+
 ## 0.16.0
 
 ### Features
