@@ -6,6 +6,12 @@
 
 - Native integration would not properly disable when no DSN was provided ([#584](https://github.com/getsentry/sentry-capacitor/pull/584))
 
+### Dependencies
+
+- Bump Cocoa SDK from v8.18.0 to v8.22.0 ([#555](https://github.com/getsentry/sentry-capacitor/pull/555))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8220)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.18.0...8.22.0)
+
 ## 0.16.0
 
 ### Features
