@@ -11,6 +11,7 @@
     "sync": "ionic cap copy & ionic cap sync",
     "ios": "ionic cap open ios",
     "android": "ionic cap open android",
+    "bump:sample-pod": "cd ios/App && pod install",
     "lint": "eslint ."
   },
   "dependencies": {

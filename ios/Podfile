@@ -12,7 +12,7 @@ end
 target 'Plugin' do
   capacitor_pods
 
-  pod 'Sentry/HybridSDK', '8.18.0'
+  pod 'Sentry/HybridSDK', '8.21.0'
 end
 
 target 'PluginTests' do
