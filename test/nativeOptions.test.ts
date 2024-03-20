@@ -1,6 +1,16 @@
+import { Capacitor } from '@capacitor/core';
 import type { Instrumenter, StackParser } from '@sentry/types';
+import type { CapacitorOptions } from 'src';
 
 import { FilterNativeOptions } from '../src/nativeOptions';
+
+// Mock the Capacitor module
+jest.mock('@capacitor/core', () => ({
+  Capacitor: {
+    getPlatform: jest.fn()
+  }
+}));
+
 
 describe('nativeOptions', () => {
 
@@ -99,4 +109,33 @@ describe('nativeOptions', () => {
 
     expect(keysFilter.toString()).toBe('');
   });
+
+  test('Should include iOS parameters when running on iOS', async () => {
+    (Capacitor.getPlatform as jest.Mock).mockReturnValue('ios');
+
+    const expectedOptions: CapacitorOptions = {
+      environment: 'abc',
+      // iOS parameters
+      enableAppHangTracking: true,
+      appHangTimeoutInterval: 123
+    };
+    const nativeOptions = FilterNativeOptions(expectedOptions);
+      expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
+  });
+
+  test('Should not include iOS parameters when running on android', async () => {
+    (Capacitor.getPlatform as jest.Mock).mockReturnValue('android');
+
+    const expectedOptions = {
+      environment: 'abc',
+    };
+    const nativeOptions = FilterNativeOptions({
+      ...expectedOptions, ...{
+        appHangTimeoutInterval: 123,
+        enableAppHangTracking: true
+      }
+    });
+      expect(nativeOptions).toEqual(expectedOptions);
+  });
+
 });
