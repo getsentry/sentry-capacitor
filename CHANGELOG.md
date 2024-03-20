@@ -8,9 +8,9 @@
 
 ### Dependencies
 
-- Bump Cocoa SDK from v8.18.0 to v8.22.2 ([#555](https://github.com/getsentry/sentry-capacitor/pull/555), [#604](https://github.com/getsentry/sentry-capacitor/pull/604))
-  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8222)
-  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.18.0...8.22.2)
+- Bump Cocoa SDK from v8.18.0 to v8.21.0 ([#605](https://github.com/getsentry/sentry-capacitor/pull/605))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8210)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.18.0...8.21.0)
 - Bump Android SDK from v6.34.0 to v7.6.0 ([#544](https://github.com/getsentry/sentry-capacitor/pull/544))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#760)
   - [diff](https://github.com/getsentry/sentry-java/compare/6.34.0...7.6.0)
