@@ -755,13 +755,13 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@sentry-internal/eslint-config-sdk@7.93.0":
-  version "7.93.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-config-sdk/-/eslint-config-sdk-7.93.0.tgz#66a1b5f792345d687be7e4e1ad3c0f480ff47e68"
-  integrity sha512-D+lRVUa5Rnx4pUBrLdzK7X8+LOF74D+6+v8wexWP/23KnKIhc8owHUBTLDS1FWwshAGOhZkU6GUEbwpRXE3e/Q==
+"@sentry-internal/eslint-config-sdk@7.108.0":
+  version "7.108.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-config-sdk/-/eslint-config-sdk-7.108.0.tgz#4ec2a06f5eda349f42af069f61d5e2cb6ff219c1"
+  integrity sha512-MsA4pzayvJZB9QtxlKjQabRFAOwAl1Z0Vd3v+dCA28H3ek59533m30TwcPtv6uOmHUXOcIqzpaF6SM564xlUoQ==
   dependencies:
-    "@sentry-internal/eslint-plugin-sdk" "7.93.0"
-    "@sentry-internal/typescript" "7.93.0"
+    "@sentry-internal/eslint-plugin-sdk" "7.108.0"
+    "@sentry-internal/typescript" "7.108.0"
     "@typescript-eslint/eslint-plugin" "^5.48.0"
     "@typescript-eslint/parser" "^5.48.0"
     eslint-config-prettier "^6.11.0"
@@ -770,6 +770,13 @@
     eslint-plugin-jest "^27.2.2"
     eslint-plugin-jsdoc "^30.0.3"
     eslint-plugin-simple-import-sort "^5.0.3"
+
+"@sentry-internal/eslint-plugin-sdk@7.108.0":
+  version "7.108.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-plugin-sdk/-/eslint-plugin-sdk-7.108.0.tgz#42e65c8d470b4a55ea76cc8d5aff570f512edfe9"
+  integrity sha512-Od5cnoeQb2RUoYtjI062JTgcb6SRxlcD6++5INQDtEQjkBqNvThL+/GZ7b5wCjiaPsyPTbbAd1kEgzeVzYo4oQ==
+  dependencies:
+    requireindex "~1.1.0"
 
 "@sentry-internal/eslint-plugin-sdk@7.93.0":
   version "7.93.0"
@@ -795,6 +802,11 @@
     "@sentry/core" "7.93.0"
     "@sentry/types" "7.93.0"
     "@sentry/utils" "7.93.0"
+
+"@sentry-internal/typescript@7.108.0":
+  version "7.108.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/typescript/-/typescript-7.108.0.tgz#ea13a460e1d4c5a1eea939c85fa7d177d8d52b92"
+  integrity sha512-PXJgGg038sVSG4fl4a0Up1PPWLqTgFKTrAt+lawaRkDQT4nOS8dUGtzCMhYcgv6EsWArf16NF8I2UtmYHpW3oQ==
 
 "@sentry-internal/typescript@7.93.0":
   version "7.93.0"
