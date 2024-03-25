@@ -34,12 +34,12 @@ buildscript {
     if (rootProject.project(':capacitor-android').android.compileOptions.sourceCompatibility >= JavaVersion.VERSION_17) {
       println "Sentry Capacitor: Applying dependencies for Capacitor 5 or higher."
       classpath 'com.android.tools.build:gradle:8.0.0'
-      classpath 'com.google.gms:google-services:4.3.15'
+      classpath 'com.google.gms:google-services:4.4.1'
     }
     else {
       println "Sentry Capacitor: Applying dependencies for Capacitor 4."
       classpath 'com.android.tools.build:gradle:7.2.1'
-      classpath 'com.google.gms:google-services:4.3.13'
+      classpath 'com.google.gms:google-services:4.4.1'
     }
   }
 }
