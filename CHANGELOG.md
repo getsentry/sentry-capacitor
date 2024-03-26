@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Dependencies
+
+- Bump Cocoa SDK from v8.21.0 to v8.22.4 ([#606](https://github.com/getsentry/sentry-capacitor/pull/606))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8224)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.21.0...8.22.4)
+
 ## 0.17.0
 
 ### Features
