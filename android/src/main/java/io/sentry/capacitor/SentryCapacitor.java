@@ -11,25 +11,28 @@ import com.getcapacitor.PluginMethod;
 import io.sentry.Breadcrumb;
 import io.sentry.HubAdapter;
 import io.sentry.Integration;
+import io.sentry.IScope;
 import io.sentry.Sentry;
 import io.sentry.SentryEvent;
 import io.sentry.SentryLevel;
+import io.sentry.SentryOptions;
 import io.sentry.UncaughtExceptionHandlerIntegration;
 import io.sentry.android.core.BuildConfig;
 import io.sentry.android.core.AnrIntegration;
+import io.sentry.android.core.InternalSentrySdk;
+import io.sentry.android.core.SentryAndroidOptions;
 import io.sentry.android.core.NdkIntegration;
 import io.sentry.android.core.SentryAndroid;
 import io.sentry.protocol.SdkVersion;
 import io.sentry.protocol.SentryPackage;
 import io.sentry.protocol.User;
-import java.io.File;
-import java.io.FileOutputStream;
+
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -213,6 +216,36 @@ public class SentryCapacitor extends Plugin {
     }
 
     @PluginMethod
+    public void fetchNativeSdkInfo(PluginCall call) {
+      final SdkVersion sdkVersion = HubAdapter.getInstance().getOptions().getSdkVersion();
+      if (sdkVersion == null) {
+        call.resolve(null);
+      } else {
+        final JSObject sdkInfo = new JSObject();
+        sdkInfo.put("name", sdkVersion.getName());
+        sdkInfo.put("version", sdkVersion.getVersion());
+        call.resolve(sdkInfo);
+      }
+    }
+
+    @PluginMethod
+    public void fetchNativeDeviceContexts(PluginCall call) {
+      final SentryOptions options = HubAdapter.getInstance().getOptions();
+      if (!(options instanceof SentryAndroidOptions)) {
+        call.resolve(null);
+        return;
+      }
+
+      final IScope currentScope = InternalSentrySdk.getCurrentScope();
+      final Map<String, Object> serialized = InternalSentrySdk.serializeScope(
+        context,
+        (SentryAndroidOptions) options,
+        currentScope);
+      final JSObject deviceContext = (JSObject)CapSentryMapConverter.convertToWritable(serialized);
+      call.resolve(deviceContext);
+    }
+
+    @PluginMethod
     public void captureEnvelope(PluginCall call) {
         try {
             JSArray rawIntegers = call.getArray("envelope");
@@ -220,31 +253,14 @@ public class SentryCapacitor extends Plugin {
             for (int i = 0; i < bytes.length; i++) {
                 bytes[i] = (byte) rawIntegers.getInt(i);
             }
-
-            final String outboxPath = HubAdapter.getInstance().getOptions().getOutboxPath();
-
-            if (outboxPath == null || outboxPath.isEmpty()) {
-                logger.info("Error when writing envelope, no outbox path is present.");
-                call.reject("Missing outboxPath");
-                return;
-            }
-
-            final File installation = new File(outboxPath, UUID.randomUUID().toString());
-
-            try (FileOutputStream out = new FileOutputStream(installation)) {
-                out.write(bytes);
-                logger.info("Successfully captured envelope.");
-            } catch (Exception e) {
-                logger.info("Error writing envelope.");
-                call.reject(String.valueOf(e));
-                return;
-            }
-        } catch (Exception e) {
-            logger.info("Error reading envelope.");
-            call.reject(String.valueOf(e));
-            return;
-        }
-        call.resolve();
+            InternalSentrySdk.captureEnvelope(bytes);
+            call.resolve();
+          }
+          catch (Throwable e) {
+            final String errorMessage ="Error while capturing envelope";
+            logger.log(Level.WARNING, errorMessage);
+            call.reject(errorMessage);
+          }
     }
 
     @PluginMethod
@@ -266,7 +282,10 @@ public class SentryCapacitor extends Plugin {
     @PluginMethod
     public void addBreadcrumb(final PluginCall breadcrumb) {
         Sentry.configureScope(scope -> {
-            Breadcrumb breadcrumbInstance = new Breadcrumb();
+            Date jsTimestamp =
+               new Date((long)(breadcrumb.getDouble("timestamp")*1000));
+
+            Breadcrumb breadcrumbInstance = new Breadcrumb(jsTimestamp);
 
             if (breadcrumb.getData().has("message")) {
                 breadcrumbInstance.setMessage(breadcrumb.getString("message"));
@@ -316,8 +335,8 @@ public class SentryCapacitor extends Plugin {
             }
 
             scope.addBreadcrumb(breadcrumbInstance);
-        });
-        breadcrumb.resolve();
+       });
+            breadcrumb.resolve();
     }
 
     @PluginMethod

@@ -115,11 +115,6 @@ export const NATIVE = {
       throw this._NativeClientError;
     }
 
-    if (this.platform !== 'ios') {
-      // Only ios uses deviceContexts, return an empty object.
-      return {};
-    }
-
     return SentryCapacitor.fetchNativeDeviceContexts();
   },
 
@@ -241,24 +236,27 @@ export const NATIVE = {
    * Adds breadcrumb to the native scope.
    * @param breadcrumb Breadcrumb
    */
-  addBreadcrumb(breadcrumb: Breadcrumb): void {
-    if (!this.enableNative) {
+   addBreadcrumb(breadcrumb: Breadcrumb): void {
+   if (!this.enableNative) {
       return;
     }
     if (!this.isNativeClientAvailable()) {
       throw this._NativeClientError;
     }
 
+    // There is a  tiny difference on the timestamp created by the Native Layer and the JavaScript layer.
+    // We update the timestamp on the JavaScript layer with the given timestamp from the Native layer so both
+    // layers have their timestamp matching.
     SentryCapacitor.addBreadcrumb({
-      ...breadcrumb,
-      // Process and convert deprecated levels
-      level: breadcrumb.level
-        ? this._processLevel(breadcrumb.level)
-        : undefined,
-      data: breadcrumb.data
-        ? convertToNormalizedObject(breadcrumb.data)
-        : undefined,
-    });
+       ...breadcrumb,
+       // Process and convert deprecated levels
+       level: breadcrumb.level
+         ? this._processLevel(breadcrumb.level)
+         : undefined,
+       data: breadcrumb.data
+         ? convertToNormalizedObject(breadcrumb.data)
+         : undefined,
+     });
   },
 
   /**
@@ -267,9 +265,6 @@ export const NATIVE = {
   clearBreadcrumbs(): void {
     if (!this.enableNative) {
       return;
-    }
-    if (!this.isNativeClientAvailable()) {
-      throw this._NativeClientError;
     }
 
     SentryCapacitor.clearBreadcrumbs();
@@ -306,7 +301,6 @@ export const NATIVE = {
    * @returns The event from envelopeItem or undefined.
    */
   _processItem(item: EnvelopeItem): EnvelopeItem {
-    if (NATIVE.platform === 'android') {
       const [itemHeader, itemPayload] = item;
 
       if (itemHeader.type == 'event' || itemHeader.type == 'transaction') {
@@ -316,22 +310,9 @@ export const NATIVE = {
           // @ts-ignore Android still uses the old message object, without this the serialization of events will break.
           event.message = { message: event.message };
         }
-        /*
-      We do this to avoid duplicate breadcrumbs on Android as sentry-android applies the breadcrumbs
-      from the native scope onto every envelope sent through it. This scope will contain the breadcrumbs
-      sent through the scope sync feature. This causes duplicate breadcrumbs.
-      We then remove the breadcrumbs in all cases but if it is handled == false,
-      this is a signal that the app would crash and android would lose the breadcrumbs by the time the app is restarted to read
-      the envelope.
-      Since unhandled errors from Javascript are not going to crash the App, we can't rely on the
-      handled flag for filtering breadcrumbs.
-        */
-        if (event.breadcrumbs) {
-          event.breadcrumbs = [];
-        }
+
         return [itemHeader, event];
       }
-    }
 
     return item;
   },
