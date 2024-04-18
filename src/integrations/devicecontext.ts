@@ -1,5 +1,4 @@
-import { addEventProcessor, getCurrentHub } from '@sentry/core';
-import type { Breadcrumb, Contexts, Event, Integration } from '@sentry/types';
+import type { Breadcrumb, Event, EventProcessor, Hub, Integration } from '@sentry/types';
 import { logger, severityLevelFromString } from '@sentry/utils';
 import type { NativeDeviceContextsResponse } from 'src/definitions';
 
@@ -21,8 +20,9 @@ export class DeviceContext implements Integration {
   /**
    * @inheritDoc
    */
-  public setupOnce(): void {
-    addEventProcessor(async (event: Event) => {
+  public setupOnce(addGlobalEventProcessor: (callback: EventProcessor) => void, getCurrentHub: () => Hub): void {
+    // eslint-disable-next-line complexity
+    addGlobalEventProcessor(async (event: Event) => {
       const self = getCurrentHub().getIntegration(DeviceContext);
       if (!self) {
         return event;
@@ -38,11 +38,14 @@ export class DeviceContext implements Integration {
         return event;
       }
 
-      const context = (nativeContexts['context'] as Contexts);
-
-      event.contexts = { ...context, ...event.contexts };
-      if ('user' in nativeContexts) {
-        const user = nativeContexts['user'];
+      if (nativeContexts.contexts) {
+        event.contexts = { ...nativeContexts.contexts, ...event.contexts };
+        if (nativeContexts.contexts.app) {
+          event.contexts.app = { ...nativeContexts.contexts.app, ...event.contexts.app };
+        }
+      }
+      if (nativeContexts.user) {
+        const user = nativeContexts.user;
         if (!event.user) {
           event.user = { ...user };
         }
@@ -64,22 +67,21 @@ export class DeviceContext implements Integration {
         );
       }
 
-      const nativeLevel = typeof nativeContexts['level'] === 'string' ? severityLevelFromString(nativeContexts['level']) : undefined;
-      if (!event.level && nativeLevel) {
-        event.level = nativeLevel;
+      if (!event.level && nativeContexts.level) {
+        event.level = severityLevelFromString(nativeContexts.level);
       }
 
-      const nativeEnvironment = nativeContexts['environment'];
+      const nativeEnvironment = nativeContexts.environment;
       if (!event.environment && nativeEnvironment) {
         event.environment = nativeEnvironment;
       }
 
-      const nativeBreadcrumbs = Array.isArray(nativeContexts['breadcrumbs'])
-      ? nativeContexts['breadcrumbs'].map(breadcrumbFromObject)
+      const nativeBreadcrumbs = Array.isArray(nativeContexts.breadcrumbs)
+      ? nativeContexts.breadcrumbs.map(breadcrumbFromObject)
       : undefined;
       if (nativeBreadcrumbs) {
         if (event.breadcrumbs && event.breadcrumbs.length !== nativeBreadcrumbs.length) {
-          event.breadcrumbs = this._removeDuplicatedBreadcrumbs(event.breadcrumbs, nativeBreadcrumbs);
+          event.breadcrumbs = this._mergeUniqueBreadcrumbs(event.breadcrumbs, nativeBreadcrumbs);
         }
         else {
           event.breadcrumbs = nativeBreadcrumbs;
@@ -91,10 +93,13 @@ export class DeviceContext implements Integration {
   }
 
   /**
-   * This function merges the unique breadcrumbs from both layers and also adds the
-   * unique breadcrumbs from both lists.
+ * Merges two groups of ordered breadcrumbs and removes any duplication that may
+ * happen between them.
+ * @param jsList The first group of breadcrumbs from the JavaScript layer.
+ * @param nativeList The second group of breadcrumbs from the native layer.
+ * @returns An array of unique breadcrumbs merged from both lists.
    */
-  private _removeDuplicatedBreadcrumbs(jsList: Breadcrumb[], nativeList: Breadcrumb[]): Breadcrumb[] {
+  private _mergeUniqueBreadcrumbs(jsList: Breadcrumb[], nativeList: Breadcrumb[]): Breadcrumb[] {
 
     let jsIndex = 0;
     let natIndex = 0;

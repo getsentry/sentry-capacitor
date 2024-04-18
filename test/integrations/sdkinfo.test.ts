@@ -6,8 +6,13 @@ import { NATIVE } from '../../src/wrapper';
 
 let mockedFetchNativeSdkInfo: jest.Mock<PromiseLike<Package | null>, []>;
 
-const mockPackage = {
+const iOSMockPackage = {
   name: 'sentry-cocoa',
+  version: '0.0.1',
+};
+
+const droidMockPackage = {
+  name: 'sentry-java',
   version: '0.0.1',
 };
 
@@ -29,24 +34,24 @@ afterEach(() => {
 
 describe('Sdk Info', () => {
   it('Adds native package and javascript platform to event on iOS', async () => {
-    mockedFetchNativeSdkInfo = jest.fn().mockResolvedValue(mockPackage);
+    mockedFetchNativeSdkInfo = jest.fn().mockResolvedValue(iOSMockPackage);
     const mockEvent: Event = {};
     const processedEvent = await executeIntegrationFor(mockEvent);
 
-    expect(processedEvent?.sdk?.packages).toEqual(expect.arrayContaining([mockPackage]));
+    expect(processedEvent?.sdk?.packages).toEqual(expect.arrayContaining([iOSMockPackage]));
     expect(processedEvent?.platform === 'javascript');
     expect(mockedFetchNativeSdkInfo).toBeCalledTimes(1);
   });
 
-  it('Adds javascript platform but not native package on Android', async () => {
+  it('Adds javascript platform and javascript platform to event on Android', async () => {
     NATIVE.platform = 'android';
-    mockedFetchNativeSdkInfo = jest.fn().mockResolvedValue(mockPackage);
+    mockedFetchNativeSdkInfo = jest.fn().mockResolvedValue(droidMockPackage);
     const mockEvent: Event = {};
     const processedEvent = await executeIntegrationFor(mockEvent);
 
-    expect(processedEvent?.sdk?.packages).toEqual(expect.not.arrayContaining([mockPackage]));
+    expect(processedEvent?.sdk?.packages).toEqual(expect.arrayContaining([droidMockPackage]));
     expect(processedEvent?.platform === 'javascript');
-    expect(mockedFetchNativeSdkInfo).not.toBeCalled();
+    expect(mockedFetchNativeSdkInfo).toBeCalledTimes(1);
   });
 
   it('Does not overwrite existing sdk name and version', async () => {

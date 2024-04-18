@@ -227,115 +227,7 @@ describe('Tests Native Wrapper', () => {
       expect(SentryCapacitor.captureEnvelope).not.toBeCalled();
     });
 
-    test('Clears breadcrumbs on Android if there is no exception', async () => {
-      NATIVE.platform = 'android';
-
-      const event = {
-        event_id: 'event0',
-        message: 'test',
-        breadcrumbs: [
-          {
-            message: 'crumb!',
-          },
-        ],
-        sdk: {
-          name: 'test-sdk-name',
-          version: '1.2.3',
-        },
-      };
-
-      const expectedHeader = JSON.stringify({
-        event_id: event.event_id,
-        sent_at: '123'
-      });
-      const expectedItem = JSON.stringify({
-        type: 'event',
-        content_type: 'application/json',
-        length: 116,
-      });
-      const expectedPayload = JSON.stringify({
-        ...event,
-        breadcrumbs: [],
-        message: {
-          message: event.message,
-        },
-      });
-
-      const env = createEnvelope<EventEnvelope>({ event_id: event.event_id, sent_at: '123' }, [
-        [{ type: 'event' }, event] as EventItem,
-      ]);
-
-      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
-
-      await NATIVE.sendEnvelope(env);
-
-      expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
-      expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
-        `${expectedHeader}\n${expectedItem}\n${expectedPayload}`);
-    });
-
-    test('Clears breadcrumbs on Android if there is a handled exception', async () => {
-      NATIVE.platform = 'android';
-
-      const event = {
-        event_id: 'event0',
-        message: 'test',
-        breadcrumbs: [
-          {
-            message: 'crumb!',
-          },
-        ],
-        exception: {
-          values: [{
-            mechanism: {
-              handled: true
-            }
-          }]
-        },
-        sdk: {
-          name: 'test-sdk-name',
-          version: '1.2.3',
-        },
-      };
-
-      const env = createEnvelope<EventEnvelope>({ event_id: event.event_id, sent_at: '123' }, [
-        [{ type: 'event' }, event] as EventItem,
-      ]);
-
-      const expectedHeader = JSON.stringify({
-        event_id: event.event_id,
-        sent_at: '123'
-      });
-      const expectedItem = JSON.stringify({
-        type: 'event',
-        content_type: 'application/json',
-        length: 172,
-      });
-      const expectedPayload = JSON.stringify({
-        ...event,
-        breadcrumbs: [],
-        message: {
-          message: event.message,
-        },
-        exception: {
-          values: [{
-            mechanism: {
-              handled: true
-            }
-          }]
-        }
-      });
-
-      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
-
-      await NATIVE.sendEnvelope(env);
-
-      expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
-      expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
-        `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`);
-    });
-
-    test('Clears breadcrumbs on Android if there is a handled exception', async () => {
+    test('Keep breadcrumbs on Android if there is a handled exception', async () => {
       NATIVE.platform = 'android';
 
       const event = {
@@ -366,11 +258,11 @@ describe('Tests Native Wrapper', () => {
       const expectedItem = JSON.stringify({
         type: 'event',
         content_type: 'application/json',
-        length: 172,
+        length: 192,
       });
       const expectedPayload = JSON.stringify({
         ...event,
-        breadcrumbs: [],
+        breadcrumbs: [{"message":"crumb!"}],
         message: {
           message: event.message,
         },
@@ -615,14 +507,16 @@ describe('Tests Native Wrapper', () => {
 
       expect(SentryCapacitor.fetchNativeDeviceContexts).toBeCalled();
     });
-    test('returns empty object on android', async () => {
+    test('returns context object from native module on android', async () => {
       NATIVE.platform = 'android';
 
-      await expect(NATIVE.fetchNativeDeviceContexts()).resolves.toMatchObject(
-        {}
-      );
+      await expect(NATIVE.fetchNativeDeviceContexts()).resolves.toMatchObject({
+        someContext: {
+          someValue: 0,
+        },
+      });
 
-      expect(SentryCapacitor.fetchNativeDeviceContexts).not.toBeCalled();
+      expect(SentryCapacitor.fetchNativeDeviceContexts).toBeCalled();
     });
   });
 });

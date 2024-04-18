@@ -244,7 +244,7 @@ export const NATIVE = {
       throw this._NativeClientError;
     }
 
-    // There is a  tiny difference on the timestamp created by the Native Layer and the JavaScript layer.
+    // There is a tiny difference on the timestamp created by the Native Layer and the JavaScript layer.
     // We update the timestamp on the JavaScript layer with the given timestamp from the Native layer so both
     // layers have their timestamp matching.
     SentryCapacitor.addBreadcrumb({

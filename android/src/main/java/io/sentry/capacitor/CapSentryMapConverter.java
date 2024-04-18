@@ -3,10 +3,8 @@ package io.sentry.capacitor;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.PluginCall;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
@@ -16,13 +14,10 @@ import io.sentry.ILogger;
 import io.sentry.SentryLevel;
 import io.sentry.android.core.AndroidLogger;
 
-
 public class CapSentryMapConverter {
   public static final String NAME = "CapSentry.MapConverter";
 
   private static final ILogger logger = new AndroidLogger(NAME);
-
-
 
   public static Object convertToWritable(Object serialized) {
     if (serialized instanceof Map) {
@@ -96,12 +91,11 @@ public class CapSentryMapConverter {
       writableArray.put(Double.valueOf(doubleValue));
     } else if (value instanceof String) {
       writableArray.put((String) value);
-
     }
     else if (value instanceof JSObject) {
       writableArray.put((JSObject) value);
     } else if (value instanceof JSArray) {
-      writableArray.put((JSArray) value);      // No mention why it could throw https://developer.android.com/reference/org/json/JSONArray#put(double)
+      writableArray.put((JSArray) value);
     } else {
       logger.log(SentryLevel.ERROR,
         "Could not convert object: " + value);

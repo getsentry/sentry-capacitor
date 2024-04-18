@@ -4,7 +4,7 @@
 
 ### Fixes
 
-- Breadcrumbs added on hints are now captured ([#629](https://github.com/getsentry/sentry-capacitor/pull/629))
+- Breadcrumbs added on hints are now captured. ([#629](https://github.com/getsentry/sentry-capacitor/pull/629))
 - Event is enriched with all the Android context on the JS layer and you can filter/modify all the data in the `beforeSend`. ([#629](https://github.com/getsentry/sentry-capacitor/pull/629))
 
 ## 0.17.0

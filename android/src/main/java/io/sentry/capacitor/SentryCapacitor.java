@@ -336,7 +336,7 @@ public class SentryCapacitor extends Plugin {
 
             scope.addBreadcrumb(breadcrumbInstance);
        });
-            breadcrumb.resolve();
+       breadcrumb.resolve();
     }
 
     @PluginMethod
