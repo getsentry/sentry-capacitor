@@ -5,29 +5,26 @@ import { createEnvelope, logger } from '@sentry/utils';
 import { utf8ToBytes } from '../src/vendor';
 import { NATIVE } from '../src/wrapper';
 
+import { SentryCapacitor } from '../src/plugin';
+
 let getStringBytesLengthValue = 1;
 
 function NumberArrayToString(numberArray: number[]): string {
   return new TextDecoder().decode(new Uint8Array(numberArray).buffer);
 }
 
-jest.mock(
-  '@capacitor/core',
-  () => {
-    const original = jest.requireActual('@capacitor/core');
+jest.mock('@capacitor/core', () => {
+  const original = jest.requireActual('@capacitor/core');
 
-    return {
-      WebPlugin: original.WebPlugin,
-      registerPlugin: jest.fn(),
-      Capacitor: {
-        isPluginAvailable: jest.fn(() => true),
-        getPlatform: jest.fn(() => 'android'),
-      },
-    };
-  },
-  /* virtual allows us to mock modules that aren't in package.json */
-  { virtual: true },
-);
+  return {
+    WebPlugin: original.WebPlugin,
+    registerPlugin: jest.fn(),
+    Capacitor: {
+      isPluginAvailable: jest.fn(() => true),
+      getPlatform: jest.fn(() => 'android'),
+    },
+  };
+});
 
 jest.mock('../src/plugin', () => {
   return {
@@ -65,19 +62,18 @@ jest.mock('../src/plugin', () => {
   };
 });
 
-import { SentryCapacitor } from '../src/plugin';
-
-beforeEach(() => {
-  getStringBytesLengthValue = 1;
-  NATIVE.enableNative = true;
-  NATIVE.platform = 'android';
-});
-
-afterEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('Tests Native Wrapper', () => {
+
+  beforeEach(() => {
+    getStringBytesLengthValue = 1;
+    NATIVE.enableNative = true;
+    NATIVE.platform = 'android';
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('initNativeSdk', () => {
     test('calls plugin', async () => {
       SentryCapacitor.initNativeSdk = jest.fn();
@@ -102,6 +98,7 @@ describe('Tests Native Wrapper', () => {
       expect(nativeOption.vue).toBeUndefined();
 
       expect(initNativeSdk).toBeCalled();
+      initNativeSdk.mockRestore()
     });
 
 
@@ -132,6 +129,7 @@ describe('Tests Native Wrapper', () => {
       expect(nativeOption.tracesSampler).toBeUndefined();
 
       expect(initNativeSdk).toBeCalled();
+      initNativeSdk.mockRestore()
     });
 
     test('warns if there is no dsn', async () => {
@@ -262,7 +260,7 @@ describe('Tests Native Wrapper', () => {
       });
       const expectedPayload = JSON.stringify({
         ...event,
-        breadcrumbs: [{"message":"crumb!"}],
+        breadcrumbs: [{ "message": "crumb!" }],
         message: {
           message: event.message,
         },
@@ -286,6 +284,8 @@ describe('Tests Native Wrapper', () => {
       expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
       expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
         `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`);
+
+      captureEnvelopeSpy.mockRestore();
     });
 
     test('has statusCode 200 on success', async () => {
@@ -336,6 +336,7 @@ describe('Tests Native Wrapper', () => {
       NATIVE.enableNative = true;
       const result = await NATIVE.sendEnvelope(env);
       expect(result).toMatchObject(expectedReturn);
+      captureEnvelopeSpy.mockRestore();
     })
   });
 
@@ -351,13 +352,13 @@ describe('Tests Native Wrapper', () => {
   // });
 
   describe('isModuleLoaded', () => {
-    test('returns true when module is loaded', () => {
+    test('returns true when module is loaded', async () => {
       expect(NATIVE.isModuleLoaded()).toBe(true);
     });
   });
 
   describe('crash', () => {
-    test('calls the native crash', () => {
+    test('calls the native crash', async () => {
       NATIVE.crash();
 
       expect(SentryCapacitor.crash).toBeCalled();

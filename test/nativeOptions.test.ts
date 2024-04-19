@@ -6,14 +6,13 @@ import { FilterNativeOptions } from '../src/nativeOptions';
 
 // Mock the Capacitor module
 jest.mock('@capacitor/core', () => ({
+  ...jest.requireActual('@capacitor/core'),
   Capacitor: {
     getPlatform: jest.fn()
   }
 }));
 
-
 describe('nativeOptions', () => {
-
   test('Use value of enableOutOfMemoryTracking on enableWatchdogTerminationTracking when set true', async () => {
     const nativeOptions = FilterNativeOptions(
       {
@@ -120,7 +119,7 @@ describe('nativeOptions', () => {
       appHangTimeoutInterval: 123
     };
     const nativeOptions = FilterNativeOptions(expectedOptions);
-      expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
+    expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
   });
 
   test('Should not include iOS parameters when running on android', async () => {
@@ -135,7 +134,7 @@ describe('nativeOptions', () => {
         enableAppHangTracking: true
       }
     });
-      expect(nativeOptions).toEqual(expectedOptions);
+    expect(nativeOptions).toEqual(expectedOptions);
   });
 
 });

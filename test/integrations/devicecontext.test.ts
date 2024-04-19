@@ -2,33 +2,29 @@ import type { Hub } from '@sentry/core';
 import type { Breadcrumb, Event, SeverityLevel } from '@sentry/types';
 
 import type { NativeDeviceContextsResponse } from '../../src/definitions';
-
-jest.mock('@sentry/utils', () => ({
-  ...jest.requireActual('@sentry/utils'),
-  logger: {
-    log: jest.fn()
-  }
-}));
-jest.mock('../../src/wrapper');
-
 import { logger } from '@sentry/utils';
 
 import { DeviceContext } from '../../src/integrations';
 import { NATIVE } from '../../src/wrapper';
 
+jest.mock('../../src/wrapper');
+
 describe('Device Context Integration', () => {
   let integration: DeviceContext;
 
   const mockGetCurrentHub = () =>
-    ({
-      getIntegration: () => integration,
-    } as unknown as Hub);
+  ({
+    getIntegration: () => integration,
+  } as unknown as Hub);
 
   beforeEach(() => {
     integration = new DeviceContext();
   });
 
+
   it('return original event if integration fails', async () => {
+    logger.log = jest.fn();
+
     const originalEvent = { environment: 'original' } as Event;
 
     (
@@ -194,51 +190,7 @@ describe('Device Context Integration', () => {
       breadcrumbs: [{ message: 'duplicate-breadcrumb' }, { message: 'native-breadcrumb' }]
     });
   });
-/*
-  it('adds in_foreground false to native app contexts', async () => {
-    mockCurrentAppState = 'background';
-    const { processedEvent } = await executeIntegrationWith({
-      nativeContexts: { contexts: { app: { native: 'value' } } },
-    });
-    expect(processedEvent).toStrictEqual({
-      contexts: {
-        app: {
-          native: 'value',
-          in_foreground: false,
-        },
-      },
-    });
-  });
 
-  it('adds in_foreground to native app contexts', async () => {
-    mockCurrentAppState = 'active';
-    const { processedEvent } = await executeIntegrationWith({
-      nativeContexts: { contexts: { app: { native: 'value' } } },
-    });
-    expect(processedEvent).toStrictEqual({
-      contexts: {
-        app: {
-          native: 'value',
-          in_foreground: true,
-        },
-      },
-    });
-  });
-
-  it('do not add in_foreground if unknown', async () => {
-    mockCurrentAppState = 'unknown';
-    const { processedEvent } = await executeIntegrationWith({
-      nativeContexts: { contexts: { app: { native: 'value' } } },
-    });
-    expect(processedEvent).toStrictEqual({
-      contexts: {
-        app: {
-          native: 'value',
-        },
-      },
-    });
-  });
-*/
   async function executeIntegrationWith({
     nativeContexts,
     mockEvent,
@@ -257,7 +209,7 @@ describe('Device Context Integration', () => {
     ).mockImplementation(() => Promise.resolve(nativeContexts as NativeDeviceContextsResponse));
     const originalNativeContexts = { ...nativeContexts };
     const originalMockEvent = { ...mockEvent };
-    const processedEvent =await executeIntegrationFor(mockEvent ?? {});
+    const processedEvent = await executeIntegrationFor(mockEvent ?? {});
     return {
       processedEvent,
       expectEvent: {
@@ -281,8 +233,7 @@ describe('Device Context Integration', () => {
   }
 });
 
-describe('Device Context Breadcrumb filter', () =>
-{
+describe('Device Context Breadcrumb filter', () => {
   const integration = new DeviceContext();
   const mergeUniqueBreadcrumbs = integration['_mergeUniqueBreadcrumbs'];
 
@@ -296,60 +247,60 @@ describe('Device Context Breadcrumb filter', () =>
   it('merge breadcrumbs on different index', async () => {
     const jsList = [{ timestamp: 2, message: 'duplicated breadcrumb' }] as Breadcrumb[];
     const nativeList = [
-      { timestamp: 1, message: 'new natieve'},
+      { timestamp: 1, message: 'new natieve' },
       { timestamp: 2, message: 'duplicated breadcrumb' }] as Breadcrumb[];
     expect(mergeUniqueBreadcrumbs(jsList, nativeList)).toStrictEqual([
-      { timestamp: 1, message: 'new natieve'},
+      { timestamp: 1, message: 'new natieve' },
       { timestamp: 2, message: 'duplicated breadcrumb' }] as Breadcrumb[]);
   });
 
   it('joins different breadcrumbs', async () => {
     const jsList = [
-    { timestamp: 1, message: 'new js'},
-    { timestamp: 2, message: 'new js' }] as Breadcrumb[];
-  const nativeList = [
-      { timestamp: 1, message: 'new native'},
+      { timestamp: 1, message: 'new js' },
+      { timestamp: 2, message: 'new js' }] as Breadcrumb[];
+    const nativeList = [
+      { timestamp: 1, message: 'new native' },
       { timestamp: 2, message: 'new native' }] as Breadcrumb[];
     expect(mergeUniqueBreadcrumbs(jsList, nativeList)).toStrictEqual([
-      { timestamp: 1, message: 'new native'},
-      { timestamp: 1, message: 'new js'},
-      { timestamp: 2, message: 'new native'},
-      { timestamp: 2, message: 'new js'}] as Breadcrumb[]);
+      { timestamp: 1, message: 'new native' },
+      { timestamp: 1, message: 'new js' },
+      { timestamp: 2, message: 'new native' },
+      { timestamp: 2, message: 'new js' }] as Breadcrumb[]);
   });
 
   it('all javascript breadcrumbs merged when list is larger than native one', async () => {
     const jsList = [
-    { timestamp: 1, message: 'new js'},
-    { timestamp: 2, message: 'new js'},
-    { timestamp: 3, message: 'new js'},
-    { timestamp: 4, message: 'new js' }] as Breadcrumb[];
-  const nativeList = [
-      { timestamp: 1, message: 'new native'},
+      { timestamp: 1, message: 'new js' },
+      { timestamp: 2, message: 'new js' },
+      { timestamp: 3, message: 'new js' },
+      { timestamp: 4, message: 'new js' }] as Breadcrumb[];
+    const nativeList = [
+      { timestamp: 1, message: 'new native' },
       { timestamp: 2, message: 'new native' }] as Breadcrumb[];
     expect(mergeUniqueBreadcrumbs(jsList, nativeList)).toStrictEqual([
-      { timestamp: 1, message: 'new native'},
-      { timestamp: 1, message: 'new js'},
-      { timestamp: 2, message: 'new native'},
-      { timestamp: 2, message: 'new js'},
-      { timestamp: 3, message: 'new js'},
+      { timestamp: 1, message: 'new native' },
+      { timestamp: 1, message: 'new js' },
+      { timestamp: 2, message: 'new native' },
+      { timestamp: 2, message: 'new js' },
+      { timestamp: 3, message: 'new js' },
       { timestamp: 4, message: 'new js' }] as Breadcrumb[]);
   });
 
   it('all native breadcrumbs merged when list is larger than javascripty one', async () => {
-  const jsList = [
-      { timestamp: 1, message: 'new js'},
+    const jsList = [
+      { timestamp: 1, message: 'new js' },
       { timestamp: 2, message: 'new js' }] as Breadcrumb[];
-      const nativeList = [
-        { timestamp: 1, message: 'new native'},
-        { timestamp: 2, message: 'new native'},
-        { timestamp: 3, message: 'new native'},
-        { timestamp: 4, message: 'new native' }] as Breadcrumb[];
-        expect(mergeUniqueBreadcrumbs(jsList, nativeList)).toStrictEqual([
-      { timestamp: 1, message: 'new native'},
-      { timestamp: 1, message: 'new js'},
-      { timestamp: 2, message: 'new native'},
-      { timestamp: 2, message: 'new js'},
-      { timestamp: 3, message: 'new native'},
+    const nativeList = [
+      { timestamp: 1, message: 'new native' },
+      { timestamp: 2, message: 'new native' },
+      { timestamp: 3, message: 'new native' },
+      { timestamp: 4, message: 'new native' }] as Breadcrumb[];
+    expect(mergeUniqueBreadcrumbs(jsList, nativeList)).toStrictEqual([
+      { timestamp: 1, message: 'new native' },
+      { timestamp: 1, message: 'new js' },
+      { timestamp: 2, message: 'new native' },
+      { timestamp: 2, message: 'new js' },
+      { timestamp: 3, message: 'new native' },
       { timestamp: 4, message: 'new native' }] as Breadcrumb[]);
   });
 

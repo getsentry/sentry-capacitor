@@ -1,4 +1,4 @@
-import type { BrowserOptions} from '@sentry/browser';
+import type { BrowserOptions } from '@sentry/browser';
 import type { Integration } from '@sentry/types';
 
 import type { CapacitorOptions } from '../src';
@@ -12,10 +12,6 @@ jest.mock('../src/wrapper', () => {
       initNativeSdk: jest.fn(() => Promise.resolve()),
     },
   };
-});
-
-beforeEach(() => {
-  jest.clearAllMocks();
 });
 
 describe('SDK Init', () => {
