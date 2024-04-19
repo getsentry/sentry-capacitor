@@ -101,9 +101,7 @@ jobs:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
       - name: Run tests
-        run: |
-          yarn install
-          yarn test
+        run: yarn test
 
   job_build:
     name: Build
