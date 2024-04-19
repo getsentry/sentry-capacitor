@@ -2,10 +2,9 @@
 import type { Envelope, EventEnvelope, EventItem, SeverityLevel, TransportMakeRequestResponse } from '@sentry/types';
 import { createEnvelope, logger } from '@sentry/utils';
 
+import { SentryCapacitor } from '../src/plugin';
 import { utf8ToBytes } from '../src/vendor';
 import { NATIVE } from '../src/wrapper';
-
-import { SentryCapacitor } from '../src/plugin';
 
 let getStringBytesLengthValue = 1;
 

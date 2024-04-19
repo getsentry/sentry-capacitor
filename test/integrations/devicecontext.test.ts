@@ -1,9 +1,8 @@
 import type { Hub } from '@sentry/core';
 import type { Breadcrumb, Event, SeverityLevel } from '@sentry/types';
-
-import type { NativeDeviceContextsResponse } from '../../src/definitions';
 import { logger } from '@sentry/utils';
 
+import type { NativeDeviceContextsResponse } from '../../src/definitions';
 import { DeviceContext } from '../../src/integrations';
 import { NATIVE } from '../../src/wrapper';
 
