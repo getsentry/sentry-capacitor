@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Dependencies
+
+- Bump JavaScript Sibling SDKs from v7.93.0 to v7.114.0 ([#646](https://github.com/getsentry/sentry-capacitor/pull/646))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#71140)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.93.0...7.114.0)
+
 ## 0.17.0
 
 ### Features

@@ -41,10 +41,10 @@
   "license": "MIT",
   "peerDependencies": {
     "@capacitor/core": ">=3.0.0",
-    "@sentry/angular": "7.93.0",
-    "@sentry/angular-ivy": "7.93.0",
-    "@sentry/react": "7.93.0",
-    "@sentry/vue": "7.93.0"
+    "@sentry/angular": "7.114.0",
+    "@sentry/angular-ivy": "7.114.0",
+    "@sentry/react": "7.114.0",
+    "@sentry/vue": "7.114.0"
   },
   "peerDependenciesMeta": {
     "@sentry/angular-ivy": {
