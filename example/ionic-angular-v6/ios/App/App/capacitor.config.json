@@ -7,5 +7,9 @@
 			"launchShowDuration": 0
 		}
 	},
-	"webDir": "www"
+	"webDir": "www",
+	"packageClassList": [
+		"SentryCapacitor",
+		"SentryCapacitor"
+	]
 }

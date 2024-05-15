@@ -1,46 +1,45 @@
-// There is no version defined on the package.
-// Since Capacitor 5 the minimum Java version was altered to version 18 so we will use this information to define if
-// the project is running on Capacitor 5 or higher.
-def cap5OrHigher =  rootProject.project(':capacitor-android').android.compileOptions.sourceCompatibility >= JavaVersion.VERSION_17
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
 
-def defaultSdkVersion = 33
+def getCapacitorCompileSdkVersion() {
+  return  Integer.parseInt(
+    rootProject.project(':capacitor-android').android.compileSdkVersion
+      .replaceAll(/\D+/, ''))
+}
+
+def GetCapacitorVersion() {
+  def compileVersion =  getCapacitorCompileSdkVersion()
+  if (compileVersion == 34) {
+    return 6
+  }
+  else if (compileVersion == 33) {
+    return 5
+  }
+  else if (compileVersion == 32) {
+    return 4
+  }
+  else {
+    throw new GradleException("The version of Capacitor is not supported by Sentry, CODE: " + compileVersion)
+  }
+}
+
+def capVersion = GetCapacitorVersion()
+
+def defaultSdkVersion = getCapacitorCompileSdkVersion()
 def targetJavaVersion = JavaVersion.VERSION_17
-if (cap5OrHigher) {
+if (capVersion >= 5) {
   println "Sentry Capacitor: Applying defaults for Capacitor 5 or higher"
   ext {
-    junitVersion =  project.hasProperty('junitVersion') ? rootProject.ext.junitVersion : '4.13.2'
-    androidxAppCompatVersion = project.hasProperty('androidxAppCompatVersion') ? rootProject.ext.androidxAppCompatVersion : '1.6.1'
-    androidxJunitVersion = project.hasProperty('androidxJunitVersion') ? rootProject.ext.androidxJunitVersion : '1.1.5'
-    androidxEspressoCoreVersion = project.hasProperty('androidxEspressoCoreVersion') ? rootProject.ext.androidxEspressoCoreVersion : '3.5.1'
+    androidxAppCompatVersion = safeExtGet('androidxAppCompatVersion', '1.6.1')
+    androidxEspressoCoreVersion = safeExtGet('androidxEspressoCoreVersion', '3.5.1')
   }
 }
 else {
   println "Sentry Capacitor: Applying defaults for Capacitor 4."
-  defaultSdkVersion = 32
   targetJavaVersion = JavaVersion.VERSION_11
   ext {
-    junitVersion =  project.hasProperty('junitVersion') ? rootProject.ext.junitVersion : '4.12'
-    androidxJunitVersion = project.hasProperty('androidxJunitVersion') ? rootProject.ext.androidxJunitVersion : '1.1.1'
-    androidxEspressoCoreVersion = project.hasProperty('androidxEspressoCoreVersion') ? rootProject.ext.androidxEspressoCoreVersion : '3.2.0'
-  }
-}
-
-buildscript {
-  repositories {
-    google()
-    mavenCentral()
-  }
-  dependencies {
-    if (rootProject.project(':capacitor-android').android.compileOptions.sourceCompatibility >= JavaVersion.VERSION_17) {
-      println "Sentry Capacitor: Applying dependencies for Capacitor 5 or higher."
-      classpath 'com.android.tools.build:gradle:8.0.0'
-      classpath 'com.google.gms:google-services:4.3.15'
-    }
-    else {
-      println "Sentry Capacitor: Applying dependencies for Capacitor 4."
-      classpath 'com.android.tools.build:gradle:7.2.1'
-      classpath 'com.google.gms:google-services:4.3.13'
-    }
+    androidxEspressoCoreVersion = safeExtGet('androidxEspressoCoreVersion', '3.2.0')
   }
 }
 
@@ -48,13 +47,12 @@ apply plugin: 'com.android.library'
 
 android {
   namespace "io.sentry.capacitor"
-  compileSdkVersion project.hasProperty('compileSdkVersion') ? rootProject.ext.compileSdkVersion : defaultSdkVersion
+  compileSdkVersion safeExtGet('compileSdkVersion', defaultSdkVersion)
   defaultConfig {
-    minSdkVersion project.hasProperty('minSdkVersion') ? rootProject.ext.minSdkVersion : 22
-    targetSdkVersion project.hasProperty('targetSdkVersion') ? rootProject.ext.targetSdkVersion : defaultSdkVersion
+    minSdkVersion safeExtGet('minSdkVersion', 22) // Same for Capacitor 6 or lower
+    targetSdkVersion safeExtGet('targetSdkVersion', defaultSdkVersion)
     versionCode 1
     versionName "1.0"
-    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
     release {
@@ -76,12 +74,7 @@ repositories {
   mavenCentral()
 }
 
-
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':capacitor-android')
     implementation 'io.sentry:sentry-android:7.6.0'
-    testImplementation "junit:junit:$junitVersion"
-    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
 }

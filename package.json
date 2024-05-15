@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/getsentry/sentry-capacitor"
   },
-  "version": "0.17.0",
+  "version": "0.17.1",
   "description": "Official Sentry SDK for Capacitor",
   "types": "dist/esm/index.d.ts",
   "main": "dist/build/index.js",
@@ -23,11 +23,11 @@
     "swiftlint": "node-swiftlint",
     "prepack": "yarn run build",
     "postinstall": "node scripts/check-siblings.js",
-    "bump:v5": "cd example/ionic-angular-v5 && yalc add @sentry/capacitor && yarn install && yarn build && yarn run bump:sample-pod && npx cap sync",
-    "bump:v3": "cd example/ionic-angular && yalc add @sentry/capacitor && yalc add broken_module && yarn install && yarn run build && yarn bump:sample-pod && npx cap sync",
-    "bump:v2": "cd example/ionic-angular-v2 && yalc add @sentry/capacitor && yarn install && yarn build && yarn run bump:sample-pod && npx cap sync",
-    "bump:sample-vue": "cd example/ionic-vue3 && yalc add @sentry/capacitor && yarn install && ionic build && yarn run bump:sample-pod && npx cap sync",
-    "bump:samples": "yalc publish && yarn run bump:v5 && yarn run bump:v3 && yarn run bump:v2 && yarn run bump:sample-vue"
+    "bump:v6": "cd example/ionic-angular-v6 && yalc add @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
+    "bump:v5": "cd example/ionic-angular-v5 && yalc add @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
+    "bump:v3": "cd example/ionic-angular-v3 && yalc add @sentry/capacitor && yalc add broken_module && yarn install --check-files && yarn run build && yarn bump:sample-pod && npx cap sync",
+    "bump:sample-vue": "cd example/ionic-vue3 && yalc add @sentry/capacitor && yarn install --check-files && ionic build && yarn run bump:sample-pod && npx cap sync",
+    "bump:samples": "yalc publish && yarn run bump:v6 && yarn run bump:v5 && yarn run bump:v3 && yarn run bump:sample-vue"
   },
   "keywords": [
     "capacitor",
@@ -70,9 +70,9 @@
     "@sentry/utils": "7.114.0"
   },
   "devDependencies": {
-    "@capacitor/android": "^3.0.1 || ^4.0.0 || ^5.0.0",
-    "@capacitor/core": "^3.0.1 || ^4.0.0 || ^5.0.0",
-    "@capacitor/ios": "^3.0.1 || ^4.0.0 || ^5.0.0",
+    "@capacitor/android": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0",
+    "@capacitor/core": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0",
+    "@capacitor/ios": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0",
     "@ionic/prettier-config": "^1.0.0",
     "@sentry-internal/eslint-config-sdk": "7.114.0",
     "@sentry-internal/eslint-plugin-sdk": "7.114.0",
