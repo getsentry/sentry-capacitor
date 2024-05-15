@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Features
+
+- Support Capacitor 6 ([#651](https://github.com/getsentry/sentry-capacitor/pull/651))
+
 ### Fixes/Features
 
 - Bump JavaScript SDK from v7.93.0 to v7.114.0 ([#645](https://github.com/getsentry/sentry-capacitor/pull/645))
