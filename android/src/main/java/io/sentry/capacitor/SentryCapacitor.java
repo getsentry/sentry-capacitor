@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
-import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
+import com.getcapacitor.annotation.CapacitorPlugin;
+
 import io.sentry.Breadcrumb;
 import io.sentry.HubAdapter;
 import io.sentry.Integration;
@@ -28,12 +29,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@NativePlugin
+@CapacitorPlugin
 public class SentryCapacitor extends Plugin {
 
     private static final String NATIVE_SDK_NAME = "sentry.native.android.capacitor";
@@ -52,7 +53,8 @@ public class SentryCapacitor extends Plugin {
         }
 
         try {
-            this.packageInfo = this.context.getPackageManager().getPackageInfo(this.getContext().getPackageName(), 0);
+            String packageName = this.getContext().getPackageName();
+            this.packageInfo = this.context.getPackageManager().getPackageInfo(packageName, 0); // Requires API 33 for deprecation change.
         } catch (Exception e) {
             logger.info("Error getting package info.");
         }
@@ -180,17 +182,21 @@ public class SentryCapacitor extends Plugin {
                 }
 
                 if (otherUserKeys != null) {
-                    Map<String, String> otherUserKeysMap = new HashMap<>();
+                    HashMap<String, String> otherUserKeysMap = new HashMap<>();
                     Iterator<String> it = otherUserKeys.keys();
 
                     while (it.hasNext()) {
                       String key = it.next();
                       String value = otherUserKeys.getString(key);
 
-                      otherUserKeysMap.put(key, value);
+                      // other is ConcurrentHashMap and can't have null values
+                      if (value != null) {
+                        otherUserKeys.put(key, value);
+                      }
                     }
 
-                    userInstance.setOthers(otherUserKeysMap);
+                    // Works on the Android SDK but doesn't seems to be supported by the back-end.
+                    userInstance.setData(otherUserKeysMap);
                 }
 
                 scope.setUser(userInstance);
@@ -208,7 +214,7 @@ public class SentryCapacitor extends Plugin {
         JSObject release = new JSObject();
         release.put("id", this.packageInfo.packageName);
         release.put("version", this.packageInfo.versionName);
-        release.put("build", String.valueOf(this.packageInfo.versionCode));
+        release.put("build", String.valueOf(this.packageInfo.versionCode)); // Requires API 28
         call.resolve(release);
     }
 
@@ -376,14 +382,14 @@ public class SentryCapacitor extends Plugin {
     public void addPackages(SentryEvent event, SdkVersion sdk) {
         SdkVersion eventSdk = event.getSdk();
         if (eventSdk != null && eventSdk.getName().equals("sentry.javascript.capacitor") && sdk != null) {
-            List<SentryPackage> sentryPackages = sdk.getPackages();
+            Set<SentryPackage> sentryPackages = sdk.getPackageSet();
             if (sentryPackages != null) {
                 for (SentryPackage sentryPackage : sentryPackages) {
                     eventSdk.addPackage(sentryPackage.getName(), sentryPackage.getVersion());
                 }
             }
 
-            List<String> integrations = sdk.getIntegrations();
+            Set<String> integrations = sdk.getIntegrationSet();
             if (integrations != null) {
                 for (String integration : integrations) {
                     eventSdk.addIntegration(integration);
