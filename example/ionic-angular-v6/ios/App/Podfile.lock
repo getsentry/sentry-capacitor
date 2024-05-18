@@ -1,7 +1,7 @@
 PODS:
-  - Capacitor (5.5.1):
+  - Capacitor (6.0.0):
     - CapacitorCordova
-  - CapacitorCordova (5.5.1)
+  - CapacitorCordova (6.0.0)
   - Sentry/HybridSDK (8.21.0):
     - SentryPrivate (= 8.21.0)
   - SentryCapacitor (0.17.0):
@@ -28,8 +28,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
-  Capacitor: 9da0a2415e3b6098511f8b5ffdb578d91ee79f8f
-  CapacitorCordova: e128cc7688c070ca0bfa439898a5f609da8dbcfe
+  Capacitor: 559d073c4ca6c27f8e7002c807eea94c3ba435a9
+  CapacitorCordova: 8c4bfdf69368512e85b1d8b724dd7546abeb30af
   Sentry: ebc12276bd17613a114ab359074096b6b3725203
   SentryCapacitor: eab7128c7c9558bfca219d1d11dd7aed74b1a01f
   SentryPrivate: d651efb234cf385ec9a1cdd3eff94b5e78a0e0fe
