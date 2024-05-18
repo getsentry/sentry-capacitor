@@ -1,12 +1,13 @@
-import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { Router } from "@angular/router";
-import { createErrorHandler, TraceService, routingInstrumentation, init as sentryAngularInit } from '@sentry/angular-ivy';
+
 import * as Sentry from '@sentry/capacitor';
+import { init as sentryAngularInit, createErrorHandler } from '@sentry/angular-ivy';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,13 +24,7 @@ Sentry.init(
     // Whether SDK should be enabled or not
     enabled: true,
     // Use the tracing integration to see traces and add performance monitoring
-    integrations: [
-      new Sentry.BrowserTracing({routingInstrumentation}),
-      new Sentry.Replay({
-        maskAllText: false,
-        blockAllMedia: true,
-      }),
-    ],
+    integrations: [new Sentry.BrowserTracing()],
     // A release identifier
     release: '1.0.0',
     // A dist identifier
@@ -39,40 +34,23 @@ Sentry.init(
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
     tracesSampleRate: 1.0,
-    // This sets the sample rate to be 10%. You may want this to be 100% while
-    // in development and sample at a lower rate in production
-    replaysSessionSampleRate: 0.1,
-    // If the entire session is not sampled, use the below sample rate to sample
-    // sessions when an error occurs.
-    replaysOnErrorSampleRate: 1.0,
   },
   sentryAngularInit,
 );
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    /* Provide the @sentry/angular error handler */
-    {
-      provide: ErrorHandler,
-      useValue: createErrorHandler(),
-    },
-    {
-      provide: TraceService,
-      deps: [Router],
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: () => () => {},
-      deps: [TraceService],
-      multi: true,
-    },
-
-  ],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        /* Provide the @sentry/angular error handler */
+        {
+            provide: ErrorHandler,
+            useValue: createErrorHandler(),
+        },
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

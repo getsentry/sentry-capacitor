@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import * as Sentry from '@sentry/capacitor';
 
+
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',

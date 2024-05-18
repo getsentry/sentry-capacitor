@@ -10,14 +10,17 @@ def getCapacitorCompileSdkVersion() {
 
 def GetCapacitorVersion() {
   def compileVersion =  getCapacitorCompileSdkVersion()
-  if (compileVersion == 34) {
+  if (compileVersion >= 34) {
     return 6
   }
   else if (compileVersion == 33) {
     return 5
   }
-  else if (compileVersion == 32) {
+  else if (compileVersion == 32 || compileVersion == 31) {
     return 4
+  }
+  else if (compileVersion == 30 || compileVersion == 29) {
+    return 3
   }
   else {
     throw new GradleException("The version of Capacitor is not supported by Sentry, CODE: " + compileVersion)

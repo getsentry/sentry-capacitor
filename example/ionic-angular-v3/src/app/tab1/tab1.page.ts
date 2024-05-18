@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
 import * as Sentry from '@sentry/capacitor';
-import * as broken from 'broken_module';
+import { SeverityLevel } from '@sentry/types';
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -13,10 +14,6 @@ export class Tab1Page {
   public throwUnhandledException(): void {
     // @ts-ignore intentionally calling to demonstrate global error handling
     undefinedMethod();
-  }
-
-  public throwUnhandledNodeException(): void {
-    broken.throw_error();
   }
 
   public regularException(): void {
@@ -94,23 +91,23 @@ export class Tab1Page {
     });
 
     Sentry.addBreadcrumb({
-      level: 'info' as Sentry.SeverityLevel,
+      level: 'info' as SeverityLevel,
       message: `TEST-BREADCRUMB-INFO: ${dateString}`,
     });
     Sentry.addBreadcrumb({
-      level: 'debug' as Sentry.SeverityLevel,
+      level: 'debug' as SeverityLevel,
       message: `TEST-BREADCRUMB-DEBUG: ${dateString}`,
     });
     Sentry.addBreadcrumb({
-      level: 'error' as Sentry.SeverityLevel,
+      level: 'error' as SeverityLevel,
       message: `TEST-BREADCRUMB-ERROR: ${dateString}`,
     });
     Sentry.addBreadcrumb({
-      level: 'fatal' as Sentry.SeverityLevel,
+      level: 'fatal' as SeverityLevel,
       message: `TEST-BREADCRUMB-FATAL: ${dateString}`,
     });
     Sentry.addBreadcrumb({
-      level: 'info' as Sentry.SeverityLevel,
+      level: 'info' as SeverityLevel,
       message: `TEST-BREADCRUMB-DATA: ${dateString}`,
       data: {
         stringTest: 'Hello',
@@ -125,7 +122,6 @@ export class Tab1Page {
       category: 'TEST-CATEGORY',
     });
 
-    // eslint-disable-next-line no-console
     console.log('Test scope properties were set.');
   }
 

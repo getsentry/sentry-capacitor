@@ -25,9 +25,10 @@
     "postinstall": "node scripts/check-siblings.js",
     "bump:v6": "cd example/ionic-angular-v6 && yalc add @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
     "bump:v5": "cd example/ionic-angular-v5 && yalc add @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
-    "bump:v3": "cd example/ionic-angular-v3 && yalc add @sentry/capacitor && yalc add broken_module && yarn install --check-files && yarn run build && yarn bump:sample-pod && npx cap sync",
+    "bump:v4": "cd example/ionic-angular-v4 && yalc add @sentry/capacitor && yalc add broken_module && yarn install --check-files && yarn run build && yarn bump:sample-pod && npx cap sync",
+    "bump:v3": "cd example/ionic-angular-v3 && yalc add @sentry/capacitor && yarn install --check-files && yarn run build && yarn bump:sample-pod && npx cap sync",
     "bump:sample-vue": "cd example/ionic-vue3 && yalc add @sentry/capacitor && yarn install --check-files && ionic build && yarn run bump:sample-pod && npx cap sync",
-    "bump:samples": "yalc publish && yarn run bump:v6 && yarn run bump:v5 && yarn run bump:v3 && yarn run bump:sample-vue"
+    "bump:samples": "yalc publish && yarn run bump:v6 && yarn run bump:v5 && yarn run bump:v4 && yarn run bump:v3 && yarn run bump:sample-vue"
   },
   "keywords": [
     "capacitor",
