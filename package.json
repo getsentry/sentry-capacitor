@@ -23,11 +23,12 @@
     "swiftlint": "node-swiftlint",
     "prepack": "yarn run build",
     "postinstall": "node scripts/check-siblings.js",
-    "bump:v5": "cd example/ionic-angular-v5 && yalc add @sentry/capacitor && yarn install && yarn build && yarn run bump:sample-pod && npx cap sync",
-    "bump:v3": "cd example/ionic-angular && yalc add @sentry/capacitor && yalc add broken_module && yarn install && yarn run build && yarn bump:sample-pod && npx cap sync",
-    "bump:v2": "cd example/ionic-angular-v2 && yalc add @sentry/capacitor && yarn install && yarn build && yarn run bump:sample-pod && npx cap sync",
-    "bump:sample-vue": "cd example/ionic-vue3 && yalc add @sentry/capacitor && yarn install && ionic build && yarn run bump:sample-pod && npx cap sync",
-    "bump:samples": "yalc publish && yarn run bump:v5 && yarn run bump:v3 && yarn run bump:v2 && yarn run bump:sample-vue"
+    "bump:v6": "cd example/ionic-angular-v6 && yalc add @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
+    "bump:v5": "cd example/ionic-angular-v5 && yalc add @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
+    "bump:v4": "cd example/ionic-angular-v4 && yalc add @sentry/capacitor && yalc add broken_module && yarn install --check-files && yarn run build && yarn bump:sample-pod && npx cap sync",
+    "bump:v3": "cd example/ionic-angular-v3 && yalc add @sentry/capacitor && yarn install --check-files && yarn run build && yarn bump:sample-pod && npx cap sync",
+    "bump:sample-vue": "cd example/ionic-vue3 && yalc add @sentry/capacitor && yarn install --check-files && ionic build && yarn run bump:sample-pod && npx cap sync",
+    "bump:samples": "yalc publish && yarn run bump:v6 && yarn run bump:v5 && yarn run bump:v4 && yarn run bump:v3 && yarn run bump:sample-vue"
   },
   "keywords": [
     "capacitor",
@@ -41,10 +42,10 @@
   "license": "MIT",
   "peerDependencies": {
     "@capacitor/core": ">=3.0.0",
-    "@sentry/angular": "7.93.0",
-    "@sentry/angular-ivy": "7.93.0",
-    "@sentry/react": "7.93.0",
-    "@sentry/vue": "7.93.0"
+    "@sentry/angular": "7.114.0",
+    "@sentry/angular-ivy": "7.114.0",
+    "@sentry/react": "7.114.0",
+    "@sentry/vue": "7.114.0"
   },
   "peerDependenciesMeta": {
     "@sentry/angular-ivy": {
@@ -61,22 +62,22 @@
     }
   },
   "dependencies": {
-    "@sentry/browser": "7.93.0",
-    "@sentry/core": "7.93.0",
-    "@sentry/hub": "7.93.0",
-    "@sentry/integrations": "7.93.0",
-    "@sentry/tracing": "7.93.0",
-    "@sentry/types": "7.93.0",
-    "@sentry/utils": "7.93.0"
+    "@sentry/browser": "7.114.0",
+    "@sentry/core": "7.114.0",
+    "@sentry/hub": "7.114.0",
+    "@sentry/integrations": "7.114.0",
+    "@sentry/tracing": "7.114.0",
+    "@sentry/types": "7.114.0",
+    "@sentry/utils": "7.114.0"
   },
   "devDependencies": {
-    "@capacitor/android": "^3.0.1 || ^4.0.0 || ^5.0.0",
-    "@capacitor/core": "^3.0.1 || ^4.0.0 || ^5.0.0",
-    "@capacitor/ios": "^3.0.1 || ^4.0.0 || ^5.0.0",
+    "@capacitor/android": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0",
+    "@capacitor/core": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0",
+    "@capacitor/ios": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0",
     "@ionic/prettier-config": "^1.0.0",
-    "@sentry-internal/eslint-config-sdk": "7.93.0",
-    "@sentry-internal/eslint-plugin-sdk": "7.93.0",
-    "@sentry-internal/typescript": "7.93.0",
+    "@sentry-internal/eslint-config-sdk": "7.114.0",
+    "@sentry-internal/eslint-plugin-sdk": "7.114.0",
+    "@sentry-internal/typescript": "7.114.0",
     "@sentry/wizard": "3.21.0",
     "@types/jest": "^26.0.15",
     "eslint": "^7.13.0",

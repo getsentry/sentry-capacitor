@@ -157,3 +157,7 @@ dependencies {
 +    implementation 'io.sentry:sentry-android:6.7.7-my-local-version'
 }
 ```
+
+## Bumping Capacitor
+
+When bumping the dependency of Capacitor, always have a look on the following link to see any changes required on the SDK in order to support the latest versions of Capacitor: https://capacitorjs.com/docs/updating/plugins/6-0

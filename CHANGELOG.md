@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### Features
+
+- Support Capacitor 6 ([#651](https://github.com/getsentry/sentry-capacitor/pull/651))
+
+### Dependencies
+
+- Bump JavaScript SDK from v7.93.0 to v7.114.0 ([#645](https://github.com/getsentry/sentry-capacitor/pull/645))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/7.114.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.81.1...7.114.0)
+
 ## 0.17.0
 
 ### Features

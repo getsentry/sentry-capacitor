@@ -1,0 +1,6 @@
+[
+	{
+		"pkg": "@sentry/capacitor",
+		"classpath": "io.sentry.capacitor.SentryCapacitor"
+	}
+]
