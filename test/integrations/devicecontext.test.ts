@@ -235,11 +235,12 @@ describe('Device Context Integration', () => {
 describe('Device Context Breadcrumb filter', () => {
   const integration = new DeviceContext();
   const mergeUniqueBreadcrumbs = integration['_mergeUniqueBreadcrumbs'];
+  const defaultMaxBreadcrumb = 100;
 
   it('merge breadcrumbs if same timestamp and message', async () => {
     const jsList = [{ timestamp: 1, message: 'duplicated breadcrumb' }] as Breadcrumb[];
     const nativeList = [{ timestamp: 1, message: 'duplicated breadcrumb' }] as Breadcrumb[];
-    expect(mergeUniqueBreadcrumbs(jsList, nativeList)).toStrictEqual(
+    expect(mergeUniqueBreadcrumbs(jsList, nativeList, defaultMaxBreadcrumb)).toStrictEqual(
       [{ timestamp: 1, message: 'duplicated breadcrumb' }] as Breadcrumb[]);
   });
 
@@ -248,9 +249,32 @@ describe('Device Context Breadcrumb filter', () => {
     const nativeList = [
       { timestamp: 1, message: 'new natieve' },
       { timestamp: 2, message: 'duplicated breadcrumb' }] as Breadcrumb[];
-    expect(mergeUniqueBreadcrumbs(jsList, nativeList)).toStrictEqual([
+    expect(mergeUniqueBreadcrumbs(jsList, nativeList, defaultMaxBreadcrumb)).toStrictEqual([
       { timestamp: 1, message: 'new natieve' },
       { timestamp: 2, message: 'duplicated breadcrumb' }] as Breadcrumb[]);
+  });
+
+  it('merge breadcrumbs that are out of order', async () => {
+    const jsList = [
+      { timestamp: 2, message: 'duplicated breadcrumb 2' },
+      { timestamp: 1, message: 'duplicated breadcrumb' },
+      { timestamp: 3, message: 'new js' },
+      { timestamp: 4, message: 'new js' },
+    ] as Breadcrumb[];
+    const nativeList = [
+      { timestamp: 2, message: 'new native' },
+      { timestamp: 1, message: 'duplicated breadcrumb' },
+      { timestamp: 2, message: 'duplicated breadcrumb 2' },
+      { timestamp: 3, message: 'new native' },
+      { timestamp: 4, message: 'new native' },] as Breadcrumb[];
+    expect(mergeUniqueBreadcrumbs(jsList, nativeList, defaultMaxBreadcrumb)).toStrictEqual([
+      { timestamp: 1, message: 'duplicated breadcrumb' },
+      { timestamp: 2, message: 'new native' },
+      { timestamp: 2, message: 'duplicated breadcrumb 2' },
+      { timestamp: 3, message: 'new native' },
+      { timestamp: 3, message: 'new js' },
+      { timestamp: 4, message: 'new native' },
+      { timestamp: 4, message: 'new js' }] as Breadcrumb[]);
   });
 
   it('joins different breadcrumbs', async () => {
@@ -260,7 +284,7 @@ describe('Device Context Breadcrumb filter', () => {
     const nativeList = [
       { timestamp: 1, message: 'new native' },
       { timestamp: 2, message: 'new native' }] as Breadcrumb[];
-    expect(mergeUniqueBreadcrumbs(jsList, nativeList)).toStrictEqual([
+    expect(mergeUniqueBreadcrumbs(jsList, nativeList, defaultMaxBreadcrumb)).toStrictEqual([
       { timestamp: 1, message: 'new native' },
       { timestamp: 1, message: 'new js' },
       { timestamp: 2, message: 'new native' },
@@ -276,7 +300,7 @@ describe('Device Context Breadcrumb filter', () => {
     const nativeList = [
       { timestamp: 1, message: 'new native' },
       { timestamp: 2, message: 'new native' }] as Breadcrumb[];
-    expect(mergeUniqueBreadcrumbs(jsList, nativeList)).toStrictEqual([
+    expect(mergeUniqueBreadcrumbs(jsList, nativeList, defaultMaxBreadcrumb)).toStrictEqual([
       { timestamp: 1, message: 'new native' },
       { timestamp: 1, message: 'new js' },
       { timestamp: 2, message: 'new native' },
@@ -294,7 +318,7 @@ describe('Device Context Breadcrumb filter', () => {
       { timestamp: 2, message: 'new native' },
       { timestamp: 3, message: 'new native' },
       { timestamp: 4, message: 'new native' }] as Breadcrumb[];
-    expect(mergeUniqueBreadcrumbs(jsList, nativeList)).toStrictEqual([
+    expect(mergeUniqueBreadcrumbs(jsList, nativeList, defaultMaxBreadcrumb)).toStrictEqual([
       { timestamp: 1, message: 'new native' },
       { timestamp: 1, message: 'new js' },
       { timestamp: 2, message: 'new native' },
@@ -309,10 +333,61 @@ describe('Device Context Breadcrumb filter', () => {
     const nativeList: Breadcrumb[] = [];
 
     // Call the private method
-    const result = mergeUniqueBreadcrumbs(jsList, nativeList);
+    const result = mergeUniqueBreadcrumbs(jsList, nativeList, defaultMaxBreadcrumb);
 
     // Assert that the result is an empty array
     expect(result).toEqual([]);
   });
 
+  describe('respect maxBreadcrumb limits', async () => {
+    const newLimit_3 = 3;
+
+    it('limit JavaScript list', async () => {
+      const jsList = [
+        { timestamp: 1, message: 'js breadcrumb' },
+        { timestamp: 2, message: 'js breadcrumb' },
+        { timestamp: 3, message: 'js breadcrumb' },
+        { timestamp: 4, message: 'js breadcrumb' },
+        { timestamp: 5, message: 'js breadcrumb' },] as Breadcrumb[];
+      const nativeList = [] as Breadcrumb[];
+      expect(mergeUniqueBreadcrumbs(jsList, nativeList, newLimit_3)).toStrictEqual([
+          { timestamp: 1, message: 'js breadcrumb' },
+          { timestamp: 2, message: 'js breadcrumb' },
+          { timestamp: 3, message: 'js breadcrumb' }] as Breadcrumb[]);
+    });
+
+    it('limit Native list', async () => {
+      const nativeList = [
+        { timestamp: 1, message: 'native breadcrumb' },
+        { timestamp: 2, message: 'native breadcrumb' },
+        { timestamp: 3, message: 'native breadcrumb' },
+        { timestamp: 4, message: 'native breadcrumb' },
+        { timestamp: 5, message: 'native breadcrumb' },] as Breadcrumb[];
+      const jsList = [] as Breadcrumb[];
+      expect(mergeUniqueBreadcrumbs(jsList, nativeList, newLimit_3)).toStrictEqual([
+          { timestamp: 1, message: 'native breadcrumb' },
+          { timestamp: 2, message: 'native breadcrumb' },
+          { timestamp: 3, message: 'native breadcrumb' }] as Breadcrumb[]);
+    });
+
+    it('limit Merge', async () => {
+      const nativeList = [
+        { timestamp: 1, message: 'duplicated breadcrumb' },
+        { timestamp: 2, message: 'duplicated breadcrumb' },
+        { timestamp: 3, message: 'duplicated breadcrumb' },
+        { timestamp: 4, message: 'duplicated breadcrumb' },
+        { timestamp: 5, message: 'duplicated breadcrumb' },] as Breadcrumb[];
+      const jsList = [
+        { timestamp: 1, message: 'duplicated breadcrumb' },
+        { timestamp: 2, message: 'duplicated breadcrumb' },
+        { timestamp: 3, message: 'duplicated breadcrumb' },
+        { timestamp: 4, message: 'duplicated breadcrumb' },
+        { timestamp: 5, message: 'duplicated breadcrumb' },] as Breadcrumb[];
+      expect(mergeUniqueBreadcrumbs(jsList, nativeList, newLimit_3)).toStrictEqual([
+          { timestamp: 1, message: 'duplicated breadcrumb' },
+          { timestamp: 2, message: 'duplicated breadcrumb' },
+          { timestamp: 3, message: 'duplicated breadcrumb' }] as Breadcrumb[]);
+    });
+
+  });
 });

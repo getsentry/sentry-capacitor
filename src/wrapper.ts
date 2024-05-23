@@ -266,7 +266,9 @@ export const NATIVE = {
     if (!this.enableNative) {
       return;
     }
-
+    if (!this.isNativeClientAvailable()) {
+      throw this._NativeClientError;
+    }
     SentryCapacitor.clearBreadcrumbs();
   },
 
@@ -305,7 +307,7 @@ export const NATIVE = {
 
       if (itemHeader.type == 'event' || itemHeader.type == 'transaction') {
         const event = this._processLevels(itemPayload as Event);
-        if ('message' in event) {
+        if ('message' in event && this.platform === 'android') {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore Android still uses the old message object, without this the serialization of events will break.
           event.message = { message: event.message };

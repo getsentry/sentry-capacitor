@@ -23,7 +23,8 @@ export class DeviceContext implements Integration {
   public setupOnce(addGlobalEventProcessor: (callback: EventProcessor) => void, getCurrentHub: () => Hub): void {
     // eslint-disable-next-line complexity
     addGlobalEventProcessor(async (event: Event) => {
-      const self = getCurrentHub().getIntegration(DeviceContext);
+      const hub = getCurrentHub();
+      const self = hub.getIntegration(DeviceContext);
       if (!self) {
         return event;
       }
@@ -81,7 +82,8 @@ export class DeviceContext implements Integration {
       : undefined;
       if (nativeBreadcrumbs) {
         if (event.breadcrumbs && event.breadcrumbs.length !== nativeBreadcrumbs.length) {
-          event.breadcrumbs = this._mergeUniqueBreadcrumbs(event.breadcrumbs, nativeBreadcrumbs);
+          const maxBreadcrumbs = hub.getClient()?.getOptions().maxBreadcrumbs ?? 100; // Default is 100.
+          event.breadcrumbs = this._mergeUniqueBreadcrumbs(event.breadcrumbs, nativeBreadcrumbs, maxBreadcrumbs);
         }
         else {
           event.breadcrumbs = nativeBreadcrumbs;
@@ -99,15 +101,20 @@ export class DeviceContext implements Integration {
  * @param nativeList The second group of breadcrumbs from the native layer.
  * @returns An array of unique breadcrumbs merged from both lists.
    */
-  private _mergeUniqueBreadcrumbs(jsList: Breadcrumb[], nativeList: Breadcrumb[]): Breadcrumb[] {
+  private _mergeUniqueBreadcrumbs(jsList: Breadcrumb[], nativeList: Breadcrumb[], maxBreadcrumbs: number): Breadcrumb[] {
+    // Ensure both lists are ordered by timestamp.
+    const orderedNativeList = [...nativeList].sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0));
+    const orderedJsList = [...jsList].sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0));
 
+    const combinedList: Breadcrumb[] = [];
     let jsIndex = 0;
     let natIndex = 0;
-    const combinedList: Breadcrumb[] = [];
-    while (jsIndex < jsList.length && natIndex < nativeList.length)
+
+    while (jsIndex < orderedJsList.length && natIndex < orderedNativeList.length && combinedList.length < maxBreadcrumbs)
     {
-      const jsBreadcrumb = jsList[jsIndex];
-      const natBreadcrumb = nativeList[natIndex];
+      const jsBreadcrumb = orderedJsList[jsIndex];
+      const natBreadcrumb = orderedNativeList[natIndex];
+
       if (jsBreadcrumb.timestamp === natBreadcrumb.timestamp &&
         jsBreadcrumb.message === natBreadcrumb.message) {
         combinedList.push(jsBreadcrumb);
@@ -126,12 +133,13 @@ export class DeviceContext implements Integration {
       }
     }
 
-    while (jsIndex < jsList.length) {
-      combinedList.push(jsList[jsIndex++]);
+    // Add remaining breadcrumbs from the JavaScript and Native list if space allows.
+    while (jsIndex < orderedJsList.length  && combinedList.length < maxBreadcrumbs) {
+      combinedList.push(orderedJsList[jsIndex++]);
     }
 
-    while (natIndex < nativeList.length) {
-      combinedList.push(nativeList[natIndex++]);
+    while (natIndex < orderedNativeList.length && combinedList.length < maxBreadcrumbs) {
+      combinedList.push(orderedNativeList[natIndex++]);
     }
     return combinedList;
   }
