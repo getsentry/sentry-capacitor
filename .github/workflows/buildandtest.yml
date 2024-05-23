@@ -80,7 +80,14 @@ jobs:
           yarn build
           yalc publish
       - name: Update SDK & build samples
-        run: yarn bump:samples
+        run: |
+          yalc publish &&
+          yarn run bump:v6 &
+          yarn run bump:v5 &
+          yarn run bump:v4 &
+          yarn run bump:v3 &
+          yarn run bump:sample-vue &
+          wait
 
   job_unit_test:
     name: Test
