@@ -101,15 +101,10 @@ jobs:
       matrix:
         include:
           - bump: 'v3'
-            path: 'example/ionic-angular-v3'
           - bump: 'v4'
-            path: 'example/ionic-angular-v4'
           - bump: 'v5'
-            path: 'example/ionic-angular-v5'
           - bump: 'v6'
-            path: 'example/ionic-angular-v6'
           - bump: 'vue'
-            path: 'example/ionic-vue3'
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v3
@@ -144,7 +139,6 @@ jobs:
           yalc publish
 
       - name: Build Sample ${{ matrix.bump }}
-        working-directory:
         run: yarn run bump:${{ matrix.bump }}
 
   job_unit_test:
