@@ -95,18 +95,17 @@ jobs:
   job_sample_test:
     name: Sample Build Test
     needs: job_build
-    build_variations:
-      # macos required for the xcode build.
-      runs-on: macos-latest
-      strategy:
-        matrix:
-          bump: ['v3', 'v4', 'v5', 'v6', 'vue']
-          path:
-            - 'example/ionic-angular-v3'
-            - 'example/ionic-angular-v4'
-            - 'example/ionic-angular-v5'
-            - 'example/ionic-angular-v6'
-            - 'example/ionic-vue3'
+    # macos required for the xcode build.
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        bump: ['v3', 'v4', 'v5', 'v6', 'vue']
+        path:
+          - 'example/ionic-angular-v3'
+          - 'example/ionic-angular-v4'
+          - 'example/ionic-angular-v5'
+          - 'example/ionic-angular-v6'
+          - 'example/ionic-vue3'
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v3
@@ -129,10 +128,9 @@ jobs:
 
       - name: Download Sentry Capacitor package
         uses: actions/download-artifact@v3
-        working-directory: ${{ matrix.path }}
         with:
           name: yalc-package
-          path: .yalc # Ensure this path matches where yalc expects to find the package
+          path: ${{ matrix.path }}/.yalc # Ensure this path matches where yalc expects to find the package
 
       - name: Publish test broken node.
         working-directory: example/broken_node_module
