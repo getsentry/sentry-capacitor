@@ -36,84 +36,12 @@ jobs:
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ steps.compute_lockfile_hash.outputs.hash }}
-      - name: Install Yarn
-        run: npm install -g yarn@1.22.22
 
       - name: Install dependencies
         if: steps.cache_dependencies.outputs.cache-hit == ''
         run: yarn install
     outputs:
       dependency_cache_key: ${{ steps.compute_lockfile_hash.outputs.hash }}
-
-  job_sample_test:
-    name: Sample Build Test
-    needs: job_build
-    continue-on-error: true
-    timeout-minutes: 30
-    # macos required for the xcode build.
-    runs-on: macos-latest
-    steps:
-      - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v3
-      - name: Set up Node
-        uses: actions/setup-node@v3
-      - name: Check dependency cache
-        uses: actions/cache@v3.3.3
-        with:
-          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
-          key: ${{ needs.job_build.outputs.dependency_cache_key }}
-      - name: Check build cache
-        uses: actions/cache@v3.3.3
-        with:
-          path: ${{ env.CACHED_BUILD_PATHS }}
-          key: ${{ env.BUILD_CACHE_KEY }}
-      - name: Install yalc
-        run: yarn  global add yalc
-      - name: Install Ionic
-        run: yarn  global add @ionic/cli
-      - name: Install Packages
-        run: yarn install
-      - name: Publish test broken node.
-        working-directory: example/broken_node_module
-        run: |
-          yarn install
-          yarn build
-          yalc publish
-      - name: Update SDK & build samples
-        run: |
-          yalc publish &&
-          {
-            yarn run bump:v6 | sed 's/^/[sample V6] /' &
-            yarn run bump:v5 | sed 's/^/[sample V5] /' &
-            yarn run bump:v4 | sed 's/^/[sample V4] /' &
-            yarn run bump:v3 | sed 's/^/[sample V3] /' &
-            yarn run bump:sample-vue | sed 's/^/[sample VUE] /' &
-          } | tee >(cat) &
-          wait
-
-  job_unit_test:
-    name: Test
-    needs: job_build
-    continue-on-error: true
-    timeout-minutes: 30
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v3
-      - name: Set up Node
-        uses: actions/setup-node@v3
-      - name: Check dependency cache
-        uses: actions/cache@v3.3.3
-        with:
-          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
-          key: ${{ needs.job_build.outputs.dependency_cache_key }}
-      - name: Check build cache
-        uses: actions/cache@v3.3.3
-        with:
-          path: ${{ env.CACHED_BUILD_PATHS }}
-          key: ${{ env.BUILD_CACHE_KEY }}
-      - name: Run tests
-        run: yarn test
 
   job_build:
     name: Build
@@ -147,10 +75,99 @@ jobs:
       - name: Check if yarn.lock is dirty
         if: steps.cache_built_packages.outputs.cache-hit == ''
         run: yarn install --frozen-lockfile
+      - name: Publish package locally
+        run: |
+          yarn  global add yalc
+          yalc publish
+
+      - name: Upload yalc package
+        uses: actions/upload-artifact@v3
+        with:
+          name: yalc-package
+          path: .yalc # Path to yalc directory where the package is published
+
+
     outputs:
       # this needs to be passed on, because the `needs` context only looks at direct ancestors (so steps which depend on
       # `job_build` can't see `job_install_deps` and what it returned)
       dependency_cache_key: ${{ needs.job_install_deps.outputs.dependency_cache_key }}
+
+  job_sample_test:
+    name: Sample Build Test
+    needs: job_build
+    build_variations:
+      # macos required for the xcode build.
+      runs-on: macos-latest
+      strategy:
+        matrix:
+          bump: ['v3', 'v4', 'v5', 'v6', 'vue']
+          path:
+            - 'example/ionic-angular-v3'
+            - 'example/ionic-angular-v4'
+            - 'example/ionic-angular-v5'
+            - 'example/ionic-angular-v6'
+            - 'example/ionic-vue3'
+    steps:
+      - name: Check out current commit (${{ github.sha }})
+        uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+      - name: Check dependency cache
+        uses: actions/cache@v3.3.3
+        with:
+          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
+          key: ${{ needs.job_build.outputs.dependency_cache_key }}
+      - name: Check build cache
+        uses: actions/cache@v3.3.3
+        with:
+          path: ${{ env.CACHED_BUILD_PATHS }}
+          key: ${{ env.BUILD_CACHE_KEY }}
+      - name: Install yalc
+        run: yarn  global add yalc
+      - name: Install Ionic
+        run: yarn  global add @ionic/cli
+
+      - name: Download Sentry Capacitor package
+        uses: actions/download-artifact@v3
+        working-directory: ${{ matrix.path }}
+        with:
+          name: yalc-package
+          path: .yalc # Ensure this path matches where yalc expects to find the package
+
+      - name: Publish test broken node.
+        working-directory: example/broken_node_module
+        run: |
+          yarn install
+          yarn build
+          yalc publish
+
+      - name: Build Sample ${{ matrix.bump }}
+        working-directory: ${{ matrix.path }}
+        run: yarn run bump:${{ matrix.bump }}
+
+  job_unit_test:
+    name: Test
+    needs: job_build
+    continue-on-error: true
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current commit (${{ github.sha }})
+        uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+      - name: Check dependency cache
+        uses: actions/cache@v3.3.3
+        with:
+          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
+          key: ${{ needs.job_build.outputs.dependency_cache_key }}
+      - name: Check build cache
+        uses: actions/cache@v3.3.3
+        with:
+          path: ${{ env.CACHED_BUILD_PATHS }}
+          key: ${{ env.BUILD_CACHE_KEY }}
+      - name: Run tests
+        run: yarn test
 
   job_artifacts:
     name: Upload Artifacts
