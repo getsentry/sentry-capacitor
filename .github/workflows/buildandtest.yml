@@ -144,6 +144,7 @@ jobs:
           yalc publish
 
       - name: Build Sample ${{ matrix.bump }}
+        working-directory:
         run: yarn run bump:${{ matrix.bump }}
 
   job_unit_test:
