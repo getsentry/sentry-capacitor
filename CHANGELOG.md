@@ -7,6 +7,18 @@
 - Breadcrumbs added on hints are now captured. ([#629](https://github.com/getsentry/sentry-capacitor/pull/629))
 - Event is enriched with all the Android context on the JS layer and you can filter/modify all the data in the `beforeSend`. ([#629](https://github.com/getsentry/sentry-capacitor/pull/629))
 
+## 0.18.0
+
+### Features
+
+- Support Capacitor 6 ([#651](https://github.com/getsentry/sentry-capacitor/pull/651))
+
+### Dependencies
+
+- Bump JavaScript SDK from v7.93.0 to v7.114.0 ([#645](https://github.com/getsentry/sentry-capacitor/pull/645))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/7.114.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.81.1...7.114.0)
+
 ## 0.17.0
 
 ### Features
