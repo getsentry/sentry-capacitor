@@ -84,7 +84,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: yalc-package
-          path: .yalc # Path to yalc directory where the package is published
+          path: ~/.yalc # Path to yalc directory where the package is published
 
 
     outputs:
@@ -134,7 +134,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: yalc-package
-          path: ${{ matrix.path }}/.yalc # Ensure this path matches where yalc expects to find the package
+          path: ~/.yalc # Ensure this path matches where yalc expects to find the package
 
       - name: Publish test broken node.
         working-directory: example/broken_node_module
