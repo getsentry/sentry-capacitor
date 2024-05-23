@@ -23,11 +23,11 @@
     "swiftlint": "node-swiftlint",
     "prepack": "yarn run build",
     "postinstall": "node scripts/check-siblings.js",
-    "bump:v6": "cd example/ionic-angular-v6 && yalc add @sentry/capacitor && yarn install && yarn build && yarn run bump:sample-pod && npx cap sync",
-    "bump:v5": "cd example/ionic-angular-v5 && yalc add @sentry/capacitor && yarn install && yarn build && yarn run bump:sample-pod && npx cap sync",
-    "bump:v4": "cd example/ionic-angular-v4 && yalc add @sentry/capacitor && yalc add broken_module && yarn install && yarn run build && yarn bump:sample-pod && npx cap sync",
-    "bump:v3": "cd example/ionic-angular-v3 && yalc add @sentry/capacitor && yarn install && yarn run build && yarn bump:sample-pod && npx cap sync",
-    "bump:sample-vue": "cd example/ionic-vue3 && yalc add @sentry/capacitor && yarn install && ionic build && yarn run bump:sample-pod && npx cap sync",
+    "bump:v6": "cd example/ionic-angular-v6 && yalc add @sentry/capacitor && yarn install --mutex network && yarn build && yarn run bump:sample-pod && npx cap sync",
+    "bump:v5": "cd example/ionic-angular-v5 && yalc add @sentry/capacitor && yarn install --mutex network && yarn build && yarn run bump:sample-pod && npx cap sync",
+    "bump:v4": "cd example/ionic-angular-v4 && yalc add @sentry/capacitor && yalc add broken_module && yarn install --mutex network && yarn run build && yarn bump:sample-pod && npx cap sync",
+    "bump:v3": "cd example/ionic-angular-v3 && yalc add @sentry/capacitor && yarn install --mutex network && yarn run build && yarn bump:sample-pod && npx cap sync",
+    "bump:sample-vue": "cd example/ionic-vue3 && yalc add @sentry/capacitor && yarn install --mutex network && ionic build && yarn run bump:sample-pod && npx cap sync",
     "bump:samples": "yalc publish &&  yarn concurrently --kill-others-on-fail \"yarn run bump:v6\" \"yarn run bump:v5\" \"yarn run bump:v4\" \"yarn run bump:v3\" \"yarn run bump:sample-vue\""
   },
   "keywords": [
