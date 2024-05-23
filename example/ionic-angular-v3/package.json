@@ -30,7 +30,7 @@
     "@capacitor/cli": "^3.9.0",
     "@ionic/angular-toolkit": "^2.3.0",
     "@ionic/cli": "^6.16.3",
-    "@sentry/cli": "^2.21.2",I am an error
+    "@sentry/cli": "^2.21.2",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
