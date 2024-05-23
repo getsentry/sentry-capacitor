@@ -99,13 +99,17 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        bump: ['v3', 'v4', 'v5', 'v6', 'vue']
-        path:
-          - 'example/ionic-angular-v3'
-          - 'example/ionic-angular-v4'
-          - 'example/ionic-angular-v5'
-          - 'example/ionic-angular-v6'
-          - 'example/ionic-vue3'
+        include:
+          - bump: 'v3'
+            path: 'example/ionic-angular-v3'
+          - bump: 'v4'
+            path: 'example/ionic-angular-v4'
+          - bump: 'v5'
+            path: 'example/ionic-angular-v5'
+          - bump: 'v6'
+            path: 'example/ionic-angular-v6'
+          - bump: 'vue'
+            path: 'example/ionic-vue3'
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v3
