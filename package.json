@@ -28,7 +28,7 @@
     "bump:v4": "cd example/ionic-angular-v4 && yalc add @sentry/capacitor && yalc add broken_module && yarn install --check-files && yarn run build && yarn bump:sample-pod && npx cap sync",
     "bump:v3": "cd example/ionic-angular-v3 && yalc add @sentry/capacitor && yarn install --check-files && yarn run build && yarn bump:sample-pod && npx cap sync",
     "bump:sample-vue": "cd example/ionic-vue3 && yalc add @sentry/capacitor && yarn install --check-files && ionic build && yarn run bump:sample-pod && npx cap sync",
-    "bump:samples": "yalc publish && yarn run bump:v6 && yarn run bump:v5 && yarn run bump:v4 && yarn run bump:v3 && yarn run bump:sample-vue"
+    "bump:samples": "yalc publish &&  yarn concurrently --kill-others-on-fail \"yarn run bump:v6\" \"yarn run bump:v5\" \"yarn run bump:v4\" \"yarn run bump:v3\" \"yarn run bump:sample-vue\""
   },
   "keywords": [
     "capacitor",
@@ -80,6 +80,7 @@
     "@sentry-internal/typescript": "7.114.0",
     "@sentry/wizard": "3.21.0",
     "@types/jest": "^26.0.15",
+    "concurrently": "^8.2.2",
     "eslint": "^7.13.0",
     "jest": "^26.6.3",
     "prettier": "^2.1.2",
