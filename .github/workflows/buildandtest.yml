@@ -82,11 +82,11 @@ jobs:
       - name: Update SDK & build samples
         run: |
           yalc publish &&
-          yarn run bump:v6 >  read input && echo "[sample V6] $input";  &
-          yarn run bump:v5 >  read input && echo "[sample V5] $input";  &
-          yarn run bump:v4 >  read input && echo "[sample V4] $input"; &
-          yarn run bump:v3 >  read input && echo "[sample V3] $input"; &
-          yarn run bump:sample-vue >  read input && echo "[sample VUE] $input"; &
+          { yarn run bump:v6 >  read input && echo "[sample V6] $input"; } &
+          { yarn run bump:v5 >  read input && echo "[sample V5] $input"; } &
+          { yarn run bump:v4 >  read input && echo "[sample V4] $input"; } &
+          { yarn run bump:v3 >  read input && echo "[sample V3] $input"; } &
+          { yarn run bump:sample-vue >  read input && echo "[sample VUE] $input"; } &
           wait
 
   job_unit_test:
