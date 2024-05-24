@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- Accept undefined as value for tags ([#656](https://github.com/getsentry/sentry-capacitor/pull/656))
+
 ## 0.18.0
 
 ### Features
