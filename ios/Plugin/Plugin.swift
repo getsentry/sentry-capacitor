@@ -206,14 +206,20 @@ public class SentryCapacitor: CAPPlugin {
     }
 
     @objc func setTag(_ call: CAPPluginCall) {
-        guard let key = call.getString("key"), let value = call.getString("value") else {
+        guard let key = call.getString("key") else {
             return call.reject("Error deserializing tag")
+        }
+        guard let value = call.getString("value") else {
+            SentrySDK.configureScope { scope in
+                scope.removeTag(key: key)
+            }
+            return call.resolve()
+
         }
 
         SentrySDK.configureScope { scope in
             scope.setTag(value: value, key: key)
         }
-
         call.resolve()
     }
 
