@@ -20,7 +20,9 @@ export class Tab1Page {
   }
 
   public sentryCapturedException(): void {
-    Sentry.captureException(new Error(`${Date.now()}: a test error occurred`));
+    Sentry.captureException(new Error(`${Date.now()}: a test error occurred`), (context) => {
+      return context.addBreadcrumb({ message: 'test' });
+    });
   }
 
   public errorWithUserData(): void {
