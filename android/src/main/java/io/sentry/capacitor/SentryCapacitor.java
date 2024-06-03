@@ -347,23 +347,24 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void setTag(PluginCall call) {
-        if (call.getData().has("key")) {
-          if (call.getData().has("value")) {
+        if (!call.getData().has("key")) {
+           call.reject("Error deserializing tag");
+           return;
+        }
+
+        if (call.getData().has("value")) {
             Sentry.configureScope(scope -> {
               String key = call.getString("key");
               String value = call.getString("value");
               scope.setTag(key, value);
             });
-          } else {
+        } else {
             Sentry.configureScope(scope -> {
               String key = call.getString("key");
               scope.removeTag(key);
             });
-          }
-          call.resolve();
-        } else {
-          call.reject("Error deserializing tag");
         }
+        call.resolve();
     }
 
     public void setEventOriginTag(SentryEvent event) {
