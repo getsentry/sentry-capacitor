@@ -281,7 +281,7 @@ public class SentryCapacitor: CAPPlugin {
         call.resolve()
     }
 
-    @objc func closeNativeSdk:(_ call: CAPPluginCall ) {
+    @objc func closeNativeSdk(_ call: CAPPluginCall ) {
         SentrySDK.close()
         call.resolve()
     }
