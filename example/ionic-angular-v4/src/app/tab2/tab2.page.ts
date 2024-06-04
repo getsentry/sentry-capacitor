@@ -39,9 +39,6 @@ export class Tab2Page {
   }
   public close(): void {
     Sentry.close();
-    Sentry.captureMessage(
-      `${Date.now()}: Captured message with custom tag.`,
-    );
   }
 
 }

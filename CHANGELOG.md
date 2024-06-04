@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Features
+
+- Add close function on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
+- Expose `getClient` on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
+
 ### Fixes
 
 - Accept undefined as value for tags ([#656](https://github.com/getsentry/sentry-capacitor/pull/656))
