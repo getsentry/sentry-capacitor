@@ -61,6 +61,7 @@ jest.mock('../src/plugin', () => {
       setUser: jest.fn(() => {
         return;
       }),
+      closeNativeSdk: jest.fn(() => Promise.resolve()),
     },
   };
 });
@@ -625,4 +626,14 @@ describe('Tests Native Wrapper', () => {
       expect(SentryCapacitor.fetchNativeDeviceContexts).not.toBeCalled();
     });
   });
+
+  describe('closeNativeSdk', () => {
+    test('closeNativeSdk calls native bridge', async () => {
+      await NATIVE.closeNativeSdk();
+
+      expect(SentryCapacitor.closeNativeSdk).toBeCalled();
+      expect(NATIVE.enableNative).toBe(false);
+    });
+  });
+
 });

@@ -3,7 +3,8 @@ import {
   defaultIntegrations,
   init as browserInit
 } from '@sentry/browser';
-import { Hub, makeMain } from '@sentry/core';
+import { getClient, Hub, makeMain } from '@sentry/core';
+import { logger } from '@sentry/utils';
 
 import { DeviceContext, EventOrigin, Release, SdkInfo } from './integrations';
 import { createCapacitorRewriteFrames } from './integrations/rewriteframes';
@@ -82,6 +83,23 @@ export function init<T>(
   void NATIVE.initNativeSdk(mobileOptions);
   originalInit(browserOptions);
 }
+
+/**
+ * Closes the SDK, stops sending events.
+ */
+export async function close(): Promise<void> {
+  try {
+    const client = getClient();
+
+    if (client) {
+      await client.close();
+      await NATIVE.closeNativeSdk();
+    }
+  } catch (e) {
+    logger.error('Failed to close the SDK');
+  }
+}
+
 
 /**
  * If native client is available it will trigger a native crash

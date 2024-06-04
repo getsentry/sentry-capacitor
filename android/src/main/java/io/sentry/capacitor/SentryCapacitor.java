@@ -334,6 +334,12 @@ public class SentryCapacitor extends Plugin {
     }
 
     @PluginMethod
+    public void closeNativeSdk(PluginCall call) {
+        Sentry.close();
+        call.resolve();
+    }
+
+    @PluginMethod
     public void setExtra(PluginCall call) {
         if (call.getData().has("key") && call.getData().has("value")) {
             Sentry.configureScope(scope -> {

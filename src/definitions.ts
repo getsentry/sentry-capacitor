@@ -17,6 +17,7 @@ export interface ISentryCapacitorPlugin {
   ): PromiseLike<boolean>;
 
   clearBreadcrumbs(): void;
+  closeNativeSdk(): Promise<void>;
   crash(): void;
   fetchNativeRelease(): Promise<{
     build: string;

@@ -15,5 +15,6 @@ CAP_PLUGIN(SentryCapacitor, "SentryCapacitor",
            CAP_PLUGIN_METHOD(setUser, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(addBreadcrumb, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(clearBreadcrumbs, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(closeNativeSdk, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(setContext, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(crash, CAPPluginReturnPromise);)
