@@ -49,7 +49,6 @@ export {
   setMeasurement,
   getGlobalScope,
   // getIsolationScope, TODO: Verify why it's not working
-  getClient,
   setCurrentClient,
 
 } from '@sentry/core';

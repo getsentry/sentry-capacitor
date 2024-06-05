@@ -12,7 +12,6 @@
 * spanIsSampled,
 * setMeasurement,
 * getGlobalScope,
-* getIsolationScope,
 * getClient,
 * setCurrentClient,
 
