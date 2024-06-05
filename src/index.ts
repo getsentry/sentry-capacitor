@@ -48,10 +48,9 @@ export {
   spanIsSampled,
   setMeasurement,
   getGlobalScope,
-  getIsolationScope,
+  // getIsolationScope, TODO: Verify why it's not working
   getClient,
   setCurrentClient,
-  metrics,
 
 } from '@sentry/core';
 export { Replay, BrowserTracing } from '@sentry/browser'
