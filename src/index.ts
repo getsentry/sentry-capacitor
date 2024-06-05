@@ -33,13 +33,26 @@ export {
   setExtras,
   setTag,
   setTags,
+  flush,
   setUser,
   // eslint-disable-next-line deprecation/deprecation
   startTransaction,
+  withScope,
+
+  // V8
+  startInactiveSpan,
   startSpan,
   startSpanManual,
-  startInactiveSpan,
-  withScope,
+  getActiveSpan,
+  spanToJSON,
+  spanIsSampled,
+  setMeasurement,
+  getGlobalScope,
+  getIsolationScope,
+  getClient,
+  setCurrentClient,
+  metrics,
+
 } from '@sentry/core';
 export { Replay, BrowserTracing } from '@sentry/browser'
 
