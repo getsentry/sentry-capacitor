@@ -6,14 +6,14 @@
 
 - Add the following functions on `@sentry/capacitor` ([#666](https://github.com/getsentry/sentry-capacitor/pull/666))
 
-* flush,
-* getActiveSpan,
-* spanToJSON,
-* spanIsSampled,
-* setMeasurement,
-* getGlobalScope,
-* getClient,
-* setCurrentClient,
+* flush.
+* getActiveSpan.
+* spanToJSON.
+* spanIsSampled.
+* setMeasurement.
+* getGlobalScope.
+* getClient.
+* setCurrentClient.
 
 ### Fixes
 
