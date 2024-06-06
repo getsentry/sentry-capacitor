@@ -636,4 +636,12 @@ describe('Tests Native Wrapper', () => {
     });
   });
 
+  test('closeNativeSdk called twice does not throw error.', async () => {
+    logger.debug = jest.fn();
+    await NATIVE.closeNativeSdk();
+    expect(logger.debug).not.toBeCalled();
+
+    await NATIVE.closeNativeSdk();
+    expect(logger.debug).toBeCalledWith(NATIVE._DisabledNativeError);
+  });
 });

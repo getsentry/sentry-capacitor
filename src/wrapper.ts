@@ -279,14 +279,19 @@ export const NATIVE = {
   /**
    * Closes the Native Layer SDK
    */
-  closeNativeSdk(): Promise<void> {
-    if (!this.enableNative || !this.isNativeClientAvailable()) {
+   closeNativeSdk(): Promise<void> {
+    if (!this.enableNative) {
+      // Only log and avoid rejecting.
+      logger.debug(this._DisabledNativeError);
       return Promise.resolve();
     }
+    if (!this.isNativeClientAvailable()) {
+      throw this._NativeClientError;
+    }
 
-    return SentryCapacitor.closeNativeSdk().then(() => {
-      this.enableNative = false;
-    });
+     return SentryCapacitor.closeNativeSdk().then(() => {
+       this.enableNative = false;
+     });
   },
 
 
