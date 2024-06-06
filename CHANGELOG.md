@@ -4,16 +4,9 @@
 
 ### Features
 
-- Add the following functions on `@sentry/capacitor` ([#666](https://github.com/getsentry/sentry-capacitor/pull/666))
+- Add the following functions to `@sentry/capacitor` ([#666](https://github.com/getsentry/sentry-capacitor/pull/666))
+  - `flush`, `getActiveSpan`, `spanToJSON`, `spanIsSampled`, `setMeasurement`, `getGlobalScope` and `setCurrentClient`.
 
-* flush.
-* getActiveSpan.
-* spanToJSON.
-* spanIsSampled.
-* setMeasurement.
-* getGlobalScope.
-* getClient.
-* setCurrentClient.
 
 ### Fixes
 
