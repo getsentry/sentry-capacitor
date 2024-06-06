@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Features
+
+- Add the following functions to `@sentry/capacitor` ([#666](https://github.com/getsentry/sentry-capacitor/pull/666))
+  - `flush`, `getActiveSpan`, `spanToJSON`, `spanIsSampled`, `setMeasurement`, `getGlobalScope` and `setCurrentClient`.
+
+
 ### Fixes
 
 - Accept undefined as value for tags ([#656](https://github.com/getsentry/sentry-capacitor/pull/656))
