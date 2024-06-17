@@ -275,6 +275,26 @@ export const NATIVE = {
     SentryCapacitor.clearBreadcrumbs();
   },
 
+
+  /**
+   * Closes the Native Layer SDK
+   */
+  closeNativeSdk(): Promise<void> {
+    if (!this.enableNative) {
+      // Only log and avoid rejecting.
+      logger.debug(this._DisabledNativeError);
+      return Promise.resolve();
+    }
+    if (!this.isNativeClientAvailable()) {
+      throw this._NativeClientError;
+    }
+
+    return SentryCapacitor.closeNativeSdk().then(() => {
+      this.enableNative = false;
+    });
+  },
+
+
   /**
    * Sets context on the native scope. Not implemented in Android yet.
    * @param key string

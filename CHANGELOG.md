@@ -4,9 +4,10 @@
 
 ### Features
 
+- Add close function on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
+- Expose `getClient` on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
 - Add the following functions to `@sentry/capacitor` ([#666](https://github.com/getsentry/sentry-capacitor/pull/666))
   - `flush`, `getActiveSpan`, `spanToJSON`, `spanIsSampled`, `setMeasurement`, `getGlobalScope` and `setCurrentClient`.
-
 
 ### Fixes
 

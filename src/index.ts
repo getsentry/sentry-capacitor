@@ -28,6 +28,7 @@ export {
   getCurrentHub,
   Hub,
   Scope,
+  getClient,
   setContext,
   setExtra,
   setExtras,
@@ -56,4 +57,4 @@ export { Replay, BrowserTracing } from '@sentry/browser'
 
 export { SDK_NAME, SDK_VERSION } from './version';
 export type { CapacitorOptions } from './options';
-export { init, nativeCrash } from './sdk';
+export { init, nativeCrash, close } from './sdk';
