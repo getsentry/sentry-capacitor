@@ -17,7 +17,7 @@ export const NATIVE = {
    * Sending the event over the bridge to native
    * @param event Event
    */
-  async sendEnvelope(envelope: Envelope): Promise<TransportMakeRequestResponse | void> {
+  async sendEnvelope(envelope: Envelope): Promise<TransportMakeRequestResponse> {
     if (!this.enableNative) {
       throw this._DisabledNativeError;
     }

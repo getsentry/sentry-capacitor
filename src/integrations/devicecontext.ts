@@ -1,47 +1,33 @@
-import { addEventProcessor, getCurrentHub } from '@sentry/core';
-import type { Contexts, Event, Integration } from '@sentry/types';
+import type { Contexts, Event, IntegrationFn } from '@sentry/types';
 import { logger } from '@sentry/utils';
 
 import { NATIVE } from '../wrapper';
 
-/** Load device context from native. */
-export class DeviceContext implements Integration {
-  /**
-   * @inheritDoc
-   */
-  public static id: string = 'DeviceContext';
+const INTEGRATION_NAME = 'DeviceContext';
 
-  /**
-   * @inheritDoc
-   */
-  public name: string = DeviceContext.id;
+export const deviceContextIntegration = (() => {
+  return {
+    name: INTEGRATION_NAME,
+    processEvent: processEvent
+  };
+}) satisfies IntegrationFn;
 
-  /**
-   * @inheritDoc
-   */
-  public setupOnce(): void {
-    addEventProcessor(async (event: Event) => {
-      const self = getCurrentHub().getIntegration(DeviceContext);
-      if (!self) {
-        return event;
+
+async function processEvent(event: Event): Promise<Event> {
+  try {
+    const contexts = await NATIVE.fetchNativeDeviceContexts();
+    const context = (contexts['context'] as Contexts);
+
+    event.contexts = { ...context, ...event.contexts };
+    if ('user' in contexts) {
+      const user = contexts['user'];
+      if (!event.user) {
+        event.user = { ...user };
       }
-
-      try {
-        const contexts = await NATIVE.fetchNativeDeviceContexts();
-        const context = (contexts['context'] as Contexts);
-
-        event.contexts = { ...context, ...event.contexts };
-        if ('user' in contexts) {
-          const user = contexts['user'];
-          if (!event.user) {
-            event.user = { ...user };
-          }
-        }
-      } catch (e) {
-        logger.log(`Failed to get device context from native: ${e}`);
-      }
-
-      return event;
-    });
+    }
+  } catch (e) {
+    logger.log(`Failed to get device context from native: ${e}`);
   }
+
+  return event;
 }

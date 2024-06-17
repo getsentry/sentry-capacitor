@@ -15,7 +15,7 @@ export interface BaseNativeTransportOptions {
 /** Native Transport class implementation */
 export class NativeTransport implements Transport {
   /** A simple buffer holding all requests. */
-  protected readonly _buffer: PromiseBuffer<void | TransportMakeRequestResponse>;
+  protected readonly _buffer: PromiseBuffer<TransportMakeRequestResponse>;
 
   public constructor(options: BaseNativeTransportOptions = {}) {
     this._buffer = makePromiseBuffer(options.bufferSize || DEFAULT_BUFFER_SIZE);
@@ -27,7 +27,7 @@ export class NativeTransport implements Transport {
    *
    * @param envelope Envelope that should be sent to Sentry.
    */
-  public send(envelope: Envelope): PromiseLike<void | TransportMakeRequestResponse> {
+  public send(envelope: Envelope): PromiseLike<TransportMakeRequestResponse> {
     return this._buffer.add(() => NATIVE.sendEnvelope(envelope));
   }
 

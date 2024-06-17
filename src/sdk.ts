@@ -3,11 +3,10 @@ import {
   defaultIntegrations,
   init as browserInit
 } from '@sentry/browser';
-import { getClient, Hub, makeMain } from '@sentry/core';
+import { getClient, rewriteFramesIntegration } from '@sentry/core';
 import { logger } from '@sentry/utils';
 
-import { DeviceContext, EventOrigin, Release, SdkInfo } from './integrations';
-import { createCapacitorRewriteFrames } from './integrations/rewriteframes';
+import { deviceContextIntegration, eventOriginIntegration, releaseIntegration, sdkInfoIntegration } from './integrations';
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
 import { CapacitorScope } from './scope';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
@@ -39,26 +38,26 @@ export function init<T>(
     finalOptions.enableNative ??= true;
   }
 
-  const capacitorHub = new Hub(undefined, new CapacitorScope());
-  makeMain(capacitorHub);
+
+  //  const capacitorHub = new Hub(undefined, new CapacitorScope());
+  //  makeMain(capacitorHub);
 
   finalOptions.defaultIntegrations = [
     ...defaultIntegrations,
-    createCapacitorRewriteFrames(),
-    new Release(),
-    new SdkInfo(),
-    new EventOrigin(),
+    rewriteFramesIntegration,
+    releaseIntegration,
+    sdkInfoIntegration,
+    eventOriginIntegration
   ];
 
   if (finalOptions.enableNative) {
-    finalOptions.defaultIntegrations.push(new DeviceContext());
+    finalOptions.defaultIntegrations.push(deviceContextIntegration);
 
     if (!passedOptions.transport && NATIVE.platform !== 'web') {
       finalOptions.transport = passedOptions.transport
         || makeNativeTransport;
 
       finalOptions.transportOptions = {
-        ...{ textEncoder: makeUtf8TextEncoder() },
         ...(passedOptions.transportOptions ?? {}),
         bufferSize: DEFAULT_BUFFER_SIZE,
       };
@@ -99,7 +98,6 @@ export async function close(): Promise<void> {
     logger.error('Failed to close the SDK');
   }
 }
-
 
 /**
  * If native client is available it will trigger a native crash

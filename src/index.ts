@@ -14,19 +14,12 @@ export type {
 } from '@sentry/types';
 
 export {
-  // eslint-disable-next-line deprecation/deprecation
-  addGlobalEventProcessor,
   addEventProcessor,
   addBreadcrumb,
   captureException,
   captureEvent,
   captureMessage,
-  // eslint-disable-next-line deprecation/deprecation
-  configureScope,
-  getCurrentScope,
-  getHubFromCarrier,
   getCurrentHub,
-  Hub,
   Scope,
   getClient,
   setContext,
@@ -36,11 +29,7 @@ export {
   setTags,
   flush,
   setUser,
-  // eslint-disable-next-line deprecation/deprecation
-  startTransaction,
   withScope,
-
-  // V8
   startInactiveSpan,
   startSpan,
   startSpanManual,
@@ -51,9 +40,13 @@ export {
   getGlobalScope,
   // getIsolationScope, TODO: Verify why it's not working
   setCurrentClient,
+  getRootSpan,
+  addChildSpanToSpan,
+  startIdleSpan,
 
 } from '@sentry/core';
-export { Replay, BrowserTracing } from '@sentry/browser'
+
+export { replayIntegration, browserTracingIntegration } from '@sentry/browser'
 
 export { SDK_NAME, SDK_VERSION } from './version';
 export type { CapacitorOptions } from './options';
