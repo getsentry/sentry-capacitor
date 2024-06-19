@@ -1,18 +1,18 @@
 import type { BrowserOptions } from '@sentry/browser';
 import {
-  defaultIntegrations,
-  init as browserInit
+  init as browserInit,
 } from '@sentry/browser';
-import { getClient, rewriteFramesIntegration } from '@sentry/core';
+import { getClient, getIntegrationsToSetup } from '@sentry/core';
 import { logger } from '@sentry/utils';
 
-import { deviceContextIntegration, eventOriginIntegration, releaseIntegration, sdkInfoIntegration } from './integrations';
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
-import { CapacitorScope } from './scope';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
-import { makeUtf8TextEncoder } from './transports/TextEncoder';
 import { NATIVE } from './wrapper';
-
+import { Integration } from '@sentry/types';
+import { safeFactory } from './utils/safeFactory';
+import { getDefaultIntegrations } from './integrations/default';
+import * as test from '@sentry/browser';
+import { CapacitorScope } from './scope';
 /**
  * Initializes the Capacitor SDK alongside a sibling Sentry SDK
  * @param options Options for the SDK
@@ -37,32 +37,32 @@ export function init<T>(
     finalOptions.enableNativeNagger ??= true;
     finalOptions.enableNative ??= true;
   }
-
+  test. = new CapacitorScope();
 
   //  const capacitorHub = new Hub(undefined, new CapacitorScope());
   //  makeMain(capacitorHub);
+  const defaultIntegrations: false | Integration[] = passedOptions.defaultIntegrations === undefined
+    ? getDefaultIntegrations(passedOptions)
+    : passedOptions.defaultIntegrations;
 
-  finalOptions.defaultIntegrations = [
-    ...defaultIntegrations,
-    rewriteFramesIntegration,
-    releaseIntegration,
-    sdkInfoIntegration,
-    eventOriginIntegration
-  ];
+  finalOptions.integrations = getIntegrationsToSetup({
+    integrations: safeFactory(passedOptions.integrations, { loggerMessage: 'The integrations threw an error' }),
+    defaultIntegrations,
+  });
 
-  if (finalOptions.enableNative) {
-    finalOptions.defaultIntegrations.push(deviceContextIntegration);
+  if (finalOptions.enableNative &&
+    !passedOptions.transport &&
+    NATIVE.platform !== 'web') {
 
-    if (!passedOptions.transport && NATIVE.platform !== 'web') {
-      finalOptions.transport = passedOptions.transport
-        || makeNativeTransport;
+    finalOptions.transport = passedOptions.transport
+      || makeNativeTransport;
 
-      finalOptions.transportOptions = {
-        ...(passedOptions.transportOptions ?? {}),
-        bufferSize: DEFAULT_BUFFER_SIZE,
-      };
-    }
+    finalOptions.transportOptions = {
+      ...(passedOptions.transportOptions ?? {}),
+      bufferSize: DEFAULT_BUFFER_SIZE,
+    };
   }
+  useEncodePolyfill();
 
   const browserOptions = {
     ...finalOptions,
