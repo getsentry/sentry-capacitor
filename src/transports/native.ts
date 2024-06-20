@@ -1,4 +1,9 @@
-import type { BaseTransportOptions, Envelope, Transport, TransportMakeRequestResponse } from '@sentry/types';
+import type {
+  BaseTransportOptions,
+  Envelope,
+  Transport,
+  TransportMakeRequestResponse,
+} from '@sentry/types';
 import type { PromiseBuffer } from '@sentry/utils';
 import { makePromiseBuffer } from '@sentry/utils';
 
@@ -20,7 +25,6 @@ export class NativeTransport implements Transport {
   public constructor(options: BaseNativeTransportOptions = {}) {
     this._buffer = makePromiseBuffer(options.bufferSize || DEFAULT_BUFFER_SIZE);
   }
-
 
   /**
    * Sends the envelope to the Store endpoint in Sentry.
@@ -47,7 +51,9 @@ export class NativeTransport implements Transport {
 /**
  * Creates a Native Transport.
  */
-export function makeNativeTransport(options: BaseNativeTransportOptions = {}): NativeTransport {
+export function makeNativeTransport(
+  options: BaseNativeTransportOptions = {},
+): NativeTransport {
   return new NativeTransport(options);
 }
 

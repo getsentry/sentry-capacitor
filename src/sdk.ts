@@ -1,18 +1,16 @@
 import type { BrowserOptions } from '@sentry/browser';
-import {
-  init as browserInit,
-} from '@sentry/browser';
+import { init as browserInit } from '@sentry/browser';
 import { getClient, getIntegrationsToSetup } from '@sentry/core';
 import { logger } from '@sentry/utils';
 
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
 import { NATIVE } from './wrapper';
-import { Integration } from '@sentry/types';
+import type { Integration } from '@sentry/types';
 import { safeFactory } from './utils/safeFactory';
 import { getDefaultIntegrations } from './integrations/default';
-import * as test from '@sentry/browser';
-import { CapacitorScope } from './scope';
+import { setCapacitorGlobalScope } from './scope';
+import { useEncodePolyfill } from './transports/encodePolyfill';
 /**
  * Initializes the Capacitor SDK alongside a sibling Sentry SDK
  * @param options Options for the SDK
@@ -28,8 +26,7 @@ export function init<T>(
     enableCaptureFailedRequests: false,
     ...passedOptions,
   };
-  if (finalOptions.enabled === false ||
-    NATIVE.platform === 'web') {
+  if (finalOptions.enabled === false || NATIVE.platform === 'web') {
     finalOptions.enableNative = false;
     finalOptions.enableNativeNagger = false;
   } else {
@@ -37,25 +34,26 @@ export function init<T>(
     finalOptions.enableNativeNagger ??= true;
     finalOptions.enableNative ??= true;
   }
-  test. = new CapacitorScope();
-
   //  const capacitorHub = new Hub(undefined, new CapacitorScope());
   //  makeMain(capacitorHub);
-  const defaultIntegrations: false | Integration[] = passedOptions.defaultIntegrations === undefined
-    ? getDefaultIntegrations(passedOptions)
-    : passedOptions.defaultIntegrations;
+  const defaultIntegrations: false | Integration[] =
+    passedOptions.defaultIntegrations === undefined
+      ? getDefaultIntegrations(passedOptions)
+      : passedOptions.defaultIntegrations;
 
   finalOptions.integrations = getIntegrationsToSetup({
-    integrations: safeFactory(passedOptions.integrations, { loggerMessage: 'The integrations threw an error' }),
+    integrations: safeFactory(passedOptions.integrations, {
+      loggerMessage: 'The integrations threw an error',
+    }),
     defaultIntegrations,
   });
 
-  if (finalOptions.enableNative &&
+  if (
+    finalOptions.enableNative &&
     !passedOptions.transport &&
-    NATIVE.platform !== 'web') {
-
-    finalOptions.transport = passedOptions.transport
-      || makeNativeTransport;
+    NATIVE.platform !== 'web'
+  ) {
+    finalOptions.transport = passedOptions.transport || makeNativeTransport;
 
     finalOptions.transportOptions = {
       ...(passedOptions.transportOptions ?? {}),
@@ -63,6 +61,7 @@ export function init<T>(
     };
   }
   useEncodePolyfill();
+  setCapacitorGlobalScope();
 
   const browserOptions = {
     ...finalOptions,

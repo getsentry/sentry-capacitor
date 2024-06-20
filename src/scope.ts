@@ -1,5 +1,6 @@
 import { Scope } from '@sentry/core';
 import type { Breadcrumb, User } from '@sentry/types';
+import { getGlobalSingleton } from '@sentry/utils';
 
 import { convertToNormalizedObject } from './utils/normalize';
 import { NATIVE } from './wrapper';
@@ -72,7 +73,9 @@ export class CapacitorScope extends Scope {
   public addBreadcrumb(breadcrumb: Breadcrumb, maxBreadcrumbs?: number): this {
     const mergedBreadcrumb: Breadcrumb = {
       ...breadcrumb,
-      data: breadcrumb.data ? convertToNormalizedObject(breadcrumb.data) : undefined,
+      data: breadcrumb.data
+        ? convertToNormalizedObject(breadcrumb.data)
+        : undefined,
     };
 
     NATIVE.addBreadcrumb(mergedBreadcrumb);
@@ -86,4 +89,13 @@ export class CapacitorScope extends Scope {
     NATIVE.clearBreadcrumbs();
     return super.clearBreadcrumbs();
   }
+}
+
+/**
+ * Sets the Sentry Capacitor scope as the default global scope, allowing the communication between the Native and JavaScript layers.
+ */
+export function setCapacitorGlobalScope(): void {
+  // TODO Do we want to replace `getGlobalSingleton` too?
+  // isolated scopes sounds ideal to not require CapacitorScope and just let it flow towards the Native transport once it gets captured.
+  getGlobalSingleton('globalScope', () => new CapacitorScope());
 }

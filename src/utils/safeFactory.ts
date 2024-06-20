@@ -13,7 +13,11 @@ type DangerTypesWithoutCallSignature =
  * If the factory fails original data are returned as it.
  * They might be partially modified by the failed function.
  */
-export function safeFactory<A extends [R, ...unknown[]], R, T extends DangerTypesWithoutCallSignature>(
+export function safeFactory<
+  A extends [R, ...unknown[]],
+  R,
+  T extends DangerTypesWithoutCallSignature,
+>(
   danger: ((...args: A) => R) | T,
   options: {
     loggerMessage?: string;
@@ -25,7 +29,9 @@ export function safeFactory<A extends [R, ...unknown[]], R, T extends DangerType
         return danger(...args);
       } catch (error) {
         logger.error(
-          options.loggerMessage ? options.loggerMessage : `The ${danger.name} callback threw an error`,
+          options.loggerMessage
+            ? options.loggerMessage
+            : `The ${danger.name} callback threw an error`,
           error,
         );
         return args[0];

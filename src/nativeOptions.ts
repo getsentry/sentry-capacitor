@@ -7,7 +7,9 @@ import type { CapacitorOptions } from './options';
  * some of the excluded parameters are: Integrations, app, vue, beforeSend, beforeBreadcrumb, integrations, defaultIntegrations, transport, tracesSampler.
  * @param options CapacitorOptions
  */
-export function FilterNativeOptions(options: CapacitorOptions): CapacitorOptions {
+export function FilterNativeOptions(
+  options: CapacitorOptions,
+): CapacitorOptions {
   return {
     // allowUrls: Only available on the JavaScript Layer.
     attachStacktrace: options.attachStacktrace,
@@ -19,7 +21,9 @@ export function FilterNativeOptions(options: CapacitorOptions): CapacitorOptions
     enabled: options.enabled,
     enableNdkScopeSync: options.enableNdkScopeSync,
     // eslint-disable-next-line deprecation/deprecation
-    enableWatchdogTerminationTracking: options.enableOutOfMemoryTracking ?? options.enableWatchdogTerminationTracking,
+    enableWatchdogTerminationTracking:
+      options.enableOutOfMemoryTracking ??
+      options.enableWatchdogTerminationTracking,
     enableTracing: options.enableTracing,
     environment: options.environment,
     // ignoreErrors: Only available on the JavaScript Layer.
@@ -36,14 +40,15 @@ export function FilterNativeOptions(options: CapacitorOptions): CapacitorOptions
     tracesSampleRate: options.tracesSampleRate,
     // tunnel: options.tunnel: Only handled on the JavaScript Layer.
     enableCaptureFailedRequests: options.enableCaptureFailedRequests,
-    ...iOSParameters(options)
+    ...iOSParameters(options),
   };
 }
 
-function iOSParameters(options: CapacitorOptions): CapacitorOptions
-{
-  return Capacitor.getPlatform() === 'ios' ? {
-    enableAppHangTracking: options.enableAppHangTracking,
-    appHangTimeoutInterval: options.appHangTimeoutInterval
-  } : {}
+function iOSParameters(options: CapacitorOptions): CapacitorOptions {
+  return Capacitor.getPlatform() === 'ios'
+    ? {
+        enableAppHangTracking: options.enableAppHangTracking,
+        appHangTimeoutInterval: options.appHangTimeoutInterval,
+      }
+    : {};
 }

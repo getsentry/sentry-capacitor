@@ -1,5 +1,14 @@
 import { Capacitor } from '@capacitor/core';
-import type { BaseEnvelopeItemHeaders, Breadcrumb, Envelope, EnvelopeItem, Event, SeverityLevel, TransportMakeRequestResponse, User } from '@sentry/types';
+import type {
+  BaseEnvelopeItemHeaders,
+  Breadcrumb,
+  Envelope,
+  EnvelopeItem,
+  Event,
+  SeverityLevel,
+  TransportMakeRequestResponse,
+  User,
+} from '@sentry/types';
 import { dropUndefinedKeys, logger, SentryError } from '@sentry/utils';
 
 import type { NativeDeviceContextsResponse } from './definitions';
@@ -17,7 +26,9 @@ export const NATIVE = {
    * Sending the event over the bridge to native
    * @param event Event
    */
-  async sendEnvelope(envelope: Envelope): Promise<TransportMakeRequestResponse> {
+  async sendEnvelope(
+    envelope: Envelope,
+  ): Promise<TransportMakeRequestResponse> {
     if (!this.enableNative) {
       throw this._DisabledNativeError;
     }
@@ -33,7 +44,6 @@ export const NATIVE = {
     envelopeBytes.push(EOL);
 
     for (const rawItem of envelopeItems) {
-
       const [itemHeader, itemPayload] = this._processItem(rawItem);
 
       let bytesContentType: string;
@@ -42,9 +52,10 @@ export const NATIVE = {
         bytesContentType = 'text/plain';
         bytesPayload = utf8ToBytes(itemPayload);
       } else if (itemPayload instanceof Uint8Array) {
-        bytesContentType = typeof itemHeader.content_type === 'string'
-          ? itemHeader.content_type
-          : 'application/octet-stream';
+        bytesContentType =
+          typeof itemHeader.content_type === 'string'
+            ? itemHeader.content_type
+            : 'application/octet-stream';
         bytesPayload = [...itemPayload];
       } else {
         bytesContentType = 'application/json';
@@ -63,12 +74,13 @@ export const NATIVE = {
     }
 
     let transportStatusCode = 200;
-    await SentryCapacitor.captureEnvelope({ envelope: envelopeBytes })
-      .then(_ => _ // We only want to know if it failed.
-        , failed => {
-          logger.error('Failed to capture Envelope: ', failed);
-          transportStatusCode = 500;
-        });
+    await SentryCapacitor.captureEnvelope({ envelope: envelopeBytes }).then(
+      _ => _, // We only want to know if it failed.
+      failed => {
+        logger.error('Failed to capture Envelope: ', failed);
+        transportStatusCode = 500;
+      },
+    );
 
     return { statusCode: transportStatusCode } as TransportMakeRequestResponse;
   },
@@ -275,7 +287,6 @@ export const NATIVE = {
     SentryCapacitor.clearBreadcrumbs();
   },
 
-
   /**
    * Closes the Native Layer SDK
    */
@@ -293,7 +304,6 @@ export const NATIVE = {
       this.enableNative = false;
     });
   },
-
 
   /**
    * Sets context on the native scope. Not implemented in Android yet.
@@ -360,9 +370,9 @@ export const NATIVE = {
    * @param data key-value map.
    * @returns An object where all root-level values are strings.
    */
-  _serializeObject(data: {
-    [key: string]: unknown;
-  }): { [key: string]: string } {
+  _serializeObject(data: { [key: string]: unknown }): {
+    [key: string]: string;
+  } {
     const serialized: { [key: string]: string } = {};
 
     Object.keys(data).forEach(dataKey => {
@@ -401,16 +411,14 @@ export const NATIVE = {
    */
 
   _processLevel(level: SeverityLevel): SeverityLevel {
-    if (level == 'log' as SeverityLevel) {
+    if (level == ('log' as SeverityLevel)) {
       return 'debug' as SeverityLevel;
-    }
-    else if (level == 'critical' as SeverityLevel) {
+    } else if (level == ('critical' as SeverityLevel)) {
       return 'fatal' as SeverityLevel;
     }
 
     return level;
   },
-
 
   /**
    * Checks whether the SentryCapacitor module is loaded.

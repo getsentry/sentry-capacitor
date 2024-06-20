@@ -1,4 +1,4 @@
-import { addEventProcessor , getCurrentHub } from '@sentry/core';
+import { addEventProcessor, getClient } from '@sentry/core';
 import type { EventProcessor } from '@sentry/types';
 
 import { Release } from '../../src/integrations/release';
@@ -17,7 +17,7 @@ jest.mock('@sentry/core', () => {
   };
 
   return {
-    addEventProcessor : jest.fn(),
+    addEventProcessor: jest.fn(),
     getCurrentHub: () => hub,
   };
 });
@@ -39,12 +39,12 @@ describe('Tests the Release integration', () => {
     let eventProcessor: EventProcessor = () => null;
 
     // @ts-expect-error Mock
-    addEventProcessor .mockImplementation(e => (eventProcessor = e));
+    addEventProcessor.mockImplementation(e => (eventProcessor = e));
     releaseIntegration.setupOnce();
 
-    expect(addEventProcessor ).toBeCalled();
+    expect(addEventProcessor).toBeCalled();
 
-    const client = getCurrentHub().getClient();
+    const client = getClient();
 
     // @ts-expect-error Mock
     client.getOptions.mockImplementation(() => ({}));
@@ -61,10 +61,10 @@ describe('Tests the Release integration', () => {
     let eventProcessor: EventProcessor = () => null;
 
     // @ts-expect-error Mock
-    addEventProcessor .mockImplementation(e => (eventProcessor = e));
+    addEventProcessor.mockImplementation(e => (eventProcessor = e));
     releaseIntegration.setupOnce();
 
-    const client = getCurrentHub().getClient();
+    const client = getClient();
 
     // @ts-expect-error Mock
     client.getOptions.mockImplementation(() => ({
@@ -83,10 +83,10 @@ describe('Tests the Release integration', () => {
     let eventProcessor: EventProcessor = () => null;
 
     // @ts-expect-error Mock
-    addEventProcessor .mockImplementation(e => (eventProcessor = e));
+    addEventProcessor.mockImplementation(e => (eventProcessor = e));
     releaseIntegration.setupOnce();
 
-    const client = getCurrentHub().getClient();
+    const client = getClient();
 
     // @ts-expect-error Mock
     client.getOptions.mockImplementation(() => ({
@@ -105,12 +105,12 @@ describe('Tests the Release integration', () => {
     let eventProcessor: EventProcessor = () => null;
 
     // @ts-expect-error Mock
-    addEventProcessor .mockImplementation(e => (eventProcessor = e));
+    addEventProcessor.mockImplementation(e => (eventProcessor = e));
     releaseIntegration.setupOnce();
 
-    expect(addEventProcessor ).toBeCalled();
+    expect(addEventProcessor).toBeCalled();
 
-    const client = getCurrentHub().getClient();
+    const client = getClient();
 
     // @ts-expect-error Mock
     client.getOptions.mockImplementation(() => ({

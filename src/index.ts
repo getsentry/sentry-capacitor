@@ -19,7 +19,6 @@ export {
   captureException,
   captureEvent,
   captureMessage,
-  getCurrentHub,
   Scope,
   getClient,
   setContext,
@@ -43,10 +42,9 @@ export {
   getRootSpan,
   addChildSpanToSpan,
   startIdleSpan,
-
 } from '@sentry/core';
 
-export { replayIntegration, browserTracingIntegration } from '@sentry/browser'
+export { replayIntegration, browserTracingIntegration } from '@sentry/browser';
 
 export { SDK_NAME, SDK_VERSION } from './version';
 export type { CapacitorOptions } from './options';

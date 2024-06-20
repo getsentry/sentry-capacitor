@@ -11,7 +11,7 @@ let NativeSdkPackage: Package | null = null;
 export const sdkInfoIntegration = (() => {
   return {
     name: INTEGRATION_NAME,
-    preprocessEvent: processEvent
+    preprocessEvent: processEvent,
   };
 }) satisfies IntegrationFn;
 

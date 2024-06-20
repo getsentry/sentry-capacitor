@@ -1,4 +1,11 @@
-import type { BaseTransportOptions, Client, ClientOptions, Event, EventHint, Integration, IntegrationFn } from '@sentry/types';
+import type {
+  BaseTransportOptions,
+  Client,
+  ClientOptions,
+  Event,
+  EventHint,
+  IntegrationFn,
+} from '@sentry/types';
 
 import { NATIVE } from '../wrapper';
 
@@ -7,13 +14,15 @@ const INTEGRATION_NAME = 'Release';
 export const releaseIntegration = (() => {
   return {
     name: INTEGRATION_NAME,
-    preprocessEvent: processEvent
+    preprocessEvent: processEvent,
   };
 }) satisfies IntegrationFn;
 
-
-async function processEvent(event: Event, _: EventHint, client: Client<ClientOptions<BaseTransportOptions>>): Promise<Event> {
-
+async function processEvent(
+  event: Event,
+  _: EventHint,
+  client: Client<ClientOptions<BaseTransportOptions>>,
+): Promise<Event> {
   const options = client.getOptions();
   /*
     Check for the release and dist in the options passed on init.

@@ -1,11 +1,11 @@
-import type { IntegrationFn, Event } from '@sentry/types';
+import type { Event, IntegrationFn } from '@sentry/types';
 
 const INTEGRATION_NAME = 'EventOrigin';
 
 export const eventOriginIntegration = (() => {
   return {
     name: INTEGRATION_NAME,
-    preprocessEvent: processEvent
+    preprocessEvent: processEvent,
   };
 }) satisfies IntegrationFn;
 
