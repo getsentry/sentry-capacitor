@@ -20,10 +20,7 @@ export function FilterNativeOptions(
     dsn: options.dsn,
     enabled: options.enabled,
     enableNdkScopeSync: options.enableNdkScopeSync,
-    // eslint-disable-next-line deprecation/deprecation
-    enableWatchdogTerminationTracking:
-      options.enableOutOfMemoryTracking ??
-      options.enableWatchdogTerminationTracking,
+    enableWatchdogTerminationTracking: options.enableWatchdogTerminationTracking,
     enableTracing: options.enableTracing,
     environment: options.environment,
     // ignoreErrors: Only available on the JavaScript Layer.
@@ -47,8 +44,8 @@ export function FilterNativeOptions(
 function iOSParameters(options: CapacitorOptions): CapacitorOptions {
   return Capacitor.getPlatform() === 'ios'
     ? {
-        enableAppHangTracking: options.enableAppHangTracking,
-        appHangTimeoutInterval: options.appHangTimeoutInterval,
-      }
+      enableAppHangTracking: options.enableAppHangTracking,
+      appHangTimeoutInterval: options.appHangTimeoutInterval,
+    }
     : {};
 }

@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+// MEMO: enableOutOfMemoryTracking removed and replaced by enableWatchdogTerminationTracking
+
 
 ### Features
 

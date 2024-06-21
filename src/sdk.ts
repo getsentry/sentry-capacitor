@@ -1,16 +1,16 @@
 import type { BrowserOptions } from '@sentry/browser';
 import { init as browserInit } from '@sentry/browser';
 import { getClient, getIntegrationsToSetup } from '@sentry/core';
+import type { Integration } from '@sentry/types';
 import { logger } from '@sentry/utils';
 
-import type { CapacitorClientOptions, CapacitorOptions } from './options';
-import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
-import { NATIVE } from './wrapper';
-import type { Integration } from '@sentry/types';
-import { safeFactory } from './utils/safeFactory';
 import { getDefaultIntegrations } from './integrations/default';
+import type { CapacitorClientOptions, CapacitorOptions } from './options';
 import { setCapacitorGlobalScope } from './scope';
 import { useEncodePolyfill } from './transports/encodePolyfill';
+import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
+import { safeFactory } from './utils/safeFactory';
+import { NATIVE } from './wrapper';
 /**
  * Initializes the Capacitor SDK alongside a sibling Sentry SDK
  * @param options Options for the SDK

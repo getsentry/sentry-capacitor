@@ -41,17 +41,6 @@ export interface BaseCapacitorOptions {
    * @default true
    * */
   enableWatchdogTerminationTracking?: boolean;
-
-  /**
-   * Enables Out of Memory Tracking for iOS and macCatalyst.
-   * See the following link for more information and possible restrictions:
-   * https://docs.sentry.io/platforms/apple/guides/ios/configuration/out-of-memory/
-   *
-   * @default true
-   * @deprecated The method will be removed on a major update, instead, use enableWatchdogTerminationTracking for the same result.
-   * */
-  enableOutOfMemoryTracking?: boolean;
-
   /**
    * When enabled, Sentry will capture failed XHR/Fetch requests. This option also enabled HTTP Errors on iOS.
    *
@@ -87,12 +76,12 @@ export interface BaseCapacitorOptions {
  */
 export interface CapacitorOptions
   extends Omit<BrowserOptions, 'autoSessionTracking'>,
-    BaseCapacitorOptions {}
+  BaseCapacitorOptions { }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CapacitorTransportOptions extends BrowserTransportOptions {}
+export interface CapacitorTransportOptions extends BrowserTransportOptions { }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CapacitorClientOptions
   extends ClientOptions<CapacitorTransportOptions>,
-    BaseCapacitorOptions {}
+  BaseCapacitorOptions { }
