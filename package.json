@@ -78,7 +78,7 @@
     "@sentry-internal/eslint-config-sdk": "7.114.0",
     "@sentry-internal/eslint-plugin-sdk": "7.114.0",
     "@sentry-internal/typescript": "7.114.0",
-    "@sentry/wizard": "3.21.0",
+    "@sentry/wizard": "3.24.0",
     "@types/jest": "^26.0.15",
     "concurrently": "^8.2.2",
     "eslint": "^7.13.0",
