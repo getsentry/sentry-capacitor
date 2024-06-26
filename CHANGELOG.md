@@ -13,6 +13,12 @@
 
 - Accept undefined as value for tags ([#656](https://github.com/getsentry/sentry-capacitor/pull/656))
 
+### Dependencies
+
+- Bump Cocoa SDK from v8.21.0 to v8.30.0 ([#606](https://github.com/getsentry/sentry-capacitor/pull/606))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8300)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.21.0...8.30.0)
+
 ## 0.18.0
 
 ### Features
