@@ -76,16 +76,17 @@
     "@sentry-internal/eslint-plugin-sdk": "8.9.2",
     "@sentry-internal/typescript": "8.9.2",
     "@sentry/wizard": "3.21.0",
-    "@types/jest": "^26.0.15",
+    "@types/jest": "^29.5.3",
     "concurrently": "^8.2.2",
     "eslint": "^7.13.0",
-    "jest": "^26.6.3",
+    "jest": "^29.6.2",
+    "jest-extended": "^4.0.2",
     "prettier": "^3.3.2",
     "prettier-plugin-java": "^2.6.0",
     "replace-in-file": "^6.2.0",
     "rimraf": "^5.0.1",
     "swiftlint": "^1.0.1",
-    "ts-jest": "^26.4.4",
+    "ts-jest": "^29.1.1",
     "typescript": "^4.0.5"
   },
   "files": [
@@ -113,6 +114,7 @@
     "transform": {
       "^.+\\.(ts)$": "ts-jest"
     },
+    "setupFilesAfterEnv": ["jest-extended/all"],
     "globals": {
       "__DEV__": true,
       "ts-jest": {

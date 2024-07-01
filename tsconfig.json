@@ -3,7 +3,10 @@
     "allowUnreachableCode": false,
     "declaration": true,
     "esModuleInterop": true,
-    "lib": ["dom", "es6"],
+    "lib": [
+      "dom",
+      "es6"
+    ],
     "module": "es6",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
@@ -15,5 +18,9 @@
     "target": "es6"
   },
   "extends": "./tsconfig.build.json",
-  "include": ["src/**/*.ts", "test/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "typings/*.d.ts"
+  ]
 }

@@ -1,12 +1,12 @@
 import type { BrowserOptions } from '@sentry/browser';
 import { init as browserInit } from '@sentry/browser';
-import { getClient, getIntegrationsToSetup } from '@sentry/core';
+import { getClient, getGlobalScope, getIntegrationsToSetup, getIsolationScope } from '@sentry/core';
 import type { Integration } from '@sentry/types';
 import { logger } from '@sentry/utils';
 
 import { getDefaultIntegrations } from './integrations/default';
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
-import { setCapacitorGlobalScope } from './scope';
+import { enableSyncToNative } from './scopeSync';
 import { useEncodePolyfill } from './transports/encodePolyfill';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
 import { safeFactory } from './utils/safeFactory';
@@ -61,7 +61,10 @@ export function init<T>(
     };
   }
   useEncodePolyfill();
-  setCapacitorGlobalScope();
+  if (finalOptions.enableNative) {
+    enableSyncToNative(getGlobalScope());
+    enableSyncToNative(getIsolationScope());
+  }
 
   const browserOptions = {
     ...finalOptions,
