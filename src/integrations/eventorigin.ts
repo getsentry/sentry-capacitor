@@ -1,13 +1,16 @@
-import type { Event, IntegrationFn } from '@sentry/types';
+import type { Event, Integration } from '@sentry/types';
 
 const INTEGRATION_NAME = 'EventOrigin';
 
-export const eventOriginIntegration = (() => {
+export const eventOriginIntegration = (): Integration => {
   return {
     name: INTEGRATION_NAME,
+    setupOnce: () => {
+      // noop
+    },
     preprocessEvent: processEvent,
   };
-}) satisfies IntegrationFn;
+};
 
 async function processEvent(event: Event): Promise<Event> {
   event.tags = event.tags ?? {};

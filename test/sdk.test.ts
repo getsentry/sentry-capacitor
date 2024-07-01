@@ -1,7 +1,7 @@
 import type { BrowserOptions } from '@sentry/browser';
-import type { Integration } from '@sentry/types';
 
 import type { CapacitorOptions } from '../src';
+import { capacitorRewriteFramesIntegration } from '../src/integrations';
 import { init } from '../src/sdk';
 import { NATIVE } from '../src/wrapper';
 
@@ -161,11 +161,7 @@ describe('SDK Init', () => {
 
     init({ enabled: true }, (capacitorOptions: CapacitorOptions) => {
       expect(capacitorOptions).toBeDefined();
-      const expectedName = 'Capacitor RewriteFrames';
-      const rewriteFrames = (capacitorOptions.defaultIntegrations as Integration[]).find(function (integration) {
-        return integration.name === expectedName;
-      }) as Integration;
-      expect(rewriteFrames.name).toBe(expectedName);
+      expect(capacitorOptions.integrations).toContain(capacitorRewriteFramesIntegration);
     });
   });
 });

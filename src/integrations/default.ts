@@ -17,8 +17,8 @@ export function getDefaultIntegrations(
 
   integrations.push(capacitorRewriteFramesIntegration);
   integrations.push(releaseIntegration);
-  integrations.push(sdkInfoIntegration);
   integrations.push(eventOriginIntegration);
+  integrations.push(sdkInfoIntegration);
 
   if (options.enableNative) {
     integrations.push(deviceContextIntegration);

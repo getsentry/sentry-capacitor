@@ -2,30 +2,20 @@ import {
   defineIntegration,
   rewriteFramesIntegration as originalRewriteFramesIntegration,
 } from '@sentry/core';
-import type { IntegrationFn, StackFrame } from '@sentry/types';
+import type { Integration, StackFrame } from '@sentry/types';
 
 import { getCurrentServerUrl } from '../utils/webViewUrl';
-
-type StackFrameIteratee = (frame: StackFrame) => StackFrame;
-interface RewriteFramesOptions {
-  root?: string;
-  prefix?: string;
-  iteratee?: StackFrameIteratee;
-}
 
 /**
  * Create Capacitor default rewrite frames integration
  * which appends app:// to the beginning of the filename
  * and removes the local server url prefixes.
  */
-export const capacitorRewriteFramesIntegration = ((
-  options?: RewriteFramesOptions,
-) => {
+export const capacitorRewriteFramesIntegration = (): Integration => {
   return originalRewriteFramesIntegration({
     iteratee: rewriteFramesIteratee,
-    ...options,
   });
-}) satisfies IntegrationFn;
+};
 
 export const rewriteFramesIntegration = defineIntegration(
   capacitorRewriteFramesIntegration,

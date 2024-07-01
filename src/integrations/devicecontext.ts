@@ -1,16 +1,19 @@
-import type { Contexts, Event, IntegrationFn } from '@sentry/types';
+import type { Contexts, Event, Integration } from '@sentry/types';
 import { logger } from '@sentry/utils';
 
 import { NATIVE } from '../wrapper';
 
 const INTEGRATION_NAME = 'DeviceContext';
 
-export const deviceContextIntegration = (() => {
+export const deviceContextIntegration = (): Integration => {
   return {
     name: INTEGRATION_NAME,
+    setupOnce: () => {
+      // noop
+    },
     processEvent: processEvent,
   };
-}) satisfies IntegrationFn;
+};
 
 async function processEvent(event: Event): Promise<Event> {
   try {

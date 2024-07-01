@@ -1,4 +1,4 @@
-import type { Event, IntegrationFn, Package } from '@sentry/types';
+import type { Event, Integration, Package } from '@sentry/types';
 import { logger } from '@sentry/utils';
 
 import { SDK_NAME, SDK_VERSION } from '../version';
@@ -8,12 +8,15 @@ const INTEGRATION_NAME = 'SdkInfo';
 
 let NativeSdkPackage: Package | null = null;
 
-export const sdkInfoIntegration = (() => {
+export const sdkInfoIntegration = (): Integration => {
   return {
     name: INTEGRATION_NAME,
+    setupOnce: () => {
+      // noop
+    },
     preprocessEvent: processEvent,
   };
-}) satisfies IntegrationFn;
+};
 
 async function processEvent(event: Event): Promise<Event> {
   // The native SDK info package here is only used on iOS as `beforeSend` is not called on `captureEnvelope`.

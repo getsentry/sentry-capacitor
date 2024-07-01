@@ -4,19 +4,22 @@ import type {
   ClientOptions,
   Event,
   EventHint,
-  IntegrationFn,
+  Integration,
 } from '@sentry/types';
 
 import { NATIVE } from '../wrapper';
 
 const INTEGRATION_NAME = 'Release';
 
-export const releaseIntegration = (() => {
+export const releaseIntegration = (): Integration => {
   return {
     name: INTEGRATION_NAME,
+    setupOnce: () => {
+      // noop
+    },
     preprocessEvent: processEvent,
   };
-}) satisfies IntegrationFn;
+};
 
 async function processEvent(
   event: Event,

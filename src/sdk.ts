@@ -11,6 +11,7 @@ import { useEncodePolyfill } from './transports/encodePolyfill';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
 import { safeFactory } from './utils/safeFactory';
 import { NATIVE } from './wrapper';
+
 /**
  * Initializes the Capacitor SDK alongside a sibling Sentry SDK
  * @param options Options for the SDK
