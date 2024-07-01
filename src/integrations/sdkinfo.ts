@@ -14,7 +14,7 @@ export const sdkInfoIntegration = (): Integration => {
     setupOnce: () => {
       // noop
     },
-    preprocessEvent: processEvent,
+    processEvent: processEvent,
   };
 };
 
