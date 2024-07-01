@@ -1,4 +1,5 @@
 import { SentryError } from '@sentry/utils';
+
 import { type NATIVE as ORIGINAL_NATIVE } from '../src/wrapper';
 import type { MockInterface } from './testutils';
 

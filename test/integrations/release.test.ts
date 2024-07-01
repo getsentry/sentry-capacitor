@@ -42,7 +42,7 @@ describe('Tests the Release integration', () => {
     addEventProcessor.mockImplementation(e => (eventProcessor = e));
     releaseIntegration.setupOnce();
 
-    expect(addEventProcessor).toBeCalled();
+    expect(addEventProcessor).toHaveBeenCalled();
 
     const client = getClient();
 
@@ -108,7 +108,7 @@ describe('Tests the Release integration', () => {
     addEventProcessor.mockImplementation(e => (eventProcessor = e));
     releaseIntegration.setupOnce();
 
-    expect(addEventProcessor).toBeCalled();
+    expect(addEventProcessor).toHaveBeenCalled();
 
     const client = getClient();
 

@@ -1,4 +1,4 @@
-import type { BrowserOptions} from '@sentry/browser';
+import type { BrowserOptions } from '@sentry/browser';
 import type { Integration } from '@sentry/types';
 
 import type { CapacitorOptions } from '../src';
@@ -100,7 +100,7 @@ describe('SDK Init', () => {
     });
 
     // eslint-disable-next-line @typescript-eslint/unbound-method
-    expect(NATIVE.initNativeSdk).toBeCalledWith(
+    expect(NATIVE.initNativeSdk).toHaveBeenCalledWith(
       expect.objectContaining(test[4]),
     );
   });

@@ -1,10 +1,11 @@
-import { BrowserClient ,
+import {
+  BrowserClient,
   defaultIntegrations,
-  } from '@sentry/browser';
+} from '@sentry/browser';
 import type { BrowserClientOptions } from '@sentry/browser/types/client';
 import type { BrowserTransportOptions } from '@sentry/browser/types/transports/types';
 import type { FetchImpl } from '@sentry/browser/types/transports/utils';
-import type { Event,Transport } from '@sentry/types';
+import type { Event, Transport } from '@sentry/types';
 
 import { NativeTransport } from '../../src/transports/native';
 import { NATIVE } from '../../src/wrapper';
@@ -43,7 +44,7 @@ describe('NativeTransport', () => {
     x.captureEvent(event);
 
     // eslint-disable-next-line @typescript-eslint/unbound-method
-    expect(NATIVE.sendEnvelope).toBeCalledTimes(1);
+    expect(NATIVE.sendEnvelope).toHaveBeenCalledTimes(1);
 
     const receivedEvent = captureEnvelopeSpy.mock.calls[0][0][1][0][1] as Event;
 

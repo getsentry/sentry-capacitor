@@ -29,7 +29,7 @@ describe('ScopeSync', () => {
 
         scope.addBreadcrumb({ message: 'test' });
 
-        expect(NATIVE.addBreadcrumb).toBeCalledTimes(1);
+        expect(NATIVE.addBreadcrumb).toHaveBeenCalledTimes(1);
       });
 
       it('adds default level if no level specified', () => {
@@ -60,7 +60,7 @@ describe('ScopeSync', () => {
           message: 'test',
         };
         scope.addBreadcrumb(breadcrumb);
-        expect(NATIVE.addBreadcrumb).toBeCalledWith(
+        expect(NATIVE.addBreadcrumb).toHaveBeenCalledWith(
           expect.objectContaining({
             timestamp: expect.any(Number),
           }),
@@ -72,7 +72,7 @@ describe('ScopeSync', () => {
           data: undefined,
         };
         scope.addBreadcrumb(breadcrumb);
-        expect(NATIVE.addBreadcrumb).toBeCalledWith(
+        expect(NATIVE.addBreadcrumb).toHaveBeenCalledWith(
           expect.objectContaining({
             data: undefined,
           }),
@@ -86,7 +86,7 @@ describe('ScopeSync', () => {
           },
         };
         scope.addBreadcrumb(breadcrumb);
-        expect(NATIVE.addBreadcrumb).toBeCalledWith(
+        expect(NATIVE.addBreadcrumb).toHaveBeenCalledWith(
           expect.objectContaining({
             data: { foo: '[NaN]' },
           }),
@@ -98,7 +98,7 @@ describe('ScopeSync', () => {
           data: 'foo' as unknown as object,
         };
         scope.addBreadcrumb(breadcrumb);
-        expect(NATIVE.addBreadcrumb).toBeCalledWith(
+        expect(NATIVE.addBreadcrumb).toHaveBeenCalledWith(
           expect.objectContaining({
             data: { value: 'foo' },
           }),
@@ -153,7 +153,7 @@ describe('ScopeSync', () => {
       expect(SentryCore.getIsolationScope().setTags).not.toBe(setTagsScopeSpy);
 
       SentryCore.setTags({ key: 'value', second: 'bar' });
-      expect(NATIVE.setTag).toBeCalledTimes(2);
+      expect(NATIVE.setTag).toHaveBeenCalledTimes(2);
       expect(NATIVE.setTag).toHaveBeenCalledWith('key', 'value');
       expect(NATIVE.setTag).toHaveBeenCalledWith('second', 'bar');
       expect(setTagsScopeSpy).toHaveBeenCalledExactlyOnceWith({ key: 'value', second: 'bar' });
@@ -171,7 +171,7 @@ describe('ScopeSync', () => {
       expect(SentryCore.getIsolationScope().setExtras).not.toBe(setExtrasScopeSpy);
 
       SentryCore.setExtras({ key: 'value', second: 'bar' });
-      expect(NATIVE.setExtra).toBeCalledTimes(2);
+      expect(NATIVE.setExtra).toHaveBeenCalledTimes(2);
       expect(NATIVE.setExtra).toHaveBeenCalledWith('key', 'value');
       expect(NATIVE.setExtra).toHaveBeenCalledWith('second', 'bar');
       expect(setExtrasScopeSpy).toHaveBeenCalledExactlyOnceWith({ key: 'value', second: 'bar' });

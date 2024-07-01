@@ -35,7 +35,7 @@ describe('Sdk Info', () => {
 
     expect(processedEvent?.sdk?.packages).toEqual(expect.arrayContaining([mockPackage]));
     expect(processedEvent?.platform === 'javascript');
-    expect(mockedFetchNativeSdkInfo).toBeCalledTimes(1);
+    expect(mockedFetchNativeSdkInfo).toHaveBeenCalledTimes(1);
   });
 
   it('Adds javascript platform but not native package on Android', async () => {
@@ -46,7 +46,7 @@ describe('Sdk Info', () => {
 
     expect(processedEvent?.sdk?.packages).toEqual(expect.not.arrayContaining([mockPackage]));
     expect(processedEvent?.platform === 'javascript');
-    expect(mockedFetchNativeSdkInfo).not.toBeCalled();
+    expect(mockedFetchNativeSdkInfo).not.toHaveBeenCalled();
   });
 
   it('Does not overwrite existing sdk name and version', async () => {
