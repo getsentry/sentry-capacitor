@@ -1,7 +1,7 @@
+import { getClient } from '@sentry/core';
 import type { Client, Event, EventHint } from '@sentry/types';
 
 import { nativeReleaseIntegration } from '../../src/integrations/release';
-import { getClient } from '@sentry/core';
 
 jest.mock('@sentry/core', () => ({
   getClient: jest.fn().mockReturnValue({
