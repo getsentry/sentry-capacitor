@@ -13,6 +13,12 @@
 
 - Accept undefined as value for tags ([#656](https://github.com/getsentry/sentry-capacitor/pull/656))
 
+### Dependencies
+
+- Bump Android SDK from v7.6.0 to v7.11.0 ([#618](https://github.com/getsentry/sentry-capacitor/pull/618))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#7110)
+  - [diff](https://github.com/getsentry/sentry-java/compare/7.6.0...7.11.0)
+
 ## 0.18.0
 
 ### Features
