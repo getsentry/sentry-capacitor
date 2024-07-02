@@ -3,7 +3,7 @@ import type { Integration } from '@sentry/types';
 import type { CapacitorOptions } from '../options';
 import { deviceContextIntegration } from './devicecontext';
 import { eventOriginIntegration } from './eventorigin';
-import { releaseIntegration } from './release';
+import { nativeReleaseIntegration } from './release';
 import { capacitorRewriteFramesIntegration } from './rewriteframes';
 import { sdkInfoIntegration } from './sdkinfo';
 
@@ -16,7 +16,7 @@ export function getDefaultIntegrations(
   const integrations: Integration[] = [];
 
   integrations.push(capacitorRewriteFramesIntegration);
-  integrations.push(releaseIntegration);
+  integrations.push(nativeReleaseIntegration);
   integrations.push(eventOriginIntegration);
   integrations.push(sdkInfoIntegration);
 

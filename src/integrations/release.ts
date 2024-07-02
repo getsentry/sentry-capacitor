@@ -11,13 +11,13 @@ import { NATIVE } from '../wrapper';
 
 const INTEGRATION_NAME = 'Release';
 
-export const releaseIntegration = (): Integration => {
+export const nativeReleaseIntegration = (): Integration => {
   return {
     name: INTEGRATION_NAME,
     setupOnce: () => {
       // noop
     },
-    preprocessEvent: processEvent,
+    processEvent: processEvent,
   };
 };
 
