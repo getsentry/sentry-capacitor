@@ -85,7 +85,7 @@ describe('Tests Native Wrapper', () => {
 
       await NATIVE.initNativeSdk({ dsn: 'test', enableNative: true });
 
-      expect(SentryCapacitor.initNativeSdk).toBeCalled();
+      expect(SentryCapacitor.initNativeSdk).toHaveBeenCalled();
     });
 
     test('Vue and App options to be removed', async () => {
@@ -96,13 +96,13 @@ describe('Tests Native Wrapper', () => {
       await NATIVE.initNativeSdk({ dsn: 'test', enableNative: true, app: 'test', vue: 'test' });
 
       const nativeOption = initNativeSdk.mock.calls[0][0].options;
-      expect(SentryCapacitor.initNativeSdk).toBeCalledTimes(1);
+      expect(SentryCapacitor.initNativeSdk).toHaveBeenCalledTimes(1);
       // @ts-ignore Not part of Capacitor Options but it is extended by Vue Options.
       expect(nativeOption.app).toBeUndefined();
       // @ts-ignore Not part of Capacitor Options but it is extended by Vue Options.
       expect(nativeOption.vue).toBeUndefined();
 
-      expect(initNativeSdk).toBeCalled();
+      expect(initNativeSdk).toHaveBeenCalled();
     });
 
 
@@ -122,7 +122,7 @@ describe('Tests Native Wrapper', () => {
         });
 
       const nativeOption = initNativeSdk.mock.calls[0][0].options;
-      expect(SentryCapacitor.initNativeSdk).toBeCalledTimes(1);
+      expect(SentryCapacitor.initNativeSdk).toHaveBeenCalledTimes(1);
       // @ts-ignore Not part of Capacitor Options but it is extended by Vue Options.
       expect(nativeOption.integrations).toBeUndefined();
       expect(nativeOption.defaultIntegrations).toBeUndefined();
@@ -132,7 +132,7 @@ describe('Tests Native Wrapper', () => {
       expect(nativeOption.transport).toBeUndefined();
       expect(nativeOption.tracesSampler).toBeUndefined();
 
-      expect(initNativeSdk).toBeCalled();
+      expect(initNativeSdk).toHaveBeenCalled();
     });
 
     test('warns if there is no dsn', async () => {
@@ -141,7 +141,7 @@ describe('Tests Native Wrapper', () => {
 
       await NATIVE.initNativeSdk({ enableNative: true });
 
-      expect(SentryCapacitor.initNativeSdk).not.toBeCalled();
+      expect(SentryCapacitor.initNativeSdk).not.toHaveBeenCalled();
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(logger.warn).toHaveBeenLastCalledWith(
         'Warning: No DSN was provided. The Sentry SDK will be disabled. Native SDK will also not be initalized.',
@@ -158,7 +158,7 @@ describe('Tests Native Wrapper', () => {
         enableNativeNagger: true,
       });
 
-      expect(SentryCapacitor.initNativeSdk).not.toBeCalled();
+      expect(SentryCapacitor.initNativeSdk).not.toHaveBeenCalled();
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(logger.warn).toHaveBeenLastCalledWith(
         'Note: Native Sentry SDK is disabled.',
@@ -212,7 +212,7 @@ describe('Tests Native Wrapper', () => {
 
       await NATIVE.sendEnvelope(env);
 
-      expect(SentryCapacitor.captureEnvelope).toBeCalledWith({ envelope: utf8ToBytes(expectedEnvelope) });
+      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledWith({ envelope: utf8ToBytes(expectedEnvelope) });
     });
 
     test('does not call Capacitor at all if enableNative is false', async () => {
@@ -224,8 +224,8 @@ describe('Tests Native Wrapper', () => {
         expect(error.message).toMatch('Native is disabled');
       }
 
-      expect(SentryCapacitor.getStringBytesLength).not.toBeCalled();
-      expect(SentryCapacitor.captureEnvelope).not.toBeCalled();
+      expect(SentryCapacitor.getStringBytesLength).not.toHaveBeenCalled();
+      expect(SentryCapacitor.captureEnvelope).not.toHaveBeenCalled();
     });
 
     test('Clears breadcrumbs on Android if there is no exception', async () => {
@@ -270,7 +270,7 @@ describe('Tests Native Wrapper', () => {
 
       await NATIVE.sendEnvelope(env);
 
-      expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
+      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
       expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
         `${expectedHeader}\n${expectedItem}\n${expectedPayload}`);
     });
@@ -331,7 +331,7 @@ describe('Tests Native Wrapper', () => {
 
       await NATIVE.sendEnvelope(env);
 
-      expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
+      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
       expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
         `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`);
     });
@@ -392,7 +392,7 @@ describe('Tests Native Wrapper', () => {
 
       await NATIVE.sendEnvelope(env);
 
-      expect(SentryCapacitor.captureEnvelope).toBeCalledTimes(1);
+      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
       expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
         `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`);
     });
@@ -469,7 +469,7 @@ describe('Tests Native Wrapper', () => {
     test('calls the native crash', () => {
       NATIVE.crash();
 
-      expect(SentryCapacitor.crash).toBeCalled();
+      expect(SentryCapacitor.crash).toHaveBeenCalled();
     });
   });
 
@@ -482,7 +482,7 @@ describe('Tests Native Wrapper', () => {
         unique: '123',
       });
 
-      expect(SentryCapacitor.setUser).toBeCalledWith({
+      expect(SentryCapacitor.setUser).toHaveBeenCalledWith({
         defaultUserKeys: {
           email: 'hello@sentry.io',
           id: '3.1234587',
@@ -498,7 +498,7 @@ describe('Tests Native Wrapper', () => {
         id: 'Hello',
       });
 
-      expect(SentryCapacitor.setUser).toBeCalledWith({
+      expect(SentryCapacitor.setUser).toHaveBeenCalledWith({
         defaultUserKeys: {
           id: 'Hello',
         },
@@ -511,7 +511,7 @@ describe('Tests Native Wrapper', () => {
     it('calls setTag', () => {
       NATIVE.setTag('key', 'value');
 
-      expect(SentryCapacitor.setTag).toBeCalledWith({
+      expect(SentryCapacitor.setTag).toHaveBeenCalledWith({
         key: 'key',
         value: 'value',
       });
@@ -521,7 +521,7 @@ describe('Tests Native Wrapper', () => {
       // @ts-ignore test number
       NATIVE.setTag('key', 0);
 
-      expect(SentryCapacitor.setTag).toBeCalledWith({
+      expect(SentryCapacitor.setTag).toHaveBeenCalledWith({
         key: 'key',
         value: '0',
       });
@@ -531,7 +531,7 @@ describe('Tests Native Wrapper', () => {
       // @ts-ignore test number
       NATIVE.setTag('key', {});
 
-      expect(SentryCapacitor.setTag).toBeCalledWith({
+      expect(SentryCapacitor.setTag).toHaveBeenCalledWith({
         key: 'key',
         value: '{}',
       });
@@ -542,7 +542,7 @@ describe('Tests Native Wrapper', () => {
     it('calls setExtra', () => {
       NATIVE.setExtra('key', { hello: 'world' });
 
-      expect(SentryCapacitor.setExtra).toBeCalledWith({
+      expect(SentryCapacitor.setExtra).toHaveBeenCalledWith({
         key: 'key',
         value: '{"hello":"world"}',
       });
@@ -555,7 +555,7 @@ describe('Tests Native Wrapper', () => {
 
       NATIVE.setContext('key', { hello: 'world' });
 
-      expect(SentryCapacitor.setContext).toBeCalledWith({
+      expect(SentryCapacitor.setContext).toHaveBeenCalledWith({
         key: 'key',
         value: { hello: 'world' },
       });
@@ -566,7 +566,7 @@ describe('Tests Native Wrapper', () => {
 
       NATIVE.setContext('key', null);
 
-      expect(SentryCapacitor.setContext).toBeCalledWith({
+      expect(SentryCapacitor.setContext).toHaveBeenCalledWith({
         key: 'key',
         value: null,
       });
@@ -577,7 +577,7 @@ describe('Tests Native Wrapper', () => {
 
       NATIVE.setContext('key', { hello: 'world' });
 
-      expect(SentryCapacitor.setExtra).toBeCalledWith({
+      expect(SentryCapacitor.setExtra).toHaveBeenCalledWith({
         key: 'key',
         value: '{"hello":"world"}',
       });
@@ -614,7 +614,7 @@ describe('Tests Native Wrapper', () => {
         },
       });
 
-      expect(SentryCapacitor.fetchNativeDeviceContexts).toBeCalled();
+      expect(SentryCapacitor.fetchNativeDeviceContexts).toHaveBeenCalled();
     });
     test('returns empty object on android', async () => {
       NATIVE.platform = 'android';
@@ -623,7 +623,7 @@ describe('Tests Native Wrapper', () => {
         {}
       );
 
-      expect(SentryCapacitor.fetchNativeDeviceContexts).not.toBeCalled();
+      expect(SentryCapacitor.fetchNativeDeviceContexts).not.toHaveBeenCalled();
     });
   });
 
@@ -631,7 +631,7 @@ describe('Tests Native Wrapper', () => {
     test('closeNativeSdk calls native bridge', async () => {
       await NATIVE.closeNativeSdk();
 
-      expect(SentryCapacitor.closeNativeSdk).toBeCalled();
+      expect(SentryCapacitor.closeNativeSdk).toHaveBeenCalled();
       expect(NATIVE.enableNative).toBe(false);
     });
   });
@@ -639,9 +639,9 @@ describe('Tests Native Wrapper', () => {
   test('closeNativeSdk called twice does not throw error.', async () => {
     logger.debug = jest.fn();
     await NATIVE.closeNativeSdk();
-    expect(logger.debug).not.toBeCalled();
+    expect(logger.debug).not.toHaveBeenCalled();
 
     await NATIVE.closeNativeSdk();
-    expect(logger.debug).toBeCalledWith(NATIVE._DisabledNativeError);
+    expect(logger.debug).toHaveBeenCalledWith(NATIVE._DisabledNativeError);
   });
 });

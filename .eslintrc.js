@@ -30,6 +30,7 @@ module.exports = {
         '@typescript-eslint/no-empty-function': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/unbound-method': 'off',
       },
     },
     {
@@ -48,6 +49,5 @@ module.exports = {
     '@sentry-internal/sdk/no-optional-chaining': 'off',
     '@sentry-internal/sdk/no-nullish-coalescing': 'off',
     '@sentry-internal/sdk/no-class-field-initializers': 'off',
-    'deprecation/deprecation': 'off',
   },
 };

@@ -13,8 +13,7 @@ export type NativeDeviceContextsResponse = {
 
 export interface ISentryCapacitorPlugin {
   addBreadcrumb(breadcrumb: Breadcrumb): void;
-  captureEnvelope(payload: { envelope: number[] }
-  ): PromiseLike<boolean>;
+  captureEnvelope(payload: { envelope: number[] }): PromiseLike<boolean>;
 
   clearBreadcrumbs(): void;
   closeNativeSdk(): Promise<void>;

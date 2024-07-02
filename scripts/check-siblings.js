@@ -98,55 +98,61 @@ function GetPackageJsonRootPath() {
  * @param {String} package The package.
  * @return {String} The path where package.json is located.
  */
-function FormatPackageInstallCommand(package) {
+function FormatPackageInstallCommand(sentryPackages) {
   // Yarn
   if (env.npm_config_argv) {
-    return "yarn add --exact " + package + " " + updateArgument;
+    return "yarn add --exact " + sentryPackages + " " + updateArgument;
   }
   else {
     // NPM
-    return "npm install --save-exact " + package + " " + updateArgument;
+    return "npm install --save-exact " + sentryPackages + " " + updateArgument;
   }
 }
 
-if (SkipPostInstall()) {
-  return;
-}
+function CheckSiblings() {
 
-const siblingVersion = GetRequiredSiblingVersion();
-if (siblingVersion === undefined) {
-  return;
-}
-
-// Method 1: Validate user parameters when requesting to install/update a new Package.
-if (env.npm_config_argv) {
-  // Only available on Yarn.
-  const npmAction = JSON.parse(env.npm_config_argv);
-  if (npmAction.original && npmAction.original.length > 1) {
-    ValidateSentryPackageParameters(npmAction.original);
+  if (SkipPostInstall()) {
     return;
   }
+
+  const siblingVersion = GetRequiredSiblingVersion();
+  if (siblingVersion === undefined) {
+    return;
+  }
+
+  // Method 1: Validate user parameters when requesting to install/update a new Package.
+  if (env.npm_config_argv) {
+    // Only available on Yarn.
+    const npmAction = JSON.parse(env.npm_config_argv);
+    if (npmAction.original && npmAction.original.length > 1) {
+      ValidateSentryPackageParameters(npmAction.original);
+      return;
+    }
+  }
+
+  // Method 2: Validate the Package.json
+  let rootPath = GetPackageJsonRootPath();
+  let incompatiblePackages = [];
+  const packageJson = fs.readFileSync(rootPath + 'package.json', 'utf8').split("\n");
+
+  for (const lineData of packageJson) {
+    let sentryRef = lineData.match(jsonFilter);
+    if (sentryRef && sentryRef[2] !== siblingVersion) {
+      incompatiblePackages.push(['@sentry/' + sentryRef[1], sentryRef[2]]);
+    }
+  }
+  if (incompatiblePackages.length > 0) {
+    const IncompatibilityError = ["This version of Sentry Capacitor is incompatible with the following installed packages:  "];
+    let packagesList = ''
+    for (const sentryPackage of incompatiblePackages) {
+      IncompatibilityError.push(sentryPackage[0] + ' version ' + sentryPackage[1]);
+      packagesList += sentryPackage[0] + '@' + siblingVersion + ' ';
+    }
+    IncompatibilityError.push("Please install the mentioned packages exactly with version " + siblingVersion + " and with the argument " + updateArgument);
+    IncompatibilityError.push(FormatPackageInstallCommand(packagesList));
+    throw IncompatibilityError.join("\n");
+  }
+
 }
 
-// Method 2: Validate the Package.json
-let rootPath = GetPackageJsonRootPath();
-let incompatiblePackages = [];
-const packageJson = fs.readFileSync(rootPath + 'package.json', 'utf8').split("\n");
-
-for (const lineData of packageJson) {
-  let sentryRef = lineData.match(jsonFilter);
-  if (sentryRef && sentryRef[2] !== siblingVersion) {
-    incompatiblePackages.push(['@sentry/' + sentryRef[1], sentryRef[2]]);
-  }
-}
-if (incompatiblePackages.length > 0) {
-  const IncompatibilityError = ["This version of Sentry Capacitor is incompatible with the following installed packages:  "];
-  let packagesList = ''
-  for (const package of incompatiblePackages) {
-    IncompatibilityError.push(package[0] + ' version ' + package[1]);
-    packagesList += package[0] + '@' + siblingVersion + ' ';
-  }
-  IncompatibilityError.push("Please install the mentioned packages exactly with version " + siblingVersion + " and with the argument " + updateArgument);
-  IncompatibilityError.push(FormatPackageInstallCommand(packagesList));
-  throw IncompatibilityError.join("\n");
-}
+CheckSiblings();

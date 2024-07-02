@@ -9,9 +9,8 @@ describe('getCurrentServerUrl', () => {
   test('returns http://localhost if WEBVIEW_SERVER_URL is ndefined', () => {
     const url = 'http://localhost';
 
-    self = {} as Window & typeof globalThis;
     // @ts-expect-error it's how it's inserted by Capacitor
-    self.WEBVIEW_SERVER_URL = url;
+    globalThis.WEBVIEW_SERVER_URL = url;
 
     expect(getCurrentServerUrl()).toBe(url);
   });
