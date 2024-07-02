@@ -37,7 +37,7 @@ describe('NativeTransport', () => {
       {
         transport: transport,
         enabled: true,
-        integrations: [dedupeIntegration()], //It wont run if there are no integrations.
+        integrations: [dedupeIntegration()], // It wont run if there are no integrations.
         dsn: EXAMPLE_DSN
       } as BrowserClientOptions);
     x.captureEvent(event);
