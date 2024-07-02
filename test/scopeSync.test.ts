@@ -177,7 +177,8 @@ describe('ScopeSync', () => {
       expect(setExtrasScopeSpy).toHaveBeenCalledExactlyOnceWith({ key: 'value', second: 'bar' });
     });
 
-    it('addBreadcrumb', () => {
+    it.only('addBreadcrumb', () => {
+      // This test is run in isolation to check for a race condition with another test.
       expect(SentryCore.getIsolationScope().addBreadcrumb).not.toBe(addBreadcrumbScopeSpy);
 
       SentryCore.addBreadcrumb({ message: 'test' });
