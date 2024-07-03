@@ -30,25 +30,24 @@ const app = createApp(App)
   .use(router);
 
 
-  Sentry.init({
-    app,
-    dsn: 'https://7f35532db4f8aca7c7b6992d488b39c1@o447951.ingest.sentry.io/4505912397660160',
-    integrations: [
-      new SentryVue.BrowserTracing({
-        tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
-        routingInstrumentation: SentryVue.vueRouterInstrumentation(router),
-      }),
-      new SentryVue.Replay({
-        maskAllText: false,
-        blockAllMedia: false,
-      }),
-    ],
-    // Performance Monitoring
-    tracesSampleRate: 1.0, //  Capture 100% of the transactions
-    // Session Replay
-    replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
-    replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
-  },
+Sentry.init({
+  app,
+  dsn: 'https://7f35532db4f8aca7c7b6992d488b39c1@o447951.ingest.sentry.io/4505912397660160',
+  integrations: [
+    SentryVue.browserTracingIntegration({ router }),
+    SentryVue.replayCanvasIntegration({
+      maskAllText: false,
+      blockAllMedia: false,
+    }),
+  ],
+  tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
+  // Performance Monitoring
+  tracesSampleRate: 1.0, //  Capture 100% of the transactions
+  // Session Replay
+  replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
+  replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
+  trackComponents: true,
+},
   // Forward the init method from @sentry/vue
   SentryVue.init
 );
