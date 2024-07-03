@@ -11,7 +11,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es6",
+    "target": "es2020",
     "lib": [
       "es2018",
       "dom"
