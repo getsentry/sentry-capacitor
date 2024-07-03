@@ -25,7 +25,7 @@ Sentry.init(
     enabled: true,
     // Use the tracing integration to see traces and add performance monitoring
     integrations: [
-      Sentry.browserTracingIntegration(routingInstrumentation),
+      Sentry.browserTracingIntegration(),
       Sentry.replayIntegration({
         maskAllText: false,
         blockAllMedia: true,
