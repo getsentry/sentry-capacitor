@@ -1,11 +1,14 @@
 # Changelog
 
 ## Unreleased
-// MEMO: enableOutOfMemoryTracking removed and replaced by enableWatchdogTerminationTracking
 
+> [!IMPORTANT]
+> If you are upgrading to the `0.x` versions of the SDK from `1.x` or below, make sure you follow our
+> [migration guide](./MIGRATION.md) first.
 
 ### Features
 
+- Support for Angular 18 ([#675](https://github.com/getsentry/sentry-capacitor/pull/675))
 - Add close function on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
 - Expose `getClient` on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
 - Add the following functions to `@sentry/capacitor` ([#666](https://github.com/getsentry/sentry-capacitor/pull/666))
@@ -14,6 +17,86 @@
 ### Fixes
 
 - Accept undefined as value for tags ([#656](https://github.com/getsentry/sentry-capacitor/pull/656))
+
+### Dependencies
+
+- Bump JavaScript SDK from v7.114.0 to v8.9.2 ([#675](https://github.com/getsentry/sentry-capacitor/pull/675))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.9.2/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.114.0...8.9.2)
+
+
+### How to Upgrade to Version 1:
+
+We recommend reading the
+[migration guide docs](https://docs.sentry.io/platforms/javascript/migration/v7-to-v8/#migration-codemod) to find out
+how to address any breaking changes in your code for your specific platform or framework.
+
+To automate upgrading to v8 as much as possible, use our migration codemod `@sentry/migr8`:
+
+```sh
+npx @sentry/migr8@latest
+```
+
+All deprecations from the v7 cycle, with the exception of `getCurrentHub()`, have been removed and can no longer be used
+in v8. If you have an advanced Sentry SDK setup, we additionally recommend reading the
+[in-depth migration guide](./MIGRATION.md) in our repo which highlights all changes with additional details and
+information.
+
+The rest of this changelog highlights the most important (breaking) changes and links to more detailed information.
+
+### Version Support
+
+With v8, we dropped support for several old runtimes and browsers
+
+**Browser SDKs:** The browser SDKs now require
+[**ES2018+**](https://caniuse.com/?feats=mdn-javascript_builtins_regexp_dotall,js-regexp-lookbehind,mdn-javascript_builtins_regexp_named_capture_groups,mdn-javascript_builtins_regexp_property_escapes,mdn-javascript_builtins_symbol_asynciterator,mdn-javascript_functions_method_definitions_async_generator_methods,mdn-javascript_grammar_template_literals_template_literal_revision,mdn-javascript_operators_destructuring_rest_in_objects,mdn-javascript_operators_destructuring_rest_in_arrays,promise-finally)
+compatible browsers. New minimum browser versions:
+
+- Chrome 63
+- Edge 79
+- Safari/iOS Safari 12
+- Firefox 58
+- Opera 50
+- Samsung Internet 8.2
+
+For more details, please see the
+[version support section in our migration guide](./MIGRATION.md#1-version-support-changes).
+
+### Performance Monitoring Changes
+
+The API around performance monitoring and tracing has been streamlined, and we've added support for more integrations
+out of the box.
+
+- [Performance Monitoring API](./MIGRATION.md#performance-monitoring-api)
+- [Performance Monitoring Integrations](./MIGRATION.md#performance-monitoring-integrations)
+
+### Functional Integrations
+
+Integrations are now simple functions instead of classes. Class-based integrations
+[have been removed](./MIGRATION.md#removal-of-class-based-integrations):
+
+```javascript
+// old (v7)
+Sentry.init({
+  integrations: [new Sentry.BrowserTracing()],
+});
+
+// new (v8)
+Sentry.init({
+  integrations: [Sentry.browserTracingIntegration()],
+});
+```
+
+### Package removal
+
+The following packages have been removed or replaced and will no longer be published:
+
+- [`@sentry/hub`](./MIGRATION.md#sentryhub)
+- [`@sentry/tracing`](./MIGRATION.md#sentrytracing)
+- [`@sentry/integrations`](./MIGRATION.md#sentryintegrations)
+- [`@sentry/serverless`](./MIGRATION.md#sentryserverless)
+- [`@sentry/replay`](./MIGRATION.md#sentryreplay)
+
 
 ## 0.18.0
 
