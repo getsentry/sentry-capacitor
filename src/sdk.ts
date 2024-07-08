@@ -10,8 +10,8 @@ import { enableSyncToNative } from './scopeSync';
 import { useEncodePolyfill } from './transports/encodePolyfill';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
 import { safeFactory } from './utils/safeFactory';
-import { NATIVE } from './wrapper';
 import { IsTextEncoderAvailable } from './utils/textEncoder';
+import { NATIVE } from './wrapper';
 
 /**
  * Initializes the Capacitor SDK alongside a sibling Sentry SDK
