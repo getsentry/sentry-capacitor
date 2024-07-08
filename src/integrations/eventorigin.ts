@@ -5,9 +5,6 @@ const INTEGRATION_NAME = 'EventOrigin';
 export const eventOriginIntegration = (): Integration => {
   return {
     name: INTEGRATION_NAME,
-    setupOnce: () => {
-      // noop
-    },
     preprocessEvent: processEvent,
   };
 };

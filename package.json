@@ -48,9 +48,6 @@
     "@sentry/vue": "8.9.2"
   },
   "peerDependenciesMeta": {
-    "@sentry/angular-ivy": {
-      "optional": true
-    },
     "@sentry/angular": {
       "optional": true
     },

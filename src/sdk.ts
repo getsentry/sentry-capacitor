@@ -11,6 +11,7 @@ import { useEncodePolyfill } from './transports/encodePolyfill';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
 import { safeFactory } from './utils/safeFactory';
 import { NATIVE } from './wrapper';
+import { IsTextEncoderAvailable } from './utils/textEncoder';
 
 /**
  * Initializes the Capacitor SDK alongside a sibling Sentry SDK
@@ -61,7 +62,11 @@ export function init<T>(
       bufferSize: DEFAULT_BUFFER_SIZE,
     };
   }
-  useEncodePolyfill();
+
+  if (!IsTextEncoderAvailable()) {
+    useEncodePolyfill();
+  }
+
   if (finalOptions.enableNative) {
     enableSyncToNative(getGlobalScope());
     enableSyncToNative(getIsolationScope());

@@ -11,9 +11,6 @@ let NativeSdkPackage: Package | null = null;
 export const sdkInfoIntegration = (): Integration => {
   return {
     name: INTEGRATION_NAME,
-    setupOnce: () => {
-      // noop
-    },
     processEvent: processEvent,
   };
 };

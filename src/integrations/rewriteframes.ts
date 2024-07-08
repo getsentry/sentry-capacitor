@@ -1,5 +1,4 @@
 import {
-  defineIntegration,
   rewriteFramesIntegration as originalRewriteFramesIntegration,
 } from '@sentry/core';
 import type { Integration, StackFrame } from '@sentry/types';
@@ -17,14 +16,14 @@ export const capacitorRewriteFramesIntegration = (): Integration => {
   });
 };
 
-export const rewriteFramesIntegration = defineIntegration(
-  capacitorRewriteFramesIntegration,
-);
-
 /**
- *
+ * Rewrites the filename of a stack frame for better readability.
+ * - Removes server URL or localhost prefix.
+ * - Adjusts for native code frames.
+ * - Adds 'app://' prefix for non-http(s) frames.
+ * - Sets 'in_app' flag to true for app frames, false for native frames.
  */
-export function rewriteFramesIteratee(frame: StackFrame): StackFrame {
+function rewriteFramesIteratee(frame: StackFrame): StackFrame {
   if (frame.filename) {
     const isReachableHost = /^https?:\/\//.test(frame.filename);
     const serverUrl = getCurrentServerUrl();
