@@ -3,7 +3,7 @@
 ## Unreleased
 
 > [!IMPORTANT]
-> If you are upgrading to the `0.x` versions of the SDK from `1.x` or below, make sure you follow our
+> If you are upgrading to the `1.x` versions of the SDK from `0.x` or below, make sure you follow our
 > [migration guide](./MIGRATION.md) first.
 
 ### Features
