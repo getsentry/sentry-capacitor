@@ -36,7 +36,7 @@ export interface BaseCapacitorOptions {
   /**
    * Enables Out of Memory Tracking for iOS and macCatalyst.
    * See the following link for more information and possible restrictions:
-   * https://docs.sentry.io/platforms/apple/guides/ios/configuration/out-of-memory/
+   * https://docs.sentry.io/platforms/apple/guides/ios/configuration/watchdog-terminations/
    *
    * @default true
    * */
