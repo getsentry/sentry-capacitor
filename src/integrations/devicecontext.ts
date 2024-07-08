@@ -8,9 +8,6 @@ const INTEGRATION_NAME = 'DeviceContext';
 export const deviceContextIntegration = (): Integration => {
   return {
     name: INTEGRATION_NAME,
-    setupOnce: () => {
-      // noop
-    },
     processEvent: processEvent,
   };
 };

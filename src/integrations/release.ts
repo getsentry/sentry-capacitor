@@ -14,9 +14,6 @@ const INTEGRATION_NAME = 'Release';
 export const nativeReleaseIntegration = (): Integration => {
   return {
     name: INTEGRATION_NAME,
-    setupOnce: () => {
-      // noop
-    },
     processEvent: processEvent,
   };
 };
