@@ -13,13 +13,14 @@ export type {
   User,
 } from '@sentry/types';
 
+export type { Scope } from '@sentry/core';
+
 export {
   addEventProcessor,
   addBreadcrumb,
   captureException,
   captureEvent,
   captureMessage,
-  Scope,
   getClient,
   setContext,
   setExtra,
@@ -37,7 +38,7 @@ export {
   spanIsSampled,
   setMeasurement,
   getGlobalScope,
-  // getIsolationScope, TODO: Verify why it's not working
+  getIsolationScope,
   setCurrentClient,
   getRootSpan,
   addChildSpanToSpan,
