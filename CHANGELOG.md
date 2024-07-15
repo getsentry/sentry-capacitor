@@ -2,28 +2,6 @@
 
 ## Unreleased
 
-> [!IMPORTANT]
-> If you are upgrading to the `1.x` versions of the SDK from `0.x` or below, make sure you follow our
-> [migration guide](https://docs.sentry.io/platforms/javascript/migration/v7-to-v8/#migration-codemod) first.
-
-### Features
-
-- Support for Angular 18 ([#675](https://github.com/getsentry/sentry-capacitor/pull/675))
-- Add close function on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
-- Expose `getClient` on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
-- Add the following functions to `@sentry/capacitor` ([#666](https://github.com/getsentry/sentry-capacitor/pull/666))
-  - `flush`, `getActiveSpan`, `spanToJSON`, `spanIsSampled`, `setMeasurement`, `getGlobalScope` and `setCurrentClient`.
-
-### Fixes
-
-- Accept undefined as value for tags ([#656](https://github.com/getsentry/sentry-capacitor/pull/656))
-
-### Dependencies
-
-- Bump JavaScript SDK from v7.114.0 to v8.9.2 ([#675](https://github.com/getsentry/sentry-capacitor/pull/675))
-  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.9.2/CHANGELOG.md)
-  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.114.0...8.9.2)
-
 
 ### How to Upgrade to Version 1:
 
@@ -47,6 +25,25 @@ All deprecations from the v7 cycle, with the exception of `getCurrentHub()`, hav
 in v8. If you have an advanced Sentry SDK setup, we additionally recommend reading the
 [in-depth migration guide](https://github.com/getsentry/sentry-javascript/blob/develop/MIGRATION.md#upgrading-from-7x-to-8x) in our repo which highlights all changes with additional details and
 information.
+
+
+### Features
+
+- Support for Angular 18 ([#675](https://github.com/getsentry/sentry-capacitor/pull/675))
+- Add close function on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
+- Expose `getClient` on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
+- Add the following functions to `@sentry/capacitor` ([#666](https://github.com/getsentry/sentry-capacitor/pull/666))
+  - `flush`, `getActiveSpan`, `spanToJSON`, `spanIsSampled`, `setMeasurement`, `getGlobalScope` and `setCurrentClient`.
+
+### Fixes
+
+- Accept undefined as value for tags ([#656](https://github.com/getsentry/sentry-capacitor/pull/656))
+
+### Dependencies
+
+- Bump JavaScript SDK from v7.114.0 to v8.9.2 ([#675](https://github.com/getsentry/sentry-capacitor/pull/675))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.9.2/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.114.0...8.9.2)
 
 ## 0.18.0
 
