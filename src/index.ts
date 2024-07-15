@@ -39,6 +39,7 @@ export {
   setMeasurement,
   getGlobalScope,
   getIsolationScope,
+  getCurrentScope,
   setCurrentClient,
   getRootSpan,
   addChildSpanToSpan,
