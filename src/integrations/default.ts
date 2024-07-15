@@ -15,13 +15,13 @@ export function getDefaultIntegrations(
 ): Integration[] {
   const integrations: Integration[] = [];
 
-  integrations.push(capacitorRewriteFramesIntegration);
-  integrations.push(nativeReleaseIntegration);
-  integrations.push(eventOriginIntegration);
-  integrations.push(sdkInfoIntegration);
+  integrations.push(capacitorRewriteFramesIntegration());
+  integrations.push(nativeReleaseIntegration());
+  integrations.push(eventOriginIntegration());
+  integrations.push(sdkInfoIntegration());
 
   if (options.enableNative) {
-    integrations.push(deviceContextIntegration);
+    integrations.push(deviceContextIntegration());
   }
 
   return integrations;
