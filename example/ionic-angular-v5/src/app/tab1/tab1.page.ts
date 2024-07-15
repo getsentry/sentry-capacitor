@@ -131,6 +131,8 @@ export class Tab1Page {
 
   public clearBreadcrumbs(): void {
     Sentry.getGlobalScope().clearBreadcrumbs();
+    Sentry.getIsolationScope().clearBreadcrumbs();
+    Sentry.getCurrentScope().clearBreadcrumbs();
   }
 
   public clearTestContext(): void {
