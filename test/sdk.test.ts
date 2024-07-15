@@ -1,9 +1,9 @@
 import type { BrowserOptions, EventHint, Exception, StackFrame } from '@sentry/browser';
+import type { Client, Event } from '@sentry/types';
 
 import type { CapacitorOptions } from '../src';
 import { init } from '../src/sdk';
 import { NATIVE } from '../src/wrapper';
-import { Client, Event } from '@sentry/types';
 
 jest.mock('../src/wrapper', () => {
   return {
