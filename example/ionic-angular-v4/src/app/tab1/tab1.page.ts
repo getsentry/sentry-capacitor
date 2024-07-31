@@ -8,7 +8,7 @@ import * as broken from 'broken_module';
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page {
-  constructor() {}
+  constructor() { }
 
   public throwUnhandledException(): void {
     // @ts-ignore intentionally calling to demonstrate global error handling
@@ -130,20 +130,16 @@ export class Tab1Page {
   }
 
   public clearUser(): void {
-    Sentry.configureScope(scope => {
-      scope.setUser(null);
-    });
+    Sentry.setUser(null);
   }
 
   public clearBreadcrumbs(): void {
-    Sentry.configureScope(scope => {
-      scope.clearBreadcrumbs();
-    });
+    Sentry.getGlobalScope().clearBreadcrumbs();
+    Sentry.getIsolationScope().clearBreadcrumbs();
+    Sentry.getCurrentScope().clearBreadcrumbs();
   }
 
   public clearTestContext(): void {
-    Sentry.configureScope(scope => {
-      scope.setContext('TEST-CONTEXT', null);
-    });
+    Sentry.setContext('TEST-CONTEXT', null);
   }
 }

@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import * as Sentry from '@sentry/capacitor';
-import { init as sentryAngularInit, createErrorHandler } from '@sentry/angular-ivy';
+import { init as sentryAngularInit, createErrorHandler } from '@sentry/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,7 +24,13 @@ Sentry.init(
     // Whether SDK should be enabled or not
     enabled: true,
     // Use the tracing integration to see traces and add performance monitoring
-    integrations: [new Sentry.BrowserTracing()],
+    integrations: [
+      Sentry.browserTracingIntegration(),
+      Sentry.replayIntegration({
+        maskAllText: false,
+        blockAllMedia: true,
+      }),
+    ],
     // A release identifier
     release: '1.0.0',
     // A dist identifier
@@ -39,18 +45,18 @@ Sentry.init(
 );
 
 @NgModule({
-    declarations: [AppComponent],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-    providers: [
-        StatusBar,
-        SplashScreen,
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        /* Provide the @sentry/angular error handler */
-        {
-            provide: ErrorHandler,
-            useValue: createErrorHandler(),
-        },
-    ],
-    bootstrap: [AppComponent]
+  declarations: [AppComponent],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    /* Provide the @sentry/angular error handler */
+    {
+      provide: ErrorHandler,
+      useValue: createErrorHandler(),
+    },
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
