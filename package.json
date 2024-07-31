@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@sentry/browser": "8.9.2",
-    "@sentry/core": "8.9.2",
+    "@sentry/core": "8.21.0",
     "@sentry/types": "8.9.2",
     "@sentry/utils": "8.9.2"
   },
