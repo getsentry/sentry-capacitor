@@ -2,8 +2,34 @@
 
 ## Unreleased
 
+
+### How to Upgrade to Version 1:
+
+- Angular minimum supported version changed to version 14, upgrade to Angular 14 or higher for using the latest SDK.
+
+- When using the package `@sentry/angular-ivy`, you will need to replace it by `@sentry/angular`.
+
+- enableOutOfMemoryTracking was removed and replaced by enableWatchdogTerminationTracking.
+
+- We recommend reading the
+[migration guide docs](https://docs.sentry.io/platforms/javascript/migration/v7-to-v8/#migration-codemod) to find out
+how to address any breaking changes in your code for your specific platform or framework.
+
+To automate upgrading to v8 as much as possible, use our migration codemod `@sentry/migr8`:
+
+```sh
+npx @sentry/migr8@latest
+```
+
+All deprecations from the v7 cycle, with the exception of `getCurrentHub()`, have been removed and can no longer be used
+in v8. If you have an advanced Sentry SDK setup, we additionally recommend reading the
+[in-depth migration guide](https://github.com/getsentry/sentry-javascript/blob/develop/MIGRATION.md#upgrading-from-7x-to-8x) in our repo which highlights all changes with additional details and
+information.
+
+
 ### Features
 
+- Support for Angular 18 ([#675](https://github.com/getsentry/sentry-capacitor/pull/675))
 - Add close function on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
 - Expose `getClient` on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
 - Add the following functions to `@sentry/capacitor` ([#666](https://github.com/getsentry/sentry-capacitor/pull/666))
@@ -12,6 +38,12 @@
 ### Fixes
 
 - Accept undefined as value for tags ([#656](https://github.com/getsentry/sentry-capacitor/pull/656))
+
+### Dependencies
+
+- Bump JavaScript SDK from v7.114.0 to v8.9.2 ([#675](https://github.com/getsentry/sentry-capacitor/pull/675))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.9.2/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.114.0...8.9.2)
 
 ## 0.18.0
 

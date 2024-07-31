@@ -4,7 +4,7 @@ import type { Exception } from '@sentry/browser';
 import { defaultStackParser, eventFromException } from '@sentry/browser';
 import type { Client, Event, EventHint, StackFrame, Stacktrace } from '@sentry/types';
 
-import { createCapacitorRewriteFrames } from '../../src/integrations/rewriteframes';
+import { capacitorRewriteFramesIntegration } from '../../src/integrations/rewriteframes';
 import * as webViewUrl from '../../src/utils/webViewUrl';
 
 describe('RewriteFrames', () => {
@@ -22,13 +22,13 @@ describe('RewriteFrames', () => {
     const error = new Error(options.message);
     error.stack = options.stack;
     const event = await eventFromException(defaultStackParser, error, HINT, ATTACH_STACKTRACE);
-    await createCapacitorRewriteFrames().processEvent?.(event, {} as EventHint, {} as Client);
+    await capacitorRewriteFramesIntegration().processEvent?.(event, {} as EventHint, {} as Client);
     const exception = event.exception?.values?.[0];
     return exception;
   };
 
   const processEvent = (event: Event): Event | undefined | null | PromiseLike<Event | null> => {
-    return createCapacitorRewriteFrames().processEvent?.(event, {} as EventHint, {} as Client);
+    return capacitorRewriteFramesIntegration().processEvent?.(event, {} as EventHint, {} as Client);
   };
 
   const firstStackTraceFromEvent = (event: Event): Stacktrace | undefined => {
@@ -48,20 +48,20 @@ describe('RewriteFrames', () => {
       message: 'Error: test',
       name: 'Error',
       stack:
-      'at n.throwUnhandledException (http://localhost/1835.53a456a58b808362.js:1:283)\n' +
-      'at http://localhost/1835.53a456a58b808362.js:1:2867\n' +
-      'at wg (http://localhost/main.bc0e3714db64c955.js:1:494047)\n' +
-      'at a (http://localhost/main.bc0e3714db64c955.js:1:494209)\n' +
-      'at _o.<anonymous> (http://localhost/main.bc0e3714db64c955.js:1:5698)\n' +
-      'at _o.x (http://localhost/main.bc0e3714db64c955.js:1:151119)\n' +
-      'at v.invokeTask (http://localhost/polyfills.931b4c31969683ac.js:1:7233)\n' +
-      'at Object.onInvokeTask (http://localhost/main.bc0e3714db64c955.js:1:524207)\n' +
-      'at v.invokeTask (http://localhost/polyfills.931b4c31969683ac.js:1:7154)\n' +
-      'at M.runTask (http://localhost/polyfills.931b4c31969683ac.js:1:2628)\n' +
-      'at m.invokeTask [as invoke] (http://localhost/polyfills.931b4c31969683ac.js:1:8)\n' +
-      'at Z (http://localhost/polyfills.931b4c31969683ac.js:1:20899)\n' +
-      'at N (http://localhost/polyfills.931b4c31969683ac.js:1:21294)\n' +
-      'at _o.F (http://localhost/polyfills.931b4c31969683ac.js:1:21458)',
+        'at n.throwUnhandledException (http://localhost/1835.53a456a58b808362.js:1:283)\n' +
+        'at http://localhost/1835.53a456a58b808362.js:1:2867\n' +
+        'at wg (http://localhost/main.bc0e3714db64c955.js:1:494047)\n' +
+        'at a (http://localhost/main.bc0e3714db64c955.js:1:494209)\n' +
+        'at _o.<anonymous> (http://localhost/main.bc0e3714db64c955.js:1:5698)\n' +
+        'at _o.x (http://localhost/main.bc0e3714db64c955.js:1:151119)\n' +
+        'at v.invokeTask (http://localhost/polyfills.931b4c31969683ac.js:1:7233)\n' +
+        'at Object.onInvokeTask (http://localhost/main.bc0e3714db64c955.js:1:524207)\n' +
+        'at v.invokeTask (http://localhost/polyfills.931b4c31969683ac.js:1:7154)\n' +
+        'at M.runTask (http://localhost/polyfills.931b4c31969683ac.js:1:2628)\n' +
+        'at m.invokeTask [as invoke] (http://localhost/polyfills.931b4c31969683ac.js:1:8)\n' +
+        'at Z (http://localhost/polyfills.931b4c31969683ac.js:1:20899)\n' +
+        'at N (http://localhost/polyfills.931b4c31969683ac.js:1:21294)\n' +
+        'at _o.F (http://localhost/polyfills.931b4c31969683ac.js:1:21458)',
     };
     const exception = await exceptionFromError(CAPACITOR_PROD);
 
@@ -182,20 +182,20 @@ describe('RewriteFrames', () => {
       message: 'Error: test',
       name: 'Error',
       stack:
-      'at Tab1Page.throwUnhandledException (http://localhost/src_app_tab1_tab1_module_ts.js:111:9)\n' +
-      'at Tab1Page_Template_ion_button_click_15_listener (ng:///Tab1Page.js:22:22)\n' +
-      'at executeListenerWithErrorHandling (http://localhost/vendor.js:95129:16)\n' +
-      'at wrapListenerIn_markDirtyAndPreventDefault (http://localhost/vendor.js:95167:22)\n' +
-      'at HostElement.<anonymous> (http://localhost/vendor.js:117909:34)\n' +
-      'at HostElement.sentryWrapped (http://localhost/vendor.js:17598:17)\n' +
-      'at _ZoneDelegate.invokeTask (http://localhost/polyfills.js:497:31)\n' +
-      'at Object.onInvokeTask (http://localhost/vendor.js:105694:33)\n' +
-      'at _ZoneDelegate.invokeTask (http://localhost/polyfills.js:496:60)\n' +
-      'at Zone.runTask (http://localhost/polyfills.js:269:47)\n' +
-      'at ZoneTask.invokeTask [as invoke] (http://localhost/polyfills.js:578:34)\n' +
-      'at invokeTask (http://localhost/polyfills.js:1752:18)\n' +
-      'at globalCallback (http://localhost/polyfills.js:1795:33)\n' +
-      'at HostElement.globalZoneAwareCallback (http://localhost/polyfills.js:1816:16)'
+        'at Tab1Page.throwUnhandledException (http://localhost/src_app_tab1_tab1_module_ts.js:111:9)\n' +
+        'at Tab1Page_Template_ion_button_click_15_listener (ng:///Tab1Page.js:22:22)\n' +
+        'at executeListenerWithErrorHandling (http://localhost/vendor.js:95129:16)\n' +
+        'at wrapListenerIn_markDirtyAndPreventDefault (http://localhost/vendor.js:95167:22)\n' +
+        'at HostElement.<anonymous> (http://localhost/vendor.js:117909:34)\n' +
+        'at HostElement.sentryWrapped (http://localhost/vendor.js:17598:17)\n' +
+        'at _ZoneDelegate.invokeTask (http://localhost/polyfills.js:497:31)\n' +
+        'at Object.onInvokeTask (http://localhost/vendor.js:105694:33)\n' +
+        'at _ZoneDelegate.invokeTask (http://localhost/polyfills.js:496:60)\n' +
+        'at Zone.runTask (http://localhost/polyfills.js:269:47)\n' +
+        'at ZoneTask.invokeTask [as invoke] (http://localhost/polyfills.js:578:34)\n' +
+        'at invokeTask (http://localhost/polyfills.js:1752:18)\n' +
+        'at globalCallback (http://localhost/polyfills.js:1795:33)\n' +
+        'at HostElement.globalZoneAwareCallback (http://localhost/polyfills.js:1816:16)'
     };
     const exception = await exceptionFromError(CAPACITOR_PROD);
 

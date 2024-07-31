@@ -1,4 +1,5 @@
-export { EventOrigin } from './eventorigin';
-export { SdkInfo } from './sdkinfo';
-export { Release } from './release';
-export { DeviceContext } from './devicecontext';
+export { deviceContextIntegration } from './devicecontext';
+export { eventOriginIntegration } from './eventorigin';
+export { nativeReleaseIntegration } from './release';
+export { capacitorRewriteFramesIntegration } from './rewriteframes';
+export { sdkInfoIntegration } from './sdkinfo';

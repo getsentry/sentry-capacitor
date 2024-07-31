@@ -1,5 +1,5 @@
-import type { BrowserOptions} from '@sentry/browser';
-import type { Integration } from '@sentry/types';
+import type { BrowserOptions, EventHint, Exception, StackFrame } from '@sentry/browser';
+import type { Client, Event } from '@sentry/types';
 
 import type { CapacitorOptions } from '../src';
 import { init } from '../src/sdk';
@@ -100,7 +100,7 @@ describe('SDK Init', () => {
     });
 
     // eslint-disable-next-line @typescript-eslint/unbound-method
-    expect(NATIVE.initNativeSdk).toBeCalledWith(
+    expect(NATIVE.initNativeSdk).toHaveBeenCalledWith(
       expect.objectContaining(test[4]),
     );
   });
@@ -158,14 +158,33 @@ describe('SDK Init', () => {
 
   test('RewriteFrames to be added by default', async () => {
     NATIVE.platform = 'web';
+    init({ enabled: true }, async (capacitorOptions: CapacitorOptions) => {
+      const rewriteFramesIntegration =
+        Array.isArray(capacitorOptions.integrations) &&
+        capacitorOptions.integrations.find(
+          (integration) => integration.name === 'RewriteFrames');
 
-    init({ enabled: true }, (capacitorOptions: CapacitorOptions) => {
-      expect(capacitorOptions).toBeDefined();
-      const expectedName = 'Capacitor RewriteFrames';
-      const rewriteFrames = (capacitorOptions.defaultIntegrations as Integration[]).find(function (integration) {
-        return integration.name === expectedName;
-      }) as Integration;
-      expect(rewriteFrames.name).toBe(expectedName);
+      // Capacitor specific frame.
+      const error = { values: [{ stacktrace: { frames: [{ filename: 'capacitor://localhost:8080/file.js' }] } }] };
+      const expectedError =
+      {
+        filename: 'app:///file.js',
+        in_app: true
+      }
+
+      expect(rewriteFramesIntegration).toBeDefined();
+
+      if (!rewriteFramesIntegration) {
+        throw new Error('rewriteFrames should be defined, but it is false');
+      }
+
+      // @ts-expect-error
+      const event = await rewriteFramesIntegration.processEvent(({ exception: error }) as Event, {} as EventHint, {} as Client);
+
+      const [firstException] = event?.exception?.values as Exception[];
+      const [firstFrame] = firstException.stacktrace?.frames as StackFrame[];
+
+      expect(firstFrame).toStrictEqual(expectedError);
     });
   });
 });

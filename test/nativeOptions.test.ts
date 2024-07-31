@@ -1,5 +1,5 @@
 import { Capacitor } from '@capacitor/core';
-import type { Instrumenter, StackParser } from '@sentry/types';
+import type { StackParser } from '@sentry/types';
 import type { CapacitorOptions } from 'src';
 
 import { FilterNativeOptions } from '../src/nativeOptions';
@@ -13,22 +13,6 @@ jest.mock('@capacitor/core', () => ({
 
 
 describe('nativeOptions', () => {
-
-  test('Use value of enableOutOfMemoryTracking on enableWatchdogTerminationTracking when set true', async () => {
-    const nativeOptions = FilterNativeOptions(
-      {
-        enableOutOfMemoryTracking: true
-      });
-    expect(nativeOptions.enableWatchdogTerminationTracking).toBeTruthy();
-  });
-
-  test('Use value of enableOutOfMemoryTracking on enableWatchdogTerminationTracking when set false', async () => {
-    const nativeOptions = FilterNativeOptions(
-      {
-        enableOutOfMemoryTracking: false
-      });
-    expect(nativeOptions.enableWatchdogTerminationTracking).toBeFalsy();
-  });
 
   test('enableWatchdogTerminationTracking is set when defined', async () => {
     const nativeOptions = FilterNativeOptions(
@@ -68,14 +52,13 @@ describe('nativeOptions', () => {
         enableNativeCrashHandling: true,
         enableNativeNagger: true,
         enableNdkScopeSync: true,
-        enableOutOfMemoryTracking: true,
+        enableWatchdogTerminationTracking: true,
         enableTracing: true,
         enableCaptureFailedRequests: true,
         environment: 'Prod',
         ignoreErrors: ['test'],
         ignoreTransactions: ['test'],
         initialScope: {},
-        instrumenter: {} as Instrumenter,
         integrations: [],
         maxBreadcrumbs: 100,
         maxValueLength: 100,
@@ -120,7 +103,7 @@ describe('nativeOptions', () => {
       appHangTimeoutInterval: 123
     };
     const nativeOptions = FilterNativeOptions(expectedOptions);
-      expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
+    expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
   });
 
   test('Should not include iOS parameters when running on android', async () => {
@@ -135,7 +118,7 @@ describe('nativeOptions', () => {
         enableAppHangTracking: true
       }
     });
-      expect(nativeOptions).toEqual(expectedOptions);
+    expect(nativeOptions).toEqual(expectedOptions);
   });
 
 });

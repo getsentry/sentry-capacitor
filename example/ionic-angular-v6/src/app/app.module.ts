@@ -4,7 +4,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { createErrorHandler, init as sentryAngularInit } from '@sentry/angular-ivy';
+import { createErrorHandler, init as sentryAngularInit } from '@sentry/angular';
 import * as Sentry from '@sentry/capacitor';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,8 +23,8 @@ Sentry.init(
     enabled: true,
     // Use the tracing integration to see traces and add performance monitoring
     integrations: [
-      new Sentry.BrowserTracing(),
-      new Sentry.Replay({
+      Sentry.browserTracingIntegration(),
+      Sentry.replayIntegration({
         maskAllText: false,
         blockAllMedia: true,
       }),
