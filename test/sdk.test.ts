@@ -174,7 +174,7 @@ describe('SDK Init', () => {
 
       expect(rewriteFramesIntegration).toBeDefined();
 
-      if (rewriteFramesIntegration == false) {
+      if (!rewriteFramesIntegration) {
         throw new Error('rewriteFrames should be defined, but it is false');
       }
 
