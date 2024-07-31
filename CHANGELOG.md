@@ -1,7 +1,6 @@
 # Changelog
 
-## Unreleased
-
+## 1.0.0-beta.1
 
 ### How to Upgrade to Version 1:
 
