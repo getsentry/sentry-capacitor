@@ -8,10 +8,10 @@
 
 - When using the package `@sentry/angular-ivy`, you will need to replace it by `@sentry/angular`.
 
-- enableOutOfMemoryTracking was removed and replaced by enableWatchdogTerminationTracking.
+- `enableOutOfMemoryTracking` was removed and replaced by `enableWatchdogTerminationTracking`.
 
-- We recommend reading the
-[migration guide docs](https://docs.sentry.io/platforms/javascript/migration/v7-to-v8/#migration-codemod) to find out
+- This release bumps the dependency for the JavaScript SDK from v7 to v8. We recommend reading the
+[migration guide docs](https://docs.sentry.io/platforms/javascript/migration/v7-to-v8/) to find out
 how to address any breaking changes in your code for your specific platform or framework.
 
 To automate upgrading to v8 as much as possible, use our migration codemod `@sentry/migr8`:
