@@ -21,7 +21,8 @@ import { NATIVE } from './wrapper';
 export function init<T>(
   passedOptions: CapacitorOptions & T,
   originalInit: (passedOptions: T & BrowserOptions) => void = browserInit,
-): void {
+): void { 
+  // trigger build.
   const finalOptions = {
     enableAutoSessionTracking: true,
     enableWatchdogTerminationTracking: true,
