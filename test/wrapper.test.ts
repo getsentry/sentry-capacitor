@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import type { Envelope, EventEnvelope, EventItem, SeverityLevel, TransportMakeRequestResponse } from '@sentry/types';
+import type { BaseEnvelopeHeaders, Envelope, EnvelopeItem, EventEnvelope, EventItem, SeverityLevel, TransportMakeRequestResponse } from '@sentry/types';
 import { createEnvelope, logger } from '@sentry/utils';
 
 import { utf8ToBytes } from '../src/vendor';
@@ -273,6 +273,22 @@ describe('Tests Native Wrapper', () => {
       expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
       expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
         `${expectedHeader}\n${expectedItem}\n${expectedPayload}`);
+    });
+
+    test('Has a valid EOF string', async () => {
+      const [expectedEOF = -1/* Placeholder */] = utf8ToBytes('\n');
+      const expectedEnvelopeBytes = utf8ToBytes(JSON.stringify({ foo: 'bar' }));
+      expectedEnvelopeBytes.push(expectedEOF);
+
+      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
+
+      const mockedEnvelope: Envelope = [{ foo: 'bar' }, []];
+
+      await NATIVE.sendEnvelope(mockedEnvelope);
+
+      expect(expectedEOF).not.toBe(-1);
+      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
+      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toEqual(expectedEnvelopeBytes);
     });
 
     test('Clears breadcrumbs on Android if there is a handled exception', async () => {
