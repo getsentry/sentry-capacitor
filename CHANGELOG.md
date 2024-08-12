@@ -1,6 +1,13 @@
 # Changelog
 
-## 1.0.0-beta.1
+## Unreleased
+
+### Dependencies
+
+- Bump Android SDK from v7.6.0 to v7.13.0 ([#705](https://github.com/getsentry/sentry-capacitor/pull/705))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#7130)
+  - [diff](https://github.com/getsentry/sentry-java/compare/7.6.0...7.13.0)
+
 
 ### How to Upgrade to Version 1:
 
@@ -25,6 +32,7 @@ in v8. If you have an advanced Sentry SDK setup, we additionally recommend readi
 [in-depth migration guide](https://github.com/getsentry/sentry-javascript/blob/develop/MIGRATION.md#upgrading-from-7x-to-8x) in our repo which highlights all changes with additional details and
 information.
 
+## 1.0.0-beta.1
 
 ### Features
 
