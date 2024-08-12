@@ -7,6 +7,9 @@
 - Bump Android SDK from v7.6.0 to v7.13.0 ([#705](https://github.com/getsentry/sentry-capacitor/pull/705))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#7130)
   - [diff](https://github.com/getsentry/sentry-java/compare/7.6.0...7.13.0)
+- Bump JavaScript SDK from v8.9.2 to v8.25.0 ([#710](https://github.com/getsentry/sentry-capacitor/pull/710))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.25.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/8.9.2...8.25.0)
 
 
 ### How to Upgrade to Version 1:
