@@ -1024,6 +1024,11 @@
     eslint-plugin-jsdoc "^30.0.3"
     eslint-plugin-simple-import-sort "^5.0.3"
 
+"@sentry-internal/eslint-plugin-sdk@8.26.0":
+  version "8.26.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-plugin-sdk/-/eslint-plugin-sdk-8.26.0.tgz#9d08c3e342e6cabd2a0f423bd7cbaba3fe062314"
+  integrity sha512-p9flHwd7ITjcLCTcrhLztFCGPEJvR/txCwcA2gN3YrpAKmLcDxyICsWiYoqBQfk97rsJbADn2ZzxU9fQsZkJPA==
+
 "@sentry-internal/eslint-plugin-sdk@8.9.2":
   version "8.9.2"
   resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-plugin-sdk/-/eslint-plugin-sdk-8.9.2.tgz#50f720f49bee72727deaf2e2db8f87cb70f7a357"
