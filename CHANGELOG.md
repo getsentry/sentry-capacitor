@@ -7,9 +7,9 @@
 - Bump Android SDK from v7.6.0 to v7.13.0 ([#705](https://github.com/getsentry/sentry-capacitor/pull/705))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#7130)
   - [diff](https://github.com/getsentry/sentry-java/compare/7.6.0...7.13.0)
-- Bump Cocoa SDK from v8.21.0 to v8.33.0 ([#606](https://github.com/getsentry/sentry-capacitor/pull/606))
-  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8330)
-  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.21.0...8.33.0)
+- Bump Cocoa SDK from v8.21.0 to v8.36.0 ([#606](https://github.com/getsentry/sentry-capacitor/pull/606), [#712](https://github.com/getsentry/sentry-capacitor/pull/712))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8360)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.21.0...8.36.0)
 
 
 ### How to Upgrade to Version 1:
