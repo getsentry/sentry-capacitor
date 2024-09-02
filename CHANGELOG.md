@@ -4,9 +4,9 @@
 
 ### Dependencies
 
-- Bump JavaScript SDK from v8.9.2 to v8.25.0 ([#710](https://github.com/getsentry/sentry-capacitor/pull/710))
-  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.25.0/CHANGELOG.md)
-  - [diff](https://github.com/getsentry/sentry-javascript/compare/8.9.2...8.25.0)
+- Bump JavaScript SDK from v8.9.2 to v8.27.0 ([#720](https://github.com/getsentry/sentry-capacitor/pull/720))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.27.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/8.9.2...8.27.0)
 - Bump Android SDK from v7.6.0 to v7.14.0 ([#705](https://github.com/getsentry/sentry-capacitor/pull/705), [#711](https://github.com/getsentry/sentry-capacitor/pull/711))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#7140)
   - [diff](https://github.com/getsentry/sentry-java/compare/7.6.0...7.14.0)
@@ -23,8 +23,8 @@
 - `enableOutOfMemoryTracking` was removed and replaced by `enableWatchdogTerminationTracking`.
 
 - This release bumps the dependency for the JavaScript SDK from v7 to v8. We recommend reading the
-[migration guide docs](https://docs.sentry.io/platforms/javascript/migration/v7-to-v8/) to find out
-how to address any breaking changes in your code for your specific platform or framework.
+  [migration guide docs](https://docs.sentry.io/platforms/javascript/migration/v7-to-v8/) to find out
+  how to address any breaking changes in your code for your specific platform or framework.
 
 To automate upgrading to v8 as much as possible, use our migration codemod `@sentry/migr8`:
 
