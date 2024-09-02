@@ -79,8 +79,6 @@ jobs:
         run: |
           yarn global add yalc
           yalc publish
-          sleep 2
-          ls -R ~/.yalc
 
       - name: Upload yalc package
         uses: actions/upload-artifact@v4
@@ -131,7 +129,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: yalc-package
-          path: ~/.yalc # Ensure this path matches where yalc expects to find the package
+          path: ~/.yalc/packages/@sentry/capacitor/ # Ensure this path matches where yalc expects to find the package
 
       - name: Publish test broken node.
         working-directory: example/broken_node_module
