@@ -78,8 +78,17 @@ jobs:
       - name: Publish package locally
         run: |
           yarn global add yalc
+          mkdir ~/.yalc
           yalc publish
           sleep 2
+
+      - name: Check yalc directory
+        id: check_yalc
+        run: |
+          if [ ! -d "$HOME/.yalc" ]; then
+            echo "Directory ~/.yalc not found"
+            exit 1
+          fi
 
       - name: Upload yalc package
         uses: actions/upload-artifact@v4
