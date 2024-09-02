@@ -79,6 +79,7 @@ jobs:
         run: |
           yarn global add yalc
           yalc publish
+          sleep 2
 
       - name: Upload yalc package
         uses: actions/upload-artifact@v4
