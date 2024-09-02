@@ -3,11 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist/esm",
-    "target": "es6",
-    "module": "es6",
+    "lib": ["DOM", "ES2018"],
+    "target": "es2018",
     "moduleResolution": "node",
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*.ts"],
 }

@@ -1,26 +1,22 @@
 {
+  "extends": "./tsconfig.build.json",
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "typings/*.d.ts"
+  ],
+  "exclude": ["node_modules"],
   "compilerOptions": {
+    "ignoreDeprecations": "5.0",
     "allowUnreachableCode": false,
     "declaration": true,
     "esModuleInterop": true,
-    "lib": [
-      "dom",
-      "es6"
-    ],
-    "module": "es6",
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "pretty": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es6"
-  },
-  "extends": "./tsconfig.build.json",
-  "include": [
-    "src/**/*.ts",
-    "test/**/*.ts",
-    "typings/*.d.ts"
-  ]
+  }
 }
