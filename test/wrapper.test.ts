@@ -275,6 +275,22 @@ describe('Tests Native Wrapper', () => {
         `${expectedHeader}\n${expectedItem}\n${expectedPayload}`);
     });
 
+    test('Has a valid EOF string', async () => {
+      const [expectedEOF = -1/* Placeholder */] = utf8ToBytes('\n');
+      const expectedEnvelopeBytes = utf8ToBytes(JSON.stringify({ foo: 'bar' }));
+      expectedEnvelopeBytes.push(expectedEOF);
+
+      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
+
+      const mockedEnvelope: Envelope = [{ foo: 'bar' }, []];
+
+      await NATIVE.sendEnvelope(mockedEnvelope);
+
+      expect(expectedEOF).not.toBe(-1);
+      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
+      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toEqual(expectedEnvelopeBytes);
+    });
+
     test('Clears breadcrumbs on Android if there is a handled exception', async () => {
       NATIVE.platform = 'android';
 

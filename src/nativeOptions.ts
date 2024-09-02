@@ -21,6 +21,8 @@ export function FilterNativeOptions(
     enabled: options.enabled,
     enableNdkScopeSync: options.enableNdkScopeSync,
     enableWatchdogTerminationTracking: options.enableWatchdogTerminationTracking,
+    // TODO: Remove Capacitor V9
+    // eslint-disable-next-line deprecation/deprecation
     enableTracing: options.enableTracing,
     environment: options.environment,
     // ignoreErrors: Only available on the JavaScript Layer.

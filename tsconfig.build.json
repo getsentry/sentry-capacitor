@@ -2,8 +2,10 @@
   "extends": "./node_modules/@sentry-internal/typescript/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "commonjs",
-    "outDir": "dist/build"
+    "outDir": "dist/build",
+    "lib": ["DOM", "ES2018"],
+    "target": "es2018",
+    "skipLibCheck": true,
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*.ts"],
 }

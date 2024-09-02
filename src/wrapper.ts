@@ -36,7 +36,7 @@ export const NATIVE = {
       throw this._NativeClientError;
     }
 
-    const [EOL] = utf8ToBytes('\n');
+    const EOL = 10; // utf8ToBytes('\n');
     const [envelopeHeader, envelopeItems] = envelope;
 
     const headerString = JSON.stringify(envelopeHeader);
