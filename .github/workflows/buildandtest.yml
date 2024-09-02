@@ -82,21 +82,12 @@ jobs:
           sleep 2
           ls ~/.yalc
 
-      - name: Check yalc directory
-        id: check_yalc
-        run: |
-          ls -R ~/.yalc
-          if [ ! -d "$HOME/.yalc" ]; then
-            echo "Directory ~/.yalc not found"
-            exit 1
-          fi
-
       - name: Upload yalc package
         uses: actions/upload-artifact@v4
         with:
           name: yalc-package
           if-no-files-found: error
-          path: ~/.yalc/ # Path to yalc directory where the package is published
+          path: /home/runner/.yalc # Path to yalc directory where the package is published
 
     outputs:
       # this needs to be passed on, because the `needs` context only looks at direct ancestors (so steps which depend on
