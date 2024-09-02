@@ -87,7 +87,7 @@ jobs:
         with:
           name: yalc-package
           if-no-files-found: error
-          path: /home/runner/.yalc # Path to yalc directory where the package is published
+          path: ~/.yalc/packages/@sentry/capacitor/ # Path to yalc directory where the package is published
 
     outputs:
       # this needs to be passed on, because the `needs` context only looks at direct ancestors (so steps which depend on
