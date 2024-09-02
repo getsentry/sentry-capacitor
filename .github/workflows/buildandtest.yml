@@ -80,15 +80,16 @@ jobs:
           yarn global add yalc
           yalc publish
           sleep 2
+          ls ~/.yalc
 
       - name: Check yalc directory
         id: check_yalc
         run: |
+          ls ~/.yalc
           if [ ! -d "$HOME/.yalc" ]; then
             echo "Directory ~/.yalc not found"
             exit 1
           fi
-          ls ~/.yalc
 
       - name: Upload yalc package
         uses: actions/upload-artifact@v4
