@@ -6,7 +6,7 @@ PODS:
     - SentryPrivate (= 8.36.0)
   - SentryCapacitor (0.18.0):
     - Capacitor
-    - Sentry/HybridSDK (= 8.21.0)
+    - Sentry/HybridSDK (= 8.36.0)
   - SentryPrivate (8.36.0)
 
 DEPENDENCIES:
