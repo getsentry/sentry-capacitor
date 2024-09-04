@@ -98,7 +98,7 @@ describe('nativeOptions', () => {
 
     const keys = Object.keys(nativeOptions);
     const keysFilter = keys.filter(key =>
-      // @ts-ignore allowed for testing.
+      // @ts-ignore allowed for testing. trigger code change
       (typeof nativeOptions[key]) !== 'string' &&
       // @ts-ignore allowed for testing.
       (typeof nativeOptions[key]) !== 'number' &&
