@@ -57,6 +57,17 @@ information.
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.9.2/CHANGELOG.md)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/7.114.0...8.9.2)
 
+## 0.19.0
+
+### Dependencies
+
+- Bump Android SDK from v7.6.0 to v7.14.0 ([#722](https://github.com/getsentry/sentry-capacitor/pull/722) )
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#7140)
+  - [diff](https://github.com/getsentry/sentry-java/compare/7.6.0...7.14.0)
+- Bump Cocoa SDK from v8.21.0 to v8.36.0 ([#722](https://github.com/getsentry/sentry-capacitor/pull/722))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8360)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.21.0...8.36.0)
+
 ## 0.18.0
 
 ### Features
