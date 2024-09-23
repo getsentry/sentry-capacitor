@@ -1,18 +1,6 @@
 # Changelog
 
-## 1.0.0-rc.1
-
-### Dependencies
-
-- Bump JavaScript SDK from v8.9.2 to v8.27.0 ([#720](https://github.com/getsentry/sentry-capacitor/pull/720))
-  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.27.0/CHANGELOG.md)
-  - [diff](https://github.com/getsentry/sentry-javascript/compare/8.9.2...8.27.0)
-- Bump Android SDK from v7.6.0 to v7.14.0 ([#705](https://github.com/getsentry/sentry-capacitor/pull/705), [#711](https://github.com/getsentry/sentry-capacitor/pull/711))
-  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#7140)
-  - [diff](https://github.com/getsentry/sentry-java/compare/7.6.0...7.14.0)
-- Bump Cocoa SDK from v8.21.0 to v8.36.0 ([#606](https://github.com/getsentry/sentry-capacitor/pull/606), [#712](https://github.com/getsentry/sentry-capacitor/pull/712))
-  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8360)
-  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.21.0...8.36.0)
+## Unreleased
 
 ### How to Upgrade to Version 1:
 
@@ -36,6 +24,45 @@ All deprecations from the v7 cycle, with the exception of `getCurrentHub()`, hav
 in v8. If you have an advanced Sentry SDK setup, we additionally recommend reading the
 [in-depth migration guide](https://github.com/getsentry/sentry-javascript/blob/develop/MIGRATION.md#upgrading-from-7x-to-8x) in our repo which highlights all changes with additional details and
 information.
+
+### Features
+
+- Support for Angular 18 ([#675](https://github.com/getsentry/sentry-capacitor/pull/675))
+- Add close function on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
+- Expose `getClient` on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
+- Add the following functions to `@sentry/capacitor` ([#666](https://github.com/getsentry/sentry-capacitor/pull/666))
+  - `flush`, `getActiveSpan`, `spanToJSON`, `spanIsSampled`, `setMeasurement`, `getGlobalScope` and `setCurrentClient`.
+
+### Fixes
+
+- Accept undefined as value for tags ([#656](https://github.com/getsentry/sentry-capacitor/pull/656))
+
+### Dependencies
+
+- Bump JavaScript SDK from v7.114.0 to v8.27.0 ([#675](https://github.com/getsentry/sentry-capacitor/pull/675), [#720](https://github.com/getsentry/sentry-capacitor/pull/720))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.9.2/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.114.0...8.9.2)
+- Bump Android SDK from v7.6.0 to v7.14.0 ([#705](https://github.com/getsentry/sentry-capacitor/pull/705), [#711](https://github.com/getsentry/sentry-capacitor/pull/711))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#7140)
+  - [diff](https://github.com/getsentry/sentry-java/compare/7.6.0...7.14.0)
+- Bump Cocoa SDK from v8.21.0 to v8.36.0 ([#606](https://github.com/getsentry/sentry-capacitor/pull/606), [#712](https://github.com/getsentry/sentry-capacitor/pull/712))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8360)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.21.0...8.36.0)
+
+
+## 1.0.0-rc.1
+
+### Dependencies
+
+- Bump JavaScript SDK from v8.9.2 to v8.27.0 ([#720](https://github.com/getsentry/sentry-capacitor/pull/720))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.27.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/8.9.2...8.27.0)
+- Bump Android SDK from v7.6.0 to v7.14.0 ([#705](https://github.com/getsentry/sentry-capacitor/pull/705), [#711](https://github.com/getsentry/sentry-capacitor/pull/711))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#7140)
+  - [diff](https://github.com/getsentry/sentry-java/compare/7.6.0...7.14.0)
+- Bump Cocoa SDK from v8.21.0 to v8.36.0 ([#606](https://github.com/getsentry/sentry-capacitor/pull/606), [#712](https://github.com/getsentry/sentry-capacitor/pull/712))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8360)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.21.0...8.36.0)
 
 ## 1.0.0-beta.1
 
