@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.0
 
 ### How to Upgrade to Version 1:
 
@@ -48,7 +48,6 @@ information.
 - Bump Cocoa SDK from v8.21.0 to v8.36.0 ([#606](https://github.com/getsentry/sentry-capacitor/pull/606), [#712](https://github.com/getsentry/sentry-capacitor/pull/712))
   - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8360)
   - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.21.0...8.36.0)
-
 
 ## 1.0.0-rc.1
 
