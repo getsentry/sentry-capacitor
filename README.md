@@ -13,12 +13,21 @@ _Bad software is everywhere, and we're tired of it. Sentry is on a mission to he
 ## Installation
 
 ```bash
-# Angular 12 and newer:
-yarn add @sentry/capacitor @sentry/angular-ivy --exact
-
-# Angular 10 and 11:
+# Angular 14 and newer:
 yarn add @sentry/capacitor @sentry/angular --exact
+
+# Vue
+yarn add @sentry/capacitor @sentry/vue --exact
+
+# React
+yarn add @sentry/capacitor @sentry/react --exact
+
+# Other
+yarn add @sentry/capacitor @sentry/browser --exact
 ```
+
+Older versions of Angular requires @sentry/capacitor V0, for more information check the page: https://docs.sentry.io/platforms/javascript/guides/capacitor/#angular-version-compatibility
+
 
 ## Usage
 
@@ -52,7 +61,7 @@ To set context information or send manual events, use the exported functions of 
 import * as Sentry from '@sentry/capacitor';
 
 // Set user information, as well as tags and further extras
-Sentry.configureScope(scope => {
+  const scope = Sentry.getCurrentScope();
   scope.setExtra('battery', 0.7);
   scope.setTag('user_mode', 'admin');
   scope.setUser({ id: '4711' });
