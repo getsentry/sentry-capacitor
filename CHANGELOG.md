@@ -1,5 +1,55 @@
 # Changelog
 
+## Unreleased
+
+### How to Upgrade to Version 1:
+
+- Angular minimum supported version changed to version 14, upgrade to Angular 14 or higher for using the latest SDK.
+
+- When using the package `@sentry/angular-ivy`, you will need to replace it by `@sentry/angular`.
+
+- `enableOutOfMemoryTracking` was removed and replaced by `enableWatchdogTerminationTracking`.
+
+- This release bumps the dependency for the JavaScript SDK from v7 to v8. We recommend reading the
+  [migration guide docs](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/v0-to-v1/) to find out
+  how to address any breaking changes in your code for your specific platform or framework.
+
+To automate upgrading to v8 as much as possible, use our migration codemod `@sentry/migr8`:
+
+```sh
+npx @sentry/migr8@latest
+```
+
+All deprecations from the v7 cycle, with the exception of `getCurrentHub()`, have been removed and can no longer be used
+in v8. If you have an advanced Sentry SDK setup, we additionally recommend reading the
+[in-depth migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/v0-to-v1/v7-to-v8/#upgrading-to-8x) in our repo which highlights all changes with additional details and
+information.
+
+### Features
+
+- Support for Angular 18 ([#675](https://github.com/getsentry/sentry-capacitor/pull/675))
+- Add close function on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
+- Expose `getClient` on `@sentry/capacitor` ([#664](https://github.com/getsentry/sentry-capacitor/pull/664))
+- Add the following functions to `@sentry/capacitor` ([#666](https://github.com/getsentry/sentry-capacitor/pull/666))
+  - `flush`, `getActiveSpan`, `spanToJSON`, `spanIsSampled`, `setMeasurement`, `getGlobalScope` and `setCurrentClient`.
+
+### Fixes
+
+- Accept undefined as value for tags ([#656](https://github.com/getsentry/sentry-capacitor/pull/656))
+
+### Dependencies
+
+- Bump JavaScript SDK from v7.114.0 to v8.27.0 ([#675](https://github.com/getsentry/sentry-capacitor/pull/675), [#720](https://github.com/getsentry/sentry-capacitor/pull/720))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.9.2/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/7.114.0...8.9.2)
+- Bump Android SDK from v7.6.0 to v7.14.0 ([#705](https://github.com/getsentry/sentry-capacitor/pull/705), [#711](https://github.com/getsentry/sentry-capacitor/pull/711))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#7140)
+  - [diff](https://github.com/getsentry/sentry-java/compare/7.6.0...7.14.0)
+- Bump Cocoa SDK from v8.21.0 to v8.36.0 ([#606](https://github.com/getsentry/sentry-capacitor/pull/606), [#712](https://github.com/getsentry/sentry-capacitor/pull/712))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8360)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.21.0...8.36.0)
+
+
 ## 1.0.0-rc.1
 
 ### Dependencies
@@ -13,29 +63,6 @@
 - Bump Cocoa SDK from v8.21.0 to v8.36.0 ([#606](https://github.com/getsentry/sentry-capacitor/pull/606), [#712](https://github.com/getsentry/sentry-capacitor/pull/712))
   - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8360)
   - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.21.0...8.36.0)
-
-### How to Upgrade to Version 1:
-
-- Angular minimum supported version changed to version 14, upgrade to Angular 14 or higher for using the latest SDK.
-
-- When using the package `@sentry/angular-ivy`, you will need to replace it by `@sentry/angular`.
-
-- `enableOutOfMemoryTracking` was removed and replaced by `enableWatchdogTerminationTracking`.
-
-- This release bumps the dependency for the JavaScript SDK from v7 to v8. We recommend reading the
-  [migration guide docs](https://docs.sentry.io/platforms/javascript/migration/v7-to-v8/) to find out
-  how to address any breaking changes in your code for your specific platform or framework.
-
-To automate upgrading to v8 as much as possible, use our migration codemod `@sentry/migr8`:
-
-```sh
-npx @sentry/migr8@latest
-```
-
-All deprecations from the v7 cycle, with the exception of `getCurrentHub()`, have been removed and can no longer be used
-in v8. If you have an advanced Sentry SDK setup, we additionally recommend reading the
-[in-depth migration guide](https://github.com/getsentry/sentry-javascript/blob/develop/MIGRATION.md#upgrading-from-7x-to-8x) in our repo which highlights all changes with additional details and
-information.
 
 ## 1.0.0-beta.1
 
