@@ -11,7 +11,7 @@
 - `enableOutOfMemoryTracking` was removed and replaced by `enableWatchdogTerminationTracking`.
 
 - This release bumps the dependency for the JavaScript SDK from v7 to v8. We recommend reading the
-  [migration guide docs](https://docs.sentry.io/platforms/javascript/migration/v7-to-v8/) to find out
+  [migration guide docs](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/v0-to-v1/) to find out
   how to address any breaking changes in your code for your specific platform or framework.
 
 To automate upgrading to v8 as much as possible, use our migration codemod `@sentry/migr8`:
@@ -22,7 +22,7 @@ npx @sentry/migr8@latest
 
 All deprecations from the v7 cycle, with the exception of `getCurrentHub()`, have been removed and can no longer be used
 in v8. If you have an advanced Sentry SDK setup, we additionally recommend reading the
-[in-depth migration guide](https://github.com/getsentry/sentry-javascript/blob/develop/MIGRATION.md#upgrading-from-7x-to-8x) in our repo which highlights all changes with additional details and
+[in-depth migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/v0-to-v1/v7-to-v8/#upgrading-to-8x) in our repo which highlights all changes with additional details and
 information.
 
 ### Features
