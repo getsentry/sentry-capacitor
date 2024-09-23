@@ -26,7 +26,7 @@ yarn add @sentry/capacitor @sentry/react --exact
 yarn add @sentry/capacitor @sentry/browser --exact
 ```
 
-Older versions of Angular requires @sentry/capacitor V0, for more information check the page: https://docs.sentry.io/platforms/javascript/guides/capacitor/#angular-version-compatibility
+Older versions of Angular require @sentry/capacitor V0, for more information check the page: https://docs.sentry.io/platforms/javascript/guides/capacitor/#angular-version-compatibility
 
 
 ## Usage
