@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Dependencies
+
+- Bump JavaScript Sibling SDKs from v8.27.0 to v8.33.1 ([#730](https://github.com/getsentry/sentry-capacitor/pull/730))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#8331)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/8.27.0...8.33.1)
+
 ## 1.0.0
 
 ### How to Upgrade to Version 1:
