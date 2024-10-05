@@ -177,7 +177,7 @@ describe('ScopeSync', () => {
       expect(setExtrasScopeSpy).toHaveBeenCalledExactlyOnceWith({ key: 'value', second: 'bar' });
     });
 
-    /* eslint-disable-next-line jest/no-focused-tests */
+    // eslint-disable-next-line @sentry-internal/sdk/no-focused-tests
     it.only('addBreadcrumb', () => {
       // This test is run in isolation to check for a race condition with another test.
       expect(SentryCore.getIsolationScope().addBreadcrumb).not.toBe(addBreadcrumbScopeSpy);
