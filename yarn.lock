@@ -1148,16 +1148,16 @@
   dependencies:
     "@sentry/types" "8.33.0"
 
-"@sentry/wizard@3.30.0":
-  version "3.30.0"
-  resolved "https://registry.yarnpkg.com/@sentry/wizard/-/wizard-3.30.0.tgz#4a88422d71ce36405b38061b0ab45953f1b37d84"
-  integrity sha512-stJpKKXjNVctqAiirI6orz3CMiPNXajom95nV288ulZdRAIF/jplhoniKKMfA1uoVmrtMws8h4bUyTert8ubSg==
+"@sentry/wizard@3.34.2":
+  version "3.34.2"
+  resolved "https://registry.yarnpkg.com/@sentry/wizard/-/wizard-3.34.2.tgz#4daab7c3a0ddf8a1166bb90f45001670e0f80005"
+  integrity sha512-2Dn9aJcso1RBycUNvsFRmq8ElkDlDuSh1qOqHULkabq4I2EiWrrjMpr/6+xNDiYSNuNDCdDxs2g9ThuvlMmb3g==
   dependencies:
     "@clack/core" "^0.3.4"
     "@clack/prompts" "0.7.0"
     "@sentry/cli" "^1.72.0"
     "@sentry/node" "^7.69.0"
-    axios "1.6.0"
+    axios "1.7.4"
     chalk "^2.4.1"
     glob "^8.1.0"
     inquirer "^6.2.0"
@@ -1669,12 +1669,12 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-axios@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.0.tgz#f1e5292f26b2fd5c2e66876adc5b06cdbd7d2102"
-  integrity sha512-EZ1DYihju9pwVB+jg67ogm+Tmqc6JmhamRN6I4Zt8DfZu5lbcQGw3ozH9lFejSJgs/ibaef3A9PMXPLeefFGJg==
+axios@1.7.4:
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.4.tgz#4c8ded1b43683c8dd362973c393f3ede24052aa2"
+  integrity sha512-DukmaFRnY6AzAALSH4J2M3k6PkaC+MfaAGdEERRWcC9q3/TWQwLpHR8ZRLKTdQ3aBDL64EdluRDjJqKw+BPZEw==
   dependencies:
-    follow-redirects "^1.15.0"
+    follow-redirects "^1.15.6"
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
 
@@ -2618,10 +2618,10 @@ flatted@^3.2.9:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.9.tgz#7eb4c67ca1ba34232ca9d2d93e9886e611ad7daf"
   integrity sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==
 
-follow-redirects@^1.15.0:
-  version "1.15.6"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.6.tgz#7f815c0cda4249c74ff09e95ef97c23b5fd0399b"
-  integrity sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==
+follow-redirects@^1.15.6:
+  version "1.15.9"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.9.tgz#a604fa10e443bf98ca94228d9eebcc2e8a2c8ee1"
+  integrity sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==
 
 for-each@^0.3.3:
   version "0.3.3"
