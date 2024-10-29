@@ -70,7 +70,6 @@ describe('normalize', () => {
 
       const actualResult = convertToNormalizedObject(obj);
       expect((actualResult)).toStrictEqual(expectedObj);
-
     });
   });
 });
