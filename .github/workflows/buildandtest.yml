@@ -38,7 +38,7 @@ jobs:
           key: ${{ steps.compute_lockfile_hash.outputs.hash }}
 
       - name: Install dependencies
-        if: steps.cache_dependencies.outputs.cache-hit == ''
+        if: steps.cache_dependencies.outputs.cache-hit != 'true'
         run: yarn install
     outputs:
       dependency_cache_key: ${{ steps.compute_lockfile_hash.outputs.hash }}
