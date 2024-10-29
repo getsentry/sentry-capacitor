@@ -69,11 +69,11 @@ jobs:
         # packages, and so `yarn build` should always run. This `if` check is therefore only there for testing CI issues
         # where the built packages are beside the point. In that case, you can change `BUILD_CACHE_KEY` (at the top of
         # this file) to a constant and skip rebuilding all of the packages each time CI runs.
-        if: steps.cache_built_packages.outputs.cache-hit == '!= true'
+        if: steps.cache_built_packages.outputs.cache-hit != 'true'
         run: yarn build
         # yarn.lock cannot be dirty when releasing a new version.
       - name: Check if yarn.lock is dirty
-        if: steps.cache_built_packages.outputs.cache-hit == '!= true'
+        if: steps.cache_built_packages.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
       - name: Publish package locally
         run: |
