@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- options normalizeDepth and normalizeMaxBreadth are now being respected when adding a breadcrumb. ([#766](https://github.com/getsentry/sentry-capacitor/pull/766))
+
 ## 1.0.1
 
 ### Dependencies
