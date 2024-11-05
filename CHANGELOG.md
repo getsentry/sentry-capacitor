@@ -12,6 +12,12 @@
 
 - options normalizeDepth and normalizeMaxBreadth are now being respected when adding a breadcrumb. ([#766](https://github.com/getsentry/sentry-capacitor/pull/766))
 
+### Dependencies
+
+- Bump Android SDK from v7.14.0 to v7.16.0 ([#752](https://github.com/getsentry/sentry-capacitor/pull/752))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#7160)
+  - [diff](https://github.com/getsentry/sentry-java/compare/7.14.0...7.16.0)
+
 ## 1.0.1
 
 ### Dependencies
