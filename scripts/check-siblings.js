@@ -68,7 +68,7 @@ function ValidateSentryPackageParameters(packages) {
       if (installedVersion.split('@').length === 2) {
         errorMessages.push("You must specify the version to the package " + installedVersion + ". ( " + installedVersion + "@" + siblingVersion + ")");
       }
-      else if (!installedVersion.endsWith(siblingVersion)) {
+      else if (!installedVersion.endsWith(siblingVersion) && !installedVersion.includes('%3A' + siblingVersion + '#')) {
         errorMessages.push("You tried to install " + installedVersion + ", but the current version of  @sentry/capacitor is only compatible with version " + siblingVersion + ". Please install the dependency with the correct version.");
       }
     }
@@ -137,7 +137,7 @@ function CheckSiblings() {
 
   for (const lineData of packageJson) {
     let sentryRef = lineData.match(jsonFilter);
-    if (sentryRef && sentryRef[2] !== siblingVersion) {
+    if (sentryRef && sentryRef[2] !== siblingVersion && !sentryRef[2].includes('%3A' + siblingVersion + '#')) {
       incompatiblePackages.push(['@sentry/' + sentryRef[1], sentryRef[2]]);
     }
   }
