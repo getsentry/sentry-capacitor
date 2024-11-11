@@ -11,7 +11,7 @@
 ### Fixes
 
 - options normalizeDepth and normalizeMaxBreadth are now being respected when adding a breadcrumb. ([#766](https://github.com/getsentry/sentry-capacitor/pull/766))
-- Add missing `withActiveSpan` and `suppressTracing` exports from `@sentry/core` ([#XX](https://github.com/getsentry/sentry-capacitor/pull/XX))
+- Add missing `withActiveSpan` and `suppressTracing` exports from `@sentry/core` ([#776](https://github.com/getsentry/sentry-capacitor/pull/776))
 
 ## 1.0.1
 
