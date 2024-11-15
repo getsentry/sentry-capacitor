@@ -1072,6 +1072,11 @@
   resolved "https://registry.yarnpkg.com/@sentry-internal/typescript/-/typescript-8.37.1.tgz#3a1fe5a0b63453eacbe921c08426a5a60f998cf0"
   integrity sha512-Ujvv0kZoXxXXf2DWr1IfPa6qk3lI8OVEDcYgmf3qZcBkNRewE4fdlNA34zuK+ZKoDnvby1Ih2y816hNevQNk4A==
 
+"@sentry-internal/typescript@8.38.0":
+  version "8.38.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/typescript/-/typescript-8.38.0.tgz#a333d08ce34be203045e0af708934034d79dab34"
+  integrity sha512-1PNLkBiQnRkDLEyIEt0agVxOf+253npJ0RtYV1g6XQCjyErR1k4E0sfDQAdjA14B6VN4oF6OAuitZ6J2M3g90A==
+
 "@sentry/browser@8.37.1":
   version "8.37.1"
   resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-8.37.1.tgz#2e6e4accc395ad9e6313e07b09415370c71e5874"
