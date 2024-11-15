@@ -23,6 +23,7 @@ jobs:
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v4
+      - run: corepack enable
       - name: Set up Node
         uses: actions/setup-node@v4
         # we use a hash of yarn.lock as our cache key, because if it hasn't changed, our dependencies haven't changed,
@@ -51,6 +52,7 @@ jobs:
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v4
+      - run: corepack enable
       - name: Set up Node
         uses: actions/setup-node@v4
       - name: Check dependency cache
@@ -108,6 +110,7 @@ jobs:
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v4
+      - run: corepack enable
       - name: Set up Node
         uses: actions/setup-node@v4
       - name: Check dependency cache
@@ -150,6 +153,7 @@ jobs:
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v4
+      - run: corepack enable
       - name: Set up Node
         uses: actions/setup-node@v4
       - name: Check dependency cache
@@ -172,6 +176,7 @@ jobs:
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v4
+      - run: corepack enable
       - name: Set up Node
         uses: actions/setup-node@v4
       - name: Check dependency cache

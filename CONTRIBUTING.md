@@ -4,7 +4,7 @@
 
 You need:
 
-- [nodejs](https://nodejs.org/en/download/) 8 or higher
+- [nodejs](https://nodejs.org/en/download/) 18 or higher (with corepack enabled)
 - [yarn 1](https://classic.yarnpkg.com/lang/en/docs/install) or higher
 - [yalc](https://github.com/wclr/yalc) (can be installed with `yarn global add yalc`)
 - http-server
