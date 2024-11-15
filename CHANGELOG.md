@@ -11,6 +11,7 @@
 ### Fixes
 
 - options normalizeDepth and normalizeMaxBreadth are now being respected when adding a breadcrumb. ([#766](https://github.com/getsentry/sentry-capacitor/pull/766))
+- Add missing `withActiveSpan` and `suppressTracing` exports from `@sentry/core` ([#776](https://github.com/getsentry/sentry-capacitor/pull/776))
 - CommonJS build does not contain ESM code anymore ([#773](https://github.com/getsentry/sentry-capacitor/pull/773))
 
 ### Dependencies

@@ -25,6 +25,8 @@ export {
   setContext,
   setExtra,
   setExtras,
+  withActiveSpan,
+  suppressTracing,
   setTag,
   setTags,
   flush,
