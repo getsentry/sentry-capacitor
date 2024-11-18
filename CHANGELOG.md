@@ -6,7 +6,7 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
-## Unreleased
+## 1.0.2
 
 ### Fixes
 
@@ -19,9 +19,6 @@
 - Bump Android SDK from v7.14.0 to v7.16.0 ([#752](https://github.com/getsentry/sentry-capacitor/pull/752))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#7160)
   - [diff](https://github.com/getsentry/sentry-java/compare/7.14.0...7.16.0)
-
-### Dependencies
-
 - Bump JavaScript SDK from v8.33.0 to v8.37.1 ([#775](https://github.com/getsentry/sentry-capacitor/pull/775))
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.37.1/CHANGELOG.md)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/8.33.0...8.37.1)
