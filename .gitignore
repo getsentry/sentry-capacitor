@@ -9,6 +9,12 @@ node_modules/
 # Jest generated folder
 coverage/
 
+# e2e siblings
+/e2e-test/scripts/siblingsTests/*/*/package.json
+/e2e-test/scripts/siblingsTests/*/*/yarn.lock
+/e2e-test/scripts/siblingsTests/*/*/stdout.txt
+/e2e-test/scripts/siblingsTests/.yalc
+
 # example files
 example/*/dist
 example/*/node_modules
