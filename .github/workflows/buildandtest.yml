@@ -169,6 +169,32 @@ jobs:
       - name: Run tests
         run: yarn test
 
+  job_e2e_test:
+    name: Test
+    needs: job_build
+    continue-on-error: true
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current commit (${{ github.sha }})
+        uses: actions/checkout@v4
+      - run: corepack enable
+      - name: Set up Node
+        uses: actions/setup-node@v4
+      - name: Check dependency cache
+        uses: actions/cache@v4.1.2
+        with:
+          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
+          key: ${{ needs.job_build.outputs.dependency_cache_key }}
+      - name: Check build cache
+        uses: actions/cache@v4.1.2
+        with:
+          path: ${{ env.CACHED_BUILD_PATHS }}
+          key: ${{ env.BUILD_CACHE_KEY }}
+      - name: Run tests
+        run: yarn test:e2e
+
+
   job_artifacts:
     name: Upload Artifacts
     needs: job_build

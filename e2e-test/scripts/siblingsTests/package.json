@@ -2,6 +2,10 @@
   "name": "2e2-sibling-test",
   "version": "1.0.0",
   "license": "MIT",
+  "scripts": {
+    "_comment": "postinstall scripts are not called from file packages so we copy the same post install from sentry capacitor",
+    "postinstall": "node node_modules/@sentry/capacitor/scripts/check-siblings.js"
+  },
   "dependencies": {
   }
 }
