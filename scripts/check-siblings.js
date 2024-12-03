@@ -7,7 +7,7 @@ const updateArgument = '--update-sentry-capacitor';
 // Filters all Sentry packages but Capacitor, CLI and Wizard.
 const jsonFilter = /\s*\"\@sentry\/(?!capacitor|wizard|cli|typescript|electron)(?<packageName>[a-zA-Z]+)\"\:\s*\"(?<version>.+)\"/;
 
-const IsE2E = true; //env.npm_package_scripts_test_e2e == './scripts/e2e-test.siblings.sh';
+const IsE2E = env.npm_package_scripts_test_e2e == './scripts/e2e-test.siblings.sh';
 
 function LogE2E(message) {
   IsE2E && console.log("E2E_TEST: " + message);
