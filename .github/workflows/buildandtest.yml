@@ -191,6 +191,8 @@ jobs:
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
+      - name: Install yalc
+        run: yarn  global add yalc
       - name: Run tests
         run: yarn test:e2e
 
