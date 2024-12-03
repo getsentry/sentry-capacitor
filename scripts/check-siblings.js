@@ -150,10 +150,7 @@ function CheckSiblings() {
   let rootPath = GetPackageJsonRootPath();
   let incompatiblePackages = [];
   const packageJson = fs.readFileSync(rootPath + 'package.json', 'utf8').split("\n");
-
-  LogE2E("TEST " +  fs.readFileSync(rootPath + "node_modules/@sentry/angular/" +'package.json', 'utf8'));
   for (const lineData of packageJson) {
-    LogE2E("test " + lineData);
     let sentryRef = lineData.match(jsonFilter);
     if (sentryRef && sentryRef[2] !== siblingVersion && !sentryRef[2].includes('%3A' + siblingVersion + '#')) {
       incompatiblePackages.push(['@sentry/' + sentryRef[1], sentryRef[2]]);
