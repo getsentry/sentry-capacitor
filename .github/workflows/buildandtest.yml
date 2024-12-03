@@ -170,7 +170,7 @@ jobs:
         run: yarn test
 
   job_e2e_test:
-    name: Test
+    name: E2E Test
     needs: job_build
     continue-on-error: true
     timeout-minutes: 30
