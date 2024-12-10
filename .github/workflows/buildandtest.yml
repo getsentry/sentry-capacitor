@@ -209,10 +209,10 @@ jobs:
         with:
           name: failed-e2e-${{ github.run_id }}
           path: |
-            /e2e-test/scripts/siblingsTests/npm*/*/*.log
-            /e2e-test/scripts/siblingsTests/npm*/*/*.json
-            /e2e-test/scripts/siblingsTests/yarn_*/*/*.log
-            /e2e-test/scripts/siblingsTests/yarn_*/*/*.json
+            ./e2e-test/scripts/siblingsTests/npm*/*/*.log
+            ./e2e-test/scripts/siblingsTests/npm*/*/*.json
+            ./e2e-test/scripts/siblingsTests/yarn_*/*/*.log
+            ./e2e-test/scripts/siblingsTests/yarn_*/*/*.json
 
   job_artifacts:
     name: Upload Artifacts
