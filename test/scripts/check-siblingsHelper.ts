@@ -116,6 +116,23 @@ export function InstallSDK(pkgMnger: string, args: ReadonlyArray<string>, rootPa
 }
 
 export function GetPackageManagerVersion(pkgMnger: string, testPath: string): string {
+  const result2 = spawnSync('corepack', ['--version'], {
+    cwd: testPath,
+    stdio: ['pipe'], // Ensure output is in readable string format
+    // Clear env to avoid contamination with root folder.
+    env: {
+      INIT_CWD: testPath
+    }
+  });
+
+  if (result2.error) {
+    throw new Error(`On PATH ${testPath}, Expected corepack to return the version, but got:\nMessage: ${result2.error.message}\nStack: ${result2.error.stack}`);
+  }
+  expect(result2.status).toBe(0);
+  expect(result2.stderr?.toString()).toBeEmpty();
+  expect(result2.stdout.toString().trim()).not.toBeEmpty();
+
+
   const result = spawnSync(pkgMnger, ['--version'], {
     cwd: testPath,
     stdio: ['pipe'], // Ensure output is in readable string format
