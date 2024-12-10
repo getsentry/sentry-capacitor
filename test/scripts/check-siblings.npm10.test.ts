@@ -17,7 +17,9 @@ describe('NPM 10 tests', () => {
 
       ClearE2ETestFolder(testPath);
       CreateE2EPackage(testPath);
-      expect(GetPackageManagerVersion('npm',testPath)).toBe("10.9.0");
+      InstallSDK('corepack',['prepare', '--activate'], testPath);
+
+      expect(GetPackageManagerVersion('npm', testPath)).toBe("10.9.0");
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
