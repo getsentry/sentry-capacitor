@@ -46,6 +46,7 @@ describe('Yarn V3 tests', () => {
       expect(result.status).toBe(0);
       expect(packageJson).toEqual(expectedPackageJson);
       expect(e2eLogs).toContain('E2E_TEST: OK');
+      expect(GetPackageManagerVersion('yarn', testPath)).toBe("3.8.6");
     });
 
     test('warns when incorrect sibling is installed', async () => {
