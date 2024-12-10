@@ -124,6 +124,9 @@ export function GetPackageManagerVersion(pkgMnger: string, testPath: string): st
       INIT_CWD: testPath
     }
   });
+  expect(result.error).toBeUndefined();
+  expect(result.status).toBe(0);
+  expect(result.stderr?.toString()).toBeEmpty();
   return result.stdout.toString().trim();
 }
 
