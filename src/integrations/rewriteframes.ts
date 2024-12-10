@@ -1,7 +1,7 @@
+import type { Integration, StackFrame } from '@sentry/core';
 import {
   rewriteFramesIntegration as originalRewriteFramesIntegration,
 } from '@sentry/core';
-import type { Integration, StackFrame } from '@sentry/types';
 
 import { getCurrentServerUrl } from '../utils/webViewUrl';
 

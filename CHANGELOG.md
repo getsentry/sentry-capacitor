@@ -8,11 +8,23 @@
 
 ## Unreleased
 
+### Features
+
+- Support Angular V19. ([#730](https://github.com/getsentry/sentry-capacitor/pull/730))
+- RequestEventData is now exposed from @sentry/capacitor ([#730](https://github.com/getsentry/sentry-capacitor/pull/730))
+
 ### Dependencies
 
-- Bump JavaScript Sibling SDKs from v8.37.1 to v8.42.0 ([#730](https://github.com/getsentry/sentry-capacitor/pull/730))
+- Bump JavaScript SDKs from v8.37.1 to v8.42.0 ([#730](https://github.com/getsentry/sentry-capacitor/pull/730))
+
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#8420)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/8.37.1...8.42.0)
+
+### Deprecations
+
+- There are new deprecations introduced by the latests JavaScript SDKs, to see them please check the below links:
+  - https://github.com/getsentry/sentry-javascript/blob/8.42.0/CHANGELOG.md#deprecations
+  - https://github.com/getsentry/sentry-javascript/blob/8.42.0/CHANGELOG.md#deprecations-1
 
 ## 1.0.2
 

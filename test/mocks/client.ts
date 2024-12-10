@@ -1,12 +1,3 @@
-import {
-  BaseClient,
-  createTransport,
-  getCurrentScope,
-  getGlobalScope,
-  getIsolationScope,
-  initAndBind,
-  setCurrentClient,
-} from '@sentry/core';
 import type {
   ClientOptions,
   Event,
@@ -16,8 +7,15 @@ import type {
   ParameterizedString,
   Session,
   SeverityLevel,
-} from '@sentry/types';
-import { resolvedSyncPromise } from '@sentry/utils';
+} from '@sentry/core';
+import {
+  BaseClient,
+  createTransport,
+  getCurrentScope,
+  getGlobalScope,
+  getIsolationScope,
+  initAndBind,
+ resolvedSyncPromise,  setCurrentClient } from '@sentry/core';
 
 export function getDefaultTestClientOptions(options: Partial<TestClientOptions> = {}): TestClientOptions {
   return {

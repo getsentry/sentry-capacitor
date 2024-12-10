@@ -2,7 +2,7 @@ jest.mock('../../src/utils/webViewUrl');
 
 import type { Exception } from '@sentry/browser';
 import { defaultStackParser, eventFromException } from '@sentry/browser';
-import type { Client, Event, EventHint, StackFrame, Stacktrace } from '@sentry/types';
+import type { Client, Event, EventHint, StackFrame, Stacktrace } from '@sentry/core';
 
 import { capacitorRewriteFramesIntegration } from '../../src/integrations/rewriteframes';
 import * as webViewUrl from '../../src/utils/webViewUrl';
