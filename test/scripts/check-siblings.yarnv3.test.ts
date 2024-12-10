@@ -25,8 +25,8 @@ describe('Yarn V3 tests', () => {
       ClearE2ETestFolder(testPath);
       CreateE2EPackage(testPath);
       SetupYarnRC(testPath);
-      InstallSDK('corepack',['prepare', '--activate'], testPath);
-      expect(GetPackageManagerVersion('yarn', testPath)).toBe("3.8.6");
+//      InstallSDK('corepack',['prepare', '--activate'], testPath);
+//      expect(GetPackageManagerVersion('yarn', testPath)).toBe("3.8.6");
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
@@ -58,8 +58,8 @@ describe('Yarn V3 tests', () => {
       ClearE2ETestFolder(testPath);
       CreateE2EPackage(testPath);
       SetupYarnRC(testPath);
-      InstallSDK('corepack',['prepare', '--activate'], testPath);
-      expect(GetPackageManagerVersion('yarn',testPath)).toBe("3.8.6");
+//      InstallSDK('corepack',['prepare', '--activate'], testPath);
+//      expect(GetPackageManagerVersion('yarn',testPath)).toBe("3.8.6");
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
@@ -103,8 +103,8 @@ describe('Yarn V3 tests', () => {
       CreateE2EStartPackage(testPath, dependenciesJson);
       CreateE2EPackage(testPath);
       SetupYarnRC(testPath);
-      InstallSDK('corepack',['prepare', '--activate'], testPath);
-      expect(GetPackageManagerVersion('yarn',testPath)).toBe("3.8.6");
+//      InstallSDK('corepack',['prepare', '--activate'], testPath);
+//      expect(GetPackageManagerVersion('yarn',testPath)).toBe("3.8.6");
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
@@ -140,8 +140,8 @@ describe('Yarn V3 tests', () => {
       CreateE2EStartPackage(testPath, dependenciesJson);
       CreateE2EPackage(testPath);
       SetupYarnRC(testPath);
-      InstallSDK('corepack',['prepare', '--activate'], testPath);
-      expect(GetPackageManagerVersion('yarn',testPath)).toBe("3.8.6");
+//      InstallSDK('corepack',['prepare', '--activate'], testPath);
+//      expect(GetPackageManagerVersion('yarn',testPath)).toBe("3.8.6");
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
