@@ -124,7 +124,10 @@ export function GetPackageManagerVersion(pkgMnger: string, testPath: string): st
       INIT_CWD: testPath
     }
   });
-  expect(result.error).toBeUndefined();
+
+  if (result.error) {
+    throw new Error(`Expected ${pkgMnger} to return the version, but got:\nMessage: ${result.error.message}\nStack: ${result.error.stack}`);
+  }
   expect(result.status).toBe(0);
   expect(result.stderr?.toString()).toBeEmpty();
   return result.stdout.toString().trim();
