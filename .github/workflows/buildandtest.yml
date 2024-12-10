@@ -194,7 +194,9 @@ jobs:
       - name: Install yalc
         run: yarn  global add yalc
       - name: Run tests
-        run: yarn test:e2e
+        run: |
+            yarn install
+            yarn test:e2e
 
 
   job_artifacts:
