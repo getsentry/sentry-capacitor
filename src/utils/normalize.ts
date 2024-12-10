@@ -1,5 +1,4 @@
-import { getClient } from '@sentry/core';
-import { normalize } from '@sentry/utils';
+import { getClient , normalize } from '@sentry/core';
 
 const KEY = 'value';
 

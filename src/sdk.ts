@@ -1,8 +1,7 @@
 import type { BrowserOptions } from '@sentry/browser';
 import { init as browserInit } from '@sentry/browser';
-import { getClient, getGlobalScope, getIntegrationsToSetup, getIsolationScope } from '@sentry/core';
-import type { Integration } from '@sentry/types';
-import { logger } from '@sentry/utils';
+import type { Integration } from '@sentry/core';
+import { getClient, getGlobalScope, getIntegrationsToSetup, getIsolationScope , logger } from '@sentry/core';
 
 import { getDefaultIntegrations } from './integrations/default';
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
