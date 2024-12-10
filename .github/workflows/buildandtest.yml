@@ -169,6 +169,51 @@ jobs:
       - name: Run tests
         run: yarn test
 
+  job_e2e_test:
+    name: E2E Test
+    needs: job_build
+    continue-on-error: true
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current commit (${{ github.sha }})
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: corepack enable
+
+      - name: Check dependency cache
+        uses: actions/cache@v4.1.2
+        with:
+          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
+          key: ${{ needs.job_build.outputs.dependency_cache_key }}
+      - name: Check build cache
+        uses: actions/cache@v4.1.2
+        with:
+          path: ${{ env.CACHED_BUILD_PATHS }}
+          key: ${{ env.BUILD_CACHE_KEY }}
+      - name: Install yalc
+        run: yarn  global add yalc
+      - name: Run tests
+        run: |
+            yarn install
+            yarn test:e2e
+
+      - name: Upload failed artifact with test logs and JSON files
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: failed-e2e-${{ github.run_id }}
+          path: |
+            ./e2e-test/scripts/siblingsTests/npm*/*/*.log
+            ./e2e-test/scripts/siblingsTests/npm*/*/*.json
+            ./e2e-test/scripts/siblingsTests/yarn_*/*/*.log
+            ./e2e-test/scripts/siblingsTests/yarn_*/*/*.json
+
   job_artifacts:
     name: Upload Artifacts
     needs: job_build
