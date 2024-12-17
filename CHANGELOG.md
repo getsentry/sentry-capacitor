@@ -22,7 +22,7 @@
 
 ### Deprecations
 
-- There are new deprecations introduced by the latests JavaScript SDKs, to see them please check the below links:
+- There are new deprecations introduced by the latests JavaScript SDKs, to see them, please check the below links:
   - https://github.com/getsentry/sentry-javascript/blob/8.42.0/CHANGELOG.md#deprecations
   - https://github.com/getsentry/sentry-javascript/blob/8.42.0/CHANGELOG.md#deprecations-1
 
