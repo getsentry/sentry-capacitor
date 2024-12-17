@@ -8,8 +8,8 @@ import type {
   SeverityLevel,
   TransportMakeRequestResponse,
   User,
-} from '@sentry/types';
-import { dropUndefinedKeys, logger, SentryError } from '@sentry/utils';
+} from '@sentry/core';
+import { dropUndefinedKeys, logger, SentryError } from '@sentry/core';
 
 import type { NativeDeviceContextsResponse } from './definitions';
 import { FilterNativeOptions } from './nativeOptions';

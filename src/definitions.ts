@@ -1,4 +1,4 @@
-import type { Breadcrumb, Package } from '@sentry/types';
+import type { Breadcrumb, Package } from '@sentry/core';
 
 import type { CapacitorOptions } from './options';
 

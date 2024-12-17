@@ -4,7 +4,7 @@ import {
 } from '@sentry/browser';
 import type { BrowserClientOptions } from '@sentry/browser/types/client';
 import type { BrowserTransportOptions } from '@sentry/browser/types/transports/types';
-import type { Event, Transport } from '@sentry/types';
+import type { Event, Transport } from '@sentry/core';
 
 import { NativeTransport } from '../../src/transports/native';
 import { NATIVE } from '../../src/wrapper';
