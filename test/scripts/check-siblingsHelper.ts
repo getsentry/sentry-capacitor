@@ -121,7 +121,7 @@ export function GetPackageManagerVersion(pkgMnger: string, testPath: string): st
     stdio: ['pipe'], // Ensure output is in readable string format
     // Clear env to avoid contamination with root folder.
     env: {
-      ...process.env,
+//      ...process.env,
       PATH: process.env.PATH,
       INIT_CWD: testPath
     }
@@ -146,7 +146,7 @@ export function GetPackageManagerVersion(pkgMnger: string, testPath: string): st
     stdio: ['pipe'], // Ensure output is in readable string format
     // Clear env to avoid contamination with root folder.
     env: {
-      ...process.env,
+//      ...process.env,
       PATH: process.env.PATH,
       INIT_CWD: testPath
     }
