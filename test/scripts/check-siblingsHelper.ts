@@ -128,7 +128,13 @@ export function GetPackageManagerVersion(pkgMnger: string, testPath: string): st
   });
 
   if (result2.error) {
-    throw new Error(`On PATH ${testPath}, Expected corepack to return the version, but got:\nMessage: ${result2.error.message}\nStack: ${result2.error.stack} ${JSON.stringify(result2)}`);
+    throw new Error(` Corepack Failed.
+      SpawnSync Error: ${result2.error}
+      Result object: ${JSON.stringify(result2, null, 2)}
+
+      STDERR: ${result2.stderr.toString()}
+
+      STDOUT: ${result2.stdout.toString()}`);
   }
   expect(result2.status).toBe(0);
   expect(result2.stderr?.toString()).toBeEmpty();
