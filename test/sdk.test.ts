@@ -1,5 +1,5 @@
 import type { BrowserOptions, EventHint, Exception, StackFrame } from '@sentry/browser';
-import type { Client, Event } from '@sentry/types';
+import type { Client, Event } from '@sentry/core';
 
 import type { CapacitorOptions } from '../src';
 import { init } from '../src/sdk';

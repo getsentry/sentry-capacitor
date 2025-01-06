@@ -1,5 +1,5 @@
-import type { InternalGlobal } from '@sentry/utils';
-import { GLOBAL_OBJ } from '@sentry/utils';
+import type { InternalGlobal } from '@sentry/core';
+import { GLOBAL_OBJ } from '@sentry/core';
 
 export interface CapacitorInternalGlobal extends InternalGlobal {
   WEBVIEW_SERVER_URL?: string;
