@@ -184,6 +184,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install Corepack
+        run: npm install -g corepack
+
       - run: corepack enable
 
       - name: Check if Corepack is enabled
