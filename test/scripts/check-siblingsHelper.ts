@@ -132,9 +132,9 @@ export function GetPackageManagerVersion(pkgMnger: string, testPath: string): st
       SpawnSync Error: ${result2.error}
       Result object: ${JSON.stringify(result2, null, 2)}
 
-      STDERR: ${result2.stderr.toString()}
+      STDERR: ${result2.stderr?.toString()}
 
-      STDOUT: ${result2.stdout.toString()}`);
+      STDOUT: ${result2.stdout?.toString()}`);
   }
   expect(result2.status).toBe(0);
   expect(result2.stderr?.toString()).toBeEmpty();
@@ -155,9 +155,9 @@ export function GetPackageManagerVersion(pkgMnger: string, testPath: string): st
       SpawnSync Error: ${result.error}
       Result object: ${JSON.stringify(result, null, 2)}
 
-      STDERR: ${result.stderr.toString()}
+      STDERR: ${result.stderr?.toString()}
 
-      STDOUT: ${result.stdout.toString()}`);
+      STDOUT: ${result.stdout?.toString()}`);
 
   }
   expect(result.status).toBe(0);
