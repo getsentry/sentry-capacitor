@@ -189,15 +189,6 @@ jobs:
 
       - run: corepack enable
 
-      - name: Check if Corepack is enabled
-        run: |
-          if corepack --version > /dev/null 2>&1; then
-            echo "Corepack is enabled."
-          else
-            echo "Corepack is not enabled."
-            exit 1
-          fi
-
       - name: Check dependency cache
         uses: actions/cache@v4.1.2
         with:
