@@ -1,21 +1,15 @@
-import { getClient } from '@sentry/core';
+import * as SentryCore from '@sentry/core';
 
-jest.mock('@sentry/core', () => ({
-  getClient: jest.fn(),
-}));
+import { enableSyncToNative } from '../../src/scopeSync';
 import { convertToNormalizedObject } from '../../src/utils/normalize';
+import { getDefaultTestClientOptions, TestClient } from '../mocks/client';
 
 describe('normalize', () => {
-  describe('convertToNormalizedObject', () => {
-    beforeEach(() => {
-      (getClient as jest.Mock).mockReturnValue({
-          getOptions: jest.fn().mockReturnValue({
-              normalizeDepth: undefined,
-              normalizeMaxBreadth: undefined,
-          }),
-      });
-    });
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
 
+  describe('convertToNormalizedObject', () => {
     test('output equals input for normalized objects', () => {
       const actualResult = convertToNormalizedObject({ foo: 'bar' });
       expect(actualResult).toEqual({ foo: 'bar' });
@@ -36,13 +30,23 @@ describe('normalize', () => {
       expect(actualResult).toEqual({ value: null });
     });
 
+    test('converts array to an object', () => {
+      const actualResult = convertToNormalizedObject([]);
+      expect(actualResult).toEqual([]);
+    });
+
+    test('converts custom class to an object', () => {
+      class TestClass {
+        test: string = 'foo';
+      }
+      const actualResult = convertToNormalizedObject(new TestClass());
+      expect(actualResult).toEqual({ test: 'foo' });
+    });
+
     test('respect normalizeDepth and normalizeMaxBreadth when set', () => {
-      (getClient as jest.Mock).mockReturnValue({
-        getOptions: jest.fn().mockReturnValue({
-          normalizeDepth: 2,
-          normalizeMaxBreadth: 3,
-        })
-      });
+      SentryCore.setCurrentClient(new TestClient(getDefaultTestClientOptions({ normalizeDepth: 2, normalizeMaxBreadth: 3})));
+      enableSyncToNative(SentryCore.getIsolationScope());
+
       const obj = {
         key1: '1',
         keyparent: {
