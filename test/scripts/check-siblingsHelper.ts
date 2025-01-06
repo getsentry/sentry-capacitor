@@ -115,16 +115,31 @@ export function InstallSDK(pkgMnger: string, args: ReadonlyArray<string>, rootPa
   return result;
 }
 
+function HideGlobalYarnPath(): string {
+  const path = process.env.PATH as string;
+  const separator = process.platform === 'win32' ? ';' : ':';
+  const pathArray = path.split(separator);
+  const newPath = pathArray
+    .filter((item) => !item.startsWith('/tmp/yarn--'))
+    .join(separator);
+  return newPath;
+}
+
+
 export function GetPackageManagerVersion(pkgMnger: string, testPath: string): string {
+  // Check if corepack is working/
+  const newEnv = {
+    ...process.env,
+    PATH: HideGlobalYarnPath(),
+    INIT_CWD: testPath
+  };
+
   const result2 = spawnSync('corepack', ['--version'], {
     cwd: testPath,
     stdio: ['pipe'], // Ensure output is in readable string format
     // Clear env to avoid contamination with root folder.
     env: {
-//      ...process.env,
-      NODE: process.env.NODE,
-      PATH: process.env.PATH,
-      INIT_CWD: testPath
+      ...newEnv
     }
   });
 
@@ -141,16 +156,13 @@ export function GetPackageManagerVersion(pkgMnger: string, testPath: string): st
   expect(result2.stderr?.toString()).toBeEmpty();
   expect(result2.stdout.toString().trim()).not.toBeEmpty();
 
-
+  // Check if it is running the correct package manager.
   const result = spawnSync(pkgMnger, ['--version'], {
     cwd: testPath,
     stdio: ['pipe'], // Ensure output is in readable string format
     // Clear env to avoid contamination with root folder.
     env: {
-      //      ...process.env,
-      NODE: process.env.NODE,
-      PATH: process.env.PATH,
-      INIT_CWD: testPath
+      ...newEnv
     }
   });
 
