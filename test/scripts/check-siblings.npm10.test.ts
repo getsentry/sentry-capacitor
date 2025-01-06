@@ -6,6 +6,7 @@ const CapacitorInstallArg = `file:${SDKPath}`
 
 describe('NPM 10 tests', () => {
   const npme2ePath = path.join(e2ePath, 'npm10');
+  const PackageMangerVersion = "10.9.2";
 
   describe('new Install', () => {
     test('no warnings when correct sibling is installed', async () => {
@@ -18,7 +19,7 @@ describe('NPM 10 tests', () => {
       ClearE2ETestFolder(testPath);
       CreateE2EPackage(testPath);
 
-      expect(GetPackageManagerVersion('npm', testPath)).toBe("10.9.0");
+      expect(GetPackageManagerVersion('npm', testPath)).toBe(PackageMangerVersion);
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
@@ -51,7 +52,7 @@ describe('NPM 10 tests', () => {
 
       ClearE2ETestFolder(testPath);
       CreateE2EPackage(testPath);
-      expect(GetPackageManagerVersion('npm',testPath)).toBe("10.9.0");
+      expect(GetPackageManagerVersion('npm',testPath)).toBe(PackageMangerVersion);
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
@@ -94,7 +95,7 @@ describe('NPM 10 tests', () => {
       ClearE2ETestFolder(testPath);
       CreateE2EStartPackage(testPath, dependenciesJson);
       CreateE2EPackage(testPath);
-      expect(GetPackageManagerVersion('npm', testPath)).toBe("10.9.0");
+      expect(GetPackageManagerVersion('npm', testPath)).toBe(PackageMangerVersion);
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
@@ -128,7 +129,7 @@ describe('NPM 10 tests', () => {
       ClearE2ETestFolder(testPath);
       CreateE2EStartPackage(testPath, dependenciesJson);
       CreateE2EPackage(testPath);
-      expect(GetPackageManagerVersion('npm', testPath)).toBe("10.9.0");
+      expect(GetPackageManagerVersion('npm', testPath)).toBe(PackageMangerVersion);
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),

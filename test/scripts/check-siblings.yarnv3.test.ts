@@ -13,6 +13,7 @@ function SetupYarnRC(testPath: string): void {
 
 describe('Yarn V3 tests', () => {
   const yarnV3e2ePath = path.join(e2ePath, 'yarn_v3');
+  const PackageMangerVersion = "3.8.6";
 
   describe('new Install', () => {
     test('no warnings when correct sibling is installed', async () => {
@@ -25,7 +26,7 @@ describe('Yarn V3 tests', () => {
       ClearE2ETestFolder(testPath);
       CreateE2EPackage(testPath);
       SetupYarnRC(testPath);
-      expect(GetPackageManagerVersion('yarn', testPath)).toBe("3.8.6");
+      expect(GetPackageManagerVersion('yarn', testPath)).toBe(PackageMangerVersion);
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
@@ -57,7 +58,7 @@ describe('Yarn V3 tests', () => {
       ClearE2ETestFolder(testPath);
       CreateE2EPackage(testPath);
       SetupYarnRC(testPath);
-      expect(GetPackageManagerVersion('yarn',testPath)).toBe("3.8.6");
+      expect(GetPackageManagerVersion('yarn',testPath)).toBe(PackageMangerVersion);
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
@@ -101,7 +102,7 @@ describe('Yarn V3 tests', () => {
       CreateE2EStartPackage(testPath, dependenciesJson);
       CreateE2EPackage(testPath);
       SetupYarnRC(testPath);
-      expect(GetPackageManagerVersion('yarn',testPath)).toBe("3.8.6");
+      expect(GetPackageManagerVersion('yarn',testPath)).toBe(PackageMangerVersion);
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
@@ -137,7 +138,7 @@ describe('Yarn V3 tests', () => {
       CreateE2EStartPackage(testPath, dependenciesJson);
       CreateE2EPackage(testPath);
       SetupYarnRC(testPath);
-      expect(GetPackageManagerVersion('yarn',testPath)).toBe("3.8.6");
+      expect(GetPackageManagerVersion('yarn',testPath)).toBe(PackageMangerVersion);
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
