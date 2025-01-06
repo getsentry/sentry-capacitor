@@ -7,6 +7,7 @@ const CapacitorInstallArg = `file:${SDKPath}`
 
 describe('Yarn V1 tests', () => {
   const yarnV1e2ePath = path.join(e2ePath, 'yarn_v1');
+  const PackageMangerVersion = "1.22.22";
 
   describe('new Install', () => {
     test('no warnings when correct sibling is installed', async () => {
@@ -18,7 +19,7 @@ describe('Yarn V1 tests', () => {
 
       ClearE2ETestFolder(testPath);
       CreateE2EPackage(testPath);
-      expect(GetPackageManagerVersion('yarn',testPath)).toBe("1.22.22");
+      expect(GetPackageManagerVersion('yarn',testPath)).toBe(PackageMangerVersion);
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
@@ -49,7 +50,7 @@ describe('Yarn V1 tests', () => {
 
       ClearE2ETestFolder(testPath);
       CreateE2EPackage(testPath);
-      expect(GetPackageManagerVersion('yarn',testPath)).toBe("1.22.22");
+      expect(GetPackageManagerVersion('yarn',testPath)).toBe(PackageMangerVersion);
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
@@ -87,7 +88,7 @@ describe('Yarn V1 tests', () => {
       ClearE2ETestFolder(testPath);
       CreateE2EStartPackage(testPath, dependenciesJson);
       CreateE2EPackage(testPath);
-      expect(GetPackageManagerVersion('yarn', testPath)).toBe("1.22.22");
+      expect(GetPackageManagerVersion('yarn', testPath)).toBe(PackageMangerVersion);
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
@@ -121,7 +122,7 @@ describe('Yarn V1 tests', () => {
       ClearE2ETestFolder(testPath);
       CreateE2EStartPackage(testPath, dependenciesJson);
       CreateE2EPackage(testPath);
-      expect(GetPackageManagerVersion('yarn', testPath)).toBe("1.22.22");
+      expect(GetPackageManagerVersion('yarn', testPath)).toBe(PackageMangerVersion);
 
       const expectedPackageJson = {
         ...GetInitialE2EPackage(testPath),
