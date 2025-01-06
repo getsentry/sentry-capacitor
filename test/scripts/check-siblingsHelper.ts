@@ -101,14 +101,18 @@ export function InstallSDK(pkgMnger: string, args: ReadonlyArray<string>, rootPa
 
   fs.writeFileSync(outputStream, `using package manager ${pkgMnger} with the following args: ${args.join(' ')}`);
 
+  const newEnv = {
+    PATH: HideGlobalYarnPath(),
+    npm_package_scripts_test_e2e: process.env.npm_package_scripts_test_e2e,
+    ...nodePatch,
+    INIT_CWD: rootPath // Override INIT_CWD to match the desired root path
+  };
+
   const result = spawnSync(pkgMnger, args, {
     cwd: rootPath,
     stdio: ['inherit', outputStream, outputStream], // Ensure output is in readable string format
     env: {
-      // Clear env to avoid contamination with root folder.
-      npm_package_scripts_test_e2e: process.env.npm_package_scripts_test_e2e,
-      ...nodePatch,
-      INIT_CWD: rootPath // Override INIT_CWD to match the desired root path
+      ...newEnv
     },
   });
   fs.closeSync(outputStream);
