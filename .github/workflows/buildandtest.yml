@@ -205,7 +205,7 @@ jobs:
 
       - name: Upload failed artifact with test logs and JSON files
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.1.0
         with:
           name: failed-e2e-${{ github.run_id }}
           path: |
