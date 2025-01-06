@@ -160,11 +160,12 @@ export function GetPackageManagerVersion(pkgMnger: string, testPath: string): st
       STDERR: ${result.stderr?.toString()}
 
       STDOUT: ${result.stdout?.toString()}`);
-
   }
   expect(result.status).toBe(0);
   expect(result.stderr?.toString()).toBeEmpty();
-  return result.stdout.toString().trim();
+
+  throw new Error(JSON.stringify(process.env));
+//  return result.stdout.toString().trim();
 }
 
 function filterYarnV3Log(str: string): string {
