@@ -122,6 +122,7 @@ export function GetPackageManagerVersion(pkgMnger: string, testPath: string): st
     // Clear env to avoid contamination with root folder.
     env: {
 //      ...process.env,
+      NODE: process.env.NODE,
       PATH: process.env.PATH,
       INIT_CWD: testPath
     }
@@ -146,7 +147,8 @@ export function GetPackageManagerVersion(pkgMnger: string, testPath: string): st
     stdio: ['pipe'], // Ensure output is in readable string format
     // Clear env to avoid contamination with root folder.
     env: {
-//      ...process.env,
+      //      ...process.env,
+      NODE: process.env.NODE,
       PATH: process.env.PATH,
       INIT_CWD: testPath
     }
@@ -164,8 +166,7 @@ export function GetPackageManagerVersion(pkgMnger: string, testPath: string): st
   expect(result.status).toBe(0);
   expect(result.stderr?.toString()).toBeEmpty();
 
-  throw new Error(JSON.stringify(process.env));
-//  return result.stdout.toString().trim();
+  return result.stdout.toString().trim();
 }
 
 function filterYarnV3Log(str: string): string {
