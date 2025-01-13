@@ -1,4 +1,5 @@
 import { Capacitor } from '@capacitor/core';
+import type { TracePropagationTargets } from '@sentry/core';
 
 import type { CapacitorOptions } from './options';
 
@@ -9,7 +10,10 @@ import type { CapacitorOptions } from './options';
  */
 export function FilterNativeOptions(
   options: CapacitorOptions,
-): CapacitorOptions {
+): CapacitorOptions &
+{
+  nativeTracePropagationTargets?: string[];
+}  {
   return {
     // allowUrls: Only available on the JavaScript Layer.
     attachStacktrace: options.attachStacktrace,
@@ -39,7 +43,7 @@ export function FilterNativeOptions(
     tracesSampleRate: options.tracesSampleRate,
     // tunnel: options.tunnel: Only handled on the JavaScript Layer.
     enableCaptureFailedRequests: options.enableCaptureFailedRequests,
-    tracePropagationTargets: options.tracePropagationTargets,
+    nativeTracePropagationTargets: filterTracePropagationTargets(options.tracePropagationTargets),
     ...iOSParameters(options),
   };
 }
@@ -51,4 +55,11 @@ function iOSParameters(options: CapacitorOptions): CapacitorOptions {
       appHangTimeoutInterval: options.appHangTimeoutInterval,
     }
     : {};
+}
+
+function filterTracePropagationTargets(targets: TracePropagationTargets  | undefined) : string[] | undefined {
+  const serializedPatterns =  targets && targets.map(p =>
+    typeof p === "string" ? p : p.toString()
+  );
+  return serializedPatterns;
 }

@@ -74,21 +74,33 @@ describe('nativeOptions', () => {
         shutdownTimeout: 10,
         stackParser: {} as StackParser,
         tracesSampler: ((_) => 1),
+        tracePropagationTargets: [/^\/api/],
         tracesSampleRate: 1,
         transportOptions: {},
         tunnel: 'test',
       });
 
     const keys = Object.keys(nativeOptions);
-    const keysFilter = keys.filter(key =>
+    const keysFilter = keys.filter(key => {
       // @ts-ignore allowed for testing.
-      (typeof nativeOptions[key]) !== 'string' &&
-      // @ts-ignore allowed for testing.
-      (typeof nativeOptions[key]) !== 'number' &&
-      // @ts-ignore allowed for testing.
-      (typeof nativeOptions[key]) !== 'boolean' &&
-      // @ts-ignore allowed for testing.
-      (typeof nativeOptions[key]) !== undefined)
+      const keyType = typeof nativeOptions[key];
+      const propTargetKey = 'nativeTracePropagationTargets';
+
+      if (
+        keyType === 'string' ||
+        keyType === 'number' ||
+        keyType === 'boolean' ||
+        keyType === 'undefined' ||
+        // Remove nativeTracePropagationTargets if is a valid a string Array.
+        (
+          key === propTargetKey &&
+          Array.isArray(nativeOptions[propTargetKey]) &&
+          nativeOptions[propTargetKey]?.every(item => typeof item === "string") === true)
+        ) {
+        return false;
+      }
+      return true;
+    });
 
     expect(keysFilter.toString()).toBe('');
   });

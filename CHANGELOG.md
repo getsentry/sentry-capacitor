@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- tracePropationTargets is now correctly propagated to the native SDKs ([#803](https://github.com/getsentry/sentry-capacitor/pull/803))
+
 ## 1.1.0
 
 ### Features

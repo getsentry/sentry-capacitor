@@ -9,6 +9,8 @@ import * as Sentry from '@sentry/capacitor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+const stringRegex = "abc"; // Alphanumeric, dashes/underscores, 3-30 chars
+const regexPattern = /^\/.*\/[gimsuy]*$/; // Valid RegExp with optional flags
 
 // ATTENTION: Change the DSN below with your own to see the events in Sentry. Get one at sentry.io
 Sentry.init(
@@ -44,6 +46,7 @@ Sentry.init(
     // If the entire session is not sampled, use the below sample rate to sample
     // sessions when an error occurs.
     replaysOnErrorSampleRate: 1.0,
+    tracePropagationTargets: [stringRegex, regexPattern]
   },
   sentryAngularInit,
 );
