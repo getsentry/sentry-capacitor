@@ -39,7 +39,6 @@ export function FilterNativeOptions(
     tracesSampleRate: options.tracesSampleRate,
     // tunnel: options.tunnel: Only handled on the JavaScript Layer.
     enableCaptureFailedRequests: options.enableCaptureFailedRequests,
-    tracePropagationTargets: options.tracePropagationTargets,
     ...iOSParameters(options),
   };
 }
