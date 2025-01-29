@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- Undefined siblingVersion error when updating the Sentry Capacitor Package ([#829](https://github.com/getsentry/sentry-capacitor/pull/829))
+
 ## 1.1.0
 
 ### Features

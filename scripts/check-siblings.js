@@ -138,7 +138,6 @@ function CheckSiblings() {
   if (env.npm_config_argv) {
     // Only available on Yarn.
     const npmAction = JSON.parse(env.npm_config_argv);
-
     if (npmAction.original && npmAction.original.length > 1) {
       ValidateSentryPackageParameters(npmAction.original, siblingVersion);
       LogE2E("OK");
