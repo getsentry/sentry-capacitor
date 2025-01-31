@@ -1,6 +1,3 @@
-## Temporary for Split PR
-example/ionic-angular-v7*
-
 # NPM renames .gitignore to .npmignore
 # In order to prevent that, we remove the initial "."
 # And the CLI then renames it
