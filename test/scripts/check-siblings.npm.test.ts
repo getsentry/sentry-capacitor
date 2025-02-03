@@ -41,42 +41,6 @@ describe('NPM tests', () => {
       expect(packageJson).toEqual(expectedPackageJson);
       expect(e2eLogs).toContain('E2E_TEST: OK');
     });
-
-    /*
-    // TODO: Fix test.
-    test('warns when incorrect sibling is installed', async () => {
-      // Setup.
-      const siblingVersion = InvalidSentrySiblingVersion();
-
-      const testPath = path.join(npme2ePath, 'newInstallIncorrectSibling');
-      const packageJsonPath = path.join(testPath, 'package.json');
-
-      ClearE2ETestFolder(testPath);
-      CreateE2EPackage(testPath);
-      expect(GetPackageManagerVersion('npm',testPath)).toBe(PackageMangerVersion);
-
-      const expectedPackageJson = {
-        ...GetInitialE2EPackage(testPath),
-        dependencies: {
-          '@sentry/capacitor': CapacitorInstallArg,
-          '@sentry/angular': siblingVersion
-        }
-      };
-
-      // Test
-      InstallSDK('npm',['install', '--foreground-scripts', `@capacitor/core`], testPath);
-      const result = InstallSDK('npm',['install', '--save-exact', '--foreground-scripts', CapacitorInstallArg, `@sentry/angular@${siblingVersion}`], testPath);
-      const packageJson = readJsonOrEmpty(packageJsonPath);
-      const e2eLogs = GetE2ELogs(testPath);
-      const logs = GetLogs(testPath).join('\n');
-
-      // Expect
-      expect(result.status).toBe(1);
-      expect(packageJson).toEqual(expectedPackageJson);
-      expect(e2eLogs).toContain('E2E_TEST: Incompatibility found');
-      expect(logs).toContain(`You tried to install @sentry/angular@${siblingVersion}, but the current version of  @sentry/capacitor is only compatible with version ${ValidSentrySiblingVersion()}. Please install the dependency with the correct version.`);
-    });
-    */
   });
 
   describe('update packages', () => {
