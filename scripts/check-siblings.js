@@ -7,7 +7,7 @@ const updateArgument = '--update-sentry-capacitor';
 // Filters all Sentry packages but Capacitor, CLI and Wizard.
 const jsonFilter = /\s*\"\@sentry\/(?!capacitor|wizard|cli|typescript|electron)(?<packageName>[a-zA-Z]+)\"\:\s*\"(?<version>.+)\"/;
 
-const IsE2E = env.npm_package_scripts_test_e2e == './scripts/e2e-test.siblings.sh';
+const IsE2E = env.sentry_e2e == 'true';
 
 function LogE2E(message) {
   IsE2E && console.log("E2E_TEST: " + message);
@@ -138,7 +138,6 @@ function CheckSiblings() {
   if (env.npm_config_argv) {
     // Only available on Yarn.
     const npmAction = JSON.parse(env.npm_config_argv);
-
     if (npmAction.original && npmAction.original.length > 1) {
       ValidateSentryPackageParameters(npmAction.original, siblingVersion);
       LogE2E("OK");

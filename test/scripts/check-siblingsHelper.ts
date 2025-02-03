@@ -103,7 +103,7 @@ export function InstallSDK(pkgMnger: string, args: ReadonlyArray<string>, rootPa
 
   const newEnv = {
     PATH: HideGlobalYarnPath(),
-    npm_package_scripts_test_e2e: process.env.npm_package_scripts_test_e2e,
+    sentry_e2e: 'true',
     ...nodePatch,
     INIT_CWD: rootPath // Override INIT_CWD to match the desired root path
   };
