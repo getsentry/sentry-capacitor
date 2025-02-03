@@ -69,7 +69,7 @@ describe("Yarn V3", () => {
 
 });
 
-describe("NPM V10", () => {
+describe("NPM", () => {
   test('keeps original log', () => {
     expect(FilterLogs('1234', false)).toStrictEqual(['1234']);
   });
