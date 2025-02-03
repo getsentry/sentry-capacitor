@@ -1,12 +1,13 @@
 import path from 'path';
+const { execSync } = require("child_process");
 
 import { ClearE2ETestFolder, CreateE2EPackage, CreateE2EStartPackage, e2ePath, GetE2ELogs, GetInitialE2EPackage, GetLogs, GetPackageManagerVersion, InstallSDK, InvalidSentrySiblingVersion, readJsonOrEmpty, SDKPath, ValidSentrySiblingVersion } from './check-siblingsHelper';
 
 const CapacitorInstallArg = `file:${SDKPath}`
 
-describe('NPM 10 tests', () => {
-  const npme2ePath = path.join(e2ePath, 'npm10');
-  const PackageMangerVersion = "10.9.2";
+describe('NPM tests', () => {
+  const npme2ePath = path.join(e2ePath, 'npm_default');
+  const PackageMangerVersion = execSync("npm --version").toString().trim();
 
   describe('new Install', () => {
     test('no warnings when correct sibling is installed', async () => {
