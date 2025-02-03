@@ -189,6 +189,12 @@ jobs:
 
       - run: corepack enable
 
+      - name: Install Yarn v3
+        run: corepack prepare yarn@3.8.6 --activate
+
+      - name: Install Yarn v1
+        run: corepack prepare yarn@1.22.22 --activate
+
       - name: Check dependency cache
         uses: actions/cache@v4.1.2
         with:
