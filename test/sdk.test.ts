@@ -96,6 +96,7 @@ describe('SDK Init', () => {
     NATIVE.platform = test[1];
 
     init(test[2], (browserOptions: BrowserOptions) => {
+      // eslint-disable-next-line deprecation/deprecation
       expect(browserOptions.autoSessionTracking).toBe(test[3]);
     });
 
