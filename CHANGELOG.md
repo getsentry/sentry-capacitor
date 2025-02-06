@@ -8,6 +8,10 @@
 
 ## Unreleased
 
+### Features
+
+- Added support for Capacitor V7 ([#831](https://github.com/getsentry/sentry-capacitor/pull/831))
+
 ### Fixes
 
 - Undefined siblingVersion error when updating the Sentry Capacitor Package ([#829](https://github.com/getsentry/sentry-capacitor/pull/829))
