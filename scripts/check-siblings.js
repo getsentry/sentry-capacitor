@@ -7,12 +7,6 @@ const updateArgument = '--update-sentry-capacitor';
 // Filters all Sentry packages but Capacitor, CLI and Wizard.
 const jsonFilter = /\s*\"\@sentry\/(?!capacitor|wizard|cli|typescript|electron)(?<packageName>[a-zA-Z]+)\"\:\s*\"(?<version>.+)\"/;
 
-const IsE2E = env.sentry_e2e == 'true';
-
-function LogE2E(message) {
-  IsE2E && console.log("E2E_TEST: " + message);
-}
-
 /**
  * If user requested to ignore the post-install
  * @return {Boolean} true if requested to skip the post-install check, false otherwise.
@@ -76,7 +70,6 @@ function ValidateSentryPackageParameters(packages, siblingVersion) {
   }
 
   if (errorMessages.length > 0) {
-    LogE2E("Incompatibility found");
     console.error(`⚠️   ${errorMessages.join("\n")}`);
     exit(1);
   }
@@ -121,18 +114,14 @@ function FormatPackageInstallCommand(sentryPackages) {
 }
 
 function CheckSiblings() {
-  LogE2E("Invoked");
   if (SkipPostInstall()) {
-    LogE2E("Skipped");
     return;
   }
 
   const siblingVersion = GetRequiredSiblingVersion();
   if (siblingVersion === undefined) {
-    LogE2E("Sibling not set");
     return;
   }
-  LogE2E(`Expecting sibling version ${siblingVersion}`);
 
   // Method 1: Validate user parameters when requesting to install/update a new Package.
   if (env.npm_config_argv) {
@@ -140,7 +129,6 @@ function CheckSiblings() {
     const npmAction = JSON.parse(env.npm_config_argv);
     if (npmAction.original && npmAction.original.length > 1) {
       ValidateSentryPackageParameters(npmAction.original, siblingVersion);
-      LogE2E("OK");
       return;
     }
   }
@@ -166,13 +154,11 @@ function CheckSiblings() {
       `Please install the mentioned packages exactly with version ${siblingVersion} and with the argument ${updateArgument}.
 Your project will build with the wrong package but you may face Runtime errors.
 You can use the below command to fix your package.json:`);
-    LogE2E("Incompatibility found");
 
     console.error(`⚠️   ${IncompatibilityError.join("\n")}`);
     console.warn(`  ${FormatPackageInstallCommand(packagesList)}`);
     exit(1);
   }
-  LogE2E("OK");
 }
 
 CheckSiblings();
