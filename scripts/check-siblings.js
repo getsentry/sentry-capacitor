@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { env } = require('process');
+const { env, exit } = require('process');
 
 const updateArgument = '--update-sentry-capacitor';
 
@@ -29,22 +29,17 @@ function SkipPostInstall() {
  */
 function GetRequiredSiblingVersion() {
   if (env.npm_package_dependencies__sentry_browser) {
-    // Yarn.
+    // Yarn V1.
     return env.npm_package_dependencies__sentry_browser;
   }
 
   let capacitorPackagePath = '';
-  if (env.npm_package_json) {
-    // NPM.
-    capacitorPackagePath = env.npm_package_json;
-  }
-  else if (__dirname) {
+  if (__dirname) {
     capacitorPackagePath = path.join(__dirname, '..', 'package.json');
   }
   else {
     return undefined;
   }
-
   const capacitorPackageJson = fs.readFileSync(capacitorPackagePath, 'utf8');
 
   const version = capacitorPackageJson.match(jsonFilter);
@@ -59,7 +54,7 @@ function GetRequiredSiblingVersion() {
  * This function will throw if the paramater contains a sibling with different version to the one used
  * by the SDK or if no version were specified by the user.
  */
-function ValidateSentryPackageParameters(packages) {
+function ValidateSentryPackageParameters(packages, siblingVersion) {
   let errorMessages = [];
   var packageFilter = /.*(capacitor|cli|wizard|typescript)/;
   for (const argPackage of packages) {
@@ -75,7 +70,8 @@ function ValidateSentryPackageParameters(packages) {
   }
 
   if (errorMessages.length > 0) {
-    throw errorMessages.join("\n");
+    console.error(`⚠️   ${errorMessages.join("\n")}`);
+    exit(1);
   }
 }
 
@@ -83,10 +79,18 @@ function ValidateSentryPackageParameters(packages) {
  * @return {String} The path where package.json is located.
  */
 function GetPackageJsonRootPath() {
+
+  // Avaliable when using NPM.
   if (env.INIT_CWD) {
     // Avaliable when using NPM.
     return env.INIT_CWD + '/';
   }
+
+  // Unix only.
+  if (env.PWD) {
+    return env.PWD + '/';
+  }
+
   let packagePath = __dirname + '/../../';
   while (!fs.existsSync(path.resolve(packagePath, 'package.json'))) {
     packagePath += '../';
@@ -99,8 +103,8 @@ function GetPackageJsonRootPath() {
  * @return {String} The path where package.json is located.
  */
 function FormatPackageInstallCommand(sentryPackages) {
-  // Yarn
-  if (env.npm_config_argv) {
+  // Yarn V1 || Yarn V3/V4.
+  if (env.npm_config_argv || env.npm_config_user_agent?.startsWith('yarn')) {
     return "yarn add --exact " + sentryPackages + " " + updateArgument;
   }
   else {
@@ -110,7 +114,6 @@ function FormatPackageInstallCommand(sentryPackages) {
 }
 
 function CheckSiblings() {
-
   if (SkipPostInstall()) {
     return;
   }
@@ -125,7 +128,7 @@ function CheckSiblings() {
     // Only available on Yarn.
     const npmAction = JSON.parse(env.npm_config_argv);
     if (npmAction.original && npmAction.original.length > 1) {
-      ValidateSentryPackageParameters(npmAction.original);
+      ValidateSentryPackageParameters(npmAction.original, siblingVersion);
       return;
     }
   }
@@ -134,7 +137,6 @@ function CheckSiblings() {
   let rootPath = GetPackageJsonRootPath();
   let incompatiblePackages = [];
   const packageJson = fs.readFileSync(rootPath + 'package.json', 'utf8').split("\n");
-
   for (const lineData of packageJson) {
     let sentryRef = lineData.match(jsonFilter);
     if (sentryRef && sentryRef[2] !== siblingVersion && !sentryRef[2].includes('%3A' + siblingVersion + '#')) {
@@ -142,17 +144,21 @@ function CheckSiblings() {
     }
   }
   if (incompatiblePackages.length > 0) {
-    const IncompatibilityError = ["This version of Sentry Capacitor is incompatible with the following installed packages:  "];
+    const IncompatibilityError = ["This version of Sentry Capacitor is incompatible with the following installed packages:"];
     let packagesList = ''
     for (const sentryPackage of incompatiblePackages) {
       IncompatibilityError.push(sentryPackage[0] + ' version ' + sentryPackage[1]);
       packagesList += sentryPackage[0] + '@' + siblingVersion + ' ';
     }
-    IncompatibilityError.push("Please install the mentioned packages exactly with version " + siblingVersion + " and with the argument " + updateArgument);
-    IncompatibilityError.push(FormatPackageInstallCommand(packagesList));
-    throw IncompatibilityError.join("\n");
-  }
+    IncompatibilityError.push(
+      `Please install the mentioned packages exactly with version ${siblingVersion} and with the argument ${updateArgument}.
+Your project will build with the wrong package but you may face Runtime errors.
+You can use the below command to fix your package.json:`);
 
+    console.error(`⚠️   ${IncompatibilityError.join("\n")}`);
+    console.warn(`  ${FormatPackageInstallCommand(packagesList)}`);
+    exit(1);
+  }
 }
 
 CheckSiblings();
