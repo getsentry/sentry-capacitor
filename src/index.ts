@@ -2,8 +2,6 @@ export * from './definitions';
 
 export type {
   Breadcrumb,
-  // eslint-disable-next-line deprecation/deprecation
-  Request,
   RequestEventData,
   SdkInfo,
   Event,

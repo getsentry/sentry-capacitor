@@ -9,7 +9,7 @@ import type {
   SeverityLevel,
 } from '@sentry/core';
 import {
-  BaseClient,
+  Client,
   createTransport,
   getCurrentScope,
   getGlobalScope,
@@ -42,7 +42,7 @@ export interface TestClientOptions extends ClientOptions {
   defaultIntegrations?: Integration[] | false;
 }
 
-export class TestClient extends BaseClient<TestClientOptions> {
+export class TestClient extends Client<TestClientOptions> {
   public static instance?: TestClient;
   public static sendEventCalled?: (event: Event) => void;
 
@@ -93,7 +93,7 @@ export class TestClient extends BaseClient<TestClientOptions> {
       super.sendEvent(event, hint);
       return;
     }
-    TestClient.sendEventCalled && TestClient.sendEventCalled(event);
+    TestClient.sendEventCalled?.(event);
   }
 
   public sendSession(session: Session): void {
