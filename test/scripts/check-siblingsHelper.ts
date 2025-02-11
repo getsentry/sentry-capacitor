@@ -85,6 +85,7 @@ export function CreateE2EPackage(testPath: string): void {
   const newPackagePath = path.join(testPath, 'package.json');
   const mergedPackageJson = GetInitialE2EPackage(testPath);
 
+  // eslint-disable-next-line deprecation/deprecation
   if (!fs.exists(newPackagePath)) {
     fs.createFileSync(newPackagePath);
   }
@@ -205,13 +206,6 @@ export function FilterLogs(data: string): string[] {
   // .filter(log => onlyE2ELog == log.startsWith('E2E_TEST'))
   return data.split('\n').map(filterYarnV3Log);
 }
-
-/*
-export function GetE2ELogs(testPath: string): string[] {
-  const data = fs.readFileSync(path.join(testPath, installLogFilename), 'utf8');
-  return FilterLogs(data, true);
-}
-  */
 
 export function GetLogs(testPath: string): string[] {
   return FilterLogs(fs.readFileSync(path.join(testPath, installLogFilename), 'utf8'));

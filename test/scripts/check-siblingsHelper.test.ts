@@ -12,8 +12,6 @@ describe("Yarn Classic", () => {
 
 });
 
-});
-
 describe("Yarn V3", () => {
 
   test('Removes YarnV3 logs', () => {
@@ -65,5 +63,4 @@ describe("NPM", () => {
   test('keep E2E logs', () => {
     expect(FilterLogs('npm error E2E_TEST: Invoked')).toStrictEqual(['E2E_TEST: Invoked']);
   });
-
 });
