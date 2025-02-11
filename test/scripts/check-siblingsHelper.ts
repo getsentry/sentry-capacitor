@@ -95,16 +95,11 @@ export function InstallSDK(pkgMnger: string, args: ReadonlyArray<string>, rootPa
 {
   const outputStream = fs.openSync(path.join(rootPath, installLogFilename), 'w');
 
-  const nodePatch = pkgMnger === 'npm' ? {
-    npm_package_json: path.join(rootPath, 'node_modules', '@sentry', 'capacitor', 'package.json')
-  } : {};
-
   fs.writeFileSync(outputStream, `using package manager ${pkgMnger} with the following args: ${args.join(' ')}`);
 
   const newEnv = {
     PATH: HideGlobalYarnPath(),
     sentry_e2e: 'true',
-    ...nodePatch,
     INIT_CWD: rootPath // Override INIT_CWD to match the desired root path
   };
 
@@ -206,16 +201,18 @@ function filterYarnV3Log(str: string): string {
 }
 
 // For testing.
-export function FilterLogs(data: string, filter: boolean): string[] {
-  return data.split('\n').map(filterYarnV3Log).filter(log => filter == log.startsWith('E2E_TEST'));
+export function FilterLogs(data: string): string[] {
+  // .filter(log => onlyE2ELog == log.startsWith('E2E_TEST'))
+  return data.split('\n').map(filterYarnV3Log);
 }
 
+/*
 export function GetE2ELogs(testPath: string): string[] {
   const data = fs.readFileSync(path.join(testPath, installLogFilename), 'utf8');
   return FilterLogs(data, true);
 }
+  */
 
 export function GetLogs(testPath: string): string[] {
-  const data = fs.readFileSync(path.join(testPath, installLogFilename), 'utf8');
-  return FilterLogs(data, false);
+  return FilterLogs(fs.readFileSync(path.join(testPath, installLogFilename), 'utf8'));
 }

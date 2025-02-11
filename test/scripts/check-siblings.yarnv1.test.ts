@@ -1,6 +1,6 @@
 import path from 'path';
 
-import { ClearE2ETestFolder, CreateE2EPackage, CreateE2EStartPackage, e2ePath, GetE2ELogs, GetInitialE2EPackage, GetLogs, GetPackageManagerVersion, InstallSDK, InvalidSentrySiblingVersion, readJsonOrEmpty, SDKPath, ValidSentrySiblingVersion } from './check-siblingsHelper';
+import { ClearE2ETestFolder, CreateE2EPackage, CreateE2EStartPackage, e2ePath, GetInitialE2EPackage, GetLogs, GetPackageManagerVersion, InstallSDK, InvalidSentrySiblingVersion, readJsonOrEmpty, SDKPath, ValidSentrySiblingVersion } from './check-siblingsHelper';
 
 const CapacitorInstallArg = `file:${SDKPath}`
 
@@ -33,7 +33,7 @@ describe('Yarn V1 tests', () => {
       // Test
       const result = InstallSDK('yarn',['add', CapacitorInstallArg, `@sentry/angular@${siblingVersion}`, '--force'], testPath);
       const packageJson = readJsonOrEmpty(packageJsonPath);
-      const e2eLogs = GetE2ELogs(testPath);
+      const e2eLogs = GetLogs(testPath);
 
       // Expect
       expect(result.status).toBe(0);
@@ -60,7 +60,7 @@ describe('Yarn V1 tests', () => {
       // Test
       const result = InstallSDK('yarn',['add', CapacitorInstallArg, `@sentry/angular@${siblingVersion}`, '--force'], testPath);
       const packageJson = readJsonOrEmpty(packageJsonPath);
-      const e2eLogs = GetE2ELogs(testPath);
+      const e2eLogs = GetLogs(testPath);
       const logs = GetLogs(testPath).join('\n');
 
       // Expect
@@ -98,7 +98,7 @@ describe('Yarn V1 tests', () => {
       // Test
       const result = InstallSDK('yarn',['install'], testPath);
       const packageJson = readJsonOrEmpty(packageJsonPath);
-      const e2eLogs = GetE2ELogs(testPath);
+      const e2eLogs = GetLogs(testPath);
 
       // Expect
       expect(result.status).toBe(0);
@@ -132,13 +132,12 @@ describe('Yarn V1 tests', () => {
       // Test
       const result = InstallSDK('yarn', ['install'], testPath);
       const packageJson = readJsonOrEmpty(packageJsonPath);
-      const e2eLogs = GetE2ELogs(testPath);
       const logs = GetLogs(testPath).join('\n');
 
       // Expect
       expect(result.status).toBe(1);
       expect(packageJson).toEqual(expectedPackageJson);
-      expect(e2eLogs).toContain('E2E_TEST: Incompatibility found');
+      expect(logs).toContain('E2E_TEST: Incompatibility found');
       expect(logs).toContain(`⚠️   This version of Sentry Capacitor is incompatible with the following installed packages:
 @sentry/angular version ${siblingVersion}`);
       expect(logs).toContain(`yarn add --exact @sentry/angular@${ValidSentrySiblingVersion()}  --update-sentry-capacitor`);
