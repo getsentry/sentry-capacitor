@@ -75,7 +75,7 @@
     "@sentry/wizard": "3.34.2",
     "@types/jest": "^29.5.3",
     "concurrently": "^8.2.2",
-    "eslint": "^7.13.0",
+    "eslint": "^7.6.0",
     "jest": "^29.6.2",
     "jest-extended": "^4.0.2",
     "prettier": "^3.3.2",
@@ -84,7 +84,7 @@
     "rimraf": "^5.0.1",
     "swiftlint": "^2.0.0",
     "ts-jest": "^29.1.1",
-    "typescript": "^5.0.4"
+    "typescript": "5.0.4"
   },
   "files": [
     "dist/",
