@@ -71,7 +71,7 @@
     "@capacitor/ios": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0  || ^7.0.0",
     "@ionic/prettier-config": "^1.0.0",
     "@sentry-internal/eslint-config-sdk": "8.42.0",
-    "@sentry-internal/eslint-plugin-sdk": "8.42.0",
+    "@sentry-internal/eslint-plugin-sdk": "9.5.0",
     "@sentry-internal/typescript": "8.42.0",
     "@sentry/wizard": "3.34.2",
     "@types/jest": "^29.5.3",
