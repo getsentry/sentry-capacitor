@@ -2,7 +2,7 @@
 
 <!-- prettier-ignore-start -->
 > [!IMPORTANT]
-> If you are upgrading to the `2.x` versions of the SDK from `1.x`, make sure you follow our
+> If you are upgrading to the `2.x` versions of the SDK from `1.x` or lower, make sure you follow our
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
