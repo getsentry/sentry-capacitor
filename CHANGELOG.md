@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- Fix issue with `adjustMarginsForEdgeToEdge` on Capacitor 7 ([#855](https://github.com/getsentry/sentry-capacitor/pull/855))
+
 ## 1.2.0
 
 ### Features
