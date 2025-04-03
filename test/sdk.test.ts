@@ -96,7 +96,8 @@ describe('SDK Init', () => {
     NATIVE.platform = test[1];
 
     init(test[2], (browserOptions: BrowserOptions) => {
-      expect(browserOptions.autoSessionTracking).toBe(test[3]);
+      // Deprecated. To be removed on major bump.
+      expect(browserOptions['autoSessionTracking']).toBe(test[3]);
     });
 
     // eslint-disable-next-line @typescript-eslint/unbound-method
