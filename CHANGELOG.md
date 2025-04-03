@@ -15,6 +15,20 @@
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.0.0/CHANGELOG.md#900)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/8.42.0...9.0.0)
 
+## 1.3.0
+
+### Dependencies
+
+- Bump Cocoa SDK from v8.36.0 to v8.48.0 ([#751](https://github.com/getsentry/sentry-capacitor/pull/751))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8480)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.36.0...8.48.0)
+
+## 1.2.1
+
+### Fixes
+
+- Fix issue with `adjustMarginsForEdgeToEdge` on Capacitor 7 ([#855](https://github.com/getsentry/sentry-capacitor/pull/855))
+
 ## 1.2.0
 
 ### Features
