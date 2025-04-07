@@ -10,7 +10,7 @@
 
 ### Dependencies
 
-- Bump JavaScript SDKs from v8.55.0 to v9.11.0 ([#840](https://github.com/getsentry/sentry-capacitor/pull/840))
+- Bump JavaScript SDKs from v8.55.0 to v9.11.0 ([#840](https://github.com/getsentry/sentry-capacitor/pull/840), [#872](https://github.com/getsentry/sentry-capacitor/pull/872))
 
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.11.0/CHANGELOG.md)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/8.55.0...9.11.0)
