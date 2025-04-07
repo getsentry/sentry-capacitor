@@ -1,17 +1,16 @@
-import { SDK_VERSION } from '@sentry/core';
+import { getMainCarrier, SDK_VERSION } from '@sentry/core';
+import type { CAP_GLOBAL_OBJ } from 'src/utils/webViewUrl';
 
-import { CAP_GLOBAL_OBJ } from '../utils/webViewUrl';
 import { utf8ToBytes } from '../vendor';
 
 export const useEncodePolyfill = (): void => {
-  const globalCarriers = CAP_GLOBAL_OBJ.__SENTRY__;
-
+  const globalCarriers = getMainCarrier().__SENTRY__;
   if (!globalCarriers) {
     (globalCarriers as Partial<
       (typeof CAP_GLOBAL_OBJ)['__SENTRY__']
     >) = {};
   }
-  const capacitorSiblingCarrier = CAP_GLOBAL_OBJ.__SENTRY__?.[SDK_VERSION];
+  const capacitorSiblingCarrier = globalCarriers?.[SDK_VERSION];
 
   if (capacitorSiblingCarrier) {
     capacitorSiblingCarrier.encodePolyfill = encodePolyfill;
