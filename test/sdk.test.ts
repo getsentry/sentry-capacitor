@@ -1,4 +1,4 @@
-import type { BrowserOptions, EventHint, Exception, StackFrame } from '@sentry/browser';
+import { type EventHint, type Exception, type StackFrame } from '@sentry/browser';
 import type { Client, Event } from '@sentry/core';
 
 import type { CapacitorOptions } from '../src';
@@ -20,89 +20,76 @@ beforeEach(() => {
 
 describe('SDK Init', () => {
   // [name, platform, options, autoSessionTracking, enableNative, enableAutoSessionTracking]
-  const table: Array<[
-    string,
-    string,
-    CapacitorOptions & BrowserOptions,
-    boolean,
+  const table = [
     {
-      enableNative: boolean;
-      enableAutoSessionTracking: boolean;
+      name: 'Uses default options on web',
+      platform: 'web',
+      options: { dsn: '' },
+      autoSessionTracking: true,
+      expected: {
+        enableNative: false,
+        enableAutoSessionTracking: false,
+      },
     },
-  ]> = [
-      [
-        'Uses default options on web',
-        'web',
-        { dsn: '' },
-        true,
-        {
-          enableNative: false,
-          enableAutoSessionTracking: false,
-        },
-      ],
-      [
-        'Uses default options on ios',
-        'ios',
-        { dsn: '' },
-        false,
-        {
-          enableNative: true,
-          enableAutoSessionTracking: true,
-        },
-      ],
-      [
-        'Uses default options on android',
-        'android',
-        { dsn: '' },
-        false,
-        {
-          enableNative: true,
-          enableAutoSessionTracking: true,
-        },
-      ],
-      [
-        'enableAutoSessionTracking sets autoSessionTracking on web',
-        'web',
-        { dsn: '', enableAutoSessionTracking: false },
-        false,
-        {
-          enableNative: false,
-          enableAutoSessionTracking: false,
-        },
-      ],
-      [
-        'enableAutoSessionTracking sets enableAutoSessionTracking on android',
-        'android',
-        { dsn: '', enableAutoSessionTracking: false },
-        false,
-        {
-          enableNative: true,
-          enableAutoSessionTracking: false,
-        },
-      ],
-      [
-        'enableAutoSessionTracking sets enableAutoSessionTracking on ios',
-        'ios',
-        { dsn: '', enableAutoSessionTracking: false },
-        false,
-        {
-          enableNative: true,
-          enableAutoSessionTracking: false,
-        },
-      ],
-    ];
+    {
+      name: 'Uses default options on ios',
+      platform: 'ios',
+      options: { dsn: '' },
+      autoSessionTracking: false,
+      expected: {
+        enableNative: true,
+        enableAutoSessionTracking: true,
+      },
+    },
+    {
+      name: 'Uses default options on android',
+      platform: 'android',
+      options: { dsn: '' },
+      autoSessionTracking: false,
+      expected: {
+        enableNative: true,
+        enableAutoSessionTracking: true,
+      },
+    },
+    {
+      name: 'enableAutoSessionTracking sets autoSessionTracking on web',
+      platform: 'web',
+      options: { dsn: '', enableAutoSessionTracking: false },
+      autoSessionTracking: false,
+      expected: {
+        enableNative: false,
+        enableAutoSessionTracking: false,
+      },
+    },
+    {
+      name: 'enableAutoSessionTracking sets enableAutoSessionTracking on android',
+      platform: 'android',
+      options: { dsn: '', enableAutoSessionTracking: false },
+      autoSessionTracking: false,
+      expected: {
+        enableNative: true,
+        enableAutoSessionTracking: false,
+      },
+    },
+    {
+      name: 'enableAutoSessionTracking sets enableAutoSessionTracking on ios',
+      platform: 'ios',
+      options: { dsn: '', enableAutoSessionTracking: false },
+      autoSessionTracking: false,
+      expected: {
+        enableNative: true,
+        enableAutoSessionTracking: false,
+      },
+    },
+  ];
+  it.each(table)('%s', ({ platform, options, expected }) => {
+    NATIVE.platform = platform;
 
-  it.each(table)('%s', (...test) => {
-    NATIVE.platform = test[1];
-
-    init(test[2], (browserOptions: BrowserOptions) => {
-      // Deprecated. To be removed on major bump.
-      expect(browserOptions['autoSessionTracking']).toBe(test[3]);
-    });
+    init(options);
 
     // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(NATIVE.initNativeSdk).toHaveBeenCalledWith(
-      expect.objectContaining(test[4]),
+      expect.objectContaining(expected),
     );
   });
 
@@ -183,7 +170,7 @@ describe('SDK Init', () => {
       const event = await rewriteFramesIntegration.processEvent(({ exception: error }) as Event, {} as EventHint, {} as Client);
 
       const [firstException] = event?.exception?.values as Exception[];
-      const [firstFrame] = firstException.stacktrace?.frames as StackFrame[];
+      const [firstFrame] = firstException?.stacktrace?.frames as StackFrame[];
 
       expect(firstFrame).toStrictEqual(expectedError);
     });
