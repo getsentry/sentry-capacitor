@@ -6,7 +6,7 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
-## 1.4.0
+## Unreleased
 
 ### Dependencies
 
@@ -14,6 +14,10 @@
 
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.0.0/CHANGELOG.md#900)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/8.55.0...9.0.0)
+
+## 1.4.0
+
+### Dependencies
 
 - Bump Sentry Javascript to 8.55.0 ([#870](https://github.com/getsentry/sentry-capacitor/pull/870))
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.55.0/CHANGELOG.md)
