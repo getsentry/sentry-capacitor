@@ -29,7 +29,7 @@
     "bump:v5": "cd example/ionic-angular-v5 && yalc link @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
     "bump:v4": "cd example/ionic-angular-v4 && yalc link @sentry/capacitor && yalc add broken_module && yarn install --check-files && yarn run build && yarn bump:sample-pod && npx cap sync",
     "bump:v3": "cd example/ionic-angular-v3 && yalc link @sentry/capacitor && yarn install --check-files && yarn run build && yarn bump:sample-pod && npx cap sync",
-    "bump:sample-vue": "cd example/ionic-vue3 && yalc link @sentry/capacitor && yarn install --check-files && ionic build && yarn run bump:sample-pod && npx cap sync",
+    "bump:sample-vue": "cd example/ionic-vue3 && yalc link @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
     "bump:samples": "yalc publish --sig && yarn concurrently --kill-others-on-fail \"yarn run bump:v7\" \"yarn run bump:v6\" \"yarn run bump:v5\" \"yarn run bump:v4\" \"yarn run bump:v3\" \"yarn run bump:sample-vue\""
   },
   "keywords": [
@@ -44,9 +44,9 @@
   "license": "MIT",
   "peerDependencies": {
     "@capacitor/core": ">=3.0.0",
-    "@sentry/angular": "8.55.0",
-    "@sentry/react": "8.55.0",
-    "@sentry/vue": "8.55.0"
+    "@sentry/angular": "9.0.0",
+    "@sentry/react": "9.0.0",
+    "@sentry/vue": "9.0.0"
   },
   "peerDependenciesMeta": {
     "@sentry/angular": {
@@ -60,19 +60,18 @@
     }
   },
   "dependencies": {
-    "@sentry/browser": "8.55.0",
-    "@sentry/core": "8.55.0",
-    "@sentry/types": "8.55.0",
-    "@sentry/utils": "8.55.0"
+    "@sentry/browser": "9.0.0",
+    "@sentry/core": "9.0.0",
+    "@sentry/types": "9.0.0"
   },
   "devDependencies": {
     "@capacitor/android": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
     "@capacitor/core": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0  || ^7.0.0",
     "@capacitor/ios": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0  || ^7.0.0",
     "@ionic/prettier-config": "^1.0.0",
-    "@sentry-internal/eslint-config-sdk": "8.55.0",
-    "@sentry-internal/eslint-plugin-sdk": "8.55.0",
-    "@sentry-internal/typescript": "8.55.0",
+    "@sentry-internal/eslint-config-sdk": "9.0.0",
+    "@sentry-internal/eslint-plugin-sdk": "9.0.0",
+    "@sentry-internal/typescript": "9.0.0",
     "@sentry/wizard": "3.34.2",
     "@types/jest": "^29.5.3",
     "concurrently": "^8.2.2",
@@ -85,7 +84,7 @@
     "rimraf": "^5.0.1",
     "swiftlint": "^2.0.0",
     "ts-jest": "^29.1.1",
-    "typescript": "^4.9.5"
+    "typescript": "5.0.4"
   },
   "files": [
     "dist/",
