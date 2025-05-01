@@ -14,6 +14,9 @@
 
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.0.0/CHANGELOG.md#900)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/8.55.0...9.0.0)
+- Bump Android SDK from v7.16.0 to v8.11.1 ([#783](https://github.com/getsentry/sentry-capacitor/pull/783))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8111)
+  - [diff](https://github.com/getsentry/sentry-java/compare/7.16.0...8.11.1)
 
 ## 1.4.0
 
