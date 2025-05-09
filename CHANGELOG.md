@@ -14,6 +14,9 @@
 
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.0.0/CHANGELOG.md#900)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/8.55.0...9.0.0)
+- Bump JavaScript Sibling SDKs from v9.0.0 to v9.17.0 ([#814](https://github.com/getsentry/sentry-capacitor/pull/814))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#9170)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/9.0.0...9.17.0)
 
 ## 1.4.0
 
