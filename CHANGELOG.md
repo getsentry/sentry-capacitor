@@ -14,6 +14,9 @@
 
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.0.0/CHANGELOG.md#900)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/8.55.0...9.0.0)
+- Bump Cocoa SDK from v8.48.0 to v8.50.1 ([#876](https://github.com/getsentry/sentry-capacitor/pull/876))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8501)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.48.0...8.50.1)
 
 ## 1.4.0
 
