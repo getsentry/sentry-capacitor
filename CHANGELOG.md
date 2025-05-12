@@ -6,6 +6,15 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Dependencies
+
+- Bump JavaScript SDKs from v9.0.0 to v9.11.0 ([#872](https://github.com/getsentry/sentry-capacitor/pull/872))
+
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.11.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/9.0.0...9.11.0)
+
 ## 2.0.0-beta.1
 
 ### Dependencies
