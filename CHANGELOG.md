@@ -16,6 +16,9 @@
 - Bump Android SDK from v7.16.0 to v8.11.1 ([#889](https://github.com/getsentry/sentry-capacitor/pull/889))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8111)
   - [diff](https://github.com/getsentry/sentry-java/compare/7.16.0...8.11.1)
+- Bump Cocoa SDK from v8.48.0 to v8.50.1 ([#876](https://github.com/getsentry/sentry-capacitor/pull/876))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8501)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.48.0...8.50.1)
 
 ## 2.0.0-beta.1
 
