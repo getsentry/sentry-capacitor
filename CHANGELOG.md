@@ -6,6 +6,58 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## 1.3.1
+
+### Dependencies
+
+- Bump Sentry Javascript to 8.55.0 ([#870](https://github.com/getsentry/sentry-capacitor/pull/870))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.55.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/8.42.0...8.55.0)
+
+## 1.3.0
+
+### Dependencies
+
+- Bump Cocoa SDK from v8.36.0 to v8.48.0 ([#751](https://github.com/getsentry/sentry-capacitor/pull/751))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8480)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.36.0...8.48.0)
+
+## 1.2.1
+
+### Fixes
+
+- Fix issue with `adjustMarginsForEdgeToEdge` on Capacitor 7 ([#855](https://github.com/getsentry/sentry-capacitor/pull/855))
+
+## 1.2.0
+
+### Features
+
+- Added support for Capacitor V7 ([#831](https://github.com/getsentry/sentry-capacitor/pull/831))
+
+### Fixes
+
+- Undefined siblingVersion error when updating the Sentry Capacitor Package ([#829](https://github.com/getsentry/sentry-capacitor/pull/829))
+
+## 1.1.0
+
+### Features
+
+- Support Angular V19. ([#730](https://github.com/getsentry/sentry-capacitor/pull/730))
+- RequestEventData is now exposed from @sentry/capacitor ([#730](https://github.com/getsentry/sentry-capacitor/pull/730))
+
+### Dependencies
+
+- Bump JavaScript SDKs from v8.37.1 to v8.42.0 ([#730](https://github.com/getsentry/sentry-capacitor/pull/730))
+
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#8420)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/8.37.1...8.42.0)
+
+### Deprecations
+
+- There are new deprecations introduced by the latests JavaScript SDKs, to see them, please check the below links:
+  - https://github.com/getsentry/sentry-javascript/blob/8.42.0/CHANGELOG.md#deprecations
+  - https://github.com/getsentry/sentry-javascript/blob/8.42.0/CHANGELOG.md#deprecations-1
+
 ## 1.0.2
 
 ### Fixes
