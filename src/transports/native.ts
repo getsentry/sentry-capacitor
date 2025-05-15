@@ -1,11 +1,10 @@
-import type {
-  BaseTransportOptions,
+import type {   BaseTransportOptions,
   Envelope,
+PromiseBuffer ,
   Transport,
   TransportMakeRequestResponse,
-} from '@sentry/types';
-import type { PromiseBuffer } from '@sentry/utils';
-import { makePromiseBuffer } from '@sentry/utils';
+} from '@sentry/core';
+import { makePromiseBuffer } from '@sentry/core';
 
 import { NATIVE } from '../wrapper';
 

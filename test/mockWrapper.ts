@@ -1,5 +1,3 @@
-import { SentryError } from '@sentry/utils';
-
 import { type NATIVE as ORIGINAL_NATIVE } from '../src/wrapper';
 import type { MockInterface } from './testutils';
 
@@ -33,8 +31,8 @@ const NATIVE: MockInterface<NativeType> = {
   isModuleLoaded: jest.fn(),
   isNativeClientAvailable: jest.fn(),
 
-  _DisabledNativeError: new SentryError('Native is disabled'),
-  _NativeClientError: new SentryError(
+  _DisabledNativeError: new Error('Native is disabled'),
+  _NativeClientError: new Error(
     "Native Client is not available, can't start on native.",
   ),
   crash: jest.fn(),

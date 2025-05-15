@@ -2,9 +2,93 @@
 
 <!-- prettier-ignore-start -->
 > [!IMPORTANT]
-> If you are upgrading to the `1.x` versions of the SDK from `0.x`, make sure you follow our
+> If you are upgrading to the `2.x` versions of the SDK from `1.x` or lower, make sure you follow our
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
+
+## Unreleased
+
+### Dependencies
+
+- Bump JavaScript SDKs from v9.0.0 to v9.11.0 ([#872](https://github.com/getsentry/sentry-capacitor/pull/872))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.11.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/9.0.0...9.11.0)
+- Bump Android SDK from v7.16.0 to v8.11.1 ([#889](https://github.com/getsentry/sentry-capacitor/pull/889))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8111)
+  - [diff](https://github.com/getsentry/sentry-java/compare/7.16.0...8.11.1)
+- Bump Cocoa SDK from v8.48.0 to v8.50.1 ([#876](https://github.com/getsentry/sentry-capacitor/pull/876))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8501)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.48.0...8.50.1)
+
+## 2.0.0-beta.1
+
+### Dependencies
+
+- Bump JavaScript SDKs from v8.55.0 to v9.0.0 ([#840](https://github.com/getsentry/sentry-capacitor/pull/840))
+
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.0.0/CHANGELOG.md#900)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/8.55.0...9.0.0)
+
+## 1.4.0
+
+### Dependencies
+
+- Bump JavaScript SDKs from v8.55.0 to v9.11.0 ([#840](https://github.com/getsentry/sentry-capacitor/pull/840), [#872](https://github.com/getsentry/sentry-capacitor/pull/872))
+
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.11.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/8.55.0...9.11.0)
+
+## 1.4.0
+
+### Dependencies
+
+- Bump Sentry Javascript to 8.55.0 ([#870](https://github.com/getsentry/sentry-capacitor/pull/870))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/8.55.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/8.42.0...8.55.0)
+
+## 1.3.0
+
+### Dependencies
+
+- Bump Cocoa SDK from v8.36.0 to v8.48.0 ([#751](https://github.com/getsentry/sentry-capacitor/pull/751))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8480)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.36.0...8.48.0)
+
+## 1.2.1
+
+### Fixes
+
+- Fix issue with `adjustMarginsForEdgeToEdge` on Capacitor 7 ([#855](https://github.com/getsentry/sentry-capacitor/pull/855))
+
+## 1.2.0
+
+### Features
+
+- Added support for Capacitor V7 ([#831](https://github.com/getsentry/sentry-capacitor/pull/831))
+
+### Fixes
+
+- Undefined siblingVersion error when updating the Sentry Capacitor Package ([#829](https://github.com/getsentry/sentry-capacitor/pull/829))
+
+## 1.1.0
+
+### Features
+
+- Support Angular V19. ([#730](https://github.com/getsentry/sentry-capacitor/pull/730))
+- RequestEventData is now exposed from @sentry/capacitor ([#730](https://github.com/getsentry/sentry-capacitor/pull/730))
+
+### Dependencies
+
+- Bump JavaScript SDKs from v8.37.1 to v8.42.0 ([#730](https://github.com/getsentry/sentry-capacitor/pull/730))
+
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#8420)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/8.37.1...8.42.0)
+
+### Deprecations
+
+- There are new deprecations introduced by the latests JavaScript SDKs, to see them, please check the below links:
+  - https://github.com/getsentry/sentry-javascript/blob/8.42.0/CHANGELOG.md#deprecations
+  - https://github.com/getsentry/sentry-javascript/blob/8.42.0/CHANGELOG.md#deprecations-1
 
 ## 1.0.2
 
