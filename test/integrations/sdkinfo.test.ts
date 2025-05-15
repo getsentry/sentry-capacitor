@@ -1,4 +1,4 @@
-import type { Event, EventHint, Package } from '@sentry/core';
+import type { Event, EventHint, Package } from '@sentry/types';
 
 import { SDK_NAME, SDK_VERSION } from '../../src/';
 import { sdkInfoIntegration } from '../../src/integrations';

@@ -10,9 +10,8 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
 import io.sentry.Breadcrumb;
-import io.sentry.IScope;
+import io.sentry.HubAdapter;
 import io.sentry.Integration;
-import io.sentry.ScopesAdapter;
 import io.sentry.Sentry;
 import io.sentry.SentryEvent;
 import io.sentry.SentryLevel;
@@ -26,7 +25,7 @@ import io.sentry.protocol.SentryPackage;
 import io.sentry.protocol.User;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -63,9 +62,9 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void initNativeSdk(final PluginCall call) {
-      JSObject capOptions = call.getObject("options");
+        JSObject capOptions = call.getObject("options");
 
-       SentryAndroid.init(
+        SentryAndroid.init(
             this.getContext(),
             options -> {
                 SdkVersion sdkVersion = options.getSdkVersion();
@@ -75,7 +74,7 @@ public class SentryCapacitor extends Plugin {
                     sdkVersion.setName(ANDROID_SDK_NAME);
                 }
 
-              if (capOptions.has("debug") && capOptions.getBool("debug")) {
+                if (capOptions.has("debug") && capOptions.getBool("debug")) {
                     options.setDebug(true);
                     logger.setLevel(Level.INFO);
                 }
@@ -84,7 +83,7 @@ public class SentryCapacitor extends Plugin {
                 options.setNativeSdkName(NATIVE_SDK_NAME);
                 options.setSdkVersion(sdkVersion);
 
-              String dsn = capOptions.getString("dsn") != null ? capOptions.getString("dsn") : "";
+                String dsn = capOptions.getString("dsn") != null ? capOptions.getString("dsn") : "";
                 logger.info(String.format("Starting with DSN: '%s'", dsn));
                 options.setDsn(dsn);
 
@@ -213,9 +212,9 @@ public class SentryCapacitor extends Plugin {
     @PluginMethod
     public void fetchNativeRelease(PluginCall call) {
         JSObject release = new JSObject();
-        release.put("id", packageInfo.packageName);
-        release.put("version", packageInfo.versionName);
-        release.put("build", String.valueOf(packageInfo.versionCode)); // Requires API 28
+        release.put("id", this.packageInfo.packageName);
+        release.put("version", this.packageInfo.versionName);
+        release.put("build", String.valueOf(this.packageInfo.versionCode)); // Requires API 28
         call.resolve(release);
     }
 
@@ -228,7 +227,7 @@ public class SentryCapacitor extends Plugin {
                 bytes[i] = (byte) rawIntegers.getInt(i);
             }
 
-            final String outboxPath = ScopesAdapter.getInstance().getOptions().getOutboxPath();
+            final String outboxPath = HubAdapter.getInstance().getOptions().getOutboxPath();
 
             if (outboxPath == null || outboxPath.isEmpty()) {
                 logger.info("Error when writing envelope, no outbox path is present.");
@@ -260,9 +259,9 @@ public class SentryCapacitor extends Plugin {
             String payload = call.getString("string");
             try {
                 JSObject resp = new JSObject();
-                resp.put("value", payload.getBytes(StandardCharsets.UTF_8).length);
+                resp.put("value", payload.getBytes("UTF-8").length);
                 call.resolve(resp);
-            } catch (Exception e) {
+            } catch (UnsupportedEncodingException e) {
                 call.reject(String.valueOf(e));
             }
         } else {
@@ -301,6 +300,9 @@ public class SentryCapacitor extends Plugin {
                     case "debug":
                         breadcrumbInstance.setLevel(SentryLevel.DEBUG);
                         break;
+                    case "error":
+                        breadcrumbInstance.setLevel(SentryLevel.ERROR);
+                        break;
                     default:
                         breadcrumbInstance.setLevel(SentryLevel.ERROR);
                         break;
@@ -326,7 +328,9 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void clearBreadcrumbs(PluginCall call) {
-        Sentry.configureScope(IScope::clearBreadcrumbs);
+        Sentry.configureScope(scope -> {
+            scope.clearBreadcrumbs();
+        });
     }
 
     @PluginMethod
@@ -395,13 +399,17 @@ public class SentryCapacitor extends Plugin {
         SdkVersion eventSdk = event.getSdk();
         if (eventSdk != null && eventSdk.getName().equals("sentry.javascript.capacitor") && sdk != null) {
             Set<SentryPackage> sentryPackages = sdk.getPackageSet();
-            for (SentryPackage sentryPackage : sentryPackages) {
-                eventSdk.addPackage(sentryPackage.getName(), sentryPackage.getVersion());
+            if (sentryPackages != null) {
+                for (SentryPackage sentryPackage : sentryPackages) {
+                    eventSdk.addPackage(sentryPackage.getName(), sentryPackage.getVersion());
+                }
             }
 
             Set<String> integrations = sdk.getIntegrationSet();
-            for (String integration : integrations) {
-                eventSdk.addIntegration(integration);
+            if (integrations != null) {
+                for (String integration : integrations) {
+                    eventSdk.addIntegration(integration);
+                }
             }
 
             event.setSdk(eventSdk);

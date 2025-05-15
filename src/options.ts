@@ -1,6 +1,6 @@
 import type { BrowserOptions } from '@sentry/browser';
 import type { BrowserTransportOptions } from '@sentry/browser/build/npm/types/transports/types'; // Path changed on 8.13.0
-import type { ClientOptions } from '@sentry/core';
+import type { ClientOptions } from '@sentry/types';
 
 export interface BaseCapacitorOptions {
   /**

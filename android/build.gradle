@@ -10,10 +10,7 @@ def getCapacitorCompileSdkVersion() {
 
 def GetCapacitorVersion() {
   def compileVersion =  getCapacitorCompileSdkVersion()
-  if (compileVersion >= 35) {
-    return 7
-  }
-  if (compileVersion == 34) {
+  if (compileVersion >= 34) {
     return 6
   }
   else if (compileVersion == 33) {
@@ -33,19 +30,9 @@ def GetCapacitorVersion() {
 def capVersion = GetCapacitorVersion()
 
 def defaultSdkVersion = getCapacitorCompileSdkVersion()
-def defaultMinAndroidVersion = 23
-def targetJavaVersion = JavaVersion.VERSION_21
-if (capVersion >= 7) {
-  println "Sentry Capacitor: Applying defaults for Capacitor 7 or higher"
-  ext {
-    androidxAppCompatVersion = safeExtGet('androidxAppCompatVersion', '1.7.0')
-    androidxEspressoCoreVersion = safeExtGet('androidxEspressoCoreVersion', '3.6.1')
-  }
-}
-else if (capVersion >= 5) {
-  println "Sentry Capacitor: Applying defaults for Capacitor 5 and 6"
-  targetJavaVersion = JavaVersion.VERSION_17
-  defaultMinAndroidVersion = 22
+def targetJavaVersion = JavaVersion.VERSION_17
+if (capVersion >= 5) {
+  println "Sentry Capacitor: Applying defaults for Capacitor 5 or higher"
   ext {
     androidxAppCompatVersion = safeExtGet('androidxAppCompatVersion', '1.6.1')
     androidxEspressoCoreVersion = safeExtGet('androidxEspressoCoreVersion', '3.5.1')
@@ -54,7 +41,6 @@ else if (capVersion >= 5) {
 else {
   println "Sentry Capacitor: Applying defaults for Capacitor 4."
   targetJavaVersion = JavaVersion.VERSION_11
-  defaultMinAndroidVersion = 22
   ext {
     androidxEspressoCoreVersion = safeExtGet('androidxEspressoCoreVersion', '3.2.0')
   }
@@ -66,7 +52,7 @@ android {
   namespace "io.sentry.capacitor"
   compileSdkVersion safeExtGet('compileSdkVersion', defaultSdkVersion)
   defaultConfig {
-    minSdkVersion safeExtGet('minSdkVersion', defaultMinAndroidVersion) // Same for Capacitor 6 or lower
+    minSdkVersion safeExtGet('minSdkVersion', 22) // Same for Capacitor 6 or lower
     targetSdkVersion safeExtGet('targetSdkVersion', defaultSdkVersion)
     versionCode 1
     versionName "1.0"
@@ -93,5 +79,5 @@ repositories {
 
 dependencies {
     implementation project(':capacitor-android')
-    implementation 'io.sentry:sentry-android:8.11.1'
+    implementation 'io.sentry:sentry-android:7.16.0'
 }

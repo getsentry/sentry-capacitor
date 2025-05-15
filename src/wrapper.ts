@@ -8,8 +8,8 @@ import type {
   SeverityLevel,
   TransportMakeRequestResponse,
   User,
-} from '@sentry/core';
-import { logger } from '@sentry/core';
+} from '@sentry/types';
+import { dropUndefinedKeys, logger, SentryError } from '@sentry/utils';
 
 import type { NativeDeviceContextsResponse } from './definitions';
 import { FilterNativeOptions } from './nativeOptions';
@@ -194,14 +194,15 @@ export const NATIVE = {
     let otherUserKeys = null;
     if (user) {
       const { id, ip_address, email, username, ...otherKeys } = user;
-      defaultUserKeys =
+      defaultUserKeys = dropUndefinedKeys(
         this._serializeObject({
           email,
           id,
           ip_address,
           username,
-        }, true);
-      otherUserKeys = this._serializeObject(otherKeys, true);
+        }),
+      );
+      otherUserKeys = dropUndefinedKeys(this._serializeObject(otherKeys));
     }
 
     SentryCapacitor.setUser({ defaultUserKeys, otherUserKeys });
@@ -369,14 +370,13 @@ export const NATIVE = {
    * @param data key-value map.
    * @returns An object where all root-level values are strings.
    */
-  _serializeObject(data: { [key: string]: unknown }, removeUndefinedValues?: boolean): {
+  _serializeObject(data: { [key: string]: unknown }): {
     [key: string]: string;
   } {
     const serialized: { [key: string]: string } = {};
 
     Object.keys(data).forEach(dataKey => {
       const value = data[dataKey];
-      if (removeUndefinedValues !== true || value !== undefined)
       serialized[dataKey] =
         typeof value === 'string' ? value : JSON.stringify(value);
     });
@@ -436,8 +436,8 @@ export const NATIVE = {
     );
   },
 
-  _DisabledNativeError: new Error('Native is disabled'),
-  _NativeClientError: new Error(
+  _DisabledNativeError: new SentryError('Native is disabled'),
+  _NativeClientError: new SentryError(
     "Native Client is not available, can't start on native.",
   ),
   enableNative: true,

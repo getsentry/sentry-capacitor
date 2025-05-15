@@ -5,7 +5,7 @@ import type {
   Event,
   EventHint,
   Integration,
-} from '@sentry/core';
+} from '@sentry/types';
 
 import { NATIVE } from '../wrapper';
 
