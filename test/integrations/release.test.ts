@@ -1,5 +1,5 @@
-import type { Client, Event, EventHint } from '@sentry/core';
 import { getClient } from '@sentry/core';
+import type { Client, Event, EventHint } from '@sentry/types';
 
 import { nativeReleaseIntegration } from '../../src/integrations/release';
 

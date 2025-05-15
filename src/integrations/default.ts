@@ -1,4 +1,4 @@
-import type { Integration } from '@sentry/core';
+import type { Integration } from '@sentry/types';
 
 import type { CapacitorOptions } from '../options';
 import { deviceContextIntegration } from './devicecontext';

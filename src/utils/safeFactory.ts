@@ -1,4 +1,4 @@
-import { logger } from '@sentry/core';
+import { logger } from '@sentry/utils';
 
 import type { CapacitorOptions } from '../options';
 

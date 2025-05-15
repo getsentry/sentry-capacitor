@@ -1,5 +1,5 @@
 import { Capacitor } from '@capacitor/core';
-import type { StackParser } from '@sentry/core';
+import type { StackParser } from '@sentry/types';
 import type { CapacitorOptions } from 'src';
 
 import { FilterNativeOptions } from '../src/nativeOptions';

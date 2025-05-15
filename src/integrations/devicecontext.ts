@@ -1,5 +1,5 @@
-import type { Contexts, Event, Integration } from '@sentry/core';
-import { logger } from '@sentry/core';
+import type { Contexts, Event, Integration } from '@sentry/types';
+import { logger } from '@sentry/utils';
 
 import { NATIVE } from '../wrapper';
 

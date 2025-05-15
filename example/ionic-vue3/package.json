@@ -27,7 +27,7 @@
     "@sentry/capacitor": "file:.yalc/@sentry/capacitor",
     "@sentry/cli": "^2.21.3",
     "@sentry/vite-plugin": "^2.10.3",
-    "@sentry/vue": "9.11.0",
+    "@sentry/vue": "8.37.1",
     "ionicons": "^7.0.0",
     "vue": "^3.3.0",
     "vue-facing-decorator": "^3.0.4",
@@ -45,7 +45,7 @@
     "jsdom": "^22.1.0",
     "terser": "^5.4.0",
     "typescript": "^5.1.6",
-    "vite": "^5.4.19",
+    "vite": "^5.1.8",
     "vitest": "^0.34.6",
     "vue-tsc": "^1.0.24"
   },

@@ -2,7 +2,7 @@ export * from './definitions';
 
 export type {
   Breadcrumb,
-  RequestEventData,
+  Request,
   SdkInfo,
   Event,
   Exception,
@@ -11,7 +11,7 @@ export type {
   Stacktrace,
   Thread,
   User,
-} from '@sentry/core';
+} from '@sentry/types';
 
 export type { Scope } from '@sentry/core';
 

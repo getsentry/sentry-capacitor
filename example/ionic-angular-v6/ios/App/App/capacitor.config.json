@@ -8,7 +8,6 @@
 	},
 	"webDir": "www",
 	"packageClassList": [
-		"SentryCapacitor",
 		"SentryCapacitor"
 	]
 }

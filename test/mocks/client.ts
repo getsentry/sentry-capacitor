@@ -1,3 +1,12 @@
+import {
+  BaseClient,
+  createTransport,
+  getCurrentScope,
+  getGlobalScope,
+  getIsolationScope,
+  initAndBind,
+  setCurrentClient,
+} from '@sentry/core';
 import type {
   ClientOptions,
   Event,
@@ -7,15 +16,8 @@ import type {
   ParameterizedString,
   Session,
   SeverityLevel,
-} from '@sentry/core';
-import {
-  Client,
-  createTransport,
-  getCurrentScope,
-  getGlobalScope,
-  getIsolationScope,
-  initAndBind,
- resolvedSyncPromise,  setCurrentClient } from '@sentry/core';
+} from '@sentry/types';
+import { resolvedSyncPromise } from '@sentry/utils';
 
 export function getDefaultTestClientOptions(options: Partial<TestClientOptions> = {}): TestClientOptions {
   return {
@@ -42,7 +44,7 @@ export interface TestClientOptions extends ClientOptions {
   defaultIntegrations?: Integration[] | false;
 }
 
-export class TestClient extends Client<TestClientOptions> {
+export class TestClient extends BaseClient<TestClientOptions> {
   public static instance?: TestClient;
   public static sendEventCalled?: (event: Event) => void;
 
@@ -93,7 +95,7 @@ export class TestClient extends Client<TestClientOptions> {
       super.sendEvent(event, hint);
       return;
     }
-    TestClient.sendEventCalled?.(event);
+    TestClient.sendEventCalled && TestClient.sendEventCalled(event);
   }
 
   public sendSession(session: Session): void {

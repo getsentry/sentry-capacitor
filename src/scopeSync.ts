@@ -1,4 +1,4 @@
-import type { Breadcrumb, Scope } from '@sentry/core';
+import type { Breadcrumb, Scope } from '@sentry/types';
 
 import { DEFAULT_BREADCRUMB_LEVEL } from './breadcrumb';
 import { fillTyped } from './utils/fill';

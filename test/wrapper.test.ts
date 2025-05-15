@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import type { Envelope, EventEnvelope, EventItem, SeverityLevel, TransportMakeRequestResponse } from '@sentry/core';
-import {createEnvelope, dropUndefinedKeys, logger} from '@sentry/core';
+import type { Envelope, EventEnvelope, EventItem, SeverityLevel, TransportMakeRequestResponse } from '@sentry/types';
+import { createEnvelope, logger } from '@sentry/utils';
 
 import { utf8ToBytes } from '../src/vendor';
 import { NATIVE } from '../src/wrapper';
@@ -650,76 +650,6 @@ describe('Tests Native Wrapper', () => {
       expect(SentryCapacitor.closeNativeSdk).toHaveBeenCalled();
       expect(NATIVE.enableNative).toBe(false);
     });
-  });
-
-  describe('_serializeObject', () => {
-
-    test('serializes simple object', () => {
-
-      const data = { valid: true, undefinedKey: undefined, stringData: 'data' };
-      const serializedData = NATIVE._serializeObject(data);
-
-      expect(serializedData).toEqual(
-        {
-          "stringData": "data",
-          "undefinedKey": undefined,
-          "valid": "true"
-        });
-    });
-
-    test('serializes simple object AND removes undefined values', () => {
-
-      const data = { valid: true, undefinedKey: undefined, stringData: 'data' };
-      const serializedData = NATIVE._serializeObject(data, true);
-
-      expect(serializedData).toEqual(
-        {
-          "stringData": "data",
-          "valid": "true"
-        });
-    });
-
-    test('undefined removal behaves the same as dropUndefinedKeys', () => {
-
-      const data = { valid: true, undefinedKey: undefined, stringData: 'data' };
-      // eslint-disable-next-line deprecation/deprecation
-      const oldSerializedData = dropUndefinedKeys(NATIVE._serializeObject(data));
-
-      const newSerializedData = NATIVE._serializeObject(data, true);
-
-      expect(newSerializedData).toEqual(oldSerializedData);
-    });
-
-    test('serializes complex object', () => {
-
-      const subData = { data1: 1, data2: 2, undefinedData: undefined, data3: { dataA: 'A', dataB: 0.9 } };
-      const data = { valid: true, undefinedKey: undefined, stringData: 'data', subData: subData };
-      const serializedData = NATIVE._serializeObject(data);
-
-      expect(serializedData).toEqual(
-        {
-          "stringData": "data",
-          "subData": "{\"data1\":1,\"data2\":2,\"data3\":{\"dataA\":\"A\",\"dataB\":0.9}}",
-          "undefinedKey": undefined,
-          "valid": "true"
-        });
-
-    });
-
-    test('serializes complex object AND removes undefined values', () => {
-
-      const subData = { data1: 1, data2: 2, undefinedData: undefined, data3: { dataA: 'A', dataB: 0.9 } };
-      const data = { valid: true, undefinedKey: undefined, stringData: 'data', subData: subData };
-      const serializedData = NATIVE._serializeObject(data, true);
-
-      expect(serializedData).toEqual(
-        {
-          "stringData": "data",
-          "subData": "{\"data1\":1,\"data2\":2,\"data3\":{\"dataA\":\"A\",\"dataB\":0.9}}",
-          "valid": "true"
-        });
-    });
-
   });
 
   test('closeNativeSdk called twice does not throw error.', async () => {

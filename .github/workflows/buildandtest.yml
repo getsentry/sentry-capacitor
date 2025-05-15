@@ -32,7 +32,7 @@ jobs:
         id: compute_lockfile_hash
         run: echo "hash=${{ hashFiles('yarn.lock') }}" >> "$GITHUB_OUTPUT"
       - name: Check dependency cache
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57  # V4.2.0
+        uses: actions/cache@v4.1.2
         id: cache_dependencies
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
@@ -56,12 +56,12 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
       - name: Check dependency cache
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57  # V4.2.0
+        uses: actions/cache@v4.1.2
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_install_deps.outputs.dependency_cache_key }}
       - name: Check build cache
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57  # V4.2.0
+        uses: actions/cache@v4.1.2
         id: cache_built_packages
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
@@ -114,12 +114,12 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
       - name: Check dependency cache
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57  # V4.2.0
+        uses: actions/cache@v4.1.2
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_build.outputs.dependency_cache_key }}
       - name: Check build cache
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57  # V4.2.0
+        uses: actions/cache@v4.1.2
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
@@ -157,12 +157,12 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
       - name: Check dependency cache
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57  # V4.2.0
+        uses: actions/cache@v4.1.2
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_build.outputs.dependency_cache_key }}
       - name: Check build cache
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57  # V4.2.0
+        uses: actions/cache@v4.1.2
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
@@ -180,12 +180,12 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
       - name: Check dependency cache
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57  # V4.2.0
+        uses: actions/cache@v4.1.2
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_build.outputs.dependency_cache_key }}
       - name: Check build cache
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57  # V4.2.0
+        uses: actions/cache@v4.1.2
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
