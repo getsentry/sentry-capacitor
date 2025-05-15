@@ -102,10 +102,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - bump: 'v3'
-          - bump: 'v4'
-          - bump: 'v5'
           - bump: 'v6'
+          - bump: 'v7'
           - bump: 'sample-vue'
     steps:
       - name: Check out current commit (${{ github.sha }})
