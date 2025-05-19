@@ -1036,6 +1036,11 @@
   resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-plugin-sdk/-/eslint-plugin-sdk-9.11.0.tgz#5b7c4393ea2e0d968507d7799a3cd1146b01d374"
   integrity sha512-lmoNjgqKEHtagv5h73BSDVJOgJy/rfw5IdDUEC/x+810lk785As3idgce3uxpkypn5GWKbpc0ph13gE4WPmtRg==
 
+"@sentry-internal/eslint-plugin-sdk@9.20.0":
+  version "9.20.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-plugin-sdk/-/eslint-plugin-sdk-9.20.0.tgz#879d6a0637c85128f28d6279cd6a11685c138964"
+  integrity sha512-VecRp/v+RoVSh5/0QXIzBoPjdeZMsj1Ib1MM6MgOl985c08IBnogh+4rLzJ0po4S2klkiSIv9XcEpCy/7NVc4w==
+
 "@sentry-internal/feedback@9.11.0":
   version "9.11.0"
   resolved "https://registry.yarnpkg.com/@sentry-internal/feedback/-/feedback-9.11.0.tgz#fefbfb318aef251c3dd02540ce524807dbb59bc3"
