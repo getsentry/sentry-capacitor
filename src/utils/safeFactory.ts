@@ -1,5 +1,4 @@
 import { logger } from '@sentry/core';
-
 import type { CapacitorOptions } from '../options';
 
 type DangerTypesWithoutCallSignature =

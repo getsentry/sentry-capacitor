@@ -5,7 +5,6 @@ PromiseBuffer ,
   TransportMakeRequestResponse,
 } from '@sentry/core';
 import { makePromiseBuffer } from '@sentry/core';
-
 import { NATIVE } from '../wrapper';
 
 export const DEFAULT_BUFFER_SIZE = 30;

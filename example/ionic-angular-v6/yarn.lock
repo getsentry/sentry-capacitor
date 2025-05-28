@@ -2115,62 +2115,62 @@
     "@angular-devkit/schematics" "17.3.7"
     jsonc-parser "3.2.1"
 
-"@sentry-internal/browser-utils@9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/browser-utils/-/browser-utils-9.11.0.tgz#b4d89fbf1a41ee04ddf5a0058433b6b996d39a41"
-  integrity sha512-XS71kRf7lw5St/Jc9G2Viy1cKgqGoPHqUAykXEtFt38JVXdf1TY/dSbKv/PAgNqMvC1xvdTsN0HF/81o7DNUEA==
+"@sentry-internal/browser-utils@9.23.0":
+  version "9.23.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/browser-utils/-/browser-utils-9.23.0.tgz#19cd82bc42654883190423126e666c6e5db66b43"
+  integrity sha512-hyN2Q6mh7ggw8sDVHeRyWz5LR6gjvf8zHSzQnMaF7QkeSyaeGM/SVSL4ODwqR9TRH7U2ku6nZFMbKhaBPV+Hfg==
   dependencies:
-    "@sentry/core" "9.11.0"
+    "@sentry/core" "9.23.0"
 
-"@sentry-internal/feedback@9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/feedback/-/feedback-9.11.0.tgz#fefbfb318aef251c3dd02540ce524807dbb59bc3"
-  integrity sha512-50KiRmrF1Ldr+KoRawqcCYVk7TAVP8K/I81Jk9YWwlp1+Pu1ArpYDmTNCLXTgoyiyO38aHefKGZJX6AKFuSsUQ==
+"@sentry-internal/feedback@9.23.0":
+  version "9.23.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/feedback/-/feedback-9.23.0.tgz#088c52187cb1a9bb0b22c3df14a6d0b8fafec0e4"
+  integrity sha512-Xf+KqV69TBiPo1gk2EsU6O/dumuTMxWOF52uVWJddQYI3pQTU5DqSeoZ5AY76bIIhV9n6AEFDGqNPXmuj4Acrw==
   dependencies:
-    "@sentry/core" "9.11.0"
+    "@sentry/core" "9.23.0"
 
-"@sentry-internal/replay-canvas@9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/replay-canvas/-/replay-canvas-9.11.0.tgz#56db491058dc7005291c45f3e1777afc87637db5"
-  integrity sha512-ZcRg8TWfF0ucjK2i+4TY/blRNJ7YKrgMpx19pFj6eCOJ1K8geSkAFPIfDHcQEwIU1ZTN+HiCwx0JvTI9YZxjfg==
+"@sentry-internal/replay-canvas@9.23.0":
+  version "9.23.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/replay-canvas/-/replay-canvas-9.23.0.tgz#7e384e8ab50d99d363c5e01cd255e04af1b9623b"
+  integrity sha512-cYlw5svJjyPequm0PJjFGLpee86L1NieONEHlujOXkIG6IEriiorMm+8bNpGsHRuyvg41B+4P/YmcQAGtEGxXg==
   dependencies:
-    "@sentry-internal/replay" "9.11.0"
-    "@sentry/core" "9.11.0"
+    "@sentry-internal/replay" "9.23.0"
+    "@sentry/core" "9.23.0"
 
-"@sentry-internal/replay@9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/replay/-/replay-9.11.0.tgz#ef591263b516415a40b0954e17b29c7a1a83b4c0"
-  integrity sha512-0k24h58O/2VQw1dwT/zQiWvUzLNQxpxbrVN/MYPT7czSEhI+1bX8fxMHXZORl2JqhetImMXzxH3XkuHQPEqQMg==
+"@sentry-internal/replay@9.23.0":
+  version "9.23.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/replay/-/replay-9.23.0.tgz#6b1369a8712323666fd04a4f86d3ab8865ff4f37"
+  integrity sha512-0/q15tvSboaK7/05BFQhs71bqgHKejJoDJgXmH0lySqgsRh/S18867ZxQNiuYhuVt337h07u1QaCyjnNJKHfuA==
   dependencies:
-    "@sentry-internal/browser-utils" "9.11.0"
-    "@sentry/core" "9.11.0"
+    "@sentry-internal/browser-utils" "9.23.0"
+    "@sentry/core" "9.23.0"
 
-"@sentry/angular@9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@sentry/angular/-/angular-9.11.0.tgz#0d20b68ffc238ea10125c51d44c7b1b47b90968e"
-  integrity sha512-KB5g7ZaQvjNfKCg8jdhAyNBWbptvDdW4ga/Z3/tt3663jN+3fwgh9eMFTonPe1jHMxRTqjHndfWl+Luq6nndtg==
+"@sentry/angular@9.23.0":
+  version "9.23.0"
+  resolved "https://registry.yarnpkg.com/@sentry/angular/-/angular-9.23.0.tgz#484f111bdc7fd66e7853f698df03d3f1cc671a92"
+  integrity sha512-3To/Tn3lURkchsHJEJnzHsbhx7bmeSx5t+H0pwyhQaIDBiMhcNpTu1Iy0x7a7NRXmb5a9jkq28TnbFt31ngSVg==
   dependencies:
-    "@sentry/browser" "9.11.0"
-    "@sentry/core" "9.11.0"
+    "@sentry/browser" "9.23.0"
+    "@sentry/core" "9.23.0"
     tslib "^2.4.1"
 
-"@sentry/browser@9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-9.11.0.tgz#3126223289949d4b63bfad1fc2c0fc2fdc035cbe"
-  integrity sha512-DSDj8wQJoiLqqOcntl+7phjd8l8KN9A0vaV7mZNHWbrHU3MVwXqTyLyERRLC6wi0t7F5kqczqa3xLmKjK/fMZg==
+"@sentry/browser@9.23.0":
+  version "9.23.0"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-9.23.0.tgz#8fdc4e393c8b893ca467d577bb7b11d038650641"
+  integrity sha512-QRkNxWys8e088260vByztoTsEVZ0W6v/XnZfKT6wkPPGn0aFeOrg/xjgxfI8D5huqZCxT28Cf23akOOly4FXjg==
   dependencies:
-    "@sentry-internal/browser-utils" "9.11.0"
-    "@sentry-internal/feedback" "9.11.0"
-    "@sentry-internal/replay" "9.11.0"
-    "@sentry-internal/replay-canvas" "9.11.0"
-    "@sentry/core" "9.11.0"
+    "@sentry-internal/browser-utils" "9.23.0"
+    "@sentry-internal/feedback" "9.23.0"
+    "@sentry-internal/replay" "9.23.0"
+    "@sentry-internal/replay-canvas" "9.23.0"
+    "@sentry/core" "9.23.0"
 
 "@sentry/capacitor@file:.yalc/@sentry/capacitor":
   version "2.0.0-beta.1"
   dependencies:
-    "@sentry/browser" "9.11.0"
-    "@sentry/core" "9.11.0"
-    "@sentry/types" "9.11.0"
+    "@sentry/browser" "9.23.0"
+    "@sentry/core" "9.23.0"
+    "@sentry/types" "9.23.0"
 
 "@sentry/cli-darwin@2.31.2":
   version "2.31.2"
@@ -2226,17 +2226,17 @@
     "@sentry/cli-win32-i686" "2.31.2"
     "@sentry/cli-win32-x64" "2.31.2"
 
-"@sentry/core@9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-9.11.0.tgz#4cedb0d549e98f4e259f9a48b129e3a46001aba4"
-  integrity sha512-qfb4ahGZubbrNh1MnbEqyHFp87rIwQIZapyQLCaYpudXrP1biEpLOV3mMDvDJWCdX460hoOwQ3SkwipV3We/7w==
+"@sentry/core@9.23.0":
+  version "9.23.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-9.23.0.tgz#96a514cc9d8ac043dea0a4648ed1205c25ff5ae5"
+  integrity sha512-9846pn/BvASGgl7WsnKY4xry98WreP9ToeLfCQTQOf+pNfD/qNPn1/0xPInGni3LVMAXRtfHHMPm2Ghz255N7A==
 
-"@sentry/types@9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-9.11.0.tgz#4759f9f4469541c7b30db8e5426b42e384e1d449"
-  integrity sha512-WzVFkUTHja8IlEf5ssVBi0//TuhfEXVYQ21NlOoqIurclerEAFg2jEqmOdsWM0CWRp9PH10T0i+Eu8gl0aMudg==
+"@sentry/types@9.23.0":
+  version "9.23.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-9.23.0.tgz#53b92dbc37983eb9023cb4dfd37ec615b21e7f28"
+  integrity sha512-8iIb836hGE8rxc/qqoy/CHSBTZs80rLxGNogh98vpVnJkGeIJsYrj61YUKl68etSadCKS1aZ4nn9l9zakuywCA==
   dependencies:
-    "@sentry/core" "9.11.0"
+    "@sentry/core" "9.23.0"
 
 "@socket.io/component-emitter@~3.1.0":
   version "3.1.2"

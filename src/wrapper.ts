@@ -10,7 +10,6 @@ import type {
   User,
 } from '@sentry/core';
 import { logger } from '@sentry/core';
-
 import type { NativeDeviceContextsResponse } from './definitions';
 import { FilterNativeOptions } from './nativeOptions';
 import type { CapacitorOptions } from './options';

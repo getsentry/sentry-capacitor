@@ -1,5 +1,4 @@
 import type { Breadcrumb, Scope } from '@sentry/core';
-
 import { DEFAULT_BREADCRUMB_LEVEL } from './breadcrumb';
 import { fillTyped } from './utils/fill';
 import { convertToNormalizedObject } from './utils/normalize';

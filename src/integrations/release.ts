@@ -6,7 +6,6 @@ import type {
   EventHint,
   Integration,
 } from '@sentry/core';
-
 import { NATIVE } from '../wrapper';
 
 const INTEGRATION_NAME = 'Release';

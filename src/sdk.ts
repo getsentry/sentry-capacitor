@@ -2,7 +2,6 @@ import type { BrowserOptions } from '@sentry/browser';
 import { init as browserInit } from '@sentry/browser';
 import type { Integration } from '@sentry/core';
 import { getClient, getGlobalScope, getIntegrationsToSetup, getIsolationScope , logger } from '@sentry/core';
-
 import { getDefaultIntegrations } from './integrations/default';
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
 import { enableSyncToNative } from './scopeSync';
