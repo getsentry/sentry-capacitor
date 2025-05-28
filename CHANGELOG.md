@@ -8,6 +8,10 @@
 
 ## Unreleased
 
+### Break Change
+
+- Drop support for Capacitor 3, 4 and 5.
+
 ### Dependencies
 
 - Bump JavaScript SDKs from v9.0.0 to v9.11.0 ([#872](https://github.com/getsentry/sentry-capacitor/pull/872))
