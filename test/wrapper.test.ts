@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import type { Envelope, EventEnvelope, EventItem, SeverityLevel, TransportMakeRequestResponse } from '@sentry/core';
 import {createEnvelope, dropUndefinedKeys, logger} from '@sentry/core';
-
 import { utf8ToBytes } from '../src/vendor';
 import { NATIVE } from '../src/wrapper';
 
@@ -661,9 +660,9 @@ describe('Tests Native Wrapper', () => {
 
       expect(serializedData).toEqual(
         {
-          "stringData": "data",
-          "undefinedKey": undefined,
-          "valid": "true"
+          'stringData': 'data',
+          'undefinedKey': undefined,
+          'valid': 'true'
         });
     });
 
@@ -674,8 +673,8 @@ describe('Tests Native Wrapper', () => {
 
       expect(serializedData).toEqual(
         {
-          "stringData": "data",
-          "valid": "true"
+          'stringData': 'data',
+          'valid': 'true'
         });
     });
 
@@ -698,10 +697,10 @@ describe('Tests Native Wrapper', () => {
 
       expect(serializedData).toEqual(
         {
-          "stringData": "data",
-          "subData": "{\"data1\":1,\"data2\":2,\"data3\":{\"dataA\":\"A\",\"dataB\":0.9}}",
-          "undefinedKey": undefined,
-          "valid": "true"
+          'stringData': 'data',
+          'subData': '{"data1":1,"data2":2,"data3":{"dataA":"A","dataB":0.9}}',
+          'undefinedKey': undefined,
+          'valid': 'true'
         });
 
     });
@@ -714,9 +713,9 @@ describe('Tests Native Wrapper', () => {
 
       expect(serializedData).toEqual(
         {
-          "stringData": "data",
-          "subData": "{\"data1\":1,\"data2\":2,\"data3\":{\"dataA\":\"A\",\"dataB\":0.9}}",
-          "valid": "true"
+          'stringData': 'data',
+          'subData': '{"data1":1,"data2":2,"data3":{"dataA":"A","dataB":0.9}}',
+          'valid': 'true'
         });
     });
 

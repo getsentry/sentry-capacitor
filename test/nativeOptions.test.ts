@@ -1,7 +1,6 @@
 import { Capacitor } from '@capacitor/core';
 import type { StackParser } from '@sentry/core';
 import type { CapacitorOptions } from 'src';
-
 import { FilterNativeOptions } from '../src/nativeOptions';
 
 // Mock the Capacitor module

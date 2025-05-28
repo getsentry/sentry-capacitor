@@ -5,9 +5,9 @@ import {
 import type { BrowserClientOptions } from '@sentry/browser/types/client';
 import type { BrowserTransportOptions } from '@sentry/browser/types/transports/types';
 import type { Event, Transport } from '@sentry/core';
-
 import { NativeTransport } from '../../src/transports/native';
 import { NATIVE } from '../../src/wrapper';
+
 const EXAMPLE_DSN =
   'https://6890c2f6677340daa4804f8194804ea2@o19635.ingest.sentry.io/148053';
 
