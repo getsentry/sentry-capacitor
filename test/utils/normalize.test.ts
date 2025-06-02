@@ -1,5 +1,4 @@
 import * as SentryCore from '@sentry/core';
-
 import { enableSyncToNative } from '../../src/scopeSync';
 import { convertToNormalizedObject } from '../../src/utils/normalize';
 import { getDefaultTestClientOptions, TestClient } from '../mocks/client';

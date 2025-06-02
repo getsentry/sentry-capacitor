@@ -1,5 +1,4 @@
 import { Capacitor } from '@capacitor/core';
-
 import type { CapacitorOptions } from './options';
 
 /**
