@@ -10,7 +10,7 @@
 
 ### Break Change
 
-- Drop support for Capacitor 3, 4 and 5.
+- Drop support for Capacitor 3, 4 and 5. ([#907](https://github.com/getsentry/sentry-capacitor/pull/907))
 
 ### Dependencies
 
