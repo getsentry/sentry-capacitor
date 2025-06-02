@@ -3,7 +3,6 @@ jest.mock('../../src/utils/webViewUrl');
 import type { Exception } from '@sentry/browser';
 import { defaultStackParser, eventFromException } from '@sentry/browser';
 import type { Client, Event, EventHint, StackFrame, Stacktrace } from '@sentry/core';
-
 import { capacitorRewriteFramesIntegration } from '../../src/integrations/rewriteframes';
 import * as webViewUrl from '../../src/utils/webViewUrl';
 
@@ -384,12 +383,13 @@ describe('RewriteFrames', () => {
         in_app: true
       }
     ]])
+    // eslint-disable-next-line no-unexpected-multiline
     ('should parse Angular, Capacitor and Native errors %s', async (_, frame, expectedFrame) => {
 
       const error = { values: [{ stacktrace: { frames: [frame] } }] };
       const event = await processEvent({ exception: error }) as Event;
       const firstFrame = (firstStackTraceFromEvent(event) as Stacktrace).frames?.pop();
-      expect(firstFrame).toMatchObject(expectedFrame);;
+      expect(firstFrame).toMatchObject(expectedFrame);
     });
 
   it('should remove current server url from frame filename', async () => {
@@ -399,7 +399,7 @@ describe('RewriteFrames', () => {
     const error = { values: [{ stacktrace: { frames: [frame] } }] };
     const event = await processEvent({ exception: error }) as Event;
     const firstFrame = (firstStackTraceFromEvent(event) as Stacktrace).frames?.pop();
-    expect(firstFrame?.filename).toBe('/polyfills.js');;
+    expect(firstFrame?.filename).toBe('/polyfills.js');
   });
 
 });

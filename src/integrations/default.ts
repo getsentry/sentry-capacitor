@@ -1,5 +1,4 @@
 import type { Integration } from '@sentry/core';
-
 import type { CapacitorOptions } from '../options';
 import { deviceContextIntegration } from './devicecontext';
 import { eventOriginIntegration } from './eventorigin';

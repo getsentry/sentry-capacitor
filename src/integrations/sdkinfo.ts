@@ -1,6 +1,5 @@
 import type { Event, Integration, Package } from '@sentry/core';
 import { logger } from '@sentry/core';
-
 import { SDK_NAME, SDK_VERSION } from '../version';
 import { NATIVE } from '../wrapper';
 
