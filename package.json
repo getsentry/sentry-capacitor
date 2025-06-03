@@ -62,9 +62,9 @@
     "@sentry/types": "9.23.0"
   },
   "devDependencies": {
-    "@capacitor/android": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
-    "@capacitor/core": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0  || ^7.0.0",
-    "@capacitor/ios": "^3.0.1 || ^4.0.0 || ^5.0.0 || ^6.0.0  || ^7.0.0",
+    "@capacitor/android": "^6.0.0 || ^7.0.0",
+    "@capacitor/core": "^6.0.0  || ^7.0.0",
+    "@capacitor/ios": "^6.0.0  || ^7.0.0",
     "@ionic/prettier-config": "^1.0.0",
     "@sentry-internal/eslint-config-sdk": "9.23.0",
     "@sentry-internal/eslint-plugin-sdk": "9.23.0",
