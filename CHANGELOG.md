@@ -8,20 +8,25 @@
 
 ## Unreleased
 
+### Features
+
+- Added support for Angular 20 [#910](https://github.com/getsentry/sentry-capacitor/pull/910)
+
+### Break Change
+
+- Drop support for Capacitor 3, 4 and 5. ([#907](https://github.com/getsentry/sentry-capacitor/pull/907))
+
 ### Dependencies
 
-- Bump JavaScript SDKs from v9.0.0 to v9.11.0 ([#872](https://github.com/getsentry/sentry-capacitor/pull/872))
-  - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.11.0/CHANGELOG.md)
-  - [diff](https://github.com/getsentry/sentry-javascript/compare/9.0.0...9.11.0)
 - Bump Android SDK from v7.16.0 to v8.13.2 ([#889](https://github.com/getsentry/sentry-capacitor/pull/889), [#894](https://github.com/getsentry/sentry-capacitor/pull/894))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8132)
   - [diff](https://github.com/getsentry/sentry-java/compare/7.16.0...8.13.2)
 - Bump Cocoa SDK from v8.48.0 to v8.51.1 ([#876](https://github.com/getsentry/sentry-capacitor/pull/876), [#895](https://github.com/getsentry/sentry-capacitor/pull/895))
   - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8511)
   - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.48.0...8.51.1)
-- Bump JavaScript Sibling SDKs from v9.11.0 to v9.23.0 ([#814](https://github.com/getsentry/sentry-capacitor/pull/814))
-  - [changelog](https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#9230)
-  - [diff](https://github.com/getsentry/sentry-javascript/compare/9.11.0...9.23.0)
+- Bump JavaScript SDKs from v9.0.0 to v9.27.0 ([#814](https://github.com/getsentry/sentry-capacitor/pull/814), [#910](https://github.com/getsentry/sentry-capacitor/pull/910))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#9270)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/9.11.0...9.27.0)
 
 ## 2.0.0-beta.1
 
