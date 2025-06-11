@@ -434,13 +434,6 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.24.7"
 
-"@babel/runtime@^7.21.0":
-  version "7.24.5"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.24.5.tgz#230946857c053a36ccc66e1dd03b17dd0c4ed02c"
-  integrity sha512-Nms86NXrsaeU9vbBJKni6gXiEXZ4CVpYVzEjDH9Sb8vmZ3UljyA1GSOJl/6LGPO8EHLuSF9H+IxNXHPX8QHJ4g==
-  dependencies:
-    regenerator-runtime "^0.14.0"
-
 "@babel/template@^7.22.15", "@babel/template@^7.3.3":
   version "7.22.15"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.22.15.tgz#09576efc3830f0430f4548ef971dde1350ef2f38"
@@ -1983,17 +1976,15 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-concurrently@^8.2.2:
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/concurrently/-/concurrently-8.2.2.tgz#353141985c198cfa5e4a3ef90082c336b5851784"
-  integrity sha512-1dP4gpXFhei8IOtlXRE/T/4H88ElHgTiUzh71YUmtjTEHMSRS2Z/fgOxHSxxusGHogsRfxNq1vyAwxSC+EVyDg==
+concurrently@^9.1.2:
+  version "9.1.2"
+  resolved "https://registry.yarnpkg.com/concurrently/-/concurrently-9.1.2.tgz#22d9109296961eaee773e12bfb1ce9a66bc9836c"
+  integrity sha512-H9MWcoPsYddwbOGM6difjVwVZHl63nwMEwDJG/L7VGtuaJhb12h2caPG2tVPWs7emuYix252iGfqOyrz1GczTQ==
   dependencies:
     chalk "^4.1.2"
-    date-fns "^2.30.0"
     lodash "^4.17.21"
     rxjs "^7.8.1"
     shell-quote "^1.8.1"
-    spawn-command "0.0.2"
     supports-color "^8.1.1"
     tree-kill "^1.2.2"
     yargs "^17.7.2"
@@ -2034,13 +2025,6 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
-
-date-fns@^2.30.0:
-  version "2.30.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.30.0.tgz#f367e644839ff57894ec6ac480de40cae4b0f4d0"
-  integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==
-  dependencies:
-    "@babel/runtime" "^7.21.0"
 
 debug@^3.2.7:
   version "3.2.7"
@@ -4218,11 +4202,6 @@ recast@^0.23.4:
     source-map "~0.6.1"
     tslib "^2.0.1"
 
-regenerator-runtime@^0.14.0:
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.14.1.tgz#356ade10263f685dda125100cd862c1db895327f"
-  integrity sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==
-
 regexp.prototype.flags@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/regexp.prototype.flags/-/regexp.prototype.flags-1.5.1.tgz#90ce989138db209f81492edd734183ce99f9677e"
@@ -4486,11 +4465,6 @@ source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
-
-spawn-command@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/spawn-command/-/spawn-command-0.0.2.tgz#9544e1a43ca045f8531aac1a48cb29bdae62338e"
-  integrity sha512-zC8zGoGkmc8J9ndvml8Xksr1Amk9qBujgbF0JAIWO7kXr43w0h/0GJNM/Vustixu+YE8N/MTrQ7N31FvHUACxQ==
 
 spdx-exceptions@^2.1.0:
   version "2.3.0"
