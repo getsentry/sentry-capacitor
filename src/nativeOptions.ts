@@ -1,6 +1,10 @@
 import { Capacitor } from '@capacitor/core';
 import type { CapacitorOptions } from './options';
 
+interface CapacitorLoggerOptions {
+  enableLogs: boolean
+}
+
 /**
  * Create a new CapacitorOption without any parameter that could crash the bridge (in short, not being a string, number or boolean).
  * some of the excluded parameters are: Integrations, app, vue, beforeSend, beforeBreadcrumb, integrations, defaultIntegrations, transport, tracesSampler.
@@ -36,6 +40,7 @@ export function FilterNativeOptions(
     // tunnel: options.tunnel: Only handled on the JavaScript Layer.
     enableCaptureFailedRequests: options.enableCaptureFailedRequests,
     ...iOSParameters(options),
+    ...LogParameters(options)
   };
 }
 
@@ -46,4 +51,12 @@ function iOSParameters(options: CapacitorOptions): CapacitorOptions {
       appHangTimeoutInterval: options.appHangTimeoutInterval,
     }
     : {};
+}
+
+function LogParameters(options: CapacitorOptions): CapacitorLoggerOptions | undefined {
+  // Only Web and Android implements log parameters initialization.
+  if (options._experiments?.enableLogs && Capacitor.getPlatform() === 'android') {
+    return { enableLogs: options._experiments?.enableLogs };
+  }
+  return undefined;
 }

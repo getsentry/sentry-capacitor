@@ -38,6 +38,16 @@ export class Tab2Page {
     );
   }
 
+  public captureLog(): void {
+    Sentry.logger.info('hello world capacitor');
+    Sentry.logger.warn('hello world capacitor');
+    Sentry.logger.error('hello world capacitor');
+    Sentry.logger.fatal('hello world capacitor', {
+      customAttribute: 1234,
+      complexAttribute: { logged: true}
+    });
+  }
+
   public close(): void {
     Sentry.close();
   }
