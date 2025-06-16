@@ -10,7 +10,7 @@
 
 #### Features
 
-- Add experimental support for Log tracing ([#??](https://github.com/getsentry/sentry-capacitor/pull/???))
+- Add experimental support for Log tracing ([#920](https://github.com/getsentry/sentry-capacitor/pull/920))
 
 To enable it add the following code to your Sentry Options:
 
