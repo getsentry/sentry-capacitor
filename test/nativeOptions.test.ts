@@ -32,7 +32,7 @@ describe('nativeOptions', () => {
   test('invalid types not included', async () => {
     const nativeOptions = FilterNativeOptions(
       {
-        _experiments: [true],
+        _experiments: { key: true },
         _metadata: {},
         allowUrls: ['test'],
         attachStacktrace: true,
@@ -89,6 +89,7 @@ describe('nativeOptions', () => {
       // @ts-ignore allowed for testing.
       (typeof nativeOptions[key]) !== undefined)
 
+    // Since all parameters were invalid we can expect for an empty object.
     expect(keysFilter.toString()).toBe('');
   });
 
@@ -120,4 +121,29 @@ describe('nativeOptions', () => {
     expect(nativeOptions).toEqual(expectedOptions);
   });
 
+  test('Set logger on Android', async () => {
+    (Capacitor.getPlatform as jest.Mock).mockReturnValue('android');
+
+    const filteredOptions: CapacitorOptions = {
+      _experiments: { enableLogs : true}
+    };
+    const expectedOptions = {
+      // @ts-ignore
+      enableLogs : true
+    };
+
+    const nativeOptions = FilterNativeOptions(filteredOptions);
+    expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
+  });
+
+  test('Ignore logger on iOS', async () => {
+    (Capacitor.getPlatform as jest.Mock).mockReturnValue('ios');
+
+    const filteredOptions: CapacitorOptions = {
+      _experiments: { enableLogs : true}
+    };
+
+    const nativeOptions = FilterNativeOptions(filteredOptions);
+    expect(nativeOptions).toEqual({});
+  });
 });

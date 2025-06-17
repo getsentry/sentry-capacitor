@@ -193,7 +193,7 @@ describe('Tests Native Wrapper', () => {
       });
       const expectedItem = JSON.stringify({
         type: 'event',
-        content_type: 'application/json',
+        content_type: 'application/vnd.sentry.items.log+json',
         length: expectedNativeLength,
       });
       const expectedPayload = JSON.stringify({
@@ -250,7 +250,7 @@ describe('Tests Native Wrapper', () => {
       });
       const expectedItem = JSON.stringify({
         type: 'event',
-        content_type: 'application/json',
+        content_type: 'application/vnd.sentry.items.log+json',
         length: 116,
       });
       const expectedPayload = JSON.stringify({
@@ -324,7 +324,7 @@ describe('Tests Native Wrapper', () => {
       });
       const expectedItem = JSON.stringify({
         type: 'event',
-        content_type: 'application/json',
+        content_type: 'application/vnd.sentry.items.log+json',
         length: 172,
       });
       const expectedPayload = JSON.stringify({
@@ -381,7 +381,7 @@ describe('Tests Native Wrapper', () => {
       });
       const expectedItem = JSON.stringify({
         type: 'event',
-        content_type: 'application/json',
+        content_type: 'application/vnd.sentry.items.log+json',
         length: 172,
       });
       const expectedPayload = JSON.stringify({

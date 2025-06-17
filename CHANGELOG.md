@@ -8,11 +8,44 @@
 
 ## Unreleased
 
+#### Features
+
+- Add experimental support for Log tracing ([#920](https://github.com/getsentry/sentry-capacitor/pull/920))
+
+To enable it add the following code to your Sentry Options:
+
+```typescript
+Sentry.init({
+  // other options...
+  _experiments: {
+    enableLogs: true,
+  },
+});
+```
+
+You can also filter the logs being collected by adding beforeSendLogs into `_experiments`
+
+```typescript
+Sentry.init({
+  // other options...
+  _experiments: {
+    enableLogs: true,
+    beforeSendLog: log => {
+      return log;
+    },
+  },
+});
+```
+
 ### Dependencies
 
 - Bump Android SDK from v8.13.2 to v8.13.3 ([#919](https://github.com/getsentry/sentry-capacitor/pull/919))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8133)
   - [diff](https://github.com/getsentry/sentry-java/compare/8.13.2...8.13.3)
+
+### Self Hosted
+
+- It is recommended to use Sentry Self Hosted version `25.2.0` or new for Sentry Capacitor V2 or newer
 
 ## 2.0.0-beta.2
 

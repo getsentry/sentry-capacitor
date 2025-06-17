@@ -48,7 +48,7 @@ export {
   startIdleSpan,
 } from '@sentry/core';
 
-export { replayIntegration, browserTracingIntegration, registerSpanErrorInstrumentation } from '@sentry/browser';
+export { replayIntegration, browserTracingIntegration, registerSpanErrorInstrumentation, logger } from '@sentry/browser';
 
 export { SDK_NAME, SDK_VERSION } from './version';
 export type { CapacitorOptions } from './options';

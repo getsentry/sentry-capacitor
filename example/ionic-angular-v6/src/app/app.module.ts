@@ -44,6 +44,12 @@ Sentry.init(
     // If the entire session is not sampled, use the below sample rate to sample
     // sessions when an error occurs.
     replaysOnErrorSampleRate: 1.0,
+    _experiments: {
+      enableLogs: true,
+      beforeSendLog: (log) => {
+        return log;
+      }
+    },
   },
   sentryAngularInit,
 );
