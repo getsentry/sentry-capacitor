@@ -42,6 +42,9 @@ Sentry.init({
 - Bump Android SDK from v8.13.2 to v8.13.3 ([#919](https://github.com/getsentry/sentry-capacitor/pull/919))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8133)
   - [diff](https://github.com/getsentry/sentry-java/compare/8.13.2...8.13.3)
+- Bump Cocoa SDK from v8.51.1 to v8.52.1 ([#914](https://github.com/getsentry/sentry-capacitor/pull/914))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#8521)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.51.1...8.52.1)
 
 ### Self Hosted
 
