@@ -14,7 +14,7 @@
 
 ### Dependencies
 
-- Bump Android SDK from v7.16.0 to v7.22.5 ([#752](https://github.com/getsentry/sentry-capacitor/pull/752))
+- Bump Android SDK from v7.16.0 to v7.22.5 ([#930](https://github.com/getsentry/sentry-capacitor/pull/930))
   - [changelog](https://github.com/getsentry/sentry-java/blob/7.22.5/CHANGELOG.md)
   - [diff](https://github.com/getsentry/sentry-java/compare/7.16.0...7.22.5)
 
