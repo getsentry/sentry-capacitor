@@ -6,7 +6,7 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
-## Unreleased
+## 1.5.0
 
 ### Fixes
 
