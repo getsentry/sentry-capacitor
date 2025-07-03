@@ -6,6 +6,18 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- Google Play’s 16 KB page size compatibility requirement ([#930](https://github.com/getsentry/sentry-capacitor/pull/930))
+
+### Dependencies
+
+- Bump Android SDK from v7.16.0 to v7.22.5 ([#752](https://github.com/getsentry/sentry-capacitor/pull/752))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/7.22.5/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-java/compare/7.16.0...7.22.5)
+
 ## 1.4.0
 
 ### Dependencies
