@@ -6,7 +6,7 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
-## Unreleased
+## 2.0.0
 
 #### Features
 
@@ -50,7 +50,6 @@ Sentry.init({
 - Bump Android SDK from v7.16.0 to v8.13.3
 - Bump Cocoa SDK from v8.48.0 to v8.51.1
 - Bump JavaScript SDKs from v8.55.0 to v9.27.0
-
 
 ## 2.0.0-beta.3
 
