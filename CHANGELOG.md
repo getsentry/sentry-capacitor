@@ -6,6 +6,52 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+#### Features
+
+- Added support for Angular 20 [#910](https://github.com/getsentry/sentry-capacitor/pull/910)
+- Add experimental support for Log tracing ([#920](https://github.com/getsentry/sentry-capacitor/pull/920))
+
+To enable it add the following code to your Sentry Options:
+
+```typescript
+Sentry.init({
+  // other options...
+  _experiments: {
+    enableLogs: true,
+  },
+});
+```
+
+You can also filter the logs being collected by adding beforeSendLogs into `_experiments`
+
+````typescript
+Sentry.init({
+  // other options...
+  _experiments: {
+    enableLogs: true,
+    beforeSendLog: log => {
+      return log;
+    },
+  },
+});
+
+### Break Change
+
+- Drop support for Capacitor 3, 4 and 5. ([#907](https://github.com/getsentry/sentry-capacitor/pull/907))
+
+### Self Hosted
+
+- It is recommended to use Sentry Self Hosted version `25.2.0` or new for Sentry Capacitor V2 or newer
+
+### Dependencies
+
+- Bump Android SDK from v7.16.0 to v8.13.3
+- Bump Cocoa SDK from v8.48.0 to v8.51.1
+- Bump JavaScript SDKs from v8.55.0 to v9.27.0
+
+
 ## 2.0.0-beta.3
 
 #### Features
@@ -21,7 +67,7 @@ Sentry.init({
     enableLogs: true,
   },
 });
-```
+````
 
 You can also filter the logs being collected by adding beforeSendLogs into `_experiments`
 
