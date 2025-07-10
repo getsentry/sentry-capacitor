@@ -32,7 +32,7 @@ Sentry.init({
 
 You can also filter the logs being collected by adding beforeSendLogs into `_experiments`
 
-````typescript
+```typescript
 Sentry.init({
   // other options...
   _experiments: {
@@ -42,6 +42,7 @@ Sentry.init({
     },
   },
 });
+```
 
 ### Breaking Change
 
