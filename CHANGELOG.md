@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- TypeScript build with strict rules couldn't find BrowserTransportOptions type ([#934](https://github.com/getsentry/sentry-capacitor/pull/934))
+
 ## 2.0.0
 
 #### Features
