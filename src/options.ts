@@ -1,6 +1,8 @@
-import type { BrowserOptions } from '@sentry/browser';
-import type { BrowserTransportOptions } from '@sentry/browser/build/npm/types/transports/types'; // Path changed on 8.13.0
+import type { BrowserOptions, makeFetchTransport } from '@sentry/browser';
 import type { ClientOptions } from '@sentry/core';
+
+// Direct reference of BrowserTransportOptions is not compatible with strict builds of latest versions of Typescript 5.
+type BrowserTransportOptions = Parameters<typeof makeFetchTransport>[0];
 
 export interface BaseCapacitorOptions {
   /**
