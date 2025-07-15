@@ -2,10 +2,10 @@ PODS:
   - Capacitor (7.0.1):
     - CapacitorCordova
   - CapacitorCordova (7.0.1)
-  - Sentry/HybridSDK (8.51.1)
-  - "SentryCapacitor (2.0.0-beta.1+009a2329)":
+  - Sentry/HybridSDK (8.53.2)
+  - "SentryCapacitor (2.0.0+116fb98b)":
     - Capacitor
-    - Sentry/HybridSDK (= 8.51.1)
+    - Sentry/HybridSDK (= 8.53.2)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -27,8 +27,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Capacitor: 23fff43571a4d1e3ee7d67b5a3588c6e757c2913
   CapacitorCordova: 63d476958d5022d76f197031e8b7ea3519988c64
-  Sentry: d950c807ffb8e966ebf019b546505a144d35d439
-  SentryCapacitor: b819ba0838b31f8905fe1e606f94a9d098a16ceb
+  Sentry: 59993bffde4a1ac297ba6d268dc4bbce068d7c1b
+  SentryCapacitor: a08f44d64511f87cb05391f48d9e6722bc03d88b
 
 PODFILE CHECKSUM: e512db45f101b9092c98513e2bceba3944192dde
 
