@@ -87,6 +87,7 @@
     "dist/",
     "ios/",
     "android/",
+    "Package.swift",
     "SentryCapacitor.podspec",
     "scripts/check-siblings.js"
   ],
