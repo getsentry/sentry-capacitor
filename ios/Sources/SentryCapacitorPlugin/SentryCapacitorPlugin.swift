@@ -2,12 +2,35 @@ import Foundation
 import Capacitor
 import Sentry
 
+// Keep compatibility with CocoaPods.
+#if SWIFT_PACKAGE
+import Sentry._Hybrid
+#endif
+
 /**
  * Please read the Capacitor iOS Plugin Development Guide
  * here: https://capacitorjs.com/docs/plugins/ios
  */
-@objc(SentryCapacitor)
-public class SentryCapacitor: CAPPlugin {
+@objc(SentryCapacitorPlugin)
+public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "SentryCapacitorPlugin"
+    public let jsName = "SentryCapacitor"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "initNativeSdk",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "captureEnvelope",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "fetchNativeRelease",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "fetchNativeSdkInfo",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "fetchNativeDeviceContexts",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getStringBytesLength",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setTag",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setExtra",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setUser",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "addBreadcrumb",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "clearBreadcrumbs",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "closeNativeSdk",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setContext",returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "crash", returnType:CAPPluginReturnPromise),
+    ]
 
     private let nativeSdkName = "sentry.cocoa.capacitor";
 
