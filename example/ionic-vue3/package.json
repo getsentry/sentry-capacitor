@@ -49,5 +49,8 @@
     "vitest": "^0.34.6",
     "vue-tsc": "^1.0.24"
   },
+  "resolutions": {
+    "form-data": "4.0.4"
+  },
   "description": "Sentry Capacitor Vue3 sample"
 }

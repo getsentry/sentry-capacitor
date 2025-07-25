@@ -83,6 +83,10 @@
     "ts-jest": "^29.1.1",
     "typescript": "5.0.4"
   },
+  "resolutions": {
+    "form-data": "4.0.4"
+  },
+
   "files": [
     "dist/",
     "ios/",
