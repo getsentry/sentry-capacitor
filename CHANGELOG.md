@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Features
+
+- Support for Swift Package Manager  ([#938](https://github.com/getsentry/sentry-capacitor/pull/938))
+
 ## 2.1.0
 
 ### Fixes
