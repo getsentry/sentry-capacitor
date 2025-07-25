@@ -12,6 +12,12 @@
 
 - Support for Swift Package Manager  ([#938](https://github.com/getsentry/sentry-capacitor/pull/938))
 
+### Dependencies
+
+- Bump JavaScript Sibling SDKs from v9.38.0 to v9.42.0 ([#936](https://github.com/getsentry/sentry-capacitor/pull/936))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#9420)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/9.38.0...9.42.0)
+
 ## 2.1.0
 
 ### Fixes
