@@ -1137,10 +1137,10 @@
   dependencies:
     "@sentry/types" "7.120.3"
 
-"@sentry/wizard@4.9.0":
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/@sentry/wizard/-/wizard-4.9.0.tgz#d10d222d0b44aed9059f6d6517f4b779b1199de3"
-  integrity sha512-dxvhBolrCJGZ8e0Sv/4xio5ELXaNSwv+hUVbA22HabRzq7pkHMnmE9EHzCQzRYswoH+Yd2FiD1Nu6zUABhfJfw==
+"@sentry/wizard@6.1.2":
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@sentry/wizard/-/wizard-6.1.2.tgz#f1a86e004b608d5ec06db969fde924e342c389a2"
+  integrity sha512-H7gBVFUjYXcXe3CIOQIP43mnSM5jTHWj0QyoudMhKzlJUg2vcsrelQop3Fz6oBGzGrjCg29QlDPRHGYP5o4Ppg==
   dependencies:
     "@clack/core" "^0.3.4"
     "@clack/prompts" "0.7.0"
