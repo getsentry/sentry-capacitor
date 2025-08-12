@@ -1,9 +1,17 @@
-import type { Event, Integration, Package } from '@sentry/core';
+import type { Event, Integration, Package, SdkInfo } from '@sentry/core';
 import { logger } from '@sentry/core';
 import { SDK_NAME, SDK_VERSION } from '../version';
 import { NATIVE } from '../wrapper';
 
+interface IpPatchedSdkInfo extends SdkInfo {
+  settings?: {
+    infer_ip?: 'auto' | 'never';
+  };
+}
+
 const INTEGRATION_NAME = 'SdkInfo';
+
+
 
 let NativeSdkPackage: Package | null = null;
 
@@ -11,6 +19,18 @@ export const sdkInfoIntegration = (): Integration => {
   return {
     name: INTEGRATION_NAME,
     processEvent: processEvent,
+    setup(client) {
+      const options = client.getOptions();
+    const metadata = options._metadata ?? {};
+    const opts = (metadata?.sdk ?? {}) as IpPatchedSdkInfo;
+    opts.settings = {
+      infer_ip: options.sendDefaultPii ? 'auto' : 'never',
+      // purposefully allowing already passed settings to override the default
+      ...opts.settings
+    };
+    options._metadata = metadata;
+
+    },
   };
 };
 
