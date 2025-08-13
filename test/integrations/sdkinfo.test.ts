@@ -1,4 +1,4 @@
-import type { Event, EventHint, Package } from '@sentry/core';
+import type {  Client,Event,  EventHint,  Package  } from '@sentry/core';
 import { SDK_NAME, SDK_VERSION } from '../../src/';
 import { sdkInfoIntegration } from '../../src/integrations';
 import { NATIVE } from '../../src/wrapper';
@@ -30,6 +30,7 @@ jest.mock('../../src/wrapper', () => {
 
 describe('Sdk Info', () => {
   afterEach(() => {
+
     NATIVE.platform = 'ios';
   });
 
@@ -76,9 +77,48 @@ describe('Sdk Info', () => {
     expect(processedEvent?.sdk?.name).toEqual(SDK_NAME);
     expect(processedEvent?.sdk?.version).toEqual(SDK_VERSION);
   });
+  it('Add none setting when defaultIp is undefined', async () => {
+    mockedFetchNativeSdkInfo = jest.fn().mockResolvedValue(null);
+    const mockEvent: Event = {};
+    const processedEvent = await processEvent(mockEvent, {}, undefined);
+
+    expect(processedEvent?.sdk?.name).toEqual(SDK_NAME);
+    expect(processedEvent?.sdk?.version).toEqual(SDK_VERSION);
+    // @ts-expect-error injected type.
+    expect(processedEvent?.sdk?.settings?.infer_ip).toEqual('never');
+  });
+
+  it('Add none setting when defaultIp is false', async () => {
+    mockedFetchNativeSdkInfo = jest.fn().mockResolvedValue(null);
+    const mockEvent: Event = {};
+    const processedEvent = await processEvent(mockEvent, {}, false);
+
+    expect(processedEvent?.sdk?.name).toEqual(SDK_NAME);
+    expect(processedEvent?.sdk?.version).toEqual(SDK_VERSION);
+    // @ts-expect-error injected type.
+    expect(processedEvent?.sdk?.settings?.infer_ip).toEqual('never');
+  });
+
+  it('Add auto setting when defaultIp is true', async () => {
+    mockedFetchNativeSdkInfo = jest.fn().mockResolvedValue(null);
+    const mockEvent: Event = {};
+    const processedEvent = await processEvent(mockEvent, {}, true);
+
+    expect(processedEvent?.sdk?.name).toEqual(SDK_NAME);
+    expect(processedEvent?.sdk?.version).toEqual(SDK_VERSION);
+    // @ts-expect-error injected type.
+    expect(processedEvent?.sdk?.settings?.infer_ip).toEqual('auto');
+  });
 });
 
-function processEvent(mockedEvent: Event, mockedHint: EventHint = {}): Event | null | PromiseLike<Event | null> {
+function processEvent(mockedEvent: Event, mockedHint: EventHint = {}, sendDefaultPii?: boolean): Event | null | PromiseLike<Event | null> {
   const integration = sdkInfoIntegration();
+  if (sendDefaultPii != null) {
+    const mockClient: jest.Mocked<Client> = {
+      getOptions: jest.fn().mockReturnValue({ sendDefaultPii: sendDefaultPii }),
+    } as any;
+    integration.setup!(mockClient);
+
+  }
   return integration.processEvent!(mockedEvent, mockedHint, {} as any);
 }

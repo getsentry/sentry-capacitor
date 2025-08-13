@@ -3,6 +3,7 @@ import { logger } from '@sentry/core';
 import { SDK_NAME, SDK_VERSION } from '../version';
 import { NATIVE } from '../wrapper';
 
+// TODO: Remove this on JS V10.
 interface IpPatchedSdkInfo extends SdkInfo {
   settings?: {
     infer_ip?: 'auto' | 'never';
@@ -11,9 +12,8 @@ interface IpPatchedSdkInfo extends SdkInfo {
 
 const INTEGRATION_NAME = 'SdkInfo';
 
-
-
 let NativeSdkPackage: Package | null = null;
+let DefaultPii: boolean | undefined = undefined;
 
 export const sdkInfoIntegration = (): Integration => {
   return {
@@ -21,15 +21,7 @@ export const sdkInfoIntegration = (): Integration => {
     processEvent: processEvent,
     setup(client) {
       const options = client.getOptions();
-    const metadata = options._metadata ?? {};
-    const opts = (metadata?.sdk ?? {}) as IpPatchedSdkInfo;
-    opts.settings = {
-      infer_ip: options.sendDefaultPii ? 'auto' : 'never',
-      // purposefully allowing already passed settings to override the default
-      ...opts.settings
-    };
-    options._metadata = metadata;
-
+      DefaultPii = options.sendDefaultPii;
     },
   };
 };
@@ -49,18 +41,27 @@ async function processEvent(event: Event): Promise<Event> {
   }
 
   event.platform = event.platform || 'javascript';
-  event.sdk = event.sdk || {};
-  event.sdk.name = event.sdk.name || SDK_NAME;
-  event.sdk.version = event.sdk.version || SDK_VERSION;
-  event.sdk.packages = [
+  const sdk = (event.sdk || {}) as IpPatchedSdkInfo;
+  sdk.name = sdk.name || SDK_NAME;
+  sdk.version = sdk.version || SDK_VERSION;
+  sdk.packages = [
     // default packages are added by baseclient and should not be added here
-    ...(event.sdk.packages || []),
+    ...(sdk.packages || []),
     ...((NativeSdkPackage && [NativeSdkPackage]) || []),
     {
       name: 'npm:@sentry/capacitor',
       version: SDK_VERSION,
     },
   ];
+
+  // Patch missing infer_ip.
+  sdk.settings = {
+    infer_ip: DefaultPii ? 'auto' : 'never',
+    // purposefully allowing already passed settings to override the default
+    ...sdk.settings
+  };
+
+  event.sdk = sdk;
 
   return event;
 }
