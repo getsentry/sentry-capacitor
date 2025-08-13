@@ -22,9 +22,16 @@ export const sdkInfoIntegration = (): Integration => {
     setup(client) {
       const options = client.getOptions();
       DefaultPii = options.sendDefaultPii;
-    },
+      if (DefaultPii) {
+        client.on('beforeSendEvent', (event => {
+          if (event.user?.ip_address === '{{auto}}') {
+            delete event.user.ip_address;
+          }
+        }));
+      }
+    }
   };
-};
+}
 
 async function processEvent(event: Event): Promise<Event> {
   // The native SDK info package here is only used on iOS as `beforeSend` is not called on `captureEnvelope`.

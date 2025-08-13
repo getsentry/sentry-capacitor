@@ -109,6 +109,46 @@ describe('Sdk Info', () => {
     // @ts-expect-error injected type.
     expect(processedEvent?.sdk?.settings?.infer_ip).toEqual('auto');
   });
+
+  it('removes ip_address if it is "{{auto}}"', () => {
+    const mockHandler = jest.fn();
+
+    const client = {
+      getOptions: () => ({ sendDefaultPii: true }),
+      on: (eventName: string, cb: (event: any) => void) => {
+        if (eventName === 'beforeSendEvent') {
+          mockHandler.mockImplementation(cb);
+        }
+      }
+    };
+
+    sdkInfoIntegration().setup!(client as any);
+
+    const testEvent = { user: { ip_address: '{{auto}}' } };
+    mockHandler(testEvent);
+
+    expect(testEvent.user.ip_address).toBeUndefined();
+  });
+
+  it('keeps ip_address if it is not "{{auto}}"', () => {
+    const mockHandler = jest.fn();
+
+    const client = {
+      getOptions: () => ({ sendDefaultPii: true }),
+      on: (eventName: string, cb: (event: any) => void) => {
+        if (eventName === 'beforeSendEvent') {
+          mockHandler.mockImplementation(cb);
+        }
+      }
+    };
+
+    sdkInfoIntegration().setup!(client as any);
+
+    const testEvent = { user: { ip_address: '1.2.3.4' } };
+    mockHandler(testEvent);
+
+    expect(testEvent.user.ip_address).toBe('1.2.3.4');
+  });
 });
 
 function processEvent(mockedEvent: Event, mockedHint: EventHint = {}, sendDefaultPii?: boolean): Event | null | PromiseLike<Event | null> {
@@ -116,6 +156,7 @@ function processEvent(mockedEvent: Event, mockedHint: EventHint = {}, sendDefaul
   if (sendDefaultPii != null) {
     const mockClient: jest.Mocked<Client> = {
       getOptions: jest.fn().mockReturnValue({ sendDefaultPii: sendDefaultPii }),
+      on: jest.fn(),
     } as any;
     integration.setup!(mockClient);
 
