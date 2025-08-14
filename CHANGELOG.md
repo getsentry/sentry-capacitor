@@ -8,9 +8,25 @@
 
 ## Unreleased
 
+### Important Changes
+
+- **fix(browser): Ensure IP address is only inferred by Relay if `sendDefaultPii` is `true`** ([#957](https://github.com/getsentry/sentry-capacitor/pull/957))
+
+This release includes a fix for a [behaviour change](https://docs.sentry.io/platforms/javascript/migration/v8-to-v9/#behavior-changes)
+that was originally introduced with v9 of the JavaScript SDK: User IP Addresses should only be added to Sentry events automatically,
+if `sendDefaultPii` was set to `true`.
+
+However, the change in v9 required further internal adjustment, which should have been included in v10 of the SDK.
+To avoid making a major bump, the fix was patched on the current version and not by bumping to V10.
+There is _no API_ breakage involved and hence it is safe to update.
+However, after updating the SDK, events (errors, traces, replays, etc.) sent from the browser, will only include
+user IP addresses, if you set `sendDefaultPii: true` in your `Sentry.init` options.
+
+We apologize for any inconvenience caused!
+
 ### Features
 
-- Support for Swift Package Manager  ([#938](https://github.com/getsentry/sentry-capacitor/pull/938))
+- Support for Swift Package Manager ([#938](https://github.com/getsentry/sentry-capacitor/pull/938))
 
 ### Dependencies
 
@@ -97,7 +113,7 @@ Sentry.init({
     enableLogs: true,
   },
 });
-````
+```
 
 You can also filter the logs being collected by adding beforeSendLogs into `_experiments`
 

@@ -1,18 +1,37 @@
-import type { Event, Integration, Package } from '@sentry/core';
+import type { Event, Integration, Package, SdkInfo } from '@sentry/core';
 import { logger } from '@sentry/core';
 import { SDK_NAME, SDK_VERSION } from '../version';
 import { NATIVE } from '../wrapper';
 
+// TODO: Remove this on JS V10.
+interface IpPatchedSdkInfo extends SdkInfo {
+  settings?: {
+    infer_ip?: 'auto' | 'never';
+  };
+}
+
 const INTEGRATION_NAME = 'SdkInfo';
 
 let NativeSdkPackage: Package | null = null;
+let DefaultPii: boolean | undefined = undefined;
 
 export const sdkInfoIntegration = (): Integration => {
   return {
     name: INTEGRATION_NAME,
     processEvent: processEvent,
+    setup(client) {
+      const options = client.getOptions();
+      DefaultPii = options.sendDefaultPii;
+      if (DefaultPii) {
+        client.on('beforeSendEvent', (event => {
+          if (event.user?.ip_address === '{{auto}}') {
+            delete event.user.ip_address;
+          }
+        }));
+      }
+    }
   };
-};
+}
 
 async function processEvent(event: Event): Promise<Event> {
   // The native SDK info package here is only used on iOS as `beforeSend` is not called on `captureEnvelope`.
@@ -29,18 +48,27 @@ async function processEvent(event: Event): Promise<Event> {
   }
 
   event.platform = event.platform || 'javascript';
-  event.sdk = event.sdk || {};
-  event.sdk.name = event.sdk.name || SDK_NAME;
-  event.sdk.version = event.sdk.version || SDK_VERSION;
-  event.sdk.packages = [
+  const sdk = (event.sdk || {}) as IpPatchedSdkInfo;
+  sdk.name = sdk.name || SDK_NAME;
+  sdk.version = sdk.version || SDK_VERSION;
+  sdk.packages = [
     // default packages are added by baseclient and should not be added here
-    ...(event.sdk.packages || []),
+    ...(sdk.packages || []),
     ...((NativeSdkPackage && [NativeSdkPackage]) || []),
     {
       name: 'npm:@sentry/capacitor',
       version: SDK_VERSION,
     },
   ];
+
+  // Patch missing infer_ip.
+  sdk.settings = {
+    infer_ip: DefaultPii ? 'auto' : 'never',
+    // purposefully allowing already passed settings to override the default
+    ...sdk.settings
+  };
+
+  event.sdk = sdk;
 
   return event;
 }
