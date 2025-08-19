@@ -2,32 +2,15 @@
 import type { Envelope, EventEnvelope, EventItem, SeverityLevel, TransportMakeRequestResponse } from '@sentry/core';
 import {createEnvelope, dropUndefinedKeys, logger} from '@sentry/core';
 import { utf8ToBytes } from '../src/vendor';
-import { NATIVE } from '../src/wrapper';
 
 let getStringBytesLengthValue = 1;
 
-function NumberArrayToString(numberArray: number[]): string {
-  return new TextDecoder().decode(new Uint8Array(numberArray).buffer);
-}
+// Use shared mock to avoid conflicts
+import { setupCapacitorMock } from './mocks/capacitor';
 
-jest.mock(
-  '@capacitor/core',
-  () => {
-    const original = jest.requireActual('@capacitor/core');
+setupCapacitorMock();
 
-    return {
-      WebPlugin: original.WebPlugin,
-      registerPlugin: jest.fn(),
-      Capacitor: {
-        isPluginAvailable: jest.fn(() => true),
-        getPlatform: jest.fn(() => 'android'),
-      },
-    };
-  },
-  /* virtual allows us to mock modules that aren't in package.json */
-  { virtual: true },
-);
-
+// Mock the plugin before importing wrapper
 jest.mock('../src/plugin', () => {
   return {
     SentryCapacitor: {
@@ -65,7 +48,13 @@ jest.mock('../src/plugin', () => {
   };
 });
 
+// Now import after mocks are set up
 import { SentryCapacitor } from '../src/plugin';
+import { NATIVE } from '../src/wrapper';
+
+function NumberArrayToString(numberArray: number[]): string {
+  return new TextDecoder().decode(new Uint8Array(numberArray).buffer);
+}
 
 beforeEach(() => {
   getStringBytesLengthValue = 1;

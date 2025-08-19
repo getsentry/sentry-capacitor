@@ -1,19 +1,28 @@
-import { Capacitor } from '@capacitor/core';
 import type { StackParser } from '@sentry/core';
 import type { CapacitorOptions } from 'src';
-import { FilterNativeOptions } from '../src/nativeOptions';
+// Use shared mock to avoid conflicts
+import { setupCapacitorMock } from './mocks/capacitor';
 
-// Mock the Capacitor module
-jest.mock('@capacitor/core', () => ({
-  Capacitor: {
-    getPlatform: jest.fn()
-  }
-}));
+setupCapacitorMock();
+
+import { Capacitor } from '@capacitor/core';
+import { FilterNativeOptions } from '../src/nativeOptions';
+import { expectPlatformWithReturn } from './extensions/sentryCapacitorJest';
 
 
 describe('nativeOptions', () => {
+  const mockGetPlatform = Capacitor.getPlatform as jest.Mock;
 
-  test('enableWatchdogTerminationTracking is set when defined', async () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockGetPlatform.mockReturnValue('web2');
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test('enableWatchdogTerminationTracking is set when defined', () => {
     const nativeOptions = FilterNativeOptions(
       {
         enableWatchdogTerminationTracking: true
@@ -21,7 +30,7 @@ describe('nativeOptions', () => {
     expect(nativeOptions.enableWatchdogTerminationTracking).toBeTruthy();
   });
 
-  test('enableCaptureFailedRequests is set when defined', async () => {
+  test('enableCaptureFailedRequests is set when defined', () => {
     const nativeOptions = FilterNativeOptions(
       {
         enableCaptureFailedRequests: true
@@ -29,7 +38,7 @@ describe('nativeOptions', () => {
     expect(nativeOptions.enableCaptureFailedRequests).toBeTruthy();
   });
 
-  test('invalid types not included', async () => {
+  test('invalid types not included', () => {
     const nativeOptions = FilterNativeOptions(
       {
         _experiments: { key: true },
@@ -52,7 +61,6 @@ describe('nativeOptions', () => {
         enableNativeNagger: true,
         enableNdkScopeSync: true,
         enableWatchdogTerminationTracking: true,
-        enableTracing: true,
         enableCaptureFailedRequests: true,
         environment: 'Prod',
         ignoreErrors: ['test'],
@@ -93,9 +101,8 @@ describe('nativeOptions', () => {
     expect(keysFilter.toString()).toBe('');
   });
 
-  test('Should include iOS parameters when running on iOS', async () => {
-    (Capacitor.getPlatform as jest.Mock).mockReturnValue('ios');
-
+  test('Should include iOS parameters when running on iOS', () => {
+    mockGetPlatform.mockReturnValue('ios');
     const expectedOptions: CapacitorOptions = {
       environment: 'abc',
       // iOS parameters
@@ -103,12 +110,13 @@ describe('nativeOptions', () => {
       appHangTimeoutInterval: 123
     };
     const nativeOptions = FilterNativeOptions(expectedOptions);
+
+    expectPlatformWithReturn('ios');
     expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
   });
 
-  test('Should not include iOS parameters when running on android', async () => {
-    (Capacitor.getPlatform as jest.Mock).mockReturnValue('android');
-
+  test('Should not include iOS parameters when running on android', () => {
+    mockGetPlatform.mockReturnValue('android');
     const expectedOptions = {
       environment: 'abc',
     };
@@ -118,12 +126,13 @@ describe('nativeOptions', () => {
         enableAppHangTracking: true
       }
     });
+
+    expectPlatformWithReturn('android');
     expect(nativeOptions).toEqual(expectedOptions);
   });
 
-  test('Set logger on Android', async () => {
-    (Capacitor.getPlatform as jest.Mock).mockReturnValue('android');
-
+  test('Set logger on Android', () => {
+    mockGetPlatform.mockReturnValue('android');
     const filteredOptions: CapacitorOptions = {
       _experiments: { enableLogs : true}
     };
@@ -133,17 +142,20 @@ describe('nativeOptions', () => {
     };
 
     const nativeOptions = FilterNativeOptions(filteredOptions);
+
+    expectPlatformWithReturn('android');
     expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
   });
 
-  test('Ignore logger on iOS', async () => {
-    (Capacitor.getPlatform as jest.Mock).mockReturnValue('ios');
-
+  test('Ignore logger on iOS', () => {
+    mockGetPlatform.mockReturnValue('ios');
     const filteredOptions: CapacitorOptions = {
       _experiments: { enableLogs : true}
     };
 
     const nativeOptions = FilterNativeOptions(filteredOptions);
+
+    expectPlatformWithReturn('ios');
     expect(nativeOptions).toEqual({});
   });
 });
