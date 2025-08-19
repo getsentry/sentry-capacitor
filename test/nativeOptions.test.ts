@@ -1,16 +1,23 @@
-import { Capacitor } from '@capacitor/core';
 import type { StackParser } from '@sentry/core';
 import type { CapacitorOptions } from 'src';
 import { FilterNativeOptions } from '../src/nativeOptions';
 
 // Mock the Capacitor module
-jest.mock('@capacitor/core', () => ({
-  Capacitor: {
-    getPlatform: jest.fn(() => {
-      throw new Error('Mocked error from getPlatform');
-    }),
+jest.mock('@capacitor/core', () => {
+  const original = jest.requireActual('@capacitor/core');
+
+  return {
+    ...original,
+    Capacitor: {
+      ...original.Capacitor,
+      getPlatform: jest.fn(() => {
+        throw new Error('Mocked error from getPlatform');
+      }),
+    }
   }
-}));
+});
+
+import { Capacitor } from '@capacitor/core';
 
 describe('nativeOptions', () => {
   beforeEach(() => {
@@ -96,7 +103,7 @@ describe('nativeOptions', () => {
     expect(keysFilter.toString()).toBe('');
   });
 
-  test('Should include iOS parameters when running on iOS', async () => {
+  test('Should include iOS parameters when running on iOS', () => {
     (Capacitor.getPlatform as jest.Mock).mockReturnValue('ios');
 
     const expectedOptions: CapacitorOptions = {
@@ -106,6 +113,7 @@ describe('nativeOptions', () => {
       appHangTimeoutInterval: 123
     };
     const nativeOptions = FilterNativeOptions({ ...expectedOptions });
+    expect(Capacitor.getPlatform()).toEqual('ios');
     expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
   });
 
@@ -124,7 +132,7 @@ describe('nativeOptions', () => {
     expect(nativeOptions).toEqual(expectedOptions);
   });
 
-  test('Set logger on Android', async () => {
+  test('Set logger on Android', () => {
     (Capacitor.getPlatform as jest.Mock).mockReturnValue('android');
 
     const filteredOptions: CapacitorOptions = {
@@ -136,10 +144,11 @@ describe('nativeOptions', () => {
     };
 
     const nativeOptions = FilterNativeOptions(filteredOptions);
+    expect(Capacitor.getPlatform()).toEqual('android');
     expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
   });
 
-  test('Ignore logger on iOS', async () => {
+  test('Ignore logger on iOS', () => {
     (Capacitor.getPlatform as jest.Mock).mockReturnValue('ios');
 
     const filteredOptions: CapacitorOptions = {
@@ -147,6 +156,7 @@ describe('nativeOptions', () => {
     };
 
     const nativeOptions = FilterNativeOptions(filteredOptions);
+    expect(Capacitor.getPlatform()).toEqual('ios');
     expect(nativeOptions).toEqual({});
   });
 });
