@@ -6,13 +6,16 @@ import { FilterNativeOptions } from '../src/nativeOptions';
 // Mock the Capacitor module
 jest.mock('@capacitor/core', () => ({
   Capacitor: {
-    getPlatform: jest.fn()
+    getPlatform: jest.fn(() => {
+      throw new Error('Mocked error from getPlatform');
+    }),
   }
 }));
 
-
 describe('nativeOptions', () => {
-
+  beforeEach(() => {
+    jest.resetAllMocks(); // reset mock history
+  });
   test('enableWatchdogTerminationTracking is set when defined', async () => {
     const nativeOptions = FilterNativeOptions(
       {
