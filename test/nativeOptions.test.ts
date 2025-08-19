@@ -5,7 +5,6 @@ import { setupCapacitorMock } from './mocks/capacitor';
 
 setupCapacitorMock();
 
-// Now import after the mock is set up
 import { Capacitor } from '@capacitor/core';
 import { FilterNativeOptions } from '../src/nativeOptions';
 import { expectPlatformWithReturn } from './extensions/sentryCapacitorJest';
