@@ -8,6 +8,8 @@ setupCapacitorMock();
 // Now import after the mock is set up
 import { Capacitor } from '@capacitor/core';
 import { FilterNativeOptions } from '../src/nativeOptions';
+import { expectPlatformWithReturn } from './extensions/sentryCapacitorJest';
+
 
 describe('nativeOptions', () => {
   const mockGetPlatform = Capacitor.getPlatform as jest.Mock;
@@ -108,10 +110,9 @@ describe('nativeOptions', () => {
       enableAppHangTracking: true,
       appHangTimeoutInterval: 123
     };
-    const nativeOptions = FilterNativeOptions({ ...expectedOptions });
+    const nativeOptions = FilterNativeOptions(expectedOptions);
 
-    // Verify that FilterNativeOptions called getPlatform and got 'ios'
-    expect(mockGetPlatform).toHaveBeenCalled();
+    expectPlatformWithReturn('ios');
     expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
   });
 
@@ -127,8 +128,7 @@ describe('nativeOptions', () => {
       }
     });
 
-    // Verify that FilterNativeOptions called getPlatform and got 'android'
-    expect(mockGetPlatform).toHaveBeenCalled();
+    expectPlatformWithReturn('android');
     expect(nativeOptions).toEqual(expectedOptions);
   });
 
@@ -144,8 +144,7 @@ describe('nativeOptions', () => {
 
     const nativeOptions = FilterNativeOptions(filteredOptions);
 
-    // Verify that FilterNativeOptions called getPlatform and got 'android'
-    expect(mockGetPlatform).toHaveBeenCalled();
+    expectPlatformWithReturn('android');
     expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
   });
 
@@ -157,8 +156,7 @@ describe('nativeOptions', () => {
 
     const nativeOptions = FilterNativeOptions(filteredOptions);
 
-    // Verify that FilterNativeOptions called getPlatform and got 'ios'
-    expect(mockGetPlatform).toHaveBeenCalled();
+    expectPlatformWithReturn('ios');
     expect(nativeOptions).toEqual({});
   });
 });

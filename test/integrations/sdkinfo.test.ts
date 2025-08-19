@@ -31,7 +31,6 @@ jest.mock('../../src/wrapper', () => {
 describe('Sdk Info', () => {
   afterEach(() => {
     NATIVE.platform = 'ios';
-    jest.clearAllMocks();
   });
 
   it('Adds native package and javascript platform to event on iOS', async () => {

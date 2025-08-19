@@ -31,7 +31,7 @@ export const sdkInfoIntegration = (): Integration => {
       }
     }
   };
-};
+}
 
 async function processEvent(event: Event): Promise<Event> {
   // The native SDK info package here is only used on iOS as `beforeSend` is not called on `captureEnvelope`.
