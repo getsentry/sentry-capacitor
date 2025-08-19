@@ -105,7 +105,7 @@ describe('nativeOptions', () => {
       enableAppHangTracking: true,
       appHangTimeoutInterval: 123
     };
-    const nativeOptions = FilterNativeOptions(expectedOptions);
+    const nativeOptions = FilterNativeOptions({ ...expectedOptions });
     expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
   });
 
