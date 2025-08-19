@@ -30,8 +30,8 @@ jest.mock('../../src/wrapper', () => {
 
 describe('Sdk Info', () => {
   afterEach(() => {
-
     NATIVE.platform = 'ios';
+    jest.clearAllMocks();
   });
 
   it('Adds native package and javascript platform to event on iOS', async () => {
@@ -40,7 +40,7 @@ describe('Sdk Info', () => {
     const processedEvent = await processEvent(mockEvent);
 
     expect(processedEvent?.sdk?.packages).toEqual(expect.arrayContaining([mockiOSPackage]));
-    expect(processedEvent?.platform === 'javascript');
+    expect(processedEvent?.platform).toBe('javascript');
     expect(mockedFetchNativeSdkInfo).toHaveBeenCalledTimes(1);
   });
 
