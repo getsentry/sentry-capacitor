@@ -33,4 +33,8 @@ export interface ISentryCapacitorPlugin {
   setTag(payload: { key: string; value: string }): void;
   setExtra(payload: { key: string; value: string }): void;
   setContext(payload: { key: string; value: serializedObject | null }): void;
+
+  // iOS specific.
+  pauseAppHangTracking(): void;
+  resumeAppHangTracking(): void;
 }

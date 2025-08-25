@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes/Features
+
+- iOS: expose [pauseAppHangTracking](https://docs.sentry.io/platforms/apple/configuration/app-hangs/#pause-and-resume-app-hang-tracking) and [resumeAppHangTracking](https://docs.sentry.io/platforms/apple/configuration/app-hangs/#pause-and-resume-app-hang-tracking) ([#960](https://github.com/getsentry/sentry-capacitor/pull/960))
+
 ## 2.2.0
 
 ### Important Changes

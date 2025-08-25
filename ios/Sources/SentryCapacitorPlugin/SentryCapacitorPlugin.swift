@@ -30,6 +30,8 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "closeNativeSdk",returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "setContext",returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "crash", returnType:CAPPluginReturnPromise),
+        CAPPluginMethod(name: "pauseAppHangTracking", returnType:CAPPluginReturnPromise),
+        CAPPluginMethod(name: "resumeAppHangTracking", returnType:CAPPluginReturnPromise),
     ]
 
     private let nativeSdkName = "sentry.cocoa.capacitor";
@@ -311,6 +313,16 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
 
     @objc func crash(_ call: CAPPluginCall) {
         SentrySDK.crash()
+    }
+
+    @objc func pauseAppHangTracking(_ call: CAPPluginCall) {
+        SentrySDK.pauseAppHangTracking();
+        call.resolve();
+    }
+
+    @objc func resumeAppHangTracking(_ call: CAPPluginCall) {
+        SentrySDK.resumeAppHangTracking();
+        call.resolve();
     }
 
     private func processLevel(_ levelString: String) -> SentryLevel {

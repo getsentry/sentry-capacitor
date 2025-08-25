@@ -158,4 +158,27 @@ describe('nativeOptions', () => {
     expectPlatformWithReturn('ios');
     expect(nativeOptions).toEqual({});
   });
+
+  test('sadasdasd', () => {
+    const regexPattern = /network.*error/i;
+
+    const processedIgnoreErrors: Array<string | { source: string; flags?: string }> = [];
+    for (const error of ['TypeError', regexPattern]) {
+      if (typeof error === 'string') {
+        processedIgnoreErrors.push(error);
+      } else if (error instanceof RegExp) {
+        // Convert RegExp to a serializable object
+        processedIgnoreErrors.push({
+          source: error.source,
+          flags: error.flags
+        });
+      }
+    }
+
+    expect(processedIgnoreErrors).toEqual([
+      'TypeError',
+      { source: 'network.*error', flags: 'i' }
+    ]);
+  });
+
 });
