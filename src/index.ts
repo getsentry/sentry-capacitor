@@ -50,6 +50,8 @@ export {
 
 export { replayIntegration, browserTracingIntegration, registerSpanErrorInstrumentation, logger } from '@sentry/browser';
 
+export { NativePauseAppHangTracking as pauseAppHangTracking, NativeResumeAppHangTracking as resumeAppHangTracking } from './wrapper';
+
 export { SDK_NAME, SDK_VERSION } from './version';
 export type { CapacitorOptions } from './options';
 export { init, nativeCrash, close } from './sdk';

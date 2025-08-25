@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { Capacitor } from '@capacitor/core';
 import type {
   BaseEnvelopeItemHeaders,
@@ -328,6 +329,30 @@ export const NATIVE = {
     }
   },
 
+  pauseAppHangTracking(): void {
+    if (!this.enableNative) {
+      return;
+    }
+    if (!this.isNativeClientAvailable()) {
+      throw this._NativeClientError;
+    }
+    else if (this.platform === 'ios') {
+      SentryCapacitor.pauseAppHangTracking();
+    }
+  },
+
+  resumeAppHangTracking(): void {
+    if (!this.enableNative) {
+      return;
+    }
+    if (!this.isNativeClientAvailable()) {
+      throw this._NativeClientError;
+    }
+    else if (this.platform === 'ios') {
+      SentryCapacitor.resumeAppHangTracking();
+    }
+  },
+
   /**
    * Gets the event from envelopeItem and applies the level filter to the selected event.
    * @param data An envelope item containing the event.
@@ -442,3 +467,17 @@ export const NATIVE = {
   enableNative: true,
   platform: Capacitor.getPlatform(),
 };
+
+/**
+ * Exposes the pauseAppHangTracking.
+ */
+export function NativePauseAppHangTracking() : void {
+  NATIVE.pauseAppHangTracking();
+}
+
+/**
+ * Exposes the resumeAppHangTracking.
+ */
+export function NativeResumeAppHangTracking() : void {
+  NATIVE.resumeAppHangTracking();
+}
