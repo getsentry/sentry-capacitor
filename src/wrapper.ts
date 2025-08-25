@@ -469,15 +469,15 @@ export const NATIVE = {
 };
 
 /**
- * Exposes the pauseAppHangTracking.
+ * When called, app hangs will be ignored until you call `ResumeAppHangTracking`.
  */
-export function NativePauseAppHangTracking() : void {
+export function pauseAppHangTracking() : void {
   NATIVE.pauseAppHangTracking();
 }
 
 /**
- * Exposes the resumeAppHangTracking.
+ * Resumes sending detected app hangs to Sentry that were previsously ignored by `PauseAppHangTracking`.
  */
-export function NativeResumeAppHangTracking() : void {
+export function resumeAppHangTracking() : void {
   NATIVE.resumeAppHangTracking();
 }
