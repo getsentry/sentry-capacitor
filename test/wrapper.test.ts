@@ -44,11 +44,14 @@ jest.mock('../src/plugin', () => {
         return;
       }),
       closeNativeSdk: jest.fn(() => Promise.resolve()),
+      pauseAppHangTracking: jest.fn(() => Promise.resolve()),
+      resumeAppHangTracking: jest.fn(() => Promise.resolve()),
     },
   };
 });
 
 // Now import after mocks are set up
+import { Capacitor } from '@capacitor/core';
 import { SentryCapacitor } from '../src/plugin';
 import { NATIVE } from '../src/wrapper';
 
@@ -708,6 +711,84 @@ describe('Tests Native Wrapper', () => {
         });
     });
 
+  });
+
+  describe('pauseAppHangTracking', () => {
+    test('calls native pauseAppHangTracking on iOS', () => {
+      NATIVE.platform = 'ios';
+      NATIVE.enableNative = true;
+
+      NATIVE.pauseAppHangTracking();
+
+      expect(SentryCapacitor.pauseAppHangTracking).toHaveBeenCalled();
+    });
+
+    test('does not call native pauseAppHangTracking on Android', () => {
+      NATIVE.platform = 'android';
+      NATIVE.enableNative = true;
+
+      NATIVE.pauseAppHangTracking();
+
+      expect(SentryCapacitor.pauseAppHangTracking).not.toHaveBeenCalled();
+    });
+
+    test('throws error when native client is not available', () => {
+      NATIVE.enableNative = true;
+      NATIVE.platform = 'ios';
+
+      const mockIsPluginAvailable = Capacitor.isPluginAvailable as jest.Mock;
+      mockIsPluginAvailable.mockReturnValueOnce(false);
+
+      expect(() => NATIVE.pauseAppHangTracking()).toThrow('Native Client is not available, can\'t start on native.');
+    });
+
+    test('does nothing when enableNative is false', () => {
+      NATIVE.enableNative = false;
+      NATIVE.platform = 'ios';
+
+      NATIVE.pauseAppHangTracking();
+
+      expect(SentryCapacitor.pauseAppHangTracking).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('resumeAppHangTracking', () => {
+    test('calls native resumeAppHangTracking on iOS', () => {
+      NATIVE.platform = 'ios';
+      NATIVE.enableNative = true;
+
+      NATIVE.resumeAppHangTracking();
+
+      expect(SentryCapacitor.resumeAppHangTracking).toHaveBeenCalled();
+    });
+
+    test('does not call native resumeAppHangTracking on Android', () => {
+      NATIVE.platform = 'android';
+      NATIVE.enableNative = true;
+
+      NATIVE.resumeAppHangTracking();
+
+      expect(SentryCapacitor.resumeAppHangTracking).not.toHaveBeenCalled();
+    });
+
+    test('throws error when native client is not available', () => {
+      NATIVE.enableNative = true;
+      NATIVE.platform = 'ios';
+
+      const mockIsPluginAvailable = Capacitor.isPluginAvailable as jest.Mock;
+      mockIsPluginAvailable.mockReturnValueOnce(false);
+
+      expect(() => NATIVE.resumeAppHangTracking()).toThrow('Native Client is not available, can\'t start on native.');
+    });
+
+    test('does nothing when enableNative is false', () => {
+      NATIVE.enableNative = false;
+      NATIVE.platform = 'ios';
+
+      NATIVE.resumeAppHangTracking();
+
+      expect(SentryCapacitor.resumeAppHangTracking).not.toHaveBeenCalled();
+    });
   });
 
   test('closeNativeSdk called twice does not throw error.', async () => {
