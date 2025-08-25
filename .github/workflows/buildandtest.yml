@@ -127,7 +127,7 @@ jobs:
         run: yarn  global add @ionic/cli
 
       - name: Download Sentry Capacitor package
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: yalc-package
           path: ~/.yalc/packages/@sentry/capacitor/ # Ensure this path matches where yalc expects to find the package
