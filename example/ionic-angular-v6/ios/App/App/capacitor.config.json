@@ -8,9 +8,6 @@
 	},
 	"webDir": "www",
 	"packageClassList": [
-		"SentryCapacitor",
-		"kSentryLevelNone",
-		"kSentryTransactionNameSourceCustom",
-		"SentryRRWebEvent"
+		"SentryCapacitorPlugin"
 	]
 }
