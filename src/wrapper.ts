@@ -339,6 +339,9 @@ export const NATIVE = {
     else if (this.platform === 'ios') {
       SentryCapacitor.pauseAppHangTracking();
     }
+    else {
+      logger.warn(`PauseAppHangTracking ${this._IosOnlyMessage}`);
+    }
   },
 
   resumeAppHangTracking(): void {
@@ -350,6 +353,9 @@ export const NATIVE = {
     }
     else if (this.platform === 'ios') {
       SentryCapacitor.resumeAppHangTracking();
+    }
+    else {
+      logger.warn(`ResumeAppHangTracking ${this._IosOnlyMessage}`);
     }
   },
 
@@ -464,6 +470,7 @@ export const NATIVE = {
   _NativeClientError: new Error(
     "Native Client is not available, can't start on native.",
   ),
+  _IosOnlyMessage: 'is only supported on iOS.',
   enableNative: true,
   platform: Capacitor.getPlatform(),
 };
