@@ -1,4 +1,4 @@
-import { logger } from '@sentry/core';
+import { debug } from '@sentry/core';
 import type { CapacitorOptions } from '../options';
 
 type DangerTypesWithoutCallSignature =
@@ -27,7 +27,7 @@ export function safeFactory<
       try {
         return danger(...args);
       } catch (error) {
-        logger.error(
+        debug.error(
           options.loggerMessage
             ? options.loggerMessage
             : `The ${danger.name} callback threw an error`,
@@ -54,7 +54,7 @@ export function safeTracesSampler(
       try {
         return tracesSampler(...args);
       } catch (error) {
-        logger.error('The tracesSampler callback threw an error', error);
+        debug.error('The tracesSampler callback threw an error', error);
         return 0;
       }
     };

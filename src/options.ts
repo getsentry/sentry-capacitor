@@ -77,7 +77,7 @@ export interface BaseCapacitorOptions {
  * Configuration options for the Sentry Capacitor SDK.
  */
 export interface CapacitorOptions
-  extends Omit<BrowserOptions, 'autoSessionTracking'>,
+  extends Omit<BrowserOptions, 'autoSessionTracking' | 'enableLogs'>,
   BaseCapacitorOptions { }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

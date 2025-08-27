@@ -1,4 +1,5 @@
 import { Capacitor } from '@capacitor/core';
+import type { BrowserOptions } from '@sentry/browser';
 import type { CapacitorOptions } from './options';
 
 interface CapacitorLoggerOptions {
@@ -52,11 +53,13 @@ function iOSParameters(options: CapacitorOptions): CapacitorOptions {
     }
     : {};
 }
-
-function LogParameters(options: CapacitorOptions): CapacitorLoggerOptions | undefined {
+// Browser options added so options.enableLogs is exposed.
+function LogParameters(options: CapacitorOptions & BrowserOptions ): CapacitorLoggerOptions | undefined {
+  // eslint-disable-next-line deprecation/deprecation
+  const shouldEnable = options.enableLogs as boolean ?? options._experiments?.enableLogs;
   // Only Web and Android implements log parameters initialization.
-  if (options._experiments?.enableLogs && Capacitor.getPlatform() === 'android') {
-    return { enableLogs: options._experiments?.enableLogs };
+  if (shouldEnable && Capacitor.getPlatform() === 'android') {
+    return { enableLogs: shouldEnable };
   }
   return undefined;
 }

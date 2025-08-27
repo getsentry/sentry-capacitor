@@ -10,7 +10,7 @@ import type {
   TransportMakeRequestResponse,
   User,
 } from '@sentry/core';
-import { logger } from '@sentry/core';
+import { debug } from '@sentry/core';
 import type { NativeDeviceContextsResponse } from './definitions';
 import { FilterNativeOptions } from './nativeOptions';
 import type { CapacitorOptions } from './options';
@@ -77,7 +77,7 @@ export const NATIVE = {
     await SentryCapacitor.captureEnvelope({ envelope: envelopeBytes }).then(
       _ => _, // We only want to know if it failed.
       failed => {
-        logger.error('Failed to capture Envelope: ', failed);
+        debug.error('Failed to capture Envelope: ', failed);
         transportStatusCode = 500;
       },
     );
@@ -91,7 +91,7 @@ export const NATIVE = {
    */
   async initNativeSdk(options: CapacitorOptions): Promise<boolean> {
     if (!options.dsn) {
-      logger.warn(
+      debug.warn(
         'Warning: No DSN was provided. The Sentry SDK will be disabled. Native SDK will also not be initalized.',
       );
 
@@ -101,7 +101,7 @@ export const NATIVE = {
 
     if (!options.enableNative) {
       if (options.enableNativeNagger) {
-        logger.warn('Note: Native Sentry SDK is disabled.');
+        debug.warn('Note: Native Sentry SDK is disabled.');
       }
       this.enableNative = false;
       return false;
@@ -292,7 +292,7 @@ export const NATIVE = {
   closeNativeSdk(): Promise<void> {
     if (!this.enableNative) {
       // Only log and avoid rejecting.
-      logger.debug(this._DisabledNativeError);
+      debug.log(this._DisabledNativeError);
       return Promise.resolve();
     }
     if (!this.isNativeClientAvailable()) {
@@ -340,7 +340,7 @@ export const NATIVE = {
       SentryCapacitor.pauseAppHangTracking();
     }
     else {
-      logger.warn(`PauseAppHangTracking ${this._IosOnlyMessage}`);
+      debug.warn(`PauseAppHangTracking ${this._IosOnlyMessage}`);
     }
   },
 
@@ -355,7 +355,7 @@ export const NATIVE = {
       SentryCapacitor.resumeAppHangTracking();
     }
     else {
-      logger.warn(`ResumeAppHangTracking ${this._IosOnlyMessage}`);
+      debug.warn(`ResumeAppHangTracking ${this._IosOnlyMessage}`);
     }
   },
 

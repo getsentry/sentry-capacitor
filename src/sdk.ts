@@ -1,7 +1,7 @@
 import type { BrowserOptions } from '@sentry/browser';
 import { init as browserInit } from '@sentry/browser';
 import type { Integration } from '@sentry/core';
-import { getClient, getGlobalScope, getIntegrationsToSetup, getIsolationScope , logger } from '@sentry/core';
+import { debug,getClient, getGlobalScope, getIntegrationsToSetup, getIsolationScope  } from '@sentry/core';
 import { getDefaultIntegrations } from './integrations/default';
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
 import { enableSyncToNative } from './scopeSync';
@@ -101,7 +101,7 @@ export async function close(): Promise<void> {
       await NATIVE.closeNativeSdk();
     }
   } catch (e) {
-    logger.error('Failed to close the SDK');
+    debug.error('Failed to close the SDK');
   }
 }
 
