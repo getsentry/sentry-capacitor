@@ -1008,13 +1008,13 @@
   dependencies:
     "@sentry/core" "9.38.0"
 
-"@sentry-internal/eslint-config-sdk@9.38.0":
-  version "9.38.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-config-sdk/-/eslint-config-sdk-9.38.0.tgz#fd0cff2c11664a1bb28e0dc58fb0e3e6675fc68f"
-  integrity sha512-uzwqUT21KUT7llzxEOv1d5dSbbOxwFsBVH4A+71pUsU1CmbDNjfEDrL5PDCf/cP5B2n/z4vCVO3bkHdrhek3kA==
+"@sentry-internal/eslint-config-sdk@10.6.0":
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-config-sdk/-/eslint-config-sdk-10.6.0.tgz#25e2174c046f1498a45f3d9ded9d72f3ba6719b6"
+  integrity sha512-fZrqh6hp+JEPI10SE6Y15XwXrmPwKpAtXKKAHwYer3bVHAoERKeWDEnjPb+h1fk/yU6QED7Cw68HnWMj4z0Q/A==
   dependencies:
-    "@sentry-internal/eslint-plugin-sdk" "9.38.0"
-    "@sentry-internal/typescript" "9.38.0"
+    "@sentry-internal/eslint-plugin-sdk" "10.6.0"
+    "@sentry-internal/typescript" "10.6.0"
     "@typescript-eslint/eslint-plugin" "^5.48.0"
     "@typescript-eslint/parser" "^5.48.0"
     eslint-config-prettier "^6.11.0"
@@ -1022,6 +1022,11 @@
     eslint-plugin-import "^2.22.0"
     eslint-plugin-jsdoc "^30.0.3"
     eslint-plugin-simple-import-sort "^6.0.0"
+
+"@sentry-internal/eslint-plugin-sdk@10.6.0":
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-plugin-sdk/-/eslint-plugin-sdk-10.6.0.tgz#dd8499080813cae80b0ddab88418ad1325f613f0"
+  integrity sha512-cX5TT51aMZVFmu/A4LUDVAu11olpYm2+vwUhCXin70RVwPdxUo5cwKbetwuO5pTSXPuibHLXEJTjhCyqbB5rWg==
 
 "@sentry-internal/eslint-plugin-sdk@9.38.0":
   version "9.38.0"
@@ -1059,6 +1064,11 @@
     "@sentry/core" "7.120.3"
     "@sentry/types" "7.120.3"
     "@sentry/utils" "7.120.3"
+
+"@sentry-internal/typescript@10.6.0":
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/typescript/-/typescript-10.6.0.tgz#1cfaecf32e494274eb5c54991daef7d6d34cad85"
+  integrity sha512-2dQgjMdwSmF51KRHXPDt9CQdtjyQePYsCgbyEiPPfuy1qPvfCnFyN10zfzIfDDt/BykqszAfWdxOhiide7ypqg==
 
 "@sentry-internal/typescript@9.38.0":
   version "9.38.0"
