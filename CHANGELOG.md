@@ -8,6 +8,10 @@
 
 ## Unreleased
 
+### Features
+
+- iOS: expose [pauseAppHangTracking](https://docs.sentry.io/platforms/apple/configuration/app-hangs/#pause-and-resume-app-hang-tracking) and [resumeAppHangTracking](https://docs.sentry.io/platforms/apple/configuration/app-hangs/#pause-and-resume-app-hang-tracking) ([#960](https://github.com/getsentry/sentry-capacitor/pull/960))
+
 ### Dependencies
 
 - Bump Cocoa SDK from v8.53.2 to v8.55.0 ([#943](https://github.com/getsentry/sentry-capacitor/pull/943))

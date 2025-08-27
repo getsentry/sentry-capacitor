@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { Capacitor } from '@capacitor/core';
 import type {
   BaseEnvelopeItemHeaders,
@@ -328,6 +329,36 @@ export const NATIVE = {
     }
   },
 
+  pauseAppHangTracking(): void {
+    if (!this.enableNative) {
+      return;
+    }
+    if (!this.isNativeClientAvailable()) {
+      throw this._NativeClientError;
+    }
+    else if (this.platform === 'ios') {
+      SentryCapacitor.pauseAppHangTracking();
+    }
+    else {
+      logger.warn(`PauseAppHangTracking ${this._IosOnlyMessage}`);
+    }
+  },
+
+  resumeAppHangTracking(): void {
+    if (!this.enableNative) {
+      return;
+    }
+    if (!this.isNativeClientAvailable()) {
+      throw this._NativeClientError;
+    }
+    else if (this.platform === 'ios') {
+      SentryCapacitor.resumeAppHangTracking();
+    }
+    else {
+      logger.warn(`ResumeAppHangTracking ${this._IosOnlyMessage}`);
+    }
+  },
+
   /**
    * Gets the event from envelopeItem and applies the level filter to the selected event.
    * @param data An envelope item containing the event.
@@ -439,6 +470,21 @@ export const NATIVE = {
   _NativeClientError: new Error(
     "Native Client is not available, can't start on native.",
   ),
+  _IosOnlyMessage: 'is only supported on iOS.',
   enableNative: true,
   platform: Capacitor.getPlatform(),
 };
+
+/**
+ * When called, app hangs will be ignored until you call `ResumeAppHangTracking`.
+ */
+export function pauseAppHangTracking() : void {
+  NATIVE.pauseAppHangTracking();
+}
+
+/**
+ * Resumes sending detected app hangs to Sentry that were previsously ignored by `PauseAppHangTracking`.
+ */
+export function resumeAppHangTracking() : void {
+  NATIVE.resumeAppHangTracking();
+}
