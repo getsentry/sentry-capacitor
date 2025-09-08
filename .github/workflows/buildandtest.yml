@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
       - run: corepack enable
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         # we use a hash of yarn.lock as our cache key, because if it hasn't changed, our dependencies haven't changed,
         # so no need to reinstall them
       - name: Compute dependency cache key
@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@v4
       - run: corepack enable
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
       - name: Check dependency cache
         uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
         with:
@@ -110,7 +110,7 @@ jobs:
         uses: actions/checkout@v4
       - run: corepack enable
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
       - name: Check dependency cache
         uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
         with:
@@ -153,7 +153,7 @@ jobs:
         uses: actions/checkout@v4
       - run: corepack enable
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
       - name: Check dependency cache
         uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
         with:
@@ -176,7 +176,7 @@ jobs:
         uses: actions/checkout@v4
       - run: corepack enable
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
       - name: Check dependency cache
         uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
         with:
