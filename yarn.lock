@@ -571,14 +571,6 @@
     picocolors "^1.0.0"
     sisteransi "^1.0.5"
 
-"@clack/core@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@clack/core/-/core-0.3.4.tgz#375e82fc8fe46650b37cab2f2ea8752c6b7f0450"
-  integrity sha512-H4hxZDXgHtWTwV3RAVenqcC4VbJZNegbBjlPvzOzCouXtS2y3sDvlO3IsbrPNWuLWPPlYVYPghQdSF64683Ldw==
-  dependencies:
-    picocolors "^1.0.0"
-    sisteransi "^1.0.5"
-
 "@clack/prompts@0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@clack/prompts/-/prompts-0.7.0.tgz#6aaef48ea803d91cce12bc80811cfcb8de2e75ea"
@@ -1137,12 +1129,11 @@
   dependencies:
     "@sentry/types" "7.120.3"
 
-"@sentry/wizard@4.9.0":
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/@sentry/wizard/-/wizard-4.9.0.tgz#d10d222d0b44aed9059f6d6517f4b779b1199de3"
-  integrity sha512-dxvhBolrCJGZ8e0Sv/4xio5ELXaNSwv+hUVbA22HabRzq7pkHMnmE9EHzCQzRYswoH+Yd2FiD1Nu6zUABhfJfw==
+"@sentry/wizard@6.4.0":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@sentry/wizard/-/wizard-6.4.0.tgz#86279a3a21ee827ade9930046e6c2de89ef74b46"
+  integrity sha512-O7oVViexgdjhZpFMXEUwSRVuR2gLJ+r99O5xje+iDt8iXeAz31QMoU+czH70udYmRk/c8swaHw3i5ZTqVXmUFw==
   dependencies:
-    "@clack/core" "^0.3.4"
     "@clack/prompts" "0.7.0"
     "@sentry/node" "^7.119.2"
     axios "1.8.2"
