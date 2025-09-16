@@ -41,9 +41,9 @@
   "license": "MIT",
   "peerDependencies": {
     "@capacitor/core": ">=3.0.0",
-    "@sentry/angular": "9.38.0",
-    "@sentry/react": "9.38.0",
-    "@sentry/vue": "9.38.0"
+    "@sentry/angular": "9.46.0",
+    "@sentry/react": "9.46.0",
+    "@sentry/vue": "9.46.0"
   },
   "peerDependenciesMeta": {
     "@sentry/angular": {
@@ -57,18 +57,18 @@
     }
   },
   "dependencies": {
-    "@sentry/browser": "9.38.0",
-    "@sentry/core": "9.38.0",
-    "@sentry/types": "9.38.0"
+    "@sentry/browser": "9.46.0",
+    "@sentry/core": "9.46.0",
+    "@sentry/types": "9.46.0"
   },
   "devDependencies": {
     "@capacitor/android": "^6.0.0 || ^7.0.0",
     "@capacitor/core": "^6.0.0  || ^7.0.0",
     "@capacitor/ios": "^6.0.0  || ^7.0.0",
     "@ionic/prettier-config": "^1.0.0",
-    "@sentry-internal/eslint-config-sdk": "9.38.0",
-    "@sentry-internal/eslint-plugin-sdk": "9.38.0",
-    "@sentry-internal/typescript": "9.38.0",
+    "@sentry-internal/eslint-config-sdk": "9.46.0",
+    "@sentry-internal/eslint-plugin-sdk": "9.46.0",
+    "@sentry-internal/typescript": "9.46.0",
     "@sentry/wizard": "6.4.0",
     "@types/jest": "^29.5.3",
     "concurrently": "^8.2.2",

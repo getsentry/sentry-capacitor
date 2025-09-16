@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import type { Envelope, EventEnvelope, EventItem, SeverityLevel, TransportMakeRequestResponse } from '@sentry/core';
-import {createEnvelope, dropUndefinedKeys, logger} from '@sentry/core';
+import {createEnvelope, debug,dropUndefinedKeys} from '@sentry/core';
 import { utf8ToBytes } from '../src/vendor';
 
 let getStringBytesLengthValue = 1;
@@ -128,20 +128,20 @@ describe('Tests Native Wrapper', () => {
 
     test('warns if there is no dsn', async () => {
       SentryCapacitor.initNativeSdk = jest.fn();
-      logger.warn = jest.fn();
+      debug.warn = jest.fn();
 
       await NATIVE.initNativeSdk({ enableNative: true });
 
       expect(SentryCapacitor.initNativeSdk).not.toHaveBeenCalled();
       // eslint-disable-next-line @typescript-eslint/unbound-method
-      expect(logger.warn).toHaveBeenLastCalledWith(
+      expect(debug.warn).toHaveBeenLastCalledWith(
         'Warning: No DSN was provided. The Sentry SDK will be disabled. Native SDK will also not be initalized.',
       );
     });
 
     test('does not call native module with enableNative: false', async () => {
       SentryCapacitor.initNativeSdk = jest.fn();
-      logger.warn = jest.fn();
+      debug.warn = jest.fn();
 
       await NATIVE.initNativeSdk({
         dsn: 'test',
@@ -151,7 +151,7 @@ describe('Tests Native Wrapper', () => {
 
       expect(SentryCapacitor.initNativeSdk).not.toHaveBeenCalled();
       // eslint-disable-next-line @typescript-eslint/unbound-method
-      expect(logger.warn).toHaveBeenLastCalledWith(
+      expect(debug.warn).toHaveBeenLastCalledWith(
         'Note: Native Sentry SDK is disabled.',
       );
     });
@@ -792,11 +792,11 @@ describe('Tests Native Wrapper', () => {
   });
 
   test('closeNativeSdk called twice does not throw error.', async () => {
-    logger.debug = jest.fn();
+    debug.log = jest.fn();
     await NATIVE.closeNativeSdk();
-    expect(logger.debug).not.toHaveBeenCalled();
+    expect(debug.log).not.toHaveBeenCalled();
 
     await NATIVE.closeNativeSdk();
-    expect(logger.debug).toHaveBeenCalledWith(NATIVE._DisabledNativeError);
+    expect(debug.log).toHaveBeenCalledWith(NATIVE._DisabledNativeError);
   });
 });

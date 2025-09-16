@@ -1,5 +1,5 @@
 import type { Contexts, Event, Integration } from '@sentry/core';
-import { logger } from '@sentry/core';
+import { debug } from '@sentry/core';
 import { NATIVE } from '../wrapper';
 
 const INTEGRATION_NAME = 'DeviceContext';
@@ -24,7 +24,7 @@ async function processEvent(event: Event): Promise<Event> {
       }
     }
   } catch (e) {
-    logger.log(`Failed to get device context from native: ${e}`);
+    debug.log(`Failed to get device context from native: ${e}`);
   }
 
   return event;
