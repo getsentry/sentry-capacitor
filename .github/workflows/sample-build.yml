@@ -23,7 +23,7 @@ env:
 
 jobs:
   job_sample_build:
-    name: Sample Build
+    name: Sample Build (${{ matrix.bump }})
     runs-on: macos-latest
     strategy:
       matrix:
