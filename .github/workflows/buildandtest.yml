@@ -150,6 +150,8 @@ jobs:
           if [ "${{ matrix.bump }}" = "sample-vue" ]; then echo "SAMPLE_DIR=ionic-vue3" >> "$GITHUB_ENV"; fi
 
       - name: Make gradlew executable
+      - name: Clean Gradle cache
+        run: rm -rf ~/.gradle/caches
         working-directory: example/${{ env.SAMPLE_DIR }}/android
         run: chmod +x ./gradlew
 
