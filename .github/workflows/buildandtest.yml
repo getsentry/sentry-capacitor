@@ -32,7 +32,7 @@ jobs:
         id: compute_lockfile_hash
         run: echo "hash=${{ hashFiles('yarn.lock') }}" >> "$GITHUB_OUTPUT"
       - name: Check dependency cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         id: cache_dependencies
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
@@ -56,12 +56,12 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v5
       - name: Check dependency cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_install_deps.outputs.dependency_cache_key }}
       - name: Check build cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         id: cache_built_packages
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
@@ -112,12 +112,12 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v5
       - name: Check dependency cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_build.outputs.dependency_cache_key }}
       - name: Check build cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
@@ -142,6 +142,55 @@ jobs:
       - name: Build Sample ${{ matrix.bump }}
         run: yarn run bump:${{ matrix.bump }}
 
+      - name: Resolve sample directory
+        id: resolve_sample
+        run: |
+          if [ "${{ matrix.bump }}" = "v6" ]; then echo "SAMPLE_DIR=ionic-angular-v6" >> "$GITHUB_ENV"; fi
+          if [ "${{ matrix.bump }}" = "v7" ]; then echo "SAMPLE_DIR=ionic-angular-v7" >> "$GITHUB_ENV"; fi
+          if [ "${{ matrix.bump }}" = "sample-vue" ]; then echo "SAMPLE_DIR=ionic-vue3" >> "$GITHUB_ENV"; fi
+
+      - name: Android build (Gradle)
+        working-directory: example/${{ env.SAMPLE_DIR }}/android
+        env:
+          GRADLE_OPTS: -Dorg.gradle.daemon=false
+        run: ./gradlew --no-daemon assembleDebug
+
+      - name: Upload Android APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.SAMPLE_DIR }}-android-apk
+          if-no-files-found: warn
+          path: |
+            example/${{ env.SAMPLE_DIR }}/android/app/build/outputs/apk/debug/*.apk
+
+      - name: Install CocoaPods
+        run: sudo gem install cocoapods --no-document
+
+      - name: Install xcpretty
+        run: sudo gem install xcpretty --no-document
+
+      - name: iOS pod install
+        working-directory: example/${{ env.SAMPLE_DIR }}/ios/App
+        run: pod install --repo-update
+
+      - name: iOS build (xcodebuild)
+        working-directory: example/${{ env.SAMPLE_DIR }}/ios/App
+        run: |
+          xcodebuild -workspace App.xcworkspace \
+                     -scheme App \
+                     -configuration Debug \
+                     -sdk iphonesimulator \
+                     -destination 'platform=iOS Simulator,name=iPhone 15' \
+                     build | xcpretty
+
+      - name: Upload iOS build logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.SAMPLE_DIR }}-ios-build-logs
+          if-no-files-found: warn
+          path: |
+            ~/Library/Logs/Diagnostics/*
+
   job_unit_test:
     name: Test
     needs: job_build
@@ -155,12 +204,12 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v5
       - name: Check dependency cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_build.outputs.dependency_cache_key }}
       - name: Check build cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
@@ -178,12 +227,12 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v5
       - name: Check dependency cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_build.outputs.dependency_cache_key }}
       - name: Check build cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
