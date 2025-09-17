@@ -6,6 +6,9 @@ on:
       - release/**
   pull_request:
 
+permissions:
+  contents: read
+
 env:
   CACHED_DEPENDENCY_PATHS: |
     ${{ github.workspace }}/node_modules
