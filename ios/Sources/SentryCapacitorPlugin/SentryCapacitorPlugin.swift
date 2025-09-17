@@ -70,8 +70,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
         }
 
         do {
-            let options = try Options.init(dict: optionsDict)
-
+            let options = try SentryOptionsInternal.initWithDict(optionsDict)
             let sdkVersion = PrivateSentrySDKOnly.getSdkVersionString()
             PrivateSentrySDKOnly.setSdkName(nativeSdkName, andVersionString: sdkVersion)
 
