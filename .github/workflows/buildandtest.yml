@@ -149,6 +149,10 @@ jobs:
           if [ "${{ matrix.bump }}" = "v7" ]; then echo "SAMPLE_DIR=ionic-angular-v7" >> "$GITHUB_ENV"; fi
           if [ "${{ matrix.bump }}" = "sample-vue" ]; then echo "SAMPLE_DIR=ionic-vue3" >> "$GITHUB_ENV"; fi
 
+      - name: Make gradlew executable
+        working-directory: example/${{ env.SAMPLE_DIR }}/android
+        run: chmod +x ./gradlew
+
       - name: Android build (Gradle)
         working-directory: example/${{ env.SAMPLE_DIR }}/android
         env:
