@@ -99,13 +99,10 @@ jobs:
       - name: Upload Android APK
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.SAMPLE_DIR }}-android-apk
+          name: ${{ matrix.bump }}-android-apk
           if-no-files-found: warn
           path: |
             ${{ matrix.SAMPLE_DIR }}/android/app/build/outputs/apk/debug/*.apk
-
-      #      - name: Install CocoaPods
-      #        run: sudo gem install cocoapods --no-document
 
       - name: Install xcpretty
         run: sudo gem install xcpretty --no-document
@@ -127,7 +124,7 @@ jobs:
       - name: Upload iOS build logs
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.SAMPLE_DIR }}-ios-build-logs
+          name: ${{ matrix.bump }}-ios-build-logs
           if-no-files-found: warn
           path: |
             ~/Library/Logs/Diagnostics/*
