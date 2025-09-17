@@ -118,8 +118,8 @@ jobs:
                      -scheme App \
                      -configuration Debug \
                      -sdk iphonesimulator \
-                     -destination 'platform=iOS Simulator,name=iPhone' \
-                     build | xcpretty
+                     -destination 'platform=iOS Simulator,name=iPhone 16' \
+                     build
 
       - name: Upload iOS build logs
         uses: actions/upload-artifact@v4
