@@ -154,4 +154,4 @@ jobs:
     uses: ./.github/workflows/reusable/sample-build.yml
     with:
       dependency_cache_key: ${{ needs.job_build.outputs.dependency_cache_key }}
-      build_cache_key: ${{ env.BUILD_CACHE_KEY }}
+      build_cache_key: ${{ github.sha }}
