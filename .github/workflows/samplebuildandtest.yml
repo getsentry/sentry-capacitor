@@ -5,6 +5,7 @@ on:
     types: [completed]
 
 permissions:
+  actions: read
   contents: read
 
 env:
@@ -19,6 +20,12 @@ jobs:
     name: Verify upstream success
     runs-on: ubuntu-latest
     steps:
+      - name: Debug workflow run event
+        run: |
+          echo "Workflow run conclusion: ${{ github.event.workflow_run.conclusion }}"
+          echo "Workflow run status: ${{ github.event.workflow_run.status }}"
+          echo "Workflow run head_branch: ${{ github.event.workflow_run.head_branch }}"
+          echo "Workflow run head_sha: ${{ github.event.workflow_run.head_sha }}"
       - name: Ensure upstream workflow succeeded
         if: ${{ github.event.workflow_run.conclusion != 'success' }}
         run: |
