@@ -6,7 +6,17 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- iOS build error due to recent changes with Native Sentry Options ([#980](https://github.com/getsentry/sentry-capacitor/pull/980))
+
 ## 2.3.0
+
+> [!WARNING]
+> This release contains an issue where iOS builds will fail, please opt for a lower version or version 2.3.1 or newer.
+> See issue [#4598](https://github.com/getsentry/sentry-capacitor/issues/979) for more details.
 
 ### Features
 
