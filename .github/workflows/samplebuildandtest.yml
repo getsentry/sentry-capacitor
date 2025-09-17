@@ -26,10 +26,10 @@ jobs:
         # v1.4.0
         uses: lewagon/wait-on-check-action@0dceb95e7c4cad8cc7422aee3885998f5cab9c79
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.ref }}
           check-name: 'Build & Test'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
+          wait-interval: 4
           allowed-conclusions: success
 
   job_sample_build:
