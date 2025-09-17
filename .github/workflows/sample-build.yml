@@ -32,7 +32,7 @@ jobs:
             SAMPLE_DIR: 'example/ionic-angular-v6'
             JAVA_VERSION: '17'
           - bump: 'v7'
-            sample_path: 'example/ionic-angular-v7'
+            SAMPLE_DIR: 'example/ionic-angular-v7'
             JAVA_VERSION: '21'
           - bump: 'sample-vue'
             SAMPLE_DIR: 'example/ionic-vue3'
