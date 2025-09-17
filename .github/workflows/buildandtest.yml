@@ -148,11 +148,15 @@ jobs:
           if [ "${{ matrix.bump }}" = "v7" ]; then echo "SAMPLE_DIR=ionic-angular-v7" >> "$GITHUB_ENV"; fi
           if [ "${{ matrix.bump }}" = "sample-vue" ]; then echo "SAMPLE_DIR=ionic-vue3" >> "$GITHUB_ENV"; fi
 
-      - name: Set up Java 17
+      - name: Determine Java version
+        run: |
+          if [ "${{ matrix.bump }}" = "v7" ]; then echo "JAVA_VERSION=21" >> "$GITHUB_ENV"; else echo "JAVA_VERSION=17" >> "$GITHUB_ENV"; fi
+
+      - name: Set up Java ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: ${{ env.JAVA_VERSION }}
       - name: Make gradlew executable
         working-directory: example/${{ env.SAMPLE_DIR }}/android
         run: chmod +x ./gradlew
