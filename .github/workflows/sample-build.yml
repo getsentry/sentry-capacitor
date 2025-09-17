@@ -29,8 +29,14 @@ jobs:
       matrix:
         include:
           - bump: 'v6'
+            SAMPLE_DIR: 'example/ionic-angular-v6'
+            JAVA_VERSION: '21'
           - bump: 'v7'
+            sample_path: 'example/ionic-angular-v7'
+            SAMPLE_DIR: '21'
           - bump: 'sample-vue'
+            SAMPLE_DIR: 'example/ionic-vue3'
+            JAVA_VERSION: '21'
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v4
@@ -68,29 +74,18 @@ jobs:
       - name: Build Sample ${{ matrix.bump }}
         run: yarn run bump:${{ matrix.bump }}
 
-      - name: Resolve sample directory
-        id: resolve_sample
-        run: |
-          if [ "${{ matrix.bump }}" = "v6" ]; then echo "SAMPLE_DIR=ionic-angular-v6" >> "$GITHUB_ENV"; fi
-          if [ "${{ matrix.bump }}" = "v7" ]; then echo "SAMPLE_DIR=ionic-angular-v7" >> "$GITHUB_ENV"; fi
-          if [ "${{ matrix.bump }}" = "sample-vue" ]; then echo "SAMPLE_DIR=ionic-vue3" >> "$GITHUB_ENV"; fi
-
-      - name: Determine Java version
-        run: |
-          if [ "${{ matrix.bump }}" = "v7" ]; then echo "JAVA_VERSION=21" >> "$GITHUB_ENV"; else echo "JAVA_VERSION=17" >> "$GITHUB_ENV"; fi
-
-      - name: Set up Java ${{ env.JAVA_VERSION }}
+      - name: Set up Java ${{ matrix.JAVA_VERSION }}
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{ env.JAVA_VERSION }}
+          java-version: ${{ matrix.JAVA_VERSION }}
 
       - name: Make gradlew executable
-        working-directory: example/${{ env.SAMPLE_DIR }}/android
+        working-directory: ${{ matrix.SAMPLE_DIR }}/android
         run: chmod +x ./gradlew
 
       - name: Configure Android build compatibility
-        working-directory: example/${{ env.SAMPLE_DIR }}/android
+        working-directory: ${{ matrix.SAMPLE_DIR }}/android
         run: |
           echo "android.useFullClasspathForDexingTransform=true" >> gradle.properties
           echo "android.enableR8.fullMode=false" >> gradle.properties
@@ -104,23 +99,23 @@ jobs:
       - name: Upload Android APK
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.SAMPLE_DIR }}-android-apk
+          name: ${{ matrix.SAMPLE_DIR }}-android-apk
           if-no-files-found: warn
           path: |
-            example/${{ env.SAMPLE_DIR }}/android/app/build/outputs/apk/debug/*.apk
+            example/${{ matrix.SAMPLE_DIR }}/android/app/build/outputs/apk/debug/*.apk
 
-      - name: Install CocoaPods
-        run: sudo gem install cocoapods --no-document
+      #      - name: Install CocoaPods
+      #        run: sudo gem install cocoapods --no-document
 
       - name: Install xcpretty
         run: sudo gem install xcpretty --no-document
 
       - name: iOS pod install
-        working-directory: example/${{ env.SAMPLE_DIR }}/ios/App
+        working-directory: ${{ matrix.SAMPLE_DIR }}/ios/App
         run: pod install --repo-update
 
       - name: iOS build (xcodebuild)
-        working-directory: example/${{ env.SAMPLE_DIR }}/ios/App
+        working-directory: ${{ matrix.SAMPLE_DIR }}/ios/App
         run: |
           xcodebuild -workspace App.xcworkspace \
                      -scheme App \
@@ -132,7 +127,7 @@ jobs:
       - name: Upload iOS build logs
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.SAMPLE_DIR }}-ios-build-logs
+          name: ${{ matrix.SAMPLE_DIR }}-ios-build-logs
           if-no-files-found: warn
           path: |
             ~/Library/Logs/Diagnostics/*
