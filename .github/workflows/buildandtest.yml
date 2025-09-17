@@ -158,6 +158,11 @@ jobs:
         run: chmod +x ./gradlew
 
       #      - name: Clean Gradle cache
+      - name: Configure Android build compatibility
+        working-directory: example/${{ env.SAMPLE_DIR }}/android
+        run: |
+          echo "android.enableDexingArtifactTransform=false" >> gradle.properties
+          echo "android.enableR8.fullMode=false" >> gradle.properties
       #        run: rm -rf ~/.gradle/caches
 
       - name: Android build (Gradle)
