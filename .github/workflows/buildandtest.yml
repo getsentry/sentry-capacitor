@@ -138,9 +138,14 @@ jobs:
           yarn install
           yarn build
           yalc publish
-
       - name: Build Sample ${{ matrix.bump }}
         run: yarn run bump:${{ matrix.bump }}
+
+      - name: Clean and reinstall sample dependencies
+        working-directory: example/${{ env.SAMPLE_DIR }}
+        run: |
+          rm -rf node_modules
+          yarn install --check-files
 
       - name: Resolve sample directory
         id: resolve_sample
