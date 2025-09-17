@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
         google()
         mavenCentral()
@@ -21,6 +21,15 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+    // Force a Kotlin stdlib version compatible with AGP 8 and D8
+    configurations.all { config ->
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'org.jetbrains.kotlin' && details.requested.name.startsWith('kotlin-stdlib')) {
+                details.useVersion '1.9.24'
+                details.because 'Ensure Kotlin stdlib is compatible with current Android build tools'
+            }
+        }
     }
 }
 
