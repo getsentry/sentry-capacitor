@@ -947,24 +947,24 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
-"@capacitor/android@5.6.0":
-  version "5.6.0"
-  resolved "https://registry.npmjs.org/@capacitor/android/-/android-5.6.0.tgz"
-  integrity sha512-6O7xV6K6c8WvQzKxOe7fnhRyoVpS3TNDXy1FyfhvOvclBvu+1JddSdFvW4e4dSL60s2c00sCzNRgYhm+cn0/dQ==
+"@capacitor/android@^6.0.0":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-6.2.1.tgz#705347b62605b692093a96c81ce335875ea954e2"
+  integrity sha512-8gd4CIiQO5LAIlPIfd5mCuodBRxMMdZZEdj8qG8m+dQ1sQ2xyemVpzHmRK8qSCHorsBUCg3D62j2cp6bEBAkdw==
 
-"@capacitor/app@5.0.6":
-  version "5.0.6"
-  resolved "https://registry.npmjs.org/@capacitor/app/-/app-5.0.6.tgz"
-  integrity sha512-6ZXVdnNmaYILasC/RjQw+yfTmq2ZO7Q3v5lFcDVfq3PFGnybyYQh+RstBrYri+376OmXOXxBD7E6UxBhrMzXGA==
+"@capacitor/app@^6.0.0":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/app/-/app-6.0.2.tgz#bf33d4e0882962f1f8a82481faad344053b0cd3f"
+  integrity sha512-SiGTGgslK4TbWJVImCUL1odul7/YFkVfkYtAYS9AAEzQpxBECBeRnuN3FFBcfZ9eiN1XxFBFchhiwpxtx/c7yQ==
 
-"@capacitor/cli@5.6.0":
-  version "5.6.0"
-  resolved "https://registry.npmjs.org/@capacitor/cli/-/cli-5.6.0.tgz"
-  integrity sha512-h2HLkjPn+hd95F0iOlSWROW15kxj/0qNuzXgktSNQ55Z3dCeWmelgfkbYwjo0eqiunv5zNa31H0YvrpnIVdKEA==
+"@capacitor/cli@^6.0.0":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-6.2.1.tgz#17d4e07ff203f13e02abe4fe65b67406165b8d0d"
+  integrity sha512-JKl0FpFge8PgQNInw12kcKieQ4BmOyazQ4JGJOfEpVXlgrX1yPhSZTPjngupzTCiK3I7q7iGG5kjun0fDqgSCA==
   dependencies:
     "@ionic/cli-framework-output" "^2.2.5"
     "@ionic/utils-fs" "^3.1.6"
-    "@ionic/utils-subprocess" "^2.1.11"
+    "@ionic/utils-subprocess" "2.1.11"
     "@ionic/utils-terminal" "^2.3.3"
     commander "^9.3.0"
     debug "^4.3.4"
@@ -980,32 +980,32 @@
     tslib "^2.4.0"
     xml2js "^0.5.0"
 
-"@capacitor/core@5.6.0":
-  version "5.6.0"
-  resolved "https://registry.npmjs.org/@capacitor/core/-/core-5.6.0.tgz"
-  integrity sha512-xJhCOUGPHw0QYDA3YH+CmL6qiV9DH4Ij3yPxSenymjrtLuXI197u9ddCZwGEwgVIkh9kGZBBKzsNkn89SZ2gdQ==
+"@capacitor/core@^6.0.0":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-6.2.1.tgz#7f1cbf438e55d3c32940eac26abd307c19f8bdee"
+  integrity sha512-urZwxa7hVE/BnA18oCFAdizXPse6fCKanQyEqpmz6cBJ2vObwMpyJDG5jBeoSsgocS9+Ax+9vb4ducWJn0y2qQ==
   dependencies:
     tslib "^2.1.0"
 
-"@capacitor/haptics@5.0.6":
-  version "5.0.6"
-  resolved "https://registry.npmjs.org/@capacitor/haptics/-/haptics-5.0.6.tgz"
-  integrity sha512-UrMcR7p2X10ql4VLlowUuH/VckTeu0lj+RQpekxox14uxDmu5AGIFDK/iDTi8W6QZkxTJRZK6sbCjgwYgNJ7Pw==
+"@capacitor/haptics@^6.0.0":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/haptics/-/haptics-6.0.2.tgz#3971a606ff3f436d71c90b5c524993fb684d53ee"
+  integrity sha512-xcFdIH4iIIeW2+1lzmlYMVicqB9ytaiuZ9NE3a9laKFPvMGC7hdj6i6tHFezwPJ/96xkHOwXT2b0F8Mh9xtTWg==
 
-"@capacitor/ios@5.6.0":
-  version "5.6.0"
-  resolved "https://registry.npmjs.org/@capacitor/ios/-/ios-5.6.0.tgz"
-  integrity sha512-iswpOcD5us10hIF5zS4w6k/ekW0A+2pXhDV4AHOBXR4VOkOMI8QJaavgl9JvZ/NVvVNJdEN2rOKCMNh4AH08sw==
+"@capacitor/ios@^6.0.0":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-6.2.1.tgz#ac18a429072857c0fd88a74d30d6cc60288b7471"
+  integrity sha512-tbMlQdQjxe1wyaBvYVU1yTojKJjgluZQsJkALuJxv/6F8QTw5b6vd7X785O/O7cMpIAZfUWo/vtAHzFkRV+kXw==
 
-"@capacitor/keyboard@5.0.7":
-  version "5.0.7"
-  resolved "https://registry.npmjs.org/@capacitor/keyboard/-/keyboard-5.0.7.tgz"
-  integrity sha512-+6lW8z2nXTM2NOG7D7pOasCfIGicz26+EeDRXIj5AtJibbjwtE1Q5GIY+qGHgzpmwOF0qmcrGJBz4zagDwUapg==
+"@capacitor/keyboard@^6.0.0":
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/@capacitor/keyboard/-/keyboard-6.0.3.tgz#0ea0e2f832722c02e32c5bb8a1e776d8bddc9b9e"
+  integrity sha512-V/mURxBI68HvClYjrGBlOriWkwYN7r+cWid/igJz/3scNc/V81DgQ9fpoLr4W0I5NY7YxOesjIJLuLO+LT18mQ==
 
-"@capacitor/status-bar@5.0.6":
-  version "5.0.6"
-  resolved "https://registry.npmjs.org/@capacitor/status-bar/-/status-bar-5.0.6.tgz"
-  integrity sha512-7od8CxsBnot1XMK3IeOkproFL4hgoKoWAc3pwUvmDOkQsXoxwQm4SR9mLwQavv1XfxtHbFV9Ukd7FwMxOPSViw==
+"@capacitor/status-bar@^6.0.0":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/status-bar/-/status-bar-6.0.2.tgz#a28a46630af1677f3e9c73f0e6921431d5340152"
+  integrity sha512-AmRIX6QvFemItlY7/69ARkIAqitRQqJ2qwgZmD1KqgFb78pH+XFXm1guvS/a8CuOOm/IqZ4ddDbl20yxtBqzGA==
 
 "@colors/colors@1.5.0":
   version "1.5.0"
@@ -1228,15 +1228,25 @@
     ionicons "^7.2.2"
     tslib "^2.1.0"
 
-"@ionic/utils-array@2.1.6":
-  version "2.1.6"
-  resolved "https://registry.npmjs.org/@ionic/utils-array/-/utils-array-2.1.6.tgz"
-  integrity sha512-0JZ1Zkp3wURnv8oq6Qt7fMPo5MpjbLoUoa9Bu2Q4PJuSDWM8H8gwF3dQO7VTeUj3/0o1IB1wGkFWZZYgUXZMUg==
+"@ionic/utils-array@2.1.5":
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/@ionic/utils-array/-/utils-array-2.1.5.tgz#15e4119b01e3978d58324a06d816959c25e248b6"
+  integrity sha512-HD72a71IQVBmQckDwmA8RxNVMTbxnaLbgFOl+dO5tbvW9CkkSFCv41h6fUuNsSEVgngfkn0i98HDuZC8mk+lTA==
   dependencies:
     debug "^4.0.0"
     tslib "^2.0.1"
 
-"@ionic/utils-fs@3.1.7", "@ionic/utils-fs@^3.1.6", "@ionic/utils-fs@^3.1.7":
+"@ionic/utils-fs@3.1.6":
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/@ionic/utils-fs/-/utils-fs-3.1.6.tgz#f96cbf724fcc1612be5fc61367c815c0f97796fa"
+  integrity sha512-eikrNkK89CfGPmexjTfSWl4EYqsPSBh0Ka7by4F0PLc1hJZYtJxUZV3X4r5ecA8ikjicUmcbU7zJmAjmqutG/w==
+  dependencies:
+    "@types/fs-extra" "^8.0.0"
+    debug "^4.0.0"
+    fs-extra "^9.0.0"
+    tslib "^2.0.1"
+
+"@ionic/utils-fs@^3.1.6", "@ionic/utils-fs@^3.1.7":
   version "3.1.7"
   resolved "https://registry.npmjs.org/@ionic/utils-fs/-/utils-fs-3.1.7.tgz"
   integrity sha512-2EknRvMVfhnyhL1VhFkSLa5gOcycK91VnjfrTB0kbqkTFCOXyXgVLI5whzq7SLrgD9t1aqos3lMMQyVzaQ5gVA==
@@ -1246,52 +1256,52 @@
     fs-extra "^9.0.0"
     tslib "^2.0.1"
 
-"@ionic/utils-object@2.1.6":
-  version "2.1.6"
-  resolved "https://registry.npmjs.org/@ionic/utils-object/-/utils-object-2.1.6.tgz"
-  integrity sha512-vCl7sl6JjBHFw99CuAqHljYJpcE88YaH2ZW4ELiC/Zwxl5tiwn4kbdP/gxi2OT3MQb1vOtgAmSNRtusvgxI8ww==
+"@ionic/utils-object@2.1.5":
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/@ionic/utils-object/-/utils-object-2.1.5.tgz#c1e58a711cdd4a30f46d23e241faf924424e010e"
+  integrity sha512-XnYNSwfewUqxq+yjER1hxTKggftpNjFLJH0s37jcrNDwbzmbpFTQTVAp4ikNK4rd9DOebX/jbeZb8jfD86IYxw==
   dependencies:
     debug "^4.0.0"
     tslib "^2.0.1"
 
-"@ionic/utils-process@2.1.11":
-  version "2.1.11"
-  resolved "https://registry.npmjs.org/@ionic/utils-process/-/utils-process-2.1.11.tgz"
-  integrity sha512-Uavxn+x8j3rDlZEk1X7YnaN6wCgbCwYQOeIjv/m94i1dzslqWhqIHEqxEyeE8HsT5Negboagg7GtQiABy+BLbA==
+"@ionic/utils-process@2.1.10":
+  version "2.1.10"
+  resolved "https://registry.yarnpkg.com/@ionic/utils-process/-/utils-process-2.1.10.tgz#35686d933520064859368dd70e691c1ff545d5d9"
+  integrity sha512-mZ7JEowcuGQK+SKsJXi0liYTcXd2bNMR3nE0CyTROpMECUpJeAvvaBaPGZf5ERQUPeWBVuwqAqjUmIdxhz5bxw==
   dependencies:
-    "@ionic/utils-object" "2.1.6"
-    "@ionic/utils-terminal" "2.3.4"
+    "@ionic/utils-object" "2.1.5"
+    "@ionic/utils-terminal" "2.3.3"
     debug "^4.0.0"
     signal-exit "^3.0.3"
     tree-kill "^1.2.2"
     tslib "^2.0.1"
 
-"@ionic/utils-stream@3.1.6":
-  version "3.1.6"
-  resolved "https://registry.npmjs.org/@ionic/utils-stream/-/utils-stream-3.1.6.tgz"
-  integrity sha512-4+Kitey1lTA1yGtnigeYNhV/0tggI3lWBMjC7tBs1K9GXa/q7q4CtOISppdh8QgtOhrhAXS2Igp8rbko/Cj+lA==
+"@ionic/utils-stream@3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@ionic/utils-stream/-/utils-stream-3.1.5.tgz#c8ec9fba30952d5e53a62ff2a3dad0d4283f2775"
+  integrity sha512-hkm46uHvEC05X/8PHgdJi4l4zv9VQDELZTM+Kz69odtO9zZYfnt8DkfXHJqJ+PxmtiE5mk/ehJWLnn/XAczTUw==
   dependencies:
     debug "^4.0.0"
     tslib "^2.0.1"
 
-"@ionic/utils-subprocess@^2.1.11":
-  version "2.1.14"
-  resolved "https://registry.npmjs.org/@ionic/utils-subprocess/-/utils-subprocess-2.1.14.tgz"
-  integrity sha512-nGYvyGVjU0kjPUcSRFr4ROTraT3w/7r502f5QJEsMRKTqa4eEzCshtwRk+/mpASm0kgBN5rrjYA5A/OZg8ahqg==
+"@ionic/utils-subprocess@2.1.11":
+  version "2.1.11"
+  resolved "https://registry.yarnpkg.com/@ionic/utils-subprocess/-/utils-subprocess-2.1.11.tgz#805b86c066fe3a50f6739551ca228d52f25ffeb2"
+  integrity sha512-6zCDixNmZCbMCy5np8klSxOZF85kuDyzZSTTQKQP90ZtYNCcPYmuFSzaqDwApJT4r5L3MY3JrqK1gLkc6xiUPw==
   dependencies:
-    "@ionic/utils-array" "2.1.6"
-    "@ionic/utils-fs" "3.1.7"
-    "@ionic/utils-process" "2.1.11"
-    "@ionic/utils-stream" "3.1.6"
-    "@ionic/utils-terminal" "2.3.4"
+    "@ionic/utils-array" "2.1.5"
+    "@ionic/utils-fs" "3.1.6"
+    "@ionic/utils-process" "2.1.10"
+    "@ionic/utils-stream" "3.1.5"
+    "@ionic/utils-terminal" "2.3.3"
     cross-spawn "^7.0.3"
     debug "^4.0.0"
     tslib "^2.0.1"
 
-"@ionic/utils-terminal@2.3.4":
-  version "2.3.4"
-  resolved "https://registry.npmjs.org/@ionic/utils-terminal/-/utils-terminal-2.3.4.tgz"
-  integrity sha512-cEiMFl3jklE0sW60r8JHH3ijFTwh/jkdEKWbylSyExQwZ8pPuwoXz7gpkWoJRLuoRHHSvg+wzNYyPJazIHfoJA==
+"@ionic/utils-terminal@2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@ionic/utils-terminal/-/utils-terminal-2.3.3.tgz#de118bbb07aae7eea833a9f8108bb7fe593cd26e"
+  integrity sha512-RnuSfNZ5fLEyX3R5mtcMY97cGD1A0NVBbarsSQ6yMMfRJ5YHU7hHVyUfvZeClbqkBC/pAqI/rYJuXKCT9YeMCQ==
   dependencies:
     "@types/slice-ansi" "^4.0.0"
     debug "^4.0.0"
@@ -1588,7 +1598,7 @@
     unplugin "1.0.1"
 
 "@sentry/capacitor@file:.yalc/@sentry/capacitor":
-  version "2.2.0"
+  version "2.3.0"
   dependencies:
     "@sentry/browser" "9.46.0"
     "@sentry/core" "9.46.0"
