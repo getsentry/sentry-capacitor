@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Wait for Build & Test workflow
         # v1.4.0
-        uses: lewagon/wait-on-check-action@v0dceb95e7c4cad8cc7422aee3885998f5cab9c79
+        uses: lewagon/wait-on-check-action@0dceb95e7c4cad8cc7422aee3885998f5cab9c79
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           check-name: 'Build & Test'
