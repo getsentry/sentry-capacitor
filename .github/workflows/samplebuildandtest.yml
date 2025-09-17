@@ -1,10 +1,11 @@
 name: 'Sample Build & Test'
 on:
-  push:
+  workflow_run:
+    workflows: ['Build & Test']
+    types: [completed]
     branches:
       - main
       - release/**
-  pull_request:
 
 permissions:
   contents: read
@@ -17,9 +18,19 @@ env:
   BUILD_CACHE_KEY: ${{ github.sha }}
 
 jobs:
+  job_upstream_check:
+    name: Verify upstream success
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure upstream workflow succeeded
+        if: ${{ github.event.workflow_run.conclusion != 'success' }}
+        run: |
+          echo "Upstream 'Build & Test' concluded: ${{ github.event.workflow_run.conclusion }}"
+          exit 1
+
   job_sample_build:
     name: Sample Build
-    needs: job_build
+    needs: job_upstream_check
     runs-on: macos-latest
     strategy:
       matrix:
@@ -33,16 +44,6 @@ jobs:
       - run: corepack enable
       - name: Set up Node
         uses: actions/setup-node@v5
-      - name: Check dependency cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809
-        with:
-          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
-          key: ${{ needs.job_build.outputs.dependency_cache_key }}
-      - name: Check build cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809
-        with:
-          path: ${{ env.CACHED_BUILD_PATHS }}
-          key: ${{ env.BUILD_CACHE_KEY }}
       - name: Install yalc
         run: yarn  global add yalc
       - name: Install Ionic
