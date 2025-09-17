@@ -30,13 +30,13 @@ jobs:
         include:
           - bump: 'v6'
             SAMPLE_DIR: 'example/ionic-angular-v6'
-            JAVA_VERSION: '21'
+            JAVA_VERSION: '17'
           - bump: 'v7'
             sample_path: 'example/ionic-angular-v7'
-            SAMPLE_DIR: '21'
+            JAVA_VERSION: '21'
           - bump: 'sample-vue'
             SAMPLE_DIR: 'example/ionic-vue3'
-            JAVA_VERSION: '21'
+            JAVA_VERSION: '17'
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v4
