@@ -1,12 +1,14 @@
 name: 'Sample Build & Test'
 on:
-  workflow_run:
-    workflows: ['Build & Test']
-    types: [completed]
+  push:
+    branches:
+      - main
+      - release/**
+  pull_request:
 
 permissions:
-  actions: read
   contents: read
+  actions: read
 
 env:
   CACHED_DEPENDENCY_PATHS: |
@@ -16,25 +18,23 @@ env:
   BUILD_CACHE_KEY: ${{ github.sha }}
 
 jobs:
-  job_upstream_check:
-    name: Verify upstream success
+  job_wait_for_upstream:
+    name: Wait for upstream artifacts
     runs-on: ubuntu-latest
     steps:
-      - name: Debug workflow run event
-        run: |
-          echo "Workflow run conclusion: ${{ github.event.workflow_run.conclusion }}"
-          echo "Workflow run status: ${{ github.event.workflow_run.status }}"
-          echo "Workflow run head_branch: ${{ github.event.workflow_run.head_branch }}"
-          echo "Workflow run head_sha: ${{ github.event.workflow_run.head_sha }}"
-      - name: Ensure upstream workflow succeeded
-        if: ${{ github.event.workflow_run.conclusion != 'success' }}
-        run: |
-          echo "Upstream 'Build & Test' concluded: ${{ github.event.workflow_run.conclusion }}"
-          exit 1
+      - name: Wait for Build & Test workflow
+        # v1.4.0
+        uses: lewagon/wait-on-check-action@v0dceb95e7c4cad8cc7422aee3885998f5cab9c79
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          check-name: 'Build & Test'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+          allowed-conclusions: success
 
   job_sample_build:
     name: Sample Build
-    needs: job_upstream_check
+    needs: job_wait_for_upstream
     runs-on: macos-latest
     strategy:
       matrix:
