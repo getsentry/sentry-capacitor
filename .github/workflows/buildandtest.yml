@@ -147,3 +147,11 @@ jobs:
           name: ${{ github.sha }}
           path: |
             ${{ github.workspace }}/sentry-capacitor-*
+
+  job_sample_build:
+    name: Sample Build
+    needs: job_build
+    uses: ./.github/workflows/reusable/sample-build.yml
+    with:
+      dependency_cache_key: ${{ needs.job_build.outputs.dependency_cache_key }}
+      build_cache_key: ${{ env.BUILD_CACHE_KEY }}

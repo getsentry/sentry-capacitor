@@ -1,10 +1,14 @@
-name: 'Sample Build & Test'
+name: 'Sample Build'
+
 on:
-  push:
-    branches:
-      - main
-      - release/**
-  pull_request:
+  workflow_call:
+    inputs:
+      dependency_cache_key:
+        required: true
+        type: string
+      build_cache_key:
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -15,26 +19,11 @@ env:
     ${{ github.workspace }}/node_modules
   CACHED_BUILD_PATHS: |
     ${{ github.workspace }}/dist
-  BUILD_CACHE_KEY: ${{ github.sha }}
+  BUILD_CACHE_KEY: ${{ inputs.build_cache_key }}
 
 jobs:
-  job_wait_for_upstream:
-    name: Wait for upstream artifacts
-    runs-on: ubuntu-latest
-    steps:
-      - name: Wait for Build & Test workflow
-        # v1.4.0
-        uses: lewagon/wait-on-check-action@0dceb95e7c4cad8cc7422aee3885998f5cab9c79
-        with:
-          ref: ${{ github.ref }}
-          check-name: 'Build & Test'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 4
-          allowed-conclusions: success
-
   job_sample_build:
     name: Sample Build
-    needs: job_wait_for_upstream
     runs-on: macos-latest
     strategy:
       matrix:
@@ -48,6 +37,16 @@ jobs:
       - run: corepack enable
       - name: Set up Node
         uses: actions/setup-node@v5
+      - name: Check dependency cache
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809
+        with:
+          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
+          key: ${{ inputs.dependency_cache_key }}
+      - name: Check build cache
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809
+        with:
+          path: ${{ env.CACHED_BUILD_PATHS }}
+          key: ${{ env.BUILD_CACHE_KEY }}
       - name: Install yalc
         run: yarn  global add yalc
       - name: Install Ionic
