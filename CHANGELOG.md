@@ -16,7 +16,7 @@
 
 > [!WARNING]
 > This release contains an issue where iOS builds will fail, please opt for a lower version or version 2.3.1 or newer.
-> See issue [#4598](https://github.com/getsentry/sentry-capacitor/issues/979) for more details.
+> See issue [#979](https://github.com/getsentry/sentry-capacitor/issues/979) for more details.
 
 ### Features
 
