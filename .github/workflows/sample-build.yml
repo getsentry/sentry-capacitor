@@ -118,7 +118,7 @@ jobs:
                      -scheme App \
                      -configuration Debug \
                      -sdk iphonesimulator \
-                     -destination 'platform=iOS Simulator,name=iPhone 15' \
+                     -destination 'platform=iOS Simulator,name=iPhone' \
                      build | xcpretty
 
       - name: Upload iOS build logs
