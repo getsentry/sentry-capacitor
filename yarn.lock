@@ -1008,13 +1008,13 @@
   dependencies:
     "@sentry/core" "9.46.0"
 
-"@sentry-internal/eslint-config-sdk@9.46.0":
-  version "9.46.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-config-sdk/-/eslint-config-sdk-9.46.0.tgz#156ba1551c4c570a12e2ca91aaff4c24a44c2fd8"
-  integrity sha512-nm9qsiQp9doeQXlsqSMEzuX/0bIH8nufzZfnhJPt/ANtVdoppI5aJACs2cJxX+6UBF3xqvdtkJHPqcyVh8cqiA==
+"@sentry-internal/eslint-config-sdk@10.13.0":
+  version "10.13.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-config-sdk/-/eslint-config-sdk-10.13.0.tgz#fee4def11437cef15cdd31bad66b1b43c672545b"
+  integrity sha512-QWQ04BPMKXde/aKazwgUoRIovQjvR3ksWWs6QXQak/p1E+woT2IOazDN0UkW3Bz5qH3ZbNXRoWtsmtTnrZcEQg==
   dependencies:
-    "@sentry-internal/eslint-plugin-sdk" "9.46.0"
-    "@sentry-internal/typescript" "9.46.0"
+    "@sentry-internal/eslint-plugin-sdk" "10.13.0"
+    "@sentry-internal/typescript" "10.13.0"
     "@typescript-eslint/eslint-plugin" "^5.48.0"
     "@typescript-eslint/parser" "^5.48.0"
     eslint-config-prettier "^6.11.0"
@@ -1022,6 +1022,11 @@
     eslint-plugin-import "^2.22.0"
     eslint-plugin-jsdoc "^30.0.3"
     eslint-plugin-simple-import-sort "^6.0.0"
+
+"@sentry-internal/eslint-plugin-sdk@10.13.0":
+  version "10.13.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/eslint-plugin-sdk/-/eslint-plugin-sdk-10.13.0.tgz#18ce5bc3404069ab7cdcfc4459faa3afe3143965"
+  integrity sha512-lXbvQ8jEgAsLmUu0x1Gap6sRofX5uGuE4fUhMbTu/y8F5bgBsmptBn+lRBZ2YE0RQUETJ1RvIMD0Hr4ni8elSA==
 
 "@sentry-internal/eslint-plugin-sdk@9.46.0":
   version "9.46.0"
@@ -1059,6 +1064,11 @@
     "@sentry/core" "7.120.3"
     "@sentry/types" "7.120.3"
     "@sentry/utils" "7.120.3"
+
+"@sentry-internal/typescript@10.13.0":
+  version "10.13.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/typescript/-/typescript-10.13.0.tgz#4aa6bf39a9ad9e8afdd3cbd999655e3d3abe9ef3"
+  integrity sha512-vGiH3HLmoMzpLkAgpfozOw1Zrc623Yex71uGKClYTxxtpVHK3wxihiMab9itgmjrRpGMGKqpe68e3D1NWTIrTw==
 
 "@sentry-internal/typescript@9.46.0":
   version "9.46.0"
