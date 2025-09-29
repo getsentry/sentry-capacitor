@@ -17,7 +17,7 @@ env:
 permissions:
   contents: read
   actions: read
-  workflow: write
+  workflows: write
 
 jobs:
   job_install_deps:
