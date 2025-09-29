@@ -11,7 +11,7 @@ PODS:
   - CapacitorStatusBar (5.0.6):
     - Capacitor
   - Sentry/HybridSDK (8.55.0)
-  - "SentryCapacitor (2.0.0+116fb98b)":
+  - "SentryCapacitor (2.3.0+bfea6c5f)":
     - Capacitor
     - Sentry/HybridSDK (= 8.55.0)
 
@@ -51,8 +51,8 @@ SPEC CHECKSUMS:
   CapacitorHaptics: 1fffc1217c7e64a472d7845be50fb0c2f7d4204c
   CapacitorKeyboard: ce5e01064cf57a2c05b32565310713b7fe6cc6f9
   CapacitorStatusBar: 565c0a1ebd79bb40d797606a8992b4a105885309
-  Sentry: 59993bffde4a1ac297ba6d268dc4bbce068d7c1b
-  SentryCapacitor: 493a329bf9145f60afb55cd65f1f363c5ef6e665
+  Sentry: f7dddfabe691274d6d630f04621e1345f9d6b9e0
+  SentryCapacitor: 02551ec86877a5fda41b410b2700d5ca47ba1048
 
 PODFILE CHECKSUM: a972544de6bcfa1a17161b0b4ef85e6ee7586f79
 
