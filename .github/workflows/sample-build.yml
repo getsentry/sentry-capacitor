@@ -10,11 +10,6 @@ on:
         required: true
         type: string
 
-permissions:
-  contents: read
-  actions: read
-  workflows: write
-
 env:
   CACHED_DEPENDENCY_PATHS: |
     ${{ github.workspace }}/node_modules
