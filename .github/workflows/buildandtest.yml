@@ -14,6 +14,9 @@ env:
     ${{ github.workspace }}/dist
 
   BUILD_CACHE_KEY: ${{ github.sha }}
+permissions:
+  contents: read
+  actions: read
 
 jobs:
   job_install_deps:
@@ -32,7 +35,7 @@ jobs:
         id: compute_lockfile_hash
         run: echo "hash=${{ hashFiles('yarn.lock') }}" >> "$GITHUB_OUTPUT"
       - name: Check dependency cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         id: cache_dependencies
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
@@ -56,12 +59,12 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v5
       - name: Check dependency cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_install_deps.outputs.dependency_cache_key }}
       - name: Check build cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         id: cache_built_packages
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
@@ -94,54 +97,6 @@ jobs:
       # `job_build` can't see `job_install_deps` and what it returned)
       dependency_cache_key: ${{ needs.job_install_deps.outputs.dependency_cache_key }}
 
-  job_sample_test:
-    name: Sample Build Test
-    needs: job_build
-    # macos required for the xcode build.
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        include:
-          - bump: 'v6'
-          - bump: 'v7'
-          - bump: 'sample-vue'
-    steps:
-      - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v4
-      - run: corepack enable
-      - name: Set up Node
-        uses: actions/setup-node@v5
-      - name: Check dependency cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
-        with:
-          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
-          key: ${{ needs.job_build.outputs.dependency_cache_key }}
-      - name: Check build cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
-        with:
-          path: ${{ env.CACHED_BUILD_PATHS }}
-          key: ${{ env.BUILD_CACHE_KEY }}
-      - name: Install yalc
-        run: yarn  global add yalc
-      - name: Install Ionic
-        run: yarn  global add @ionic/cli
-
-      - name: Download Sentry Capacitor package
-        uses: actions/download-artifact@v4
-        with:
-          name: yalc-package
-          path: ~/.yalc/packages/@sentry/capacitor/ # Ensure this path matches where yalc expects to find the package
-
-      - name: Publish test broken node.
-        working-directory: example/broken_node_module
-        run: |
-          yarn install
-          yarn build
-          yalc publish
-
-      - name: Build Sample ${{ matrix.bump }}
-        run: yarn run bump:${{ matrix.bump }}
-
   job_unit_test:
     name: Test
     needs: job_build
@@ -155,12 +110,12 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v5
       - name: Check dependency cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_build.outputs.dependency_cache_key }}
       - name: Check build cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
@@ -178,12 +133,12 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v5
       - name: Check dependency cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_build.outputs.dependency_cache_key }}
       - name: Check build cache
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # V4.2.4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # V4.2.4
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
@@ -195,3 +150,11 @@ jobs:
           name: ${{ github.sha }}
           path: |
             ${{ github.workspace }}/sentry-capacitor-*
+
+  job_sample_build:
+    name: Sample Build
+    needs: job_build
+    uses: ./.github/workflows/sample-build.yml
+    with:
+      dependency_cache_key: ${{ needs.job_build.outputs.dependency_cache_key }}
+      build_cache_key: ${{ github.sha }}
