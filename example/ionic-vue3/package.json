@@ -11,7 +11,7 @@
     "sync": "ionic cap copy & ionic cap sync",
     "ios": "ionic cap open ios",
     "android": "ionic cap open android",
-    "bump:sample-pod": "cd ios/App && pod install  || node ../../../../scripts/sample-skip-pod-windows.js",
+    "bump:sample-pod": "cd ios/App && pod update Sentry/HybridSDK && pod install || node ../../../../scripts/sample-skip-pod-windows.js",
     "lint": "eslint ."
   },
   "dependencies": {
