@@ -14,9 +14,6 @@ env:
     ${{ github.workspace }}/dist
 
   BUILD_CACHE_KEY: ${{ github.sha }}
-permissions:
-  contents: read
-  actions: read
 
 jobs:
   job_install_deps:
