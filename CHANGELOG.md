@@ -16,6 +16,9 @@
 - Bump Android SDK from v8.21.0 to v8.22.0 ([#972](https://github.com/getsentry/sentry-capacitor/pull/972))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8220)
   - [diff](https://github.com/getsentry/sentry-java/compare/8.21.0...8.22.0)
+- Bump JavaScript Sibling SDKs from v9.46.0 to v10.17.0 ([#936](https://github.com/getsentry/sentry-capacitor/pull/936))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#10170)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/9.46.0...10.17.0)
 
 ## 2.3.1
 
