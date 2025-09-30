@@ -60,7 +60,7 @@
     "ng": "ng",
     "start": "ng serve",
     "test": "ng test",
-    "bump:sample-pod": "cd ios/App && pod install || node ../../../../scripts/sample-skip-pod-windows.js",
+    "bump:sample-pod": "cd ios/App && pod install --repo-update || node ../../../../scripts/sample-skip-pod-windows.js",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org sentry-sdks --project capacitor ./www && sentry-cli sourcemaps upload --org sentry-sdks --project capacitor ./www"
   },
   "version": "0.0.1"
