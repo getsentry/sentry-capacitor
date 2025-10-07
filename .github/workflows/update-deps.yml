@@ -12,7 +12,10 @@ on:
 jobs:
   android:
     runs-on: ubuntu-latest
-    uses: getsentry/github-workflows/.github/workflows/updater.yml@v3
+    uses: getsentry/github-workflows/.github/workflows/updater.yml@v2
+    permissions:
+      contents: write
+      pull-requests: write
     with:
       path: scripts/update-android.sh
       name: Android SDK
@@ -22,6 +25,9 @@ jobs:
   cocoa:
     runs-on: ubuntu-latest
     uses: getsentry/github-workflows/.github/workflows/updater.yml@v3
+    permissions:
+      contents: write
+      pull-requests: write
     with:
       path: scripts/update-cocoa.sh
       name: Cocoa SDK
@@ -31,6 +37,9 @@ jobs:
   javascript:
     runs-on: ubuntu-latest
     uses: getsentry/github-workflows/.github/workflows/updater.yml@v3
+    permissions:
+      contents: write
+      pull-requests: write
     with:
       path: scripts/update-javascript.sh
       name: JavaScript SDK
@@ -40,6 +49,9 @@ jobs:
   javascript-siblings:
     runs-on: ubuntu-latest
     uses: getsentry/github-workflows/.github/workflows/updater.yml@v3
+    permissions:
+      contents: write
+      pull-requests: write
     with:
       path: scripts/update-javascript-siblings.sh
       name: JavaScript Sibling SDKs
@@ -49,6 +61,9 @@ jobs:
   wizard:
     runs-on: ubuntu-latest
     uses: getsentry/github-workflows/.github/workflows/updater.yml@v3
+    permissions:
+      contents: write
+      pull-requests: write
     with:
       path: scripts/update-wizard.sh
       name: Wizard
