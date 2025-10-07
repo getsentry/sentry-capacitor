@@ -1,3 +1,6 @@
+> [!WARNING]
+> This Sample code may contain security vulnerabilities, should never be used in production, and exists only for illustrative purposes.
+
 # Instructions for using the example app
 
 ## Add the local SDK from yalc
