@@ -84,7 +84,8 @@
     "typescript": "5.0.4"
   },
   "resolutions": {
-    "form-data": "4.0.4"
+    "form-data": "4.0.4",
+    "tmp": ">0.2.3"
   },
   "files": [
     "dist/",
