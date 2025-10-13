@@ -8,7 +8,7 @@
 
 ## Unreleased
 
-## Fixes
+## Feature
 
 - Support for iOS 26 ([#967](https://github.com/getsentry/sentry-capacitor/pull/967))
 
