@@ -8,6 +8,10 @@
 
 ## Unreleased
 
+## Feature
+
+- Support for iOS 26 ([#967](https://github.com/getsentry/sentry-capacitor/pull/967))
+
 ### Dependencies
 
 - Bump Cocoa SDK from v8.55.0 to v8.56.2 ([#967](https://github.com/getsentry/sentry-capacitor/pull/967))
