@@ -8,18 +8,6 @@
 
 ## 2.4.0
 
-### Various fixes & improvements
-
-- build(deps): bump actions/create-github-app-token from 2.1.1 to 2.1.4 (#975) by @dependabot
-- build(deps-dev): bump prettier from 3.3.2 to 3.6.2 (#962) by @dependabot
-- build(deps): bump actions/cache from 4.2.4 to 4.3.0 (#989) by @dependabot
-- build(deps): bump actions/stale from 10.0.0 to 10.1.0 (#994) by @dependabot
-- build(deps): bump getsentry/github-workflows from 2 to 3 (#986) by @dependabot
-- chore(deps): update Android SDK to v8.23.0 (#990) by @github-actions
-- chore: update scripts/update-wizard.sh to v6.5.0 (#983) by @github-actions
-- chore(deps): update Cocoa SDK to v8.56.2 (#967) by @github-actions
-- chore(deps): update Android SDK to v8.22.0 (#972) by @github-actions
-
 ## Feature
 
 - Support for iOS 26 ([#967](https://github.com/getsentry/sentry-capacitor/pull/967))
