@@ -33,7 +33,7 @@ Sentry.init(
     beforeSendLog: (log) => {
       return log;
     },
-  // A release identifier
+    // A release identifier
     release: '1.0.0',
     // A dist identifier
     dist: '1.0.0.1',
