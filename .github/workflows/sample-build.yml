@@ -107,6 +107,12 @@ jobs:
         working-directory: ${{ matrix.SAMPLE_DIR }}/ios/App
         run: pod install --repo-update
 
+      - name: Select iOS Simulator
+        run: |
+          SIMULATOR_NAME=$(xcrun simctl list devices available | grep -oE 'iPhone [0-9]+' | head -n1)
+          echo "Selected iOS Simulator: $SIMULATOR_NAME"
+          echo "SIMULATOR_NAME=$SIMULATOR_NAME" >> $GITHUB_ENV
+
       - name: iOS build (xcodebuild)
         working-directory: ${{ matrix.SAMPLE_DIR }}/ios/App
         run: |
@@ -114,7 +120,7 @@ jobs:
                      -scheme App \
                      -configuration Debug \
                      -sdk iphonesimulator \
-                     -destination 'platform=iOS Simulator,name=iPhone 16' \
+                     -destination "platform=iOS Simulator,name=$SIMULATOR_NAME" \
                      build | xcpretty && exit ${PIPESTATUS[0]}
 
       - name: Upload iOS build logs
