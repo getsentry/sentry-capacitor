@@ -10,6 +10,44 @@
 
 ## Unreleased
 
+### Break Changes
+
+#### Sentry JavaScript V10
+
+Version 10 of the Sentry JavaScript SDK primarily focuses on upgrading underlying OpenTelemetry dependencies to v2 with minimal breaking changes.
+
+Version 10 of the SDK is compatible with Sentry self-hosted versions 24.4.2 or higher (unchanged from v9). Lower versions may continue to work, but may not support all features.
+
+### Removed APIs
+
+The changes outlined in this section detail deprecated APIs that are now removed.
+
+    * BaseClient was removed, use Client as a direct replacement.
+    * hasTracingEnabled was removed, use hasSpansEnabled as a direct replacement.
+    * The internal logger and type Logger exports in @sentry/core were removed, use debug and type SentryDebugLogger instead. This does not affect the logger export used for [Sentry Logging](https://docs.sentry.io/product/explore/logs/getting-started/).
+    * The _experiments.enableLogs and _experiments.beforeSendLog options were removed, use the top-level enableLogs and beforeSendLog options instead.
+
+```JavaScript
+// before
+Sentry.init({
+  _experiments: {
+    enableLogs: true,
+    beforeSendLog: (log) => {
+      return log;
+    },
+  },
+});
+// after
+Sentry.init({
+  enableLogs: true,
+  beforeSendLog: (log) => {
+    return log;
+  },
+});
+```
+
+For more informations, please go to the following link: https://docs.sentry.io/platforms/javascript/migration/v9-to-v10
+
 ### Dependencies
 
 - Bump JavaScript Sibling SDKs from v9.46.0 to v10.20.0 ([#1013](https://github.com/getsentry/sentry-capacitor/pull/1013))
