@@ -29,11 +29,9 @@ Sentry.init(
         blockAllMedia: true,
       }),
     ],
-    _experiments: {
-      enableLogs: true,
-      beforeSendLog: (log) => {
-        return log;
-      }
+    enableLogs: true,
+    beforeSendLog: (log) => {
+      return log;
     },
     // A release identifier
     release: '1.0.0',
