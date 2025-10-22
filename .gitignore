@@ -20,8 +20,6 @@ example/*/build
 example/*/.ionic
 example/*/.yalc
 example/*/.angular
-example/*/.env
-
 
 # iOS files
 Pods
