@@ -93,7 +93,7 @@ jobs:
         run: ./gradlew --no-daemon assembleDebug
 
       - name: Upload Android APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.bump }}-android-apk
           if-no-files-found: warn
@@ -124,7 +124,7 @@ jobs:
                      build | xcpretty && exit ${PIPESTATUS[0]}
 
       - name: Upload iOS build logs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.bump }}-ios-build-logs
           if-no-files-found: warn
