@@ -1,4 +1,4 @@
-import type { Integration } from '@sentry/core';
+import { type Integration,consoleLoggingIntegration } from '@sentry/core';
 import type { CapacitorOptions } from '../options';
 import { deviceContextIntegration } from './devicecontext';
 import { eventOriginIntegration } from './eventorigin';
@@ -18,6 +18,7 @@ export function getDefaultIntegrations(
   integrations.push(nativeReleaseIntegration());
   integrations.push(eventOriginIntegration());
   integrations.push(sdkInfoIntegration());
+  integrations.push(consoleLoggingIntegration());
 
   if (options.enableNative) {
     integrations.push(deviceContextIntegration());

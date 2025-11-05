@@ -2,6 +2,7 @@ import type { BrowserOptions } from '@sentry/browser';
 import { init as browserInit } from '@sentry/browser';
 import type { Integration } from '@sentry/core';
 import { debug, getClient, getGlobalScope, getIntegrationsToSetup, getIsolationScope  } from '@sentry/core';
+import { sdkInit } from './client';
 import { getDefaultIntegrations } from './integrations/default';
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
 import { enableSyncToNative } from './scopeSync';
@@ -82,11 +83,8 @@ export function init<T>(
       NATIVE.platform !== 'web' && finalOptions.enableAutoSessionTracking,
   } as CapacitorClientOptions;
 
-  // We first initialize the NATIVE SDK to avoid the Javascript SDK to invoke any
-  // feature from the NATIVE SDK without the options being set.
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  void NATIVE.initNativeSdk(mobileOptions);
-  originalInit(browserOptions);
+
+  sdkInit(browserOptions, mobileOptions, originalInit);
 }
 
 /**
