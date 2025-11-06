@@ -56,7 +56,7 @@ public class SentryCapacitor extends Plugin {
             String packageName = this.getContext().getPackageName();
             this.packageInfo = this.context.getPackageManager().getPackageInfo(packageName, 0); // Requires API 33 for deprecation change.
         } catch (Exception e) {
-            logger.log(SentryLevel.ERROR,"Error getting package info.");
+            logger.log(SentryLevel.ERROR, "Error getting package info.");
         }
     }
 
@@ -83,7 +83,7 @@ public class SentryCapacitor extends Plugin {
                 options.setSdkVersion(sdkVersion);
 
               String dsn = capOptions.getString("dsn") != null ? capOptions.getString("dsn") : "";
-                logger.log( SentryLevel.INFO, String.format("Starting with DSN: '%s'", dsn));
+                logger.log(SentryLevel.INFO, String.format("Starting with DSN: '%s'", dsn));
                 options.setDsn(dsn);
 
                 if (capOptions.has("environment") && capOptions.getString("environment") != null) {
@@ -240,7 +240,6 @@ public class SentryCapacitor extends Plugin {
         }
         call.resolve();
     }
-
 
     @PluginMethod
     public void getStringBytesLength(PluginCall call) {
