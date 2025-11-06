@@ -55,16 +55,7 @@ import { Capacitor } from '@capacitor/core';
 import { SentryCapacitor } from '../src/plugin';
 import { base64StringFromByteArray } from '../src/vendor/fromByteArray';
 import { NATIVE } from '../src/wrapper';
-
-
-function Base64StringToString(base64String: string): string {
-  const binaryString = atob(base64String);
-  const bytes = new Uint8Array(binaryString.length);
-  for (let i = 0; i < binaryString.length; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
-  return new TextDecoder().decode(bytes);
-}
+import { Base64StringToString } from './vendor/base64Converter';
 
 beforeEach(() => {
   getStringBytesLengthValue = 1;
