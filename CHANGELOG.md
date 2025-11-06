@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- Replay not being captured on Android ([#1028](https://github.com/getsentry/sentry-capacitor/pull/1028))
+
 ## 2.4.0
 
 ## Feature
@@ -209,7 +215,6 @@ Sentry.init({
 ### Dependencies
 
 - Bump JavaScript SDKs from v8.55.0 to v9.0.0 ([#840](https://github.com/getsentry/sentry-capacitor/pull/840))
-
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.0.0/CHANGELOG.md#900)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/8.55.0...9.0.0)
 
@@ -230,7 +235,6 @@ Sentry.init({
 ### Dependencies
 
 - Bump JavaScript SDKs from v8.55.0 to v9.11.0 ([#840](https://github.com/getsentry/sentry-capacitor/pull/840), [#872](https://github.com/getsentry/sentry-capacitor/pull/872))
-
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/9.11.0/CHANGELOG.md)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/8.55.0...9.11.0)
 
@@ -276,7 +280,6 @@ Sentry.init({
 ### Dependencies
 
 - Bump JavaScript SDKs from v8.37.1 to v8.42.0 ([#730](https://github.com/getsentry/sentry-capacitor/pull/730))
-
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/develop/CHANGELOG.md#8420)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/8.37.1...8.42.0)
 
@@ -487,12 +490,10 @@ information.
 
   The release data comes from the following parameters:
   Android
-
   - release: `PackageInfo.packageName` + `PackageInfo.versionName` + `PackageInfo.versionCode`
   - dist: `PackageInfo.versionCode`
 
   iOS:
-
   - release: `CFBundleIdentifier` + `CFBundleShortVersionString` + `CFBundleVersion`
   - dist: `CFBundleVersion`
 

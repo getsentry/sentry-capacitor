@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import type { Envelope, EventEnvelope, EventItem, SeverityLevel, TransportMakeRequestResponse } from '@sentry/core';
-import {createEnvelope, debug,dropUndefinedKeys} from '@sentry/core';
+import { createEnvelope, debug, dropUndefinedKeys } from '@sentry/core';
 import { utf8ToBytes } from '../src/vendor';
 
 let getStringBytesLengthValue = 1;
@@ -53,11 +53,9 @@ jest.mock('../src/plugin', () => {
 // Now import after mocks are set up
 import { Capacitor } from '@capacitor/core';
 import { SentryCapacitor } from '../src/plugin';
+import { base64StringFromByteArray } from '../src/vendor/fromByteArray';
 import { NATIVE } from '../src/wrapper';
-
-function NumberArrayToString(numberArray: number[]): string {
-  return new TextDecoder().decode(new Uint8Array(numberArray).buffer);
-}
+import { Base64StringToString } from './vendor/base64Converter';
 
 beforeEach(() => {
   getStringBytesLengthValue = 1;
@@ -203,7 +201,7 @@ describe('Tests Native Wrapper', () => {
 
       await NATIVE.sendEnvelope(env);
 
-      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledWith({ envelope: utf8ToBytes(expectedEnvelope) });
+      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledWith({ envelope: base64StringFromByteArray(utf8ToBytes(expectedEnvelope)) });
     });
 
     test('does not call Capacitor at all if enableNative is false', async () => {
@@ -262,7 +260,7 @@ describe('Tests Native Wrapper', () => {
       await NATIVE.sendEnvelope(env);
 
       expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
-      expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
+      expect(Base64StringToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
         `${expectedHeader}\n${expectedItem}\n${expectedPayload}`);
     });
 
@@ -270,6 +268,7 @@ describe('Tests Native Wrapper', () => {
       const [expectedEOF = -1/* Placeholder */] = utf8ToBytes('\n');
       const expectedEnvelopeBytes = utf8ToBytes(JSON.stringify({ foo: 'bar' }));
       expectedEnvelopeBytes.push(expectedEOF);
+      const expectedEnvelopeBase64 = base64StringFromByteArray(expectedEnvelopeBytes);
 
       const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
 
@@ -279,7 +278,7 @@ describe('Tests Native Wrapper', () => {
 
       expect(expectedEOF).not.toBe(-1);
       expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
-      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toEqual(expectedEnvelopeBytes);
+      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toEqual(expectedEnvelopeBase64);
     });
 
     test('Clears breadcrumbs on Android if there is a handled exception', async () => {
@@ -339,7 +338,7 @@ describe('Tests Native Wrapper', () => {
       await NATIVE.sendEnvelope(env);
 
       expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
-      expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
+      expect(Base64StringToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
         `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`);
     });
 
@@ -400,7 +399,7 @@ describe('Tests Native Wrapper', () => {
       await NATIVE.sendEnvelope(env);
 
       expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
-      expect(NumberArrayToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
+      expect(Base64StringToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
         `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`);
     });
 
