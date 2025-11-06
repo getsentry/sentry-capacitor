@@ -120,9 +120,6 @@ public class SentryCapacitor extends Plugin {
                     options.setAttachThreads(capOptions.getBool("attachThreads"));
                 }
 
-                options.setEnableSpotlight(true);
-                options.setSpotlightConnectionUrl("http://192.168.8.150:8969/stream");
-
                 options.setBeforeSend(
                     (event, hint) -> {
                         setEventOriginTag(event);
