@@ -1,12 +1,14 @@
 <p align="center">
   <a href="https://sentry.io/?utm_source=github&utm_medium=logo" target="_blank">
-    <img src="https://sentry-brand.storage.googleapis.com/sentry-wordmark-dark-280x84.png" alt="Sentry" width="280" height="84">
+    <img src=".github/sentry-wordmark-dark-400x119.svg" width="280">
+
   </a>
 </p>
 
 _Bad software is everywhere, and we're tired of it. Sentry is on a mission to help developers write better software faster, so we can get back to enjoying technology. If you want to join us [<kbd>**Check out our open positions**</kbd>](https://sentry.io/careers/)_
 
 ## Official Sentry SDK for Capacitor
+
 [![build](https://github.com/getsentry/sentry-capacitor/workflows/Build%20&%20Test/badge.svg?branch=main)](https://github.com/getsentry/sentry-capacitor/actions?query=branch%3Amain)
 [![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)
 
@@ -27,7 +29,6 @@ yarn add @sentry/capacitor @sentry/browser --exact
 ```
 
 Older versions of Angular require @sentry/capacitor V0, for more information check the page: https://docs.sentry.io/platforms/javascript/guides/capacitor/#angular-version-compatibility
-
 
 ## Usage
 
@@ -87,9 +88,8 @@ Sentry.captureEvent({
 
 #### Resources
 
-* [![Documentation](https://img.shields.io/badge/documentation-sentry.io-green.svg)](https://docs.sentry.io/platforms/javascript/guides/capacitor/)
-* [![Discussions](https://img.shields.io/github/discussions/getsentry/sentry-capacitor.svg)](https://github.com/getsentry/sentry-capacitor/discussions)
-* [![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)
-* [![Stack Overflow](https://img.shields.io/badge/stack%20overflow-sentry-green.svg)](https://stackoverflow.com/questions/tagged/sentry)
-* [![X Follow](https://img.shields.io/twitter/follow/sentry?label=sentry&style=social)](https://x.com/intent/follow?screen_name=sentry)
-
+- [![Documentation](https://img.shields.io/badge/documentation-sentry.io-green.svg)](https://docs.sentry.io/platforms/javascript/guides/capacitor/)
+- [![Discussions](https://img.shields.io/github/discussions/getsentry/sentry-capacitor.svg)](https://github.com/getsentry/sentry-capacitor/discussions)
+- [![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)
+- [![Stack Overflow](https://img.shields.io/badge/stack%20overflow-sentry-green.svg)](https://stackoverflow.com/questions/tagged/sentry)
+- [![X Follow](https://img.shields.io/twitter/follow/sentry?label=sentry&style=social)](https://x.com/intent/follow?screen_name=sentry)
