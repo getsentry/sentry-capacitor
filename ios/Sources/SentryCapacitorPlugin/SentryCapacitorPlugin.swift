@@ -102,19 +102,20 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
     }
 
     @objc func captureEnvelope(_ call: CAPPluginCall) {
-        guard let bytes = call.getArray("envelope", NSNumber.self) else {
+        guard let base64Bytes = call.getString("envelope") else {
             print("Cannot parse the envelope data")
             call.reject("Envelope is null or empty")
             return
         }
 
-        let pointer = UnsafeMutablePointer<UInt8>.allocate(capacity: bytes.count)
-        for (index, number) in bytes.enumerated() {
-           // The numbers are stored as int32/64 but only the initial bits contains the number so this conversion is safe
-           pointer[index] = UInt8(number.intValue)
+        guard let data = Data(base64Encoded: base64Bytes) else {
+            print("Cannot decode base64 envelope data")
+            call.reject("Failed to decode base64 envelope")
+            return
         }
 
-        let data = Data(buffer: UnsafeMutableBufferPointer<UInt8>(start: pointer, count: bytes.count))
+        let pointer = UnsafeMutablePointer<UInt8>.allocate(capacity: data.count)
+        data.copyBytes(to: pointer, count: data.count)
 
         guard let envelope = PrivateSentrySDKOnly.envelope(with: data) else {
             call.reject("SentryCapacitor", "Failed to parse envelope from byte array.", nil)
