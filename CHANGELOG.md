@@ -18,6 +18,14 @@ Version 10 of the Sentry JavaScript SDK primarily focuses on upgrading underlyin
 
 Version 10 of the SDK is compatible with Sentry self-hosted versions 24.4.2 or higher (unchanged from v9). Lower versions may continue to work, but may not support all features.
 
+### Features
+
+- Add spotlight integration `spotlightIntegration`. ([#1039](https://github.com/getsentry/sentry-capacitor/pull/1039))
+
+### Bugfix
+
+- Sentry Capacitor integrations are now exposed to `@sentry/capacitor` ([#1039](https://github.com/getsentry/sentry-capacitor/pull/1039))
+
 ### Removed APIs
 
 The changes outlined in this section detail deprecated APIs that are now removed.
