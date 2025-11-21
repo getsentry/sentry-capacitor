@@ -75,7 +75,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             PrivateSentrySDKOnly.setSdkName(nativeSdkName, andVersionString: sdkVersion)
 
             if let sidecarUrl = optionsDict["sidecarUrl"] as? String {
-                options.enableSpotlight(true)
+                options.enableSpotlight = true
                 options.spotlightUrl = sidecarUrl
             }
 
