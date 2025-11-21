@@ -52,11 +52,10 @@ See the readmes in the specific example app folders for individual instructions:
 ### Spotlight
 
 In order to test Spotlight, modify the file environment.local.ts or local.ts from the sample apps with the following value:
-``typescript
+```typescript
 export const localConfig = {
   spotlightSidecarUrl: 'http://IP:8969/stream' // replace IP by your local IP.
 };
-``
 
 If the file is not present on your sample app, it will be automatically generated on the first build from the sample app.
 
