@@ -1,7 +1,7 @@
 import { spotlightBrowserIntegration } from '@sentry/browser';
 import type { Integration } from '@sentry/core';
-import type { CapacitorOptions } from 'src/options';
 import { CAP_GLOBAL_OBJ } from '../utils/webViewUrl';
+import { NATIVE } from '../wrapper';
 
 
 export type SpotlightOptions = Parameters<typeof spotlightBrowserIntegration>[0];
@@ -30,15 +30,11 @@ export function spotlightIntegration(spotlightOptions: SpotlightOptions | undefi
     CAP_GLOBAL_OBJ.CAP_SPOTLIGHT_URL = spotlightOptions.sidecarUrl;
   }
 
+  if (NATIVE.platform === 'web') {
+    return spotlightBrowserIntegration(spotlightOptions);
+  }
+
   return {
     name: 'Spotlight',
-    setup(client) {
-      const options = client.getOptions() as CapacitorOptions;
-      if (options.enableNative !== true) {
-        spotlightBrowserIntegration(spotlightOptions);
-        return;
-      }
-      // Native setup is not done here but set in wrapper.ts when initalizing the SDK.
-    },
   };
 }
