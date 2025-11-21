@@ -49,6 +49,13 @@ See the readmes in the specific example app folders for individual instructions:
 - [ionic-angular-v2](example/ionic-angular-v2/README.md)
 - [ionic-angular-v3](example/ionic-angular/README.md)
 
+### Spotlight
+
+in order to test Spotlight, add the following comment to the .env file of each sample app that you wish to test:
+`export SENTRY_SPOTLIGHT_URL = http://IP:8969/stream;` where IP is your private IP.
+
+For running Spotlight, please check the website `https://github.com/getsentry/spotlight/releases` and download the latest `@spotlightjs/sidecar`.
+
 ## Testing
 
 ```sh
