@@ -19,6 +19,8 @@ export type SpotlightOptions = Parameters<typeof spotlightBrowserIntegration>[0]
  * spotlightIntegration({
  *   sidecarUrl: 'http://192.168.8.150:8969/stream',
  * });
+ *
+ * @note Don't forget to allow the port 8969 for TCP in your firewall if you are testing a physical device or a simulator that is on anodther device.
  */
 export function spotlightIntegration(spotlightOptions: SpotlightOptions | undefined): Integration {
 
