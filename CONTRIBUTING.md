@@ -51,8 +51,14 @@ See the readmes in the specific example app folders for individual instructions:
 
 ### Spotlight
 
-in order to test Spotlight, add the following comment to the .env file of each sample app that you wish to test:
-`export SENTRY_SPOTLIGHT_URL = http://IP:8969/stream;` where IP is your private IP.
+In order to test Spotlight, modify the file environment.local.ts or local.ts from the sample apps with the following value:
+``typescript
+export const localConfig = {
+  spotlightSidecarUrl: 'http://IP:8969/stream' // replace IP by your local IP.
+};
+``
+
+If the file is not present on your sample app, it will be automatically generated on the first build from the sample app.
 
 For running Spotlight, please check the website `https://github.com/getsentry/spotlight/releases` and download the latest `@spotlightjs/sidecar`.
 
