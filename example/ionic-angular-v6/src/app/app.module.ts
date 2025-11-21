@@ -9,6 +9,7 @@ import * as Sentry from '@sentry/capacitor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
 
 // ATTENTION: Change the DSN below with your own to see the events in Sentry. Get one at sentry.io
 Sentry.init(
@@ -28,6 +29,9 @@ Sentry.init(
         maskAllText: false,
         blockAllMedia: true,
       }),
+      ...(environment.spotlightSidecarUrl ? [Sentry.spotlightIntegration({
+        sidecarUrl: environment.spotlightSidecarUrl,
+      })] : []),
     ],
     // A release identifier
     release: '1.0.0',

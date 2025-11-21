@@ -49,6 +49,22 @@ See the readmes in the specific example app folders for individual instructions:
 - [ionic-angular-v2](example/ionic-angular-v2/README.md)
 - [ionic-angular-v3](example/ionic-angular/README.md)
 
+### Spotlight
+
+In order to test Spotlight, modify the file environment.local.ts or local.ts from the sample apps with the following value:
+
+```typescript
+export const localConfig = {
+  spotlightSidecarUrl: 'http://IP:8969/stream', // replace IP by your local IP.
+};
+```
+
+If the file is not present on your sample app, it will be automatically generated on the first build from the sample app.
+
+For running Spotlight, please check the website `https://github.com/getsentry/spotlight/releases` and download the latest `@spotlightjs/sidecar`.
+
+NOTE: When testing spotlight on a device that is not the physical device where spotlight server is running, don't forget to expose the port 8969 for TCP.
+
 ## Testing
 
 ```sh

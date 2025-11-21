@@ -7,6 +7,7 @@ setupCapacitorMock();
 
 import { Capacitor } from '@capacitor/core';
 import { FilterNativeOptions } from '../src/nativeOptions';
+import { CAP_GLOBAL_OBJ } from '../src/utils/webViewUrl';
 import { expectPlatformWithReturn } from './extensions/sentryCapacitorJest';
 
 
@@ -16,10 +17,14 @@ describe('nativeOptions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockGetPlatform.mockReturnValue('web2');
+    // Clean up spotlight URL before each test
+    delete CAP_GLOBAL_OBJ.CAP_SPOTLIGHT_URL;
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
+    // Clean up spotlight URL after each test
+    delete CAP_GLOBAL_OBJ.CAP_SPOTLIGHT_URL;
   });
 
   test('enableWatchdogTerminationTracking is set when defined', () => {
@@ -157,5 +162,55 @@ describe('nativeOptions', () => {
 
     expectPlatformWithReturn('ios');
     expect(nativeOptions).toEqual({});
+  });
+
+  test('Should include spotlight sidecarUrl when CAP_SPOTLIGHT_URL is set', () => {
+    const spotlightUrl = 'http://192.168.8.150:8969/stream';
+    CAP_GLOBAL_OBJ.CAP_SPOTLIGHT_URL = spotlightUrl;
+
+    const nativeOptions = FilterNativeOptions({
+      environment: 'test',
+    });
+
+    expect(nativeOptions).toHaveProperty('sidecarUrl', spotlightUrl);
+  });
+
+  test('Should not include spotlight sidecarUrl when CAP_SPOTLIGHT_URL is not set', () => {
+    // Ensure CAP_SPOTLIGHT_URL is not set
+    delete CAP_GLOBAL_OBJ.CAP_SPOTLIGHT_URL;
+
+    const nativeOptions = FilterNativeOptions({
+      environment: 'test',
+    });
+
+    expect(nativeOptions).not.toHaveProperty('sidecarUrl');
+  });
+
+  test('Should not include spotlight sidecarUrl when CAP_SPOTLIGHT_URL is undefined', () => {
+    CAP_GLOBAL_OBJ.CAP_SPOTLIGHT_URL = undefined;
+
+    const nativeOptions = FilterNativeOptions({
+      environment: 'test',
+    });
+
+    expect(nativeOptions).not.toHaveProperty('sidecarUrl');
+  });
+
+  test('Should include spotlight sidecarUrl along with other options', () => {
+    const spotlightUrl = 'http://192.168.8.150:8969/stream';
+    CAP_GLOBAL_OBJ.CAP_SPOTLIGHT_URL = spotlightUrl;
+
+    const options: CapacitorOptions = {
+      environment: 'production',
+      dsn: 'https://example@sentry.io/123',
+      release: '1.0.0',
+    };
+
+    const nativeOptions = FilterNativeOptions(options);
+
+    expect(nativeOptions).toHaveProperty('sidecarUrl', spotlightUrl);
+    expect(nativeOptions.environment).toBe('production');
+    expect(nativeOptions.dsn).toBe('https://example@sentry.io/123');
+    expect(nativeOptions.release).toBe('1.0.0');
   });
 });

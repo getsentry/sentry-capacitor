@@ -2,8 +2,12 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// Import local configuration (gitignored - edit environment.local.ts to set your values)
+import { localConfig } from './environment.local';
+
 export const environment = {
-  production: false
+  production: false,
+  spotlightSidecarUrl: localConfig.spotlightSidecarUrl
 };
 
 /*
