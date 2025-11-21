@@ -63,6 +63,8 @@ If the file is not present on your sample app, it will be automatically generate
 
 For running Spotlight, please check the website `https://github.com/getsentry/spotlight/releases` and download the latest `@spotlightjs/sidecar`.
 
+NOTE: When testing spotlight on a device that is not the physical device where spotlight server is running, don't forget to expose the port 8969 for TCP.
+
 ## Testing
 
 ```sh
