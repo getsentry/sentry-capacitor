@@ -123,7 +123,6 @@ public class SentryCapacitor extends Plugin {
                 if (capOptions.has("sidecarUrl")) {
                     options.setEnableSpotlight(true);
                     options.setSpotlightConnectionUrl(capOptions.getString("sidecarUrl"));
-
                 }
 
                 options.setBeforeSend(
