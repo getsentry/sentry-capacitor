@@ -2,7 +2,11 @@ package io.sentry.capacitor;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import com.getcapacitor.JSArray;
+
+import io.sentry.ILogger;
+import io.sentry.android.core.AndroidLogger;
+import io.sentry.vendor.Base64;
+
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
@@ -12,28 +16,23 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import io.sentry.Breadcrumb;
 import io.sentry.IScope;
 import io.sentry.Integration;
-import io.sentry.ScopesAdapter;
 import io.sentry.Sentry;
 import io.sentry.SentryEvent;
 import io.sentry.SentryLevel;
 import io.sentry.UncaughtExceptionHandlerIntegration;
 import io.sentry.android.core.BuildConfig;
 import io.sentry.android.core.AnrIntegration;
+import io.sentry.android.core.InternalSentrySdk;
 import io.sentry.android.core.NdkIntegration;
 import io.sentry.android.core.SentryAndroid;
 import io.sentry.protocol.SdkVersion;
 import io.sentry.protocol.SentryPackage;
 import io.sentry.protocol.User;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @CapacitorPlugin
 public class SentryCapacitor extends Plugin {
@@ -41,7 +40,7 @@ public class SentryCapacitor extends Plugin {
     private static final String NATIVE_SDK_NAME = "sentry.native.android.capacitor";
     private static final String ANDROID_SDK_NAME = "sentry.java.android.capacitor";
 
-    static final Logger logger = Logger.getLogger("capacitor-sentry");
+    static final ILogger logger = new AndroidLogger("capacitor-sentry");
     private Context context;
     private static PackageInfo packageInfo;
 
@@ -57,7 +56,7 @@ public class SentryCapacitor extends Plugin {
             String packageName = this.getContext().getPackageName();
             this.packageInfo = this.context.getPackageManager().getPackageInfo(packageName, 0); // Requires API 33 for deprecation change.
         } catch (Exception e) {
-            logger.info("Error getting package info.");
+            logger.log(SentryLevel.ERROR, "Error getting package info.");
         }
     }
 
@@ -77,7 +76,6 @@ public class SentryCapacitor extends Plugin {
 
               if (capOptions.has("debug") && capOptions.getBool("debug")) {
                     options.setDebug(true);
-                    logger.setLevel(Level.INFO);
                 }
 
                 options.setSentryClientName(sdkVersion.getName() + "/" + sdkVersion.getVersion());
@@ -85,7 +83,7 @@ public class SentryCapacitor extends Plugin {
                 options.setSdkVersion(sdkVersion);
 
               String dsn = capOptions.getString("dsn") != null ? capOptions.getString("dsn") : "";
-                logger.info(String.format("Starting with DSN: '%s'", dsn));
+                logger.log(SentryLevel.INFO, String.format("Starting with DSN: '%s'", dsn));
                 options.setDsn(dsn);
 
                 if (capOptions.has("environment") && capOptions.getString("environment") != null) {
@@ -122,6 +120,11 @@ public class SentryCapacitor extends Plugin {
                     options.setAttachThreads(capOptions.getBool("attachThreads"));
                 }
 
+                if (capOptions.has("sidecarUrl")) {
+                    options.setEnableSpotlight(true);
+                    options.setSpotlightConnectionUrl(capOptions.getString("sidecarUrl"));
+                }
+
                 options.setBeforeSend(
                     (event, hint) -> {
                         setEventOriginTag(event);
@@ -146,7 +149,7 @@ public class SentryCapacitor extends Plugin {
 
                 options.getLogs().setEnabled(Boolean.TRUE.equals(capOptions.getBoolean("enableLogs", false)));
 
-                logger.info(String.format("Native Integrations '%s'", options.getIntegrations().toString()));
+                logger.log(SentryLevel.INFO, String.format("Native Integrations '%s'", options.getIntegrations()));
             }
         );
 
@@ -223,34 +226,21 @@ public class SentryCapacitor extends Plugin {
 
     @PluginMethod
     public void captureEnvelope(PluginCall call) {
+        String rawBytes = call.getString("envelope");
+        if  (rawBytes == null) {
+            String  errorMsg = "Can't send envelope due to empty data.";
+            logger.log(SentryLevel.ERROR,  errorMsg);
+            call.reject( errorMsg);
+            return;
+        }
+        byte[] bytes = Base64.decode(rawBytes, Base64.DEFAULT);
+
         try {
-            JSArray rawIntegers = call.getArray("envelope");
-            byte[] bytes = new byte[rawIntegers.length()];
-            for (int i = 0; i < bytes.length; i++) {
-                bytes[i] = (byte) rawIntegers.getInt(i);
-            }
-
-            final String outboxPath = ScopesAdapter.getInstance().getOptions().getOutboxPath();
-
-            if (outboxPath == null || outboxPath.isEmpty()) {
-                logger.info("Error when writing envelope, no outbox path is present.");
-                call.reject("Missing outboxPath");
-                return;
-            }
-
-            final File installation = new File(outboxPath, UUID.randomUUID().toString());
-
-            try (FileOutputStream out = new FileOutputStream(installation)) {
-                out.write(bytes);
-                logger.info("Successfully captured envelope.");
-            } catch (Exception e) {
-                logger.info("Error writing envelope.");
-                call.reject(String.valueOf(e));
-                return;
-            }
-        } catch (Exception e) {
-            logger.info("Error reading envelope.");
-            call.reject(String.valueOf(e));
+            InternalSentrySdk.captureEnvelope(bytes, false);
+        } catch (Throwable e) { // NOPMD - We don't want to crash in any case
+            String  errorMsg = "Error while capturing envelope";
+            logger.log(SentryLevel.ERROR, errorMsg);
+            call.reject(errorMsg);
             return;
         }
         call.resolve();

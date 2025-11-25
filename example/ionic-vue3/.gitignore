@@ -33,3 +33,6 @@ npm-debug.log*
 
 # Sentry Auth Token
 .sentryclirc
+
+# Local environment configuration (do not commit)
+src/config/local.ts

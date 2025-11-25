@@ -52,6 +52,9 @@
   "name": "ionic-angular",
   "private": true,
   "scripts": {
+    "setup:local-env": "node ../../scripts/setup-local-env.js",
+    "prebuild": "yarn setup:local-env",
+    "prestart": "yarn setup:local-env",
     "build": "ionic build --no-cache && yarn sentry:sourcemaps || exit 0",
     "e2e": "ng e2e",
     "lint": "ng lint",

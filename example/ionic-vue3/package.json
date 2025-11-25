@@ -4,6 +4,9 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
+    "setup:local-env": "node ../../scripts/setup-local-env.js",
+    "predev": "yarn setup:local-env",
+    "prebuild": "yarn setup:local-env",
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org sentry-sdks --project capacitor ./dist && sentry-cli sourcemaps upload --org sentry-sdks --project capacitor ./dist",

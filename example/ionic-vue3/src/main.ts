@@ -21,6 +21,7 @@ import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 import * as SentryVue from '@sentry/vue';
 import * as Sentry from '@sentry/capacitor';
+import { localConfig } from './config/local';
 
 /* Theme variables */
 import './theme/variables.css';
@@ -45,6 +46,9 @@ Sentry.init({
       maskAllText: false,
       blockAllMedia: false,
     }),
+    ...(localConfig.spotlightSidecarUrl ? [Sentry.spotlightIntegration({
+      sidecarUrl: localConfig.spotlightSidecarUrl,
+    })] : []),
   ],
   tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
   // Performance Monitoring

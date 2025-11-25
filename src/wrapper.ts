@@ -17,6 +17,7 @@ import type { CapacitorOptions } from './options';
 import { SentryCapacitor } from './plugin';
 import { convertToNormalizedObject } from './utils/normalize';
 import { utf8ToBytes } from './vendor';
+import { base64StringFromByteArray } from './vendor/fromByteArray';
 
 /**
  * Internal interface for calling native functions
@@ -74,7 +75,7 @@ export const NATIVE = {
     }
 
     let transportStatusCode = 200;
-    await SentryCapacitor.captureEnvelope({ envelope: envelopeBytes }).then(
+    await SentryCapacitor.captureEnvelope({ envelope: base64StringFromByteArray(envelopeBytes) }).then(
       _ => _, // We only want to know if it failed.
       failed => {
         debug.error('Failed to capture Envelope: ', failed);

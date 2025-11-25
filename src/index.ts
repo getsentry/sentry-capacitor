@@ -1,4 +1,5 @@
 export * from './definitions';
+export * from './integrations';
 
 export type {
   Breadcrumb,
