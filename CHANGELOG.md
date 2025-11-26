@@ -60,9 +60,9 @@ For more informations, please go to the following link: https://docs.sentry.io/p
 
 ### Dependencies
 
-- Bump JavaScript Sibling SDKs from v9.46.0 to v10.20.0 ([#1013](https://github.com/getsentry/sentry-capacitor/pull/1013))
+- Bump JavaScript Sibling SDKs from v9.46.0 to v10.27.0 ([#1013](https://github.com/getsentry/sentry-capacitor/pull/1013), [#1028](https://github.com/getsentry/sentry-capacitor/pull/1028))
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.20.0/CHANGELOG.md)
-  - [diff](https://github.com/getsentry/sentry-javascript/compare/9.46.0...10.20.0)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/9.46.0...10.27.0)
 
 ## 2.4.1
 
