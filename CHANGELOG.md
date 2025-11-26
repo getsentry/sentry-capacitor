@@ -20,10 +20,12 @@ Version 10 of the SDK is compatible with Sentry self-hosted versions 24.4.2 or h
 
 ### Features
 
+- Add Fallback to JavaScript SDK when Native SDK fails to initialize ([#1043](https://github.com/getsentry/sentry-capacitor/pull/1043))
 - Add spotlight integration `spotlightIntegration`. ([#1039](https://github.com/getsentry/sentry-capacitor/pull/1039))
 
 ### Bugfix
 
+- Replays/Logs/Sessions now have the `capacitor` SDK name as the source of the event. ([#1043](https://github.com/getsentry/sentry-capacitor/pull/1043))
 - Sentry Capacitor integrations are now exposed to `@sentry/capacitor` ([#1039](https://github.com/getsentry/sentry-capacitor/pull/1039))
 
 ### Removed APIs
