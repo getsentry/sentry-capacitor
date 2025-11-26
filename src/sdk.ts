@@ -27,7 +27,7 @@ export function init<T>(
     enableCaptureFailedRequests: false,
     ...passedOptions,
   };
-  if (finalOptions.enabled === false/* || NATIVE.platform === 'web' */) { // for testing.
+  if (finalOptions.enabled === false || NATIVE.platform === 'web') {
     finalOptions.enableNative = false;
     finalOptions.enableNativeNagger = false;
   } else {

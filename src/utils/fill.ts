@@ -24,5 +24,7 @@ export function restorefillTyped<Source extends { [key: string]: any }, Name ext
   source: Source,
   name: Name): void {
   const original = getOriginalFunction(source[name]) as Source[Name];
-  source[name] = original;
+  if (original) {
+    source[name] = original;
+  }
 }
