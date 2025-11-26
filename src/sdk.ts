@@ -27,7 +27,7 @@ export function init<T>(
     enableCaptureFailedRequests: false,
     ...passedOptions,
   };
-  if (finalOptions.enabled === false || NATIVE.platform === 'web') {
+  if (finalOptions.enabled === false/* || NATIVE.platform === 'web' */) { // for testing.
     finalOptions.enableNative = false;
     finalOptions.enableNativeNagger = false;
   } else {
@@ -84,7 +84,7 @@ export function init<T>(
   } as CapacitorClientOptions;
 
 
-  sdkInit(browserOptions, mobileOptions, originalInit);
+  sdkInit(browserOptions, mobileOptions, originalInit, passedOptions.transport);
 }
 
 /**

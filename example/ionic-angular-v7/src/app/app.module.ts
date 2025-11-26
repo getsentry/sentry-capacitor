@@ -22,6 +22,7 @@ Sentry.init(
     debug: true,
     // Whether SDK should be enabled or not
     enabled: true,
+    enableNative: true,
     // Use the tracing integration to see traces and add performance monitoring
     integrations: [
       Sentry.browserTracingIntegration(),

@@ -64,8 +64,6 @@ async function processEvent(event: Event): Promise<Event> {
 
   event.platform = event.platform || 'javascript';
   const sdk = (event.sdk || {}) as IpPatchedSdkInfo;
-  sdk.name = sdk.name || SDK_NAME;
-  sdk.version = sdk.version || SDK_VERSION;
   sdk.packages = [
     // default packages are added by baseclient and should not be added here
     ...(sdk.packages || []),
