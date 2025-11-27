@@ -1,7 +1,7 @@
 {
   "author": "Ionic Framework",
   "dependencies": {
-    "@angular/common": "^14.3.0",
+    "@angular/common": "^19.2.16",
     "@angular/core": "^14.3.0",
     "@angular/forms": "^14.3.0",
     "@angular/platform-browser": "^14.3.0",
