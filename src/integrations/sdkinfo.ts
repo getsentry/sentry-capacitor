@@ -1,7 +1,22 @@
-import type { Event, Integration, Package, SdkInfo } from '@sentry/core';
+import type { Event, Integration, Package, SdkInfo, SdkInfo as SdkInfoType } from '@sentry/core';
 import { debug } from '@sentry/core';
 import { SDK_NAME, SDK_VERSION } from '../version';
 import { NATIVE } from '../wrapper';
+
+
+type DefaultSdkInfo = Pick<Required<SdkInfoType>, 'name' | 'packages' | 'version'>;
+
+export const defaultSdkInfo: DefaultSdkInfo = {
+  name: SDK_NAME,
+  packages: [
+    {
+      name: SDK_NAME,
+      version: SDK_VERSION,
+    },
+  ],
+  version: SDK_VERSION,
+};
+
 
 // TODO: Remove this on JS V10.
 interface IpPatchedSdkInfo extends SdkInfo {
@@ -49,8 +64,6 @@ async function processEvent(event: Event): Promise<Event> {
 
   event.platform = event.platform || 'javascript';
   const sdk = (event.sdk || {}) as IpPatchedSdkInfo;
-  sdk.name = sdk.name || SDK_NAME;
-  sdk.version = sdk.version || SDK_VERSION;
   sdk.packages = [
     // default packages are added by baseclient and should not be added here
     ...(sdk.packages || []),

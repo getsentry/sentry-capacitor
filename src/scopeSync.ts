@@ -1,6 +1,6 @@
 import type { Breadcrumb, Scope } from '@sentry/core';
 import { DEFAULT_BREADCRUMB_LEVEL } from './breadcrumb';
-import { fillTyped } from './utils/fill';
+import { fillTyped, restorefillTyped } from './utils/fill';
 import { convertToNormalizedObject } from './utils/normalize';
 import { NATIVE } from './wrapper';
 
@@ -76,4 +76,26 @@ export function enableSyncToNative(scope: Scope): void {
     NATIVE.setContext(key, context);
     return original.call(scope, key, context);
   });
+}
+
+/**
+ * Disables the sync to native for the given scope.
+ * This will restore the original functions for the scope.
+ * @param scope - The scope to disable the sync to native for.
+ */
+export function disableSyncToNative(scope: Scope): void {
+  if (!syncedToNativeMap.has(scope)) {
+    return;
+  }
+
+  syncedToNativeMap.delete(scope);
+
+  restorefillTyped(scope, 'clearBreadcrumbs');
+  restorefillTyped(scope, 'setContext');
+  restorefillTyped(scope, 'setExtra');
+  restorefillTyped(scope, 'setExtras');
+  restorefillTyped(scope, 'setTags');
+  restorefillTyped(scope, 'setTag');
+  restorefillTyped(scope, 'setUser');
+  restorefillTyped(scope, 'addBreadcrumb');
 }
