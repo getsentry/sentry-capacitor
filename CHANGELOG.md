@@ -39,7 +39,7 @@ after
 Sentry.init({
   dsn: '...',
   enableLogs: true,
-  siblingOptions {
+  siblingOptions: {
     vueOptions: {
         app: app,
         attachErrorHandler: false,
