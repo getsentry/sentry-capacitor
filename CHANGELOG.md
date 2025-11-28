@@ -20,7 +20,7 @@ Version 10 of the SDK is compatible with Sentry self-hosted versions 24.4.2 or h
 
 ### Init changed for Sentry Vue and Nuxt
 
-Instead of ading the Nuxt/Vue options into Sentry.init options, you will now have to add it inside of `siblingOptions`, this only applies to parameters specific to the respective SDK, other SDKs like React or Angular won't have to do that:
+Instead of adding the Nuxt/Vue options into Sentry.init options, you will now have to add it inside `siblingOptions`, this only applies to parameters specific to the respective SDK, other SDKs like React or Angular won't have to do that:
 
 before
 
