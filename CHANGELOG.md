@@ -18,13 +18,47 @@ Version 10 of the Sentry JavaScript SDK primarily focuses on upgrading underlyin
 
 Version 10 of the SDK is compatible with Sentry self-hosted versions 24.4.2 or higher (unchanged from v9). Lower versions may continue to work, but may not support all features.
 
+### Init changed for Sentry Vue and Nuxt
+
+Instead of ading the Nuxt/Vue options into Sentry.init options, you will now have to add it inside of `siblingOptions`, this only applies to parameters specific to the respective SDK, other SDKs like React or Angular won't have to do that:
+
+before
+
+```typescript
+Sentry.init({
+  app: app,
+  attachErrorHandler: false,
+  dsn: '...',
+  enableLogs: true,...
+}, vueInit);
+```
+
+after
+
+```typescript
+Sentry.init({
+  dsn: '...',
+  enableLogs: true,
+  siblingOptions {
+    vueOptions: {
+        app: app,
+        attachErrorHandler: false,
+        ...
+    }
+  },
+  ...
+}, vueInit);
+
+```
+
 ### Features
 
 - Add Fallback to JavaScript SDK when Native SDK fails to initialize ([#1043](https://github.com/getsentry/sentry-capacitor/pull/1043))
 - Add spotlight integration `spotlightIntegration`. ([#1039](https://github.com/getsentry/sentry-capacitor/pull/1039))
 
-### Bugfix
+### Fixes
 
+- Init now showing the correct JSDoc for Vue/Nuxt init parameters. ([#1046](https://github.com/getsentry/sentry-capacitor/pull/1046))
 - Replays/Logs/Sessions now have the `capacitor` SDK name as the source of the event. ([#1043](https://github.com/getsentry/sentry-capacitor/pull/1043))
 - Sentry Capacitor integrations are now exposed to `@sentry/capacitor` ([#1039](https://github.com/getsentry/sentry-capacitor/pull/1039))
 
@@ -55,6 +89,10 @@ Sentry.init({
   },
 });
 ```
+
+### Removed Options
+
+- `_experimental.enableLogs` was removed, please use the options `enableLogs` from `CapacitorOptions`.
 
 For more informations, please go to the following link: https://docs.sentry.io/platforms/javascript/migration/v9-to-v10
 
