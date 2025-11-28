@@ -174,4 +174,145 @@ describe('SDK Init', () => {
       expect(firstFrame).toStrictEqual(expectedError);
     });
   });
+
+  describe('siblingOptions', () => {
+    test('vueOptions are merged into browserOptions', () => {
+      NATIVE.platform = 'web';
+      const mockApp = { config: {} } as any;
+      const mockOriginalInit = jest.fn();
+
+      init({
+        dsn: 'test-dsn',
+        enabled: true,
+        siblingOptions: {
+          vueOptions: {
+            app: mockApp,
+            attachProps: false,
+            attachErrorHandler: true,
+          },
+        },
+      }, mockOriginalInit);
+
+      // Wait for async operations
+      return new Promise<void>((resolve) => {
+        setTimeout(() => {
+          expect(mockOriginalInit).toHaveBeenCalled();
+          const browserOptions = mockOriginalInit.mock.calls[0][0];
+
+          // Verify vueOptions are merged into browserOptions
+          expect(browserOptions.app).toBe(mockApp);
+          expect(browserOptions.attachProps).toBe(false);
+          expect(browserOptions.attachErrorHandler).toBe(true);
+
+          // Verify siblingOptions are not in browserOptions
+          expect(browserOptions.siblingOptions).toBeUndefined();
+
+          resolve();
+        }, 10);
+      });
+    });
+
+    test('nuxtClientOptions are merged into browserOptions', () => {
+      NATIVE.platform = 'web';
+      const mockOriginalInit = jest.fn();
+
+      init({
+        dsn: 'test-dsn',
+        enabled: true,
+        siblingOptions: {
+          nuxtClientOptions: {
+            attachProps: false,
+            attachErrorHandler: false,
+          },
+        },
+      }, mockOriginalInit);
+
+      // Wait for async operations
+      return new Promise<void>((resolve) => {
+        setTimeout(() => {
+          expect(mockOriginalInit).toHaveBeenCalled();
+          const browserOptions = mockOriginalInit.mock.calls[0][0];
+
+          // Verify nuxtClientOptions are merged into browserOptions
+          expect(browserOptions.attachProps).toBe(false);
+          expect(browserOptions.attachErrorHandler).toBe(false);
+
+          // Verify siblingOptions are not in browserOptions
+          expect(browserOptions.siblingOptions).toBeUndefined();
+
+          resolve();
+        }, 10);
+      });
+    });
+
+    test('nuxtClientOptions override vueOptions when both are provided', () => {
+      NATIVE.platform = 'web';
+      const mockApp = { config: {} } as any;
+      const mockOriginalInit = jest.fn();
+
+      init({
+        dsn: 'test-dsn',
+        enabled: true,
+        siblingOptions: {
+          vueOptions: {
+            app: mockApp,
+            attachProps: true,
+            attachErrorHandler: true,
+          },
+          nuxtClientOptions: {
+            attachProps: false,
+            attachErrorHandler: false,
+          },
+        },
+      }, mockOriginalInit);
+
+      // Wait for async operations
+      return new Promise<void>((resolve) => {
+        setTimeout(() => {
+          expect(mockOriginalInit).toHaveBeenCalled();
+          const browserOptions = mockOriginalInit.mock.calls[0][0];
+
+          // Verify nuxtClientOptions override vueOptions (merged after)
+          // app property should still be present from vueOptions
+          expect(browserOptions.app).toBe(mockApp);
+          // But attachProps and attachErrorHandler are overridden by nuxtClientOptions
+          expect(browserOptions.attachProps).toBe(false);
+          expect(browserOptions.attachErrorHandler).toBe(false);
+
+          resolve();
+        }, 10);
+      });
+    });
+
+    test('siblingOptions are excluded from nativeOptions', () => {
+      NATIVE.platform = 'ios';
+      const mockOriginalInit = jest.fn();
+
+      init({
+        dsn: 'test-dsn',
+        enabled: true,
+        siblingOptions: {
+          vueOptions: {
+            attachProps: false,
+            attachErrorHandler: true,
+          },
+        },
+      }, mockOriginalInit);
+
+      // Wait for async operations
+      return new Promise<void>((resolve) => {
+        setTimeout(() => {
+          expect(NATIVE.initNativeSdk).toHaveBeenCalled();
+          const nativeOptions = (NATIVE.initNativeSdk as jest.Mock).mock.calls[0][0];
+
+          // Verify siblingOptions are not in nativeOptions
+          expect(nativeOptions.siblingOptions).toBeUndefined();
+          expect(nativeOptions.vueOptions).toBeUndefined();
+          expect(nativeOptions.nuxtClientOptions).toBeUndefined();
+
+          resolve();
+        }, 10);
+      });
+    });
+  });
 });
