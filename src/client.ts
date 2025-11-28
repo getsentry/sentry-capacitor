@@ -9,7 +9,6 @@ import { NATIVE } from './wrapper';
 type BrowserTransportOptions = Parameters<typeof makeFetchTransport>[0];
 type TransportFactory = (transportOptions: BrowserTransportOptions) => ReturnType<typeof makeFetchTransport>;
 
-
 /**
  * Post setup the Capacitor client
  */
@@ -42,7 +41,11 @@ function PostSetupCapacitorClient() : void {
  * @param originalInit - The original init function to use for the sibling SDK.
  * @param customTransport - The custom transport to use.
  */
-export function sdkInit<T>(browserOptions: T & BrowserOptions, nativeOptions: CapacitorOptions, originalInit: (passedOptions: T & BrowserOptions) => void, customTransport?: TransportFactory): void {
+export function sdkInit(
+  browserOptions: BrowserOptions,
+  nativeOptions: CapacitorOptions,
+  originalInit: (passedOptions: BrowserOptions) => void,
+  customTransport?: TransportFactory): void {
   // We first initialize the NATIVE SDK to avoid the Javascript SDK to invoke any
   // feature from the NATIVE SDK without the options being set.
   // eslint-disable-next-line @typescript-eslint/no-floating-promises

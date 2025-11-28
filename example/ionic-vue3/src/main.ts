@@ -32,7 +32,6 @@ const app = createApp(App)
 
 
 Sentry.init({
-  app,
   dsn: 'https://7f35532db4f8aca7c7b6992d488b39c1@o447951.ingest.sentry.io/4505912397660160',
   integrations: [
     SentryVue.vueIntegration({
@@ -59,11 +58,18 @@ Sentry.init({
   enableLogs: true,
   beforeSendLog: (log) => {
     return log;
-  }
+  },
 
+  siblingOptions: {
+    vueOptions: {
+      app: app,
+      attachErrorHandler: false,
+      attachProps: false,
+    },
+  },
 },
   // Forward the init method from @sentry/vue
-  SentryVue.init
+  SentryVue.init,
 );
 
 

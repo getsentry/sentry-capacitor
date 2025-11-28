@@ -138,12 +138,11 @@ describe('nativeOptions', () => {
 
   test('Set logger on Android', () => {
     mockGetPlatform.mockReturnValue('android');
-    const filteredOptions: CapacitorOptions = {
-      _experiments: { enableLogs : true}
+    const filteredOptions: CapacitorOptions & { enableLogs?: boolean } = {
+      enableLogs: true
     };
     const expectedOptions = {
-      // @ts-ignore
-      enableLogs : true
+      enableLogs: true
     };
 
     const nativeOptions = FilterNativeOptions(filteredOptions);
@@ -154,8 +153,8 @@ describe('nativeOptions', () => {
 
   test('Ignore logger on iOS', () => {
     mockGetPlatform.mockReturnValue('ios');
-    const filteredOptions: CapacitorOptions = {
-      _experiments: { enableLogs : true}
+    const filteredOptions: CapacitorOptions & { enableLogs?: boolean } = {
+      enableLogs: true
     };
 
     const nativeOptions = FilterNativeOptions(filteredOptions);
