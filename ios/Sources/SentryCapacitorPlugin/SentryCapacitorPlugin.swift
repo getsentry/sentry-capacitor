@@ -293,6 +293,12 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
                 breadcrumb.category = category
             }
 
+            if let origin = call.getString("origin") {
+                breadcrumb.origin = origin
+            } else {
+                breadcrumb.origin = "capacitor"
+            }
+
             breadcrumb.type = call.getString("type")
             breadcrumb.message = call.getString("message")
             breadcrumb.data = call.getObject("data")
