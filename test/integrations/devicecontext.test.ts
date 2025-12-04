@@ -133,12 +133,11 @@ describe('DeviceContext Integration', () => {
   describe('user merging', () => {
     it('should merge native user into event when event has no user', async () => {
       const nativeContexts = {
-        contexts: {
-          user: {
-            id: 'native-user-id',
-            email: 'native@example.com',
-            username: 'native-user',
-          },
+        contexts: {},
+        user: {
+          id: 'native-user-id',
+          email: 'native@example.com',
+          username: 'native-user',
         },
       };
 
@@ -157,11 +156,10 @@ describe('DeviceContext Integration', () => {
 
     it('should not override event user when event already has user', async () => {
       const nativeContexts = {
-        contexts: {
-          user: {
-            id: 'native-user-id',
-            email: 'native@example.com',
-          },
+        contexts: {},
+        user: {
+          id: 'native-user-id',
+          email: 'native@example.com',
         },
       };
 
@@ -498,10 +496,10 @@ describe('DeviceContext Integration', () => {
           device: {
             name: 'iPhone',
           },
-          user: {
-            id: 'user-123',
-            email: 'user@example.com',
-          },
+        },
+        user: {
+          id: 'user-123',
+          email: 'user@example.com',
         },
         breadcrumbs: [
           {
@@ -537,10 +535,6 @@ describe('DeviceContext Integration', () => {
       expect(result?.contexts).toEqual({
         device: {
           name: 'iPhone',
-        },
-        user: {
-          id: 'user-123',
-          email: 'user@example.com',
         },
         app: {
           name: 'MyApp',
