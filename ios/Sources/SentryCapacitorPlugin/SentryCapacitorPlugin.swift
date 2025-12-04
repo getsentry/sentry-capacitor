@@ -182,7 +182,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             }
 
             let extraContext = PrivateSentrySDKOnly.getExtraContext()
-            var context = contexts["context"] as? [String: Any] ?? [:]
+            var context = contexts["contexts"] as? [String: Any] ?? [:]
 
             if let deviceExtraContext = extraContext["device"] as? [String: Any] {
                 var deviceContext = context["device"] as? [String: Any] ?? [:]
@@ -198,6 +198,17 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
                     appContext[key] = value
                 }
                 context["app"] = appContext
+            }
+
+            // Remove capacitor breadcrumbs
+            if let breadcrumbs = contexts["breadcrumbs"] as? [[String: Any]] {
+                let filteredBreadcrumbs = breadcrumbs.filter { breadcrumb in
+                    guard let origin = breadcrumb["origin"] as? String else {
+                        return true
+                    }
+                    return origin != "capacitor"
+                }
+                contexts["breadcrumbs"] = filteredBreadcrumbs
             }
 
             contexts["context"] = context
@@ -302,6 +313,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             breadcrumb.type = call.getString("type")
             breadcrumb.message = call.getString("message")
             breadcrumb.data = call.getObject("data")
+            breadcrumb.origin = "capacitor"
 
             scope.addBreadcrumb(breadcrumb)
         }
