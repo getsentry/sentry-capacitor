@@ -55,7 +55,6 @@ import { Capacitor } from '@capacitor/core';
 import { SentryCapacitor } from '../src/plugin';
 import { base64StringFromByteArray } from '../src/vendor/fromByteArray';
 import { NATIVE } from '../src/wrapper';
-import { Base64StringToString } from './vendor/base64Converter';
 
 beforeEach(() => {
   getStringBytesLengthValue = 1;
@@ -84,7 +83,7 @@ describe('Tests Native Wrapper', () => {
       // @ts-ignore ignore app and vue since they are part of Sentry/Vue and not Capacitor.
       await NATIVE.initNativeSdk({ dsn: 'test', enableNative: true, app: 'test', vue: 'test' });
 
-      const nativeOption = initNativeSdk.mock.calls[0][0].options;
+      const nativeOption = initNativeSdk.mock.calls[0]?.[0]?.options;
       expect(SentryCapacitor.initNativeSdk).toHaveBeenCalledTimes(1);
       // @ts-ignore Not part of Capacitor Options but it is extended by Vue Options.
       expect(nativeOption.app).toBeUndefined();
@@ -110,16 +109,16 @@ describe('Tests Native Wrapper', () => {
           tracesSampler: jest.fn(),
         });
 
-      const nativeOption = initNativeSdk.mock.calls[0][0].options;
+      const nativeOption = initNativeSdk.mock.calls[0]?.[0]?.options;
       expect(SentryCapacitor.initNativeSdk).toHaveBeenCalledTimes(1);
       // @ts-ignore Not part of Capacitor Options but it is extended by Vue Options.
-      expect(nativeOption.integrations).toBeUndefined();
-      expect(nativeOption.defaultIntegrations).toBeUndefined();
-      expect(nativeOption.beforeSend).toBeUndefined();
-      expect(nativeOption.beforeSendTransaction).toBeUndefined();
-      expect(nativeOption.beforeBreadcrumb).toBeUndefined();
-      expect(nativeOption.transport).toBeUndefined();
-      expect(nativeOption.tracesSampler).toBeUndefined();
+      expect(nativeOption?.integrations).toBeUndefined();
+      expect(nativeOption?.defaultIntegrations).toBeUndefined();
+      expect(nativeOption?.beforeSend).toBeUndefined();
+      expect(nativeOption?.beforeSendTransaction).toBeUndefined();
+      expect(nativeOption?.beforeBreadcrumb).toBeUndefined();
+      expect(nativeOption?.transport).toBeUndefined();
+      expect(nativeOption?.tracesSampler).toBeUndefined();
 
       expect(initNativeSdk).toHaveBeenCalled();
     });
@@ -217,53 +216,6 @@ describe('Tests Native Wrapper', () => {
       expect(SentryCapacitor.captureEnvelope).not.toHaveBeenCalled();
     });
 
-    test('Clears breadcrumbs on Android if there is no exception', async () => {
-      NATIVE.platform = 'android';
-
-      const event = {
-        event_id: 'event0',
-        message: 'test',
-        breadcrumbs: [
-          {
-            message: 'crumb!',
-          },
-        ],
-        sdk: {
-          name: 'test-sdk-name',
-          version: '1.2.3',
-        },
-      };
-
-      const expectedHeader = JSON.stringify({
-        event_id: event.event_id,
-        sent_at: '123'
-      });
-      const expectedItem = JSON.stringify({
-        type: 'event',
-        content_type: 'application/vnd.sentry.items.log+json',
-        length: 116,
-      });
-      const expectedPayload = JSON.stringify({
-        ...event,
-        breadcrumbs: [],
-        message: {
-          message: event.message,
-        },
-      });
-
-      const env = createEnvelope<EventEnvelope>({ event_id: event.event_id, sent_at: '123' }, [
-        [{ type: 'event' }, event] as EventItem,
-      ]);
-
-      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
-
-      await NATIVE.sendEnvelope(env);
-
-      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
-      expect(Base64StringToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
-        `${expectedHeader}\n${expectedItem}\n${expectedPayload}`);
-    });
-
     test('Has a valid EOF string', async () => {
       const [expectedEOF = -1/* Placeholder */] = utf8ToBytes('\n');
       const expectedEnvelopeBytes = utf8ToBytes(JSON.stringify({ foo: 'bar' }));
@@ -278,130 +230,9 @@ describe('Tests Native Wrapper', () => {
 
       expect(expectedEOF).not.toBe(-1);
       expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
-      expect(captureEnvelopeSpy.mock.calls[0][0].envelope).toEqual(expectedEnvelopeBase64);
+      expect(captureEnvelopeSpy.mock.calls[0]?.[0]?.envelope).toEqual(expectedEnvelopeBase64);
     });
 
-    test('Clears breadcrumbs on Android if there is a handled exception', async () => {
-      NATIVE.platform = 'android';
-
-      const event = {
-        event_id: 'event0',
-        message: 'test',
-        breadcrumbs: [
-          {
-            message: 'crumb!',
-          },
-        ],
-        exception: {
-          values: [{
-            mechanism: {
-              handled: true
-            }
-          }]
-        },
-        sdk: {
-          name: 'test-sdk-name',
-          version: '1.2.3',
-        },
-      };
-
-      const env = createEnvelope<EventEnvelope>({ event_id: event.event_id, sent_at: '123' }, [
-        [{ type: 'event' }, event] as EventItem,
-      ]);
-
-      const expectedHeader = JSON.stringify({
-        event_id: event.event_id,
-        sent_at: '123'
-      });
-      const expectedItem = JSON.stringify({
-        type: 'event',
-        content_type: 'application/vnd.sentry.items.log+json',
-        length: 172,
-      });
-      const expectedPayload = JSON.stringify({
-        ...event,
-        breadcrumbs: [],
-        message: {
-          message: event.message,
-        },
-        exception: {
-          values: [{
-            mechanism: {
-              handled: true
-            }
-          }]
-        }
-      });
-
-      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
-
-      await NATIVE.sendEnvelope(env);
-
-      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
-      expect(Base64StringToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
-        `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`);
-    });
-
-    test('Clears breadcrumbs on Android if there is a handled exception', async () => {
-      NATIVE.platform = 'android';
-
-      const event = {
-        event_id: 'event0',
-        message: 'test',
-        breadcrumbs: [
-          {
-            message: 'crumb!',
-          },
-        ],
-        exception: {
-          values: [{
-            mechanism: {
-              handled: true
-            }
-          }]
-        },
-        sdk: {
-          name: 'test-sdk-name',
-          version: '1.2.3',
-        },
-      };
-
-      const expectedHeader = JSON.stringify({
-        event_id: event.event_id,
-        sent_at: '123'
-      });
-      const expectedItem = JSON.stringify({
-        type: 'event',
-        content_type: 'application/vnd.sentry.items.log+json',
-        length: 172,
-      });
-      const expectedPayload = JSON.stringify({
-        ...event,
-        breadcrumbs: [],
-        message: {
-          message: event.message,
-        },
-        exception: {
-          values: [{
-            mechanism: {
-              handled: true
-            }
-          }]
-        }
-      });
-
-      const env = createEnvelope<EventEnvelope>({ event_id: event.event_id, sent_at: '123' }, [
-        [{ type: 'event' }, event] as EventItem,
-      ]);
-
-      const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
-
-      await NATIVE.sendEnvelope(env);
-
-      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledTimes(1);
-      expect(Base64StringToString(captureEnvelopeSpy.mock.calls[0][0].envelope)).toMatch(
-        `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`);
-    });
 
     test('has statusCode 200 on success', async () => {
       const captureEnvelopeSpy = jest.spyOn(SentryCapacitor, 'captureEnvelope');
@@ -621,15 +452,6 @@ describe('Tests Native Wrapper', () => {
       });
 
       expect(SentryCapacitor.fetchNativeDeviceContexts).toHaveBeenCalled();
-    });
-    test('returns empty object on android', async () => {
-      NATIVE.platform = 'android';
-
-      await expect(NATIVE.fetchNativeDeviceContexts()).resolves.toMatchObject(
-        {}
-      );
-
-      expect(SentryCapacitor.fetchNativeDeviceContexts).not.toHaveBeenCalled();
     });
   });
 

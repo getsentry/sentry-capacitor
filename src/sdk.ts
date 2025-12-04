@@ -42,7 +42,7 @@ export function init(
   //  makeMain(capacitorHub);
   const defaultIntegrations: false | Integration[] =
 passedOptions.defaultIntegrations === undefined
-      ? getDefaultIntegrations(passedOptions)
+      ? getDefaultIntegrations(finalOptions)
 : passedOptions.defaultIntegrations;
 
   finalOptions.integrations = getIntegrationsToSetup({

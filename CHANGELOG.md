@@ -58,6 +58,11 @@ Sentry.init({
 
 ### Fixes
 
+- Added missing integrations `inboundFiltersIntegration`, `functionToStringIntegration`, `browserApiErrorsIntegration`, `breadcrumbsIntegration`, `globalHandlersIntegration`, `linkedErrorsIntegration`, `dedupeIntegration` and `browserSessionIntegration` ([#1047](https://github.com/getsentry/sentry-capacitor/pull/1047))
+  - This fixes the following option parameters that weren't working: `ignoreErrors`, `ignoreTransactions`, `allowUrls`, `denyUrls`
+  - For more information about the Integrations, check the following link: https://docs.sentry.io/platforms/javascript/configuration/integrations.
+
+- Breadcrumbs are now showing and are tied with native breadcrumbs too ([#1047](https://github.com/getsentry/sentry-capacitor/pull/1047))
 - Init now showing the correct JSDoc for Vue/Nuxt init parameters. ([#1046](https://github.com/getsentry/sentry-capacitor/pull/1046))
 - Replays/Logs/Sessions now have the `capacitor` SDK name as the source of the event. ([#1043](https://github.com/getsentry/sentry-capacitor/pull/1043))
 - Sentry Capacitor integrations are now exposed to `@sentry/capacitor` ([#1039](https://github.com/getsentry/sentry-capacitor/pull/1039))

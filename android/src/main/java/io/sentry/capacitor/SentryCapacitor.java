@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 
 import io.sentry.ILogger;
+import io.sentry.ScopesAdapter;
+import io.sentry.SentryOptions;
 import io.sentry.android.core.AndroidLogger;
+import io.sentry.android.core.SentryAndroidOptions;
 import io.sentry.vendor.Base64;
 
 import com.getcapacitor.JSObject;
@@ -12,6 +15,8 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+
+import org.json.JSONArray;
 
 import io.sentry.Breadcrumb;
 import io.sentry.IScope;
@@ -29,9 +34,11 @@ import io.sentry.protocol.SdkVersion;
 import io.sentry.protocol.SentryPackage;
 import io.sentry.protocol.User;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @CapacitorPlugin
@@ -267,17 +274,25 @@ public class SentryCapacitor extends Plugin {
         Sentry.configureScope(scope -> {
             Breadcrumb breadcrumbInstance = new Breadcrumb();
 
-            if (breadcrumb.getData().has("message")) {
+            JSObject breadcrumbData = breadcrumb.getData();
+
+            if (breadcrumbData.has("message")) {
                 breadcrumbInstance.setMessage(breadcrumb.getString("message"));
             }
 
-            if (breadcrumb.getData().has("type")) {
+            if (breadcrumbData.has("type")) {
                 breadcrumbInstance.setType(breadcrumb.getString("type"));
             }
 
-            if (breadcrumb.getData().has("category")) {
+            if (breadcrumbData.has("category")) {
                 breadcrumbInstance.setCategory(breadcrumb.getString("category"));
             }
+
+            if (breadcrumbData.has("origin")) {
+                breadcrumbInstance.setOrigin(breadcrumbData.getString("origin"));
+              } else {
+                breadcrumbInstance.setOrigin("capacitor");
+              }
 
             if (breadcrumb.getData().has("level")) {
                 switch (breadcrumb.getString("level")) {
@@ -361,6 +376,52 @@ public class SentryCapacitor extends Plugin {
         call.resolve();
     }
 
+    @PluginMethod
+    public void fetchNativeDeviceContexts(PluginCall call) {
+      final SentryOptions options = ScopesAdapter.getInstance().getOptions();
+      final IScope currentScope = InternalSentrySdk.getCurrentScope();
+
+
+      JSObject callData = call.getData();
+      if (options == null || currentScope == null) {
+        call.resolve();
+        return;
+      }
+      final Map<String, Object> serialized =
+        InternalSentrySdk.serializeScope(context, (SentryAndroidOptions) options, currentScope);
+
+      // Filter out breadcrumbs with origin "capacitor" from the serialized data before conversion
+      if (serialized.containsKey("breadcrumbs")) {
+        Object breadcrumbsObj = serialized.get("breadcrumbs");
+        if (breadcrumbsObj instanceof List) {
+          List<?> breadcrumbs = (List<?>) breadcrumbsObj;
+          List<Object> filteredBreadcrumbs = new ArrayList<>();
+          for (Object breadcrumbObj : breadcrumbs) {
+            if (breadcrumbObj instanceof Map) {
+              Map<?, ?> breadcrumb = (Map<?, ?>) breadcrumbObj;
+              Object origin = breadcrumb.get("origin");
+              if (!"capacitor".equals(origin)) {
+                filteredBreadcrumbs.add(breadcrumb);
+              }
+            } else {
+              // If it's not a Map, keep it as-is
+              filteredBreadcrumbs.add(breadcrumbObj);
+            }
+          }
+          serialized.put("breadcrumbs", filteredBreadcrumbs);
+        }
+      }
+
+      final Object deviceContext = CapSentryMapConverter.convertToWritable(serialized);
+
+      if (deviceContext instanceof JSObject) {
+        call.resolve((JSObject) deviceContext);
+      }
+      else {
+        call.resolve();
+      }
+    }
+
     public void setEventOriginTag(SentryEvent event) {
         SdkVersion sdk = event.getSdk();
         if (sdk != null) {
@@ -400,3 +461,4 @@ public class SentryCapacitor extends Plugin {
         }
     }
 }
+
