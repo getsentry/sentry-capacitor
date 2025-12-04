@@ -313,7 +313,6 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             breadcrumb.type = call.getString("type")
             breadcrumb.message = call.getString("message")
             breadcrumb.data = call.getObject("data")
-            breadcrumb.origin = "capacitor"
 
             scope.addBreadcrumb(breadcrumb)
         }
