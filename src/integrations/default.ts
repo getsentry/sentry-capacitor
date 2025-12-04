@@ -29,11 +29,10 @@ export function getDefaultIntegrations(
     // eslint-disable-next-line deprecation/deprecation
     inboundFiltersIntegration(),
     functionToStringIntegration(),
-    // Web Only
     browserApiErrorsIntegration(),
     breadcrumbsIntegration(),
-    globalHandlersIntegration(), // browser?
-    linkedErrorsIntegration(), // ?
+    globalHandlersIntegration(),
+    linkedErrorsIntegration(),
     dedupeIntegration(),
   );
 
