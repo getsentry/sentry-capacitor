@@ -18,8 +18,8 @@ async function processEvent(event: Event, _hint: EventHint, client: Client): Pro
     const context = nativeContexts['contexts'] as Contexts;
 
     event.contexts = { ...context, ...event.contexts };
-    if ('user' in context) {
-      const user = context['user'];
+    if ('user' in nativeContexts) {
+      const user = nativeContexts['user'];
       if (!event.user) {
         event.user = { ...user };
       }
