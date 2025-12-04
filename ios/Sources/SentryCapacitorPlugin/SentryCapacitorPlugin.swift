@@ -211,7 +211,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
                 contexts["breadcrumbs"] = filteredBreadcrumbs
             }
 
-            contexts["context"] = context
+            contexts["contexts"] = context
 
             call.resolve(contexts as PluginCallResultData)
         }
