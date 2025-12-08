@@ -2,6 +2,7 @@
 import type { Envelope, EventEnvelope, EventItem, SeverityLevel, TransportMakeRequestResponse } from '@sentry/core';
 import { createEnvelope, debug, dropUndefinedKeys } from '@sentry/core';
 import { utf8ToBytes } from '../src/vendor';
+import { base64EnvelopeToString, createLogEnvelopeHelper, createMetricEnvelopeHelper } from './helper/envelopeHelper';
 
 let getStringBytesLengthValue = 1;
 
@@ -182,7 +183,7 @@ describe('Tests Native Wrapper', () => {
       });
       const expectedItem = JSON.stringify({
         type: 'event',
-        content_type: 'application/vnd.sentry.items.log+json',
+        content_type: 'application/json',
         length: expectedNativeLength,
       });
       const expectedPayload = JSON.stringify({
@@ -282,7 +283,120 @@ describe('Tests Native Wrapper', () => {
       NATIVE.enableNative = true;
       const result = await NATIVE.sendEnvelope(env);
       expect(result).toMatchObject(expectedReturn);
-    })
+    });
+
+    test('uses correct content type for metrics with content_type set', async () => {
+      // Create a SerializedMetric array as expected by createMetricEnvelope
+      const serializedMetrics = [
+        {
+          timestamp: 1765200319.505,
+          name: 'test.metric.counter',
+          value: 1,
+          type: 'counter' as const,
+          unit: 'none',
+          trace_id: '',
+        },
+      ];
+
+      // Use createMetricEnvelopeHelper to create a properly formatted metric envelope
+      const env = createMetricEnvelopeHelper(serializedMetrics);
+
+      await NATIVE.sendEnvelope(env);
+
+      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalled();
+      const base64Envelope = (SentryCapacitor.captureEnvelope as jest.Mock).mock.calls[0]?.[0]?.envelope;
+      expect(base64Envelope).toBeDefined();
+      expect(base64EnvelopeToString(base64Envelope)).toEqual(
+`{}
+{"type":"trace_metric","item_count":1,"content_type":"application/vnd.sentry.items.trace-metric+json","length":124}
+{"items":[{"timestamp":1765200319.505,"name":"test.metric.counter","value":1,"type":"counter","unit":"none","trace_id":""}]}
+`);
+    });
+
+    test('uses correct content type for logs with content_type set', async () => {
+      // Create a SerializedLog array as expected by createLogEnvelope
+      const serializedLogs = [
+        {
+          timestamp: 1765200551.692,
+          level: 'info' as const,
+          body: 'test log message',
+          severity_number: 9,
+          attributes: {},
+        },
+      ];
+
+      // Use createLogEnvelopeHelper to create a properly formatted log envelope
+      const env = createLogEnvelopeHelper(serializedLogs);
+
+      await NATIVE.sendEnvelope(env);
+
+      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalled();
+      const base64Envelope = (SentryCapacitor.captureEnvelope as jest.Mock).mock.calls[0]?.[0]?.envelope;
+      expect(base64Envelope).toBeDefined();
+      expect(base64EnvelopeToString(base64Envelope)).toEqual(
+`{}
+{"type":"log","item_count":1,"content_type":"application/vnd.sentry.items.log+json","length":117}
+{"items":[{"timestamp":1765200551.692,"level":"info","body":"test log message","severity_number":9,"attributes":{}}]}
+`);
+    });
+
+    test('respects existing content_type in item header', async () => {
+      const expectedNativeLength = 50;
+      getStringBytesLengthValue = expectedNativeLength;
+
+      const customItem = {
+        custom: 'data',
+      };
+
+      // Test with custom content_type - using any to bypass strict typing for test
+      const env = [
+        { event_id: 'custom0', sent_at: '123' },
+        [[{ type: 'log', content_type: 'application/vnd.sentry.items.custom+json' }, customItem]],
+      ] as any as Envelope;
+
+      await NATIVE.sendEnvelope(env);
+
+      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalled();
+      const base64Envelope = (SentryCapacitor.captureEnvelope as jest.Mock).mock.calls[0]?.[0]?.envelope;
+      expect(base64Envelope).toBeDefined();
+      expect(base64EnvelopeToString(base64Envelope)).toEqual(
+`{"event_id":"custom0","sent_at":"123"}
+{"type":"log","content_type":"application/vnd.sentry.items.custom+json","length":17}
+{"custom":"data"}
+`);
+    });
+
+    test('defaults to application/json when content_type is not set', async () => {
+      const expectedNativeLength = 15;
+      getStringBytesLengthValue = expectedNativeLength;
+
+      const itemWithoutContentType = {
+        some: 'data',
+      };
+
+      const expectedHeader = JSON.stringify({
+        event_id: 'default0',
+        sent_at: '123'
+      });
+      const expectedItem = JSON.stringify({
+        type: 'event',
+        content_type: 'application/json',
+        length: expectedNativeLength,
+      });
+      const expectedPayload = JSON.stringify(itemWithoutContentType);
+
+      const expectedEnvelope = `${expectedHeader}\n${expectedItem}\n${expectedPayload}\n`;
+
+      // Test with item that doesn't have content_type set - should default to application/json
+      const env = [
+        { event_id: 'default0', sent_at: '123' },
+        [[{ type: 'event' }, itemWithoutContentType]],
+      ] as any as Envelope;
+
+      await NATIVE.sendEnvelope(env);
+
+      expect(SentryCapacitor.captureEnvelope).toHaveBeenCalledWith({ envelope: base64StringFromByteArray(utf8ToBytes(expectedEnvelope)) });
+    });
   });
 
   // TODO add this in when fetchRelease method is in progress
