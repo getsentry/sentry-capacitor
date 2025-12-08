@@ -141,24 +141,8 @@ export class Tab1Page {
 
   public createMetric(): void {
     // Create a metric using Sentry metrics API
-    // @ts-ignore - metrics API may not be fully typed
-    if (Sentry.metrics && typeof Sentry.metrics.increment === 'function') {
-      Sentry.metrics.increment('test.metric.counter', 1, {
-        tags: { source: 'capacitor-sample-app' },
-      });
-    } else {
-      // Fallback: create a custom metric using captureMessage with metric context
-      Sentry.captureMessage('Metric created', {
-        level: 'info',
-        tags: {
-          metric_type: 'counter',
-          metric_name: 'test.metric.counter',
-        },
-        extra: {
-          value: 1,
-          timestamp: Date.now(),
-        },
-      });
+    Sentry.metrics.count('test.metric.counter', 1,
+      { attributes: { from_test_app: true } },
+    );
     }
-  }
 }

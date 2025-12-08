@@ -12,6 +12,7 @@ export type {
   Stacktrace,
   Thread,
   User,
+  Metric
 } from '@sentry/core';
 
 export type { Scope } from '@sentry/core';
@@ -49,7 +50,7 @@ export {
   startIdleSpan,
 } from '@sentry/core';
 
-export { replayIntegration, browserTracingIntegration, registerSpanErrorInstrumentation, logger } from '@sentry/browser';
+export { metrics, replayIntegration, browserTracingIntegration, registerSpanErrorInstrumentation, logger } from '@sentry/browser';
 
 export { pauseAppHangTracking, resumeAppHangTracking } from './wrapper';
 
