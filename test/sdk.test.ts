@@ -143,6 +143,34 @@ describe('SDK Init', () => {
     });
   });
 
+  test('passes metrics experiments to browser options', () => {
+    NATIVE.platform = 'web';
+    const mockOriginalInit = jest.fn();
+    const beforeSendMetric = jest.fn(metric => metric);
+
+    init({
+      dsn: 'test-dsn',
+      enabled: true,
+      _experiments: {
+        enableMetrics: true,
+        beforeSendMetric,
+      },
+    }, mockOriginalInit);
+
+    // Wait for async operations
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        expect(mockOriginalInit).toHaveBeenCalled();
+        const browserOptions = mockOriginalInit.mock.calls[0][0];
+
+        expect(browserOptions.enableMetrics).toBe(true);
+        expect(browserOptions.beforeSendMetric).toBe(beforeSendMetric);
+
+        resolve();
+      }, 10);
+    });
+  });
+
   test('RewriteFrames to be added by default', async () => {
     NATIVE.platform = 'web';
     init({ enabled: true }, async (capacitorOptions: CapacitorOptions) => {

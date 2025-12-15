@@ -53,7 +53,8 @@ Sentry.init({
 
 ### Features
 
-- Add metric support!
+- Add experimental Metric support for Web and iOS.
+  for more information see doc page:
 - Add Fallback to JavaScript SDK when Native SDK fails to initialize ([#1043](https://github.com/getsentry/sentry-capacitor/pull/1043))
 - Add spotlight integration `spotlightIntegration`. ([#1039](https://github.com/getsentry/sentry-capacitor/pull/1039))
 

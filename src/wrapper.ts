@@ -59,12 +59,7 @@ export const NATIVE = {
             : 'application/octet-stream';
         bytesPayload = [...itemPayload];
       } else {
-        // Check if the item header already has a content_type set
-        if (typeof itemHeader.content_type === 'string') {
-          bytesContentType = itemHeader.content_type;
-        } else {
-          bytesContentType = 'application/json';
-        }
+        bytesContentType =  typeof itemHeader.content_type === 'string' ? itemHeader.content_type : 'application/json';
         bytesPayload = utf8ToBytes(JSON.stringify(itemPayload));
       }
 
