@@ -106,8 +106,6 @@ For more informations, please go to the following link: https://docs.sentry.io/p
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.27.0/CHANGELOG.md)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/9.46.0...10.27.0)
 
-## V3
-
 ## 2.4.1
 
 ### Fixes
