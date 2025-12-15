@@ -138,4 +138,11 @@ export class Tab1Page {
   public clearTestContext(): void {
     Sentry.setContext('TEST-CONTEXT', null);
   }
+
+  public createMetric(): void {
+    // Create a metric using Sentry metrics API
+    Sentry.metrics.count('test.metric.counter', 1,
+      { attributes: { from_test_app: true } },
+    );
+  }
 }

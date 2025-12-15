@@ -80,6 +80,8 @@ finalOptions.transport = passedOptions.transport || makeNativeTransport;
     ...finalOptions,
     autoSessionTracking:
       NATIVE.platform === 'web' && finalOptions.enableAutoSessionTracking,
+    enableMetrics: finalOptions._experiments?.enableMetrics,
+    beforeSendMetric: finalOptions._experiments?.beforeSendMetric,
   } as BrowserOptions;
 
   const mobileOptions = {

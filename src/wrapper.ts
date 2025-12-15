@@ -59,7 +59,7 @@ export const NATIVE = {
             : 'application/octet-stream';
         bytesPayload = [...itemPayload];
       } else {
-        bytesContentType = 'application/vnd.sentry.items.log+json';
+        bytesContentType =  typeof itemHeader.content_type === 'string' ? itemHeader.content_type : 'application/json';
         bytesPayload = utf8ToBytes(JSON.stringify(itemPayload));
       }
 
