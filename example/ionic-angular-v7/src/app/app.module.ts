@@ -25,9 +25,9 @@ Sentry.init(
     // Use the tracing integration to see traces and add performance monitoring
     _experiments: {
       enableMetrics: true,
-    },
-    beforeSendMetric: (metric) => {
-      return metric;
+      beforeSendMetric: (metric) => {
+        return metric;
+      },
     },
     integrations: [
       Sentry.browserTracingIntegration(),
