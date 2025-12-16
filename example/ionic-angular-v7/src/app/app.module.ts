@@ -9,6 +9,7 @@ import * as Sentry from '@sentry/capacitor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
 
 // ATTENTION: Change the DSN below with your own to see the events in Sentry. Get one at sentry.io
 Sentry.init(
@@ -22,18 +23,25 @@ Sentry.init(
     // Whether SDK should be enabled or not
     enabled: true,
     // Use the tracing integration to see traces and add performance monitoring
+    _experiments: {
+      enableMetrics: true,
+      beforeSendMetric: (metric) => {
+        return metric;
+      },
+    },
     integrations: [
       Sentry.browserTracingIntegration(),
       Sentry.replayIntegration({
         maskAllText: false,
         blockAllMedia: true,
       }),
+      Sentry.spotlightIntegration({
+        sidecarUrl:  environment.spotlightSidecarUrl,
+      }),
     ],
-    _experiments: {
-      enableLogs: true,
-      beforeSendLog: (log) => {
-        return log;
-      }
+    enableLogs: true,
+    beforeSendLog: (log) => {
+      return log;
     },
     // A release identifier
     release: '1.0.0',

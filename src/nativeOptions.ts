@@ -1,9 +1,13 @@
 import { Capacitor } from '@capacitor/core';
-import type { BrowserOptions } from '@sentry/browser';
 import type { CapacitorOptions } from './options';
+import { getCurrentSpotlightUrl } from './utils/webViewUrl';
 
 interface CapacitorLoggerOptions {
   enableLogs: boolean
+}
+
+interface CapacitorSpotlightOptions {
+  sidecarUrl: string;
 }
 
 /**
@@ -41,7 +45,8 @@ export function FilterNativeOptions(
     // tunnel: options.tunnel: Only handled on the JavaScript Layer.
     enableCaptureFailedRequests: options.enableCaptureFailedRequests,
     ...iOSParameters(options),
-    ...LogParameters(options)
+    ...LogParameters(options),
+    ...SpotlightParameters(),
   };
 }
 
@@ -54,12 +59,18 @@ function iOSParameters(options: CapacitorOptions): CapacitorOptions {
     : {};
 }
 // Browser options added so options.enableLogs is exposed.
-function LogParameters(options: CapacitorOptions & BrowserOptions ): CapacitorLoggerOptions | undefined {
-  // eslint-disable-next-line deprecation/deprecation
-  const shouldEnable = options.enableLogs as boolean ?? options._experiments?.enableLogs;
+function LogParameters(options: CapacitorOptions  & { enableLogs?: boolean }): CapacitorLoggerOptions | undefined {
   // Only Web and Android implements log parameters initialization.
-  if (shouldEnable && Capacitor.getPlatform() === 'android') {
-    return { enableLogs: shouldEnable };
+  if (options.enableLogs && Capacitor.getPlatform() === 'android') {
+    return { enableLogs: true };
+  }
+  return undefined;
+}
+
+function SpotlightParameters(): CapacitorSpotlightOptions | undefined {
+  const spotlightUrl = getCurrentSpotlightUrl();
+  if (spotlightUrl) {
+    return { sidecarUrl: spotlightUrl };
   }
   return undefined;
 }

@@ -1,9 +1,7 @@
 jest.mock('../src/wrapper', () => jest.requireActual('./mockWrapper'));
 import type { Breadcrumb } from '@sentry/core';
-import * as SentryCore from '@sentry/core';
 import { Scope } from '@sentry/core';
-import { enableSyncToNative } from '../src/scopeSync';
-import { getDefaultTestClientOptions, TestClient } from './mocks/client';
+import { disableSyncToNative, enableSyncToNative } from '../src/scopeSync';
 import { NATIVE } from './mockWrapper';
 
 jest.mock('../src/wrapper');
@@ -106,95 +104,89 @@ describe('ScopeSync', () => {
     });
   });
 
-  describe('static apis', () => {
-    let setUserScopeSpy: jest.SpyInstance;
-    let setTagScopeSpy: jest.SpyInstance;
-    let setTagsScopeSpy: jest.SpyInstance;
-    let setExtraScopeSpy: jest.SpyInstance;
-    let setExtrasScopeSpy: jest.SpyInstance;
-    let addBreadcrumbScopeSpy: jest.SpyInstance;
-    let setContextScopeSpy: jest.SpyInstance;
 
-    beforeAll(() => {
-      const testScope = SentryCore.getIsolationScope();
-      setUserScopeSpy = jest.spyOn(testScope, 'setUser');
-      setTagScopeSpy = jest.spyOn(testScope, 'setTag');
-      setTagsScopeSpy = jest.spyOn(testScope, 'setTags');
-      setExtraScopeSpy = jest.spyOn(testScope, 'setExtra');
-      setExtrasScopeSpy = jest.spyOn(testScope, 'setExtras');
-      addBreadcrumbScopeSpy = jest.spyOn(testScope, 'addBreadcrumb');
-      setContextScopeSpy = jest.spyOn(testScope, 'setContext');
-    });
+  describe('disableSyncToNative', () => {
+    let scope: Scope;
 
     beforeEach(() => {
-      SentryCore.setCurrentClient(new TestClient(getDefaultTestClientOptions()));
-      enableSyncToNative(SentryCore.getIsolationScope());
+      scope = new Scope();
     });
 
-    it('setUser', () => {
-      expect(SentryCore.getIsolationScope().setUser).not.toBe(setUserScopeSpy);
+    it('should restore original functions after disabling sync', () => {
+      const originalSetUser = scope.setUser;
+      const originalSetTag = scope.setTag;
+      const originalSetTags = scope.setTags;
+      const originalSetExtra = scope.setExtra;
+      const originalSetExtras = scope.setExtras;
+      const originalAddBreadcrumb = scope.addBreadcrumb;
+      const originalClearBreadcrumbs = scope.clearBreadcrumbs;
+      const originalSetContext = scope.setContext;
 
-      const user = { id: '123' };
-      SentryCore.setUser(user);
-      expect(NATIVE.setUser).toHaveBeenCalledExactlyOnceWith({ id: '123' });
-      expect(setUserScopeSpy).toHaveBeenCalledExactlyOnceWith({ id: '123' });
+      // Enable sync (functions should be wrapped)
+      enableSyncToNative(scope);
+      expect(scope.setUser).not.toBe(originalSetUser);
+      expect(scope.setTag).not.toBe(originalSetTag);
+      expect(scope.setTags).not.toBe(originalSetTags);
+      expect(scope.setExtra).not.toBe(originalSetExtra);
+      expect(scope.setExtras).not.toBe(originalSetExtras);
+      expect(scope.addBreadcrumb).not.toBe(originalAddBreadcrumb);
+      expect(scope.clearBreadcrumbs).not.toBe(originalClearBreadcrumbs);
+      expect(scope.setContext).not.toBe(originalSetContext);
+
+      // Disable sync (functions should be restored)
+      disableSyncToNative(scope);
+      expect(scope.setUser).toBe(originalSetUser);
+      expect(scope.setTag).toBe(originalSetTag);
+      expect(scope.setTags).toBe(originalSetTags);
+      expect(scope.setExtra).toBe(originalSetExtra);
+      expect(scope.setExtras).toBe(originalSetExtras);
+      expect(scope.addBreadcrumb).toBe(originalAddBreadcrumb);
+      expect(scope.clearBreadcrumbs).toBe(originalClearBreadcrumbs);
+      expect(scope.setContext).toBe(originalSetContext);
     });
 
-    it('setTag', () => {
-      expect(SentryCore.getIsolationScope().setTag).not.toBe(setTagScopeSpy);
+    it('should not call native methods after disabling sync', () => {
+      enableSyncToNative(scope);
+      disableSyncToNative(scope);
 
-      SentryCore.setTag('key', 'value');
-      expect(NATIVE.setTag).toHaveBeenCalledExactlyOnceWith('key', 'value');
-      expect(setTagScopeSpy).toHaveBeenCalledExactlyOnceWith('key', 'value');
+      // Clear any calls made during sync setup
+      jest.clearAllMocks();
+
+      scope.setUser({ id: '123' });
+      scope.setTag('key', 'value');
+      scope.setTags({ key1: 'value1', key2: 'value2' });
+      scope.setExtra('key', 'value');
+      scope.setExtras({ key1: 'value1', key2: 'value2' });
+      scope.addBreadcrumb({ message: 'test' });
+      scope.clearBreadcrumbs();
+      scope.setContext('key', { data: 'value' });
+
+      expect(NATIVE.setUser).not.toHaveBeenCalled();
+      expect(NATIVE.setTag).not.toHaveBeenCalled();
+      expect(NATIVE.setExtra).not.toHaveBeenCalled();
+      expect(NATIVE.addBreadcrumb).not.toHaveBeenCalled();
+      expect(NATIVE.clearBreadcrumbs).not.toHaveBeenCalled();
+      expect(NATIVE.setContext).not.toHaveBeenCalled();
     });
 
-    it('setTags', () => {
-      expect(SentryCore.getIsolationScope().setTags).not.toBe(setTagsScopeSpy);
+    it('should do nothing if scope was not previously synced', () => {
+      const newScope = new Scope();
+      const originalSetUser = newScope.setUser;
 
-      SentryCore.setTags({ key: 'value', second: 'bar' });
-      expect(NATIVE.setTag).toHaveBeenCalledTimes(2);
-      expect(NATIVE.setTag).toHaveBeenCalledWith('key', 'value');
-      expect(NATIVE.setTag).toHaveBeenCalledWith('second', 'bar');
-      expect(setTagsScopeSpy).toHaveBeenCalledExactlyOnceWith({ key: 'value', second: 'bar' });
+      // Should not throw and should not change anything
+      expect(() => disableSyncToNative(newScope)).not.toThrow();
+      expect(newScope.setUser).toBe(originalSetUser);
     });
 
-    it('setExtra', () => {
-      expect(SentryCore.getIsolationScope().setExtra).not.toBe(setExtraScopeSpy);
+    it('should handle multiple disable calls gracefully', () => {
+      enableSyncToNative(scope);
 
-      SentryCore.setExtra('key', 'value');
-      expect(NATIVE.setExtra).toHaveBeenCalledExactlyOnceWith('key', 'value');
-      expect(setExtraScopeSpy).toHaveBeenCalledExactlyOnceWith('key', 'value');
-    });
+      disableSyncToNative(scope);
+      const restoredSetUser = scope.setUser;
 
-    it('setExtras', () => {
-      expect(SentryCore.getIsolationScope().setExtras).not.toBe(setExtrasScopeSpy);
-
-      SentryCore.setExtras({ key: 'value', second: 'bar' });
-      expect(NATIVE.setExtra).toHaveBeenCalledTimes(2);
-      expect(NATIVE.setExtra).toHaveBeenCalledWith('key', 'value');
-      expect(NATIVE.setExtra).toHaveBeenCalledWith('second', 'bar');
-      expect(setExtrasScopeSpy).toHaveBeenCalledExactlyOnceWith({ key: 'value', second: 'bar' });
-    });
-
-    // eslint-disable-next-line @sentry-internal/sdk/no-focused-tests
-    it.only('addBreadcrumb', () => {
-      // This test is run in isolation to check for a race condition with another test.
-      expect(SentryCore.getIsolationScope().addBreadcrumb).not.toBe(addBreadcrumbScopeSpy);
-
-      SentryCore.addBreadcrumb({ message: 'test' });
-      expect(NATIVE.addBreadcrumb).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ message: 'test' }));
-      expect(addBreadcrumbScopeSpy).toHaveBeenCalledExactlyOnceWith(
-        expect.objectContaining({ message: 'test' }),
-        expect.any(Number),
-      );
-    });
-
-    it('setContext', () => {
-      expect(SentryCore.getIsolationScope().setContext).not.toBe(setContextScopeSpy);
-
-      SentryCore.setContext('key', { key: 'value' });
-      expect(NATIVE.setContext).toHaveBeenCalledExactlyOnceWith('key', { key: 'value' });
-      expect(setContextScopeSpy).toHaveBeenCalledExactlyOnceWith('key', { key: 'value' });
+      // Second disable should not change anything
+      disableSyncToNative(scope);
+      expect(scope.setUser).toBe(restoredSetUser);
     });
   });
 });

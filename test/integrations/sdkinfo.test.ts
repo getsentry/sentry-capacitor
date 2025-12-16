@@ -1,5 +1,5 @@
 import type {  Client,Event,  EventHint,  Package  } from '@sentry/core';
-import { SDK_NAME, SDK_VERSION } from '../../src/';
+import { SDK_VERSION } from '../../src/';
 import { sdkInfoIntegration } from '../../src/integrations';
 import { NATIVE } from '../../src/wrapper';
 
@@ -68,21 +68,27 @@ describe('Sdk Info', () => {
     expect(processedEvent?.sdk?.version).toEqual('1.0.0');
   });
 
-  it('Does use default sdk name and version', async () => {
+  it('Does not set sdk name and version when not provided', async () => {
     mockedFetchNativeSdkInfo = jest.fn().mockResolvedValue(null);
     const mockEvent: Event = {};
     const processedEvent = await processEvent(mockEvent);
 
-    expect(processedEvent?.sdk?.name).toEqual(SDK_NAME);
-    expect(processedEvent?.sdk?.version).toEqual(SDK_VERSION);
+    expect(processedEvent?.sdk?.name).toBeUndefined();
+    expect(processedEvent?.sdk?.version).toBeUndefined();
+    expect(processedEvent?.sdk?.packages).toContainEqual({
+      name: 'npm:@sentry/capacitor',
+      version: SDK_VERSION,
+    });
   });
   it('Add none setting when defaultIp is undefined', async () => {
     mockedFetchNativeSdkInfo = jest.fn().mockResolvedValue(null);
     const mockEvent: Event = {};
     const processedEvent = await processEvent(mockEvent, {}, undefined);
 
-    expect(processedEvent?.sdk?.name).toEqual(SDK_NAME);
-    expect(processedEvent?.sdk?.version).toEqual(SDK_VERSION);
+    expect(processedEvent?.sdk?.packages).toContainEqual({
+      name: 'npm:@sentry/capacitor',
+      version: SDK_VERSION,
+    });
     // @ts-expect-error injected type.
     expect(processedEvent?.sdk?.settings?.infer_ip).toEqual('never');
   });
@@ -92,8 +98,10 @@ describe('Sdk Info', () => {
     const mockEvent: Event = {};
     const processedEvent = await processEvent(mockEvent, {}, false);
 
-    expect(processedEvent?.sdk?.name).toEqual(SDK_NAME);
-    expect(processedEvent?.sdk?.version).toEqual(SDK_VERSION);
+    expect(processedEvent?.sdk?.packages).toContainEqual({
+      name: 'npm:@sentry/capacitor',
+      version: SDK_VERSION,
+    });
     // @ts-expect-error injected type.
     expect(processedEvent?.sdk?.settings?.infer_ip).toEqual('never');
   });
@@ -103,8 +111,10 @@ describe('Sdk Info', () => {
     const mockEvent: Event = {};
     const processedEvent = await processEvent(mockEvent, {}, true);
 
-    expect(processedEvent?.sdk?.name).toEqual(SDK_NAME);
-    expect(processedEvent?.sdk?.version).toEqual(SDK_VERSION);
+    expect(processedEvent?.sdk?.packages).toContainEqual({
+      name: 'npm:@sentry/capacitor',
+      version: SDK_VERSION,
+    });
     // @ts-expect-error injected type.
     expect(processedEvent?.sdk?.settings?.infer_ip).toEqual('auto');
   });

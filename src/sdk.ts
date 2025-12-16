@@ -2,6 +2,7 @@ import type { BrowserOptions } from '@sentry/browser';
 import { init as browserInit } from '@sentry/browser';
 import type { Integration } from '@sentry/core';
 import { debug, getClient, getGlobalScope, getIntegrationsToSetup, getIsolationScope  } from '@sentry/core';
+import { sdkInit } from './client';
 import { getDefaultIntegrations } from './integrations/default';
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
 import { enableSyncToNative } from './scopeSync';
@@ -16,16 +17,19 @@ import { NATIVE } from './wrapper';
  * @param options Options for the SDK
  * @param originalInit The init function of the sibling SDK, leave blank to initialize with `@sentry/browser`
  */
-export function init<T>(
-  passedOptions: CapacitorOptions & T,
-  originalInit: (passedOptions: T & BrowserOptions) => void = browserInit,
+export function init(
+  passedOptions: CapacitorOptions,
+  originalInit: (passedOptions:BrowserOptions) => void = browserInit,
 ): void {
+
   const finalOptions = {
     enableAutoSessionTracking: true,
     enableWatchdogTerminationTracking: true,
     enableCaptureFailedRequests: false,
     ...passedOptions,
   };
+  finalOptions.siblingOptions && delete finalOptions.siblingOptions;
+
   if (finalOptions.enabled === false || NATIVE.platform === 'web') {
     finalOptions.enableNative = false;
     finalOptions.enableNativeNagger = false;
@@ -37,12 +41,12 @@ export function init<T>(
   //  const capacitorHub = new Hub(undefined, new CapacitorScope());
   //  makeMain(capacitorHub);
   const defaultIntegrations: false | Integration[] =
-    passedOptions.defaultIntegrations === undefined
-      ? getDefaultIntegrations(passedOptions)
-      : passedOptions.defaultIntegrations;
+passedOptions.defaultIntegrations === undefined
+      ? getDefaultIntegrations(finalOptions)
+: passedOptions.defaultIntegrations;
 
   finalOptions.integrations = getIntegrationsToSetup({
-    integrations: safeFactory(passedOptions.integrations, {
+integrations: safeFactory(passedOptions.integrations, {
       loggerMessage: 'The integrations threw an error',
     }),
     defaultIntegrations,
@@ -50,13 +54,13 @@ export function init<T>(
 
   if (
     finalOptions.enableNative &&
-    !passedOptions.transport &&
+!passedOptions.transport &&
     NATIVE.platform !== 'web'
   ) {
-    finalOptions.transport = passedOptions.transport || makeNativeTransport;
+finalOptions.transport = passedOptions.transport || makeNativeTransport;
 
     finalOptions.transportOptions = {
-      ...(passedOptions.transportOptions ?? {}),
+...(passedOptions.transportOptions ?? {}),
       bufferSize: DEFAULT_BUFFER_SIZE,
     };
   }
@@ -71,10 +75,14 @@ export function init<T>(
   }
 
   const browserOptions = {
+    ...passedOptions.siblingOptions?.vueOptions,
+    ...passedOptions.siblingOptions?.nuxtClientOptions,
     ...finalOptions,
     autoSessionTracking:
       NATIVE.platform === 'web' && finalOptions.enableAutoSessionTracking,
-  } as BrowserOptions & T;
+    enableMetrics: finalOptions._experiments?.enableMetrics,
+    beforeSendMetric: finalOptions._experiments?.beforeSendMetric,
+  } as BrowserOptions;
 
   const mobileOptions = {
     ...finalOptions,
@@ -82,11 +90,7 @@ export function init<T>(
       NATIVE.platform !== 'web' && finalOptions.enableAutoSessionTracking,
   } as CapacitorClientOptions;
 
-  // We first initialize the NATIVE SDK to avoid the Javascript SDK to invoke any
-  // feature from the NATIVE SDK without the options being set.
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  void NATIVE.initNativeSdk(mobileOptions);
-  originalInit(browserOptions);
+  sdkInit(browserOptions, mobileOptions, originalInit, passedOptions.transport);
 }
 
 /**

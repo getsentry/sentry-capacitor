@@ -3,3 +3,4 @@ export { eventOriginIntegration } from './eventorigin';
 export { nativeReleaseIntegration } from './release';
 export { capacitorRewriteFramesIntegration } from './rewriteframes';
 export { sdkInfoIntegration } from './sdkinfo';
+export { spotlightIntegration } from './spotlight';

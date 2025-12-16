@@ -21,6 +21,7 @@ import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 import * as SentryVue from '@sentry/vue';
 import * as Sentry from '@sentry/capacitor';
+import { localConfig } from './config/local';
 
 /* Theme variables */
 import './theme/variables.css';
@@ -31,7 +32,6 @@ const app = createApp(App)
 
 
 Sentry.init({
-  app,
   dsn: 'https://7f35532db4f8aca7c7b6992d488b39c1@o447951.ingest.sentry.io/4505912397660160',
   integrations: [
     SentryVue.vueIntegration({
@@ -45,6 +45,9 @@ Sentry.init({
       maskAllText: false,
       blockAllMedia: false,
     }),
+    ...(localConfig.spotlightSidecarUrl ? [Sentry.spotlightIntegration({
+      sidecarUrl: localConfig.spotlightSidecarUrl,
+    })] : []),
   ],
   tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
   // Performance Monitoring
@@ -52,16 +55,21 @@ Sentry.init({
   // Session Replay
   replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
   replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
-  _experiments: {
-    enableLogs: true,
-    beforeSendLog: (log) => {
-      return log;
-    }
+  enableLogs: true,
+  beforeSendLog: (log) => {
+    return log;
   },
 
+  siblingOptions: {
+    vueOptions: {
+      app: app,
+      attachErrorHandler: false,
+      attachProps: false,
+    },
+  },
 },
   // Forward the init method from @sentry/vue
-  SentryVue.init
+  SentryVue.init,
 );
 
 

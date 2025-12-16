@@ -74,6 +74,11 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             let sdkVersion = PrivateSentrySDKOnly.getSdkVersionString()
             PrivateSentrySDKOnly.setSdkName(nativeSdkName, andVersionString: sdkVersion)
 
+            if let sidecarUrl = optionsDict["sidecarUrl"] as? String {
+                options.enableSpotlight = true
+                options.spotlightUrl = sidecarUrl
+            }
+
              // Note: For now, in sentry-cocoa, beforeSend is not called before captureEnvelope
             options.beforeSend = { [weak self] event in
                 self?.setEventOriginTag(event: event)
@@ -177,7 +182,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             }
 
             let extraContext = PrivateSentrySDKOnly.getExtraContext()
-            var context = contexts["context"] as? [String: Any] ?? [:]
+            var context = contexts["contexts"] as? [String: Any] ?? [:]
 
             if let deviceExtraContext = extraContext["device"] as? [String: Any] {
                 var deviceContext = context["device"] as? [String: Any] ?? [:]
@@ -195,7 +200,18 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
                 context["app"] = appContext
             }
 
-            contexts["context"] = context
+            // Remove capacitor breadcrumbs
+            if let breadcrumbs = contexts["breadcrumbs"] as? [[String: Any]] {
+                let filteredBreadcrumbs = breadcrumbs.filter { breadcrumb in
+                    guard let origin = breadcrumb["origin"] as? String else {
+                        return true
+                    }
+                    return origin != "capacitor"
+                }
+                contexts["breadcrumbs"] = filteredBreadcrumbs
+            }
+
+            contexts["contexts"] = context
 
             call.resolve(contexts as PluginCallResultData)
         }
@@ -286,6 +302,12 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
 
             if let category = call.getString("category") {
                 breadcrumb.category = category
+            }
+
+            if let origin = call.getString("origin") {
+                breadcrumb.origin = origin
+            } else {
+                breadcrumb.origin = "capacitor"
             }
 
             breadcrumb.type = call.getString("type")
