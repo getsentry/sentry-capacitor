@@ -1,0 +1,1 @@
+{"version":3,"file":"textEncoder.js","sourceRoot":"","sources":["../../../src/utils/textEncoder.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,sBAAsB,GAAG,GAAY,EAAE;IAClD,OAAO,OAAO,WAAW,KAAK,WAAW,CAAC;AAC5C,CAAC,CAAC","sourcesContent":["export const IsTextEncoderAvailable = (): boolean => {\n  return typeof TextEncoder !== 'undefined';\n};\n"]}
