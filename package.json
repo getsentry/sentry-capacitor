@@ -1,9 +1,9 @@
 {
-  "name": "@sentry/capacitor",
-  "homepage": "https://github.com/getsentry/sentry-capacitor",
+  "name": "@mattriese/sentry-capacitor",
+  "homepage": "https://github.com/mattriese/sentry-capacitor",
   "repository": {
     "type": "git",
-    "url": "https://github.com/getsentry/sentry-capacitor"
+    "url": "https://github.com/mattriese/sentry-capacitor"
   },
   "version": "2.4.1",
   "description": "Official Sentry SDK for Capacitor",
@@ -34,9 +34,6 @@
     "plugin",
     "native"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "author": "Sentry Team and Contributors",
   "license": "MIT",
   "peerDependencies": {
