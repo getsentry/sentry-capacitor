@@ -1,5 +1,5 @@
 {
-  "name": "@sentry/sentry-capacitor",
+  "name": "@sentry/capacitor",
   "homepage": "https://github.com/mattriese/sentry-capacitor",
   "repository": {
     "type": "git",
