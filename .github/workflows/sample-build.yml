@@ -18,9 +18,16 @@ env:
   BUILD_CACHE_KEY: ${{ inputs.build_cache_key }}
 
 jobs:
+  ready-to-merge-gate:
+    name: Ready-to-merge gate
+    uses: ./.github/workflows/ready-to-merge-workflow.yml
+    with:
+      is-pr: ${{ github.event_name == 'pull_request' }}
+      labels: ${{ toJson(github.event.pull_request.labels) }}
   job_sample_build:
     name: Sample Build (${{ matrix.bump }})
     runs-on: macos-latest
+    needs: ready-to-merge-gate
     strategy:
       matrix:
         include:
