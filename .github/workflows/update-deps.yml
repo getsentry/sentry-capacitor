@@ -11,7 +11,7 @@ on:
 
 jobs:
   android:
-    uses: getsentry/github-workflows/.github/workflows/updater.yml@v3
+    uses: getsentry/github-workflows/updater@v3
     with:
       path: scripts/update-android.sh
       name: Android SDK
@@ -20,7 +20,7 @@ jobs:
       api-token: ${{ secrets.CI_DEPLOY_KEY }}
 
   cocoa:
-    uses: getsentry/github-workflows/.github/workflows/updater.yml@v3
+    uses: getsentry/github-workflows/updater@v3
     with:
       path: scripts/update-cocoa.sh
       name: Cocoa SDK
@@ -29,7 +29,7 @@ jobs:
       api-token: ${{ secrets.CI_DEPLOY_KEY }}
 
   javascript:
-    uses: getsentry/github-workflows/.github/workflows/updater.yml@v3
+    uses: getsentry/github-workflows/updater@v3
     with:
       path: scripts/update-javascript.sh
       name: JavaScript SDK
@@ -38,7 +38,7 @@ jobs:
       api-token: ${{ secrets.CI_DEPLOY_KEY }}
 
   javascript-siblings:
-    uses: getsentry/github-workflows/.github/workflows/updater.yml@v3
+    uses: getsentry/github-workflows/updater@v3
     with:
       path: scripts/update-javascript-siblings.sh
       name: JavaScript Sibling SDKs
@@ -47,7 +47,7 @@ jobs:
       api-token: ${{ secrets.CI_DEPLOY_KEY }}
 
   wizard:
-    uses: getsentry/github-workflows/.github/workflows/updater.yml@v3
+    uses: getsentry/github-workflows/updater@v3
     with:
       path: scripts/update-wizard.sh
       name: Wizard
