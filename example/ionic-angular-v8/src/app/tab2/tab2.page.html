@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Messages </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Messages</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <section class="button-container">
+    <label>
+      Sends a message to Sentry
+      <ion-button (click)="captureSimpleMessage()"
+        >Capture a message</ion-button
+      >
+    </label>
+
+    <label>
+      Sends a message with added breadcrumb to Sentry
+      <ion-button (click)="captureBreadcrumbMessage()"
+        >Capture message with breadcrumb</ion-button
+      >
+    </label>
+
+    <label>
+      Sends a message with added custom tag to Sentry
+      <ion-button (click)="captureTagMessage()"
+        >Capture message with tag</ion-button
+      >
+    </label>
+
+    <label>
+      Sends message with added context
+      <ion-button (click)="captureContextMessage()"
+        >Capture context message</ion-button
+      >
+    </label>
+
+    <label>
+      Capture Log
+      <ion-button (click)="captureLog()"
+        >CaptureLog</ion-button
+      >
+    </label>
+
+    <label>
+      Close the SDK
+      <ion-button (click)="close()"
+        >Close the SDK</ion-button
+      >
+    </label>
+  </section>
+</ion-content>
