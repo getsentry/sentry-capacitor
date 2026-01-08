@@ -1,0 +1,13 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "ionic-angular",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		}
+	},
+	"webDir": "www",
+	"packageClassList": [
+		"SentryCapacitorPlugin"
+	]
+}

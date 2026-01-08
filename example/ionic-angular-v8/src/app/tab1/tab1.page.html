@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Exceptions </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Exceptions</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-content>
+      <img src="assets/img/ionic.png" height="100" width="300"/>
+    </ion-card-content>
+  </ion-card>
+
+  <section class="button-container">
+    <label>
+      Throws an unhandled exception
+      <ion-button (click)="throwUnhandledException()"
+        >Throw unhandled exception</ion-button
+      >
+    </label>
+
+    <label>
+      Throws an error that is NOT captured by Sentry
+      <ion-button (click)="regularException()"
+        >Throw regular exception</ion-button
+      >
+    </label>
+
+    <label>
+      Logs a defined exception message to Sentry
+      <ion-button (click)="sentryCapturedException()"
+        >Log Handled Error</ion-button
+      >
+    </label>
+
+    <label>
+      Logs a defined exception with user data to Sentry
+      <ion-button (click)="errorWithUserData()">Log User Data Error</ion-button>
+    </label>
+
+    <label>
+      Ignore logging an error that uses excluded keyword
+      <ion-button (click)="ignoredKeywordError()"
+        >Ignored Keyword Error</ion-button
+      >
+    </label>
+
+    <label>
+      Ignore logging an error that uses excluded type
+      <ion-button (click)="ignoredTypeError()">Ignored Type Error</ion-button>
+    </label>
+
+    <label>
+      Set Scope Properties
+      <ion-button (click)="setScope()">Set Scope</ion-button>
+    </label>
+    <label>
+      Clear User
+      <ion-button (click)="clearUser()">Clear User</ion-button>
+    </label>
+    <label>
+      Clear Breadcrumbs
+      <ion-button (click)="clearBreadcrumbs()">Clear Breadcrumbs</ion-button>
+    </label>
+    <label>
+      Clear Test Context
+      <ion-button (click)="clearTestContext()">Clear Test Context</ion-button>
+    </label>
+    <label>
+      Create Metric
+      <ion-button (click)="createMetric()">Create Metric</ion-button>
+    </label>
+  </section>
+</ion-content>

@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Features
+
+- Support for Capacitor 8 ([#1071](https://github.com/getsentry/sentry-capacitor/pull/1071)) - Special thanks to ([jb3rndt](https://github.com/getsentry/sentry-capacitor/pull/1061)).
+
 ## 3.0.0-beta.1
 
 ### Break Changes
