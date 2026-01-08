@@ -5,7 +5,9 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "moduleResolution": "bundler",
+    "resolvePackageJsonExports": true
   },
   "files": [
     "src/test.ts",

@@ -8,12 +8,13 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "resolvePackageJsonExports": true,
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "lib": [
-      "es2018",
+      "ES2022",
       "dom"
     ],
   },
