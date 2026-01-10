@@ -17,6 +17,10 @@ env:
     ${{ github.workspace }}/dist
   BUILD_CACHE_KEY: ${{ inputs.build_cache_key }}
 
+
+permissions:
+  contents: write
+  pull-requests: write
 jobs:
   ready-to-merge-gate:
     name: Ready-to-merge gate

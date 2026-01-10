@@ -15,6 +15,10 @@ env:
 
   BUILD_CACHE_KEY: ${{ github.sha }}
 
+
+permissions:
+  contents: write
+  pull-requests: write
 jobs:
   job_install_deps:
     name: Install Dependencies
