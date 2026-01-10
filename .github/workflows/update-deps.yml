@@ -9,6 +9,10 @@ on:
     branches:
       - main
 
+
+permissions:
+  contents: write
+  pull-requests: write
 jobs:
   android:
     uses: getsentry/github-workflows/updater@v3
