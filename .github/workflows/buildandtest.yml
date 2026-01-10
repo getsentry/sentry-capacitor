@@ -22,7 +22,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v2
       - run: corepack enable
       - name: Set up Node
         uses: actions/setup-node@v5
@@ -51,7 +51,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v2
       - run: corepack enable
       - name: Set up Node
         uses: actions/setup-node@v5
@@ -102,7 +102,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v2
       - run: corepack enable
       - name: Set up Node
         uses: actions/setup-node@v5
@@ -125,7 +125,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v2
       - run: corepack enable
       - name: Set up Node
         uses: actions/setup-node@v5
