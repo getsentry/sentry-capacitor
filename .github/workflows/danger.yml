@@ -1,7 +1,7 @@
 name: 'Danger'
 on:
   pull_request:
-    types: [opened, synchronize, reopened, edited, ready_for_review]
+    types: [opened, synchronize, reopened, edited, ready_for_review, labeled, unlabeled]
 
 jobs:
   build:
@@ -14,3 +14,7 @@ jobs:
       - run: npx danger ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  danger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: getsentry/github-workflows/danger@17cc15eb58ea3687cd8f2714a4192dcee4aa09ef
