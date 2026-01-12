@@ -1,0 +1,12 @@
+# This file is used by the build system to adjust CSS and JS output to support the specified browsers below.
+# For additional information regarding the format and rule options, please see:
+# https://github.com/browserslist/browserslist#queries
+
+# You can see what browsers were selected by your queries by running:
+#   npx browserslist
+
+# Angular 21 requires modern browsers - limit to released versions only
+Chrome >= 120 and Chrome <= 132
+Firefox >= 120 and Firefox <= 134
+Safari >= 17 and Safari <= 18.6
+Edge >= 120 and Edge <= 132

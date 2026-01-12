@@ -10,7 +10,7 @@ let package = Package(
             targets: ["SentryCapacitorPlugin"])
     ],
     dependencies: [
-        .package(url: "https://github.com/ionic-team/capacitor-swift-pm.git", from: "7.0.0"),
+        .package(url: "https://github.com/ionic-team/capacitor-swift-pm.git", "7.0.0"..<"9.0.0"),
         .package(url: "https://github.com/getsentry/sentry-cocoa", from: "8.56.2")
     ],
     targets: [

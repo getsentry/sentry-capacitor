@@ -1,5 +1,4 @@
 {
-  "author": "Ionic Framework",
   "dependencies": {
     "@angular/common": "^14.3.0",
     "@angular/core": "^14.3.0",
