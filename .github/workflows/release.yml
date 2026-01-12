@@ -27,8 +27,6 @@ jobs:
         with:
           token: ${{ steps.token.outputs.token }}
           fetch-depth: 0
-      - name: Set up Node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v5
       - name: Create install action from Craft
         run: |
           mkdir -p install
