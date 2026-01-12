@@ -17,20 +17,28 @@ jobs:
     runs-on: ubuntu-latest
     name: Release a new version
     steps:
-    - name: Get auth token
-      id: token
-      uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2
-      with:
-        app-id: ${{ vars.SENTRY_RELEASE_BOT_CLIENT_ID }}
-        private-key: ${{ secrets.SENTRY_RELEASE_BOT_PRIVATE_KEY }}
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v3
-      with:
-        token: ${{ steps.token.outputs.token }}
-        fetch-depth: 0
-    - name: Prepare release
-      uses: getsentry/craft@39ee616a6a58dc64797feecb145d66770492b66c # v2
-      env:
-        GITHUB_TOKEN: ${{ steps.token.outputs.token }}
-      with:
-        version: ${{ inputs.version }}
-        force: ${{ inputs.force }}
+      - name: Get auth token
+        id: token
+        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2
+        with:
+          app-id: ${{ vars.SENTRY_RELEASE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.SENTRY_RELEASE_BOT_PRIVATE_KEY }}
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          token: ${{ steps.token.outputs.token }}
+          fetch-depth: 0
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v5
+      - name: Create install action from Craft
+        run: |
+          mkdir -p install
+          curl -sSL https://raw.githubusercontent.com/getsentry/craft/39ee616a6a58dc64797feecb145d66770492b66c/install/action.yml -o install/action.yml
+          pwd
+          ls -la install/
+      - name: Prepare release
+        uses: getsentry/craft@39ee616a6a58dc64797feecb145d66770492b66c # v2
+        env:
+          GITHUB_TOKEN: ${{ steps.token.outputs.token }}
+        with:
+          version: ${{ inputs.version }}
+          force: ${{ inputs.force }}
