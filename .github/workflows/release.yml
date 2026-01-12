@@ -31,8 +31,6 @@ jobs:
         run: |
           mkdir -p install
           curl -sSL https://raw.githubusercontent.com/getsentry/craft/39ee616a6a58dc64797feecb145d66770492b66c/install/action.yml -o install/action.yml
-          pwd
-          ls -la install/
       - name: Prepare release
         uses: getsentry/craft@39ee616a6a58dc64797feecb145d66770492b66c # v2
         env:
