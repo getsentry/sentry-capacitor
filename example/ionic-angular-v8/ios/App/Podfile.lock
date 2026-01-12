@@ -1,0 +1,35 @@
+PODS:
+  - Capacitor (8.0.0):
+    - CapacitorCordova
+  - CapacitorCordova (8.0.0)
+  - Sentry/HybridSDK (8.56.2)
+  - "SentryCapacitor (3.0.0-beta.1+802a545b)":
+    - Capacitor
+    - Sentry/HybridSDK (= 8.56.2)
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "SentryCapacitor (from `../../node_modules/@sentry/capacitor`)"
+
+SPEC REPOS:
+  trunk:
+    - Sentry
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
+  SentryCapacitor:
+    :path: "../../node_modules/@sentry/capacitor"
+
+SPEC CHECKSUMS:
+  Capacitor: 341ff7cf652ec695d1a8ebf604db448ac7b6d635
+  CapacitorCordova: 5dc3912d25ef770a3fe0f431bb65c9fbfa2e92f9
+  Sentry: b53951377b78e21a734f5dc8318e333dbfc682d7
+  SentryCapacitor: 8684c21f817772464007fbdbeb5000d37fae05c2
+
+PODFILE CHECKSUM: 1744ffd59cb88797d7694a748e20bd2cf495841d
+
+COCOAPODS: 1.16.2

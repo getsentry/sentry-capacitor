@@ -24,10 +24,11 @@
     "swiftlint": "node-swiftlint",
     "prepack": "yarn run build",
     "postinstall": "node scripts/check-siblings.js",
+    "bump:v8": "cd example/ionic-angular-v8 && yalc link @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
     "bump:v7": "cd example/ionic-angular-v7 && yalc link @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
     "bump:v6": "cd example/ionic-angular-v6 && yalc link @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
     "bump:sample-vue": "cd example/ionic-vue3 && yalc link @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
-    "bump:samples": "yalc publish --sig && yarn concurrently --kill-others-on-fail \"yarn run bump:v7\" \"yarn run bump:v6\" \"yarn run bump:sample-vue\""
+    "bump:samples": "yalc publish --sig && yarn concurrently --kill-others-on-fail \"yarn run bump:v7\" \"yarn run bump:v6\" \"yarn run bump:v8\" \"yarn run bump:sample-vue\""
   },
   "keywords": [
     "capacitor",
@@ -62,9 +63,9 @@
     "@sentry/types": "10.27.0"
   },
   "devDependencies": {
-    "@capacitor/android": "^6.0.0 || ^7.0.0",
-    "@capacitor/core": "^6.0.0  || ^7.0.0",
-    "@capacitor/ios": "^6.0.0  || ^7.0.0",
+    "@capacitor/android": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "@capacitor/core": "^6.0.0  || ^7.0.0 || ^8.0.0",
+    "@capacitor/ios": "^6.0.0  || ^7.0.0 || ^8.0.0",
     "@ionic/prettier-config": "^1.0.0",
     "@sentry-internal/eslint-config-sdk": "10.27.0",
     "@sentry-internal/eslint-plugin-sdk": "10.27.0",

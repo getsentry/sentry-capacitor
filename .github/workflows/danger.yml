@@ -1,20 +1,14 @@
 name: 'Danger'
 on:
   pull_request:
-    types: [opened, synchronize, reopened, edited, ready_for_review]
+    types: [opened, synchronize, reopened, edited, ready_for_review, labeled, unlabeled]
 
 
 permissions:
   contents: write
   pull-requests: write
 jobs:
-  build:
-    name: Changelog
+  danger:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v3 # v3 # v2
-        with:
-          fetch-depth: 0
-      - run: npx danger ci
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: getsentry/github-workflows/danger@17cc15eb58ea3687cd8f2714a4192dcee4aa09ef

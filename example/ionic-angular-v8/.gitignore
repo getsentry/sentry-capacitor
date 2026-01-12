@@ -1,0 +1,9 @@
+.vscode/
+typings/
+
+
+# Sentry Auth Token
+.sentryclirc
+
+# Local environment configuration (do not commit)
+src/environments/environment.local.ts

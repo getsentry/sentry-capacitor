@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.13.2" type="baseline" client="gradle" dependencies="false" name="AGP (8.13.2)" variant="all" version="8.13.2">
+
+    <issue
+        id="MissingClass"
+        message="Class referenced in the layout file, `androidx.coordinatorlayout.widget.CoordinatorLayout`, was not found in the project or the libraries"
+        errorLine1="&lt;androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_main.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="ScopedStorage"
+        message="READ_EXTERNAL_STORAGE is deprecated (and is not granted) when targeting Android 13+. If you need to query or interact with MediaStore or media files on the shared storage, you should instead use one or more new storage permissions: `READ_MEDIA_IMAGES`, `READ_MEDIA_VIDEO` or `READ_MEDIA_AUDIO`."
+        errorLine1="    &lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot; />"
+        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="21"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="ScopedStorage"
+        message="WRITE_EXTERNAL_STORAGE is deprecated (and is not granted) when targeting Android 13+. If you need to write to shared storage, use the `MediaStore.createWriteRequest` intent."
+        errorLine1="    &lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot; />"
+        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="22"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="ManifestOrder"
+        message="`&lt;uses-permission>` tag appears after `&lt;application>` tag"
+        errorLine1="    &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; />"
+        errorLine2="     ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="20"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of Gradle than 8.13 is available: 8.14.3"
+        errorLine1="distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-all.zip"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="../gradle/wrapper/gradle-wrapper.properties"
+            line="3"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="PermissionImpliesUnsupportedChromeOsHardware"
+        message="Permission exists without corresponding hardware `&lt;uses-feature android:name=&quot;android.hardware.camera&quot; required=&quot;false&quot;>` tag"
+        errorLine1="    &lt;uses-permission android:name=&quot;android.permission.CAMERA&quot; />"
+        errorLine2="     ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="27"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v24`) is unnecessary; `minSdkVersion` is 24. Merge all the resources in this folder into `drawable`.">
+        <location
+            file="src/main/res/drawable-v24"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.activity_main` appears to be unused"
+        errorLine1="&lt;androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_main.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.xml.config` appears to be unused"
+        errorLine1="&lt;widget version=&quot;1.0.0&quot; xmlns=&quot;http://www.w3.org/ns/widgets&quot; xmlns:cdv=&quot;http://cordova.apache.org/ns/1.0&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/xml/config.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_background` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_launcher_background.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_foreground` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable-v24/ic_launcher_foreground.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.package_name` appears to be unused"
+        errorLine1="    &lt;string name=&quot;package_name&quot;>io.ionic.starter&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="5"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive icon is missing a monochrome tag"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive roundIcon is missing a monochrome tag"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="IconDipSize"
+        message="The image `splash.png` varies significantly in its density-independent (dip) size across the various density versions: drawable-land-hdpi/splash.png: 533x320 dp (800x480 px), drawable-land-mdpi/splash.png: 480x320 dp (480x320 px), drawable-land-xhdpi/splash.png: 640x360 dp (1280x720 px), drawable-land-xxhdpi/splash.png: 533x320 dp (1600x960 px), drawable-land-xxxhdpi/splash.png: 480x320 dp (1920x1280 px)">
+        <location
+            file="src/main/res/drawable-land-xxxhdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-land-mdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-land-xxhdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-land-hdpi/splash.png"/>
+        <location
+            file="src/main/res/drawable-land-xhdpi/splash.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicatesConfig"
+        message="The `splash.png` icon has identical contents in the following configuration folders: drawable-land-mdpi, drawable">
+        <location
+            file="src/main/res/drawable/splash.png"/>
+        <location
+            file="src/main/res/drawable-land-mdpi/splash.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/splash.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/splash.png"/>
+    </issue>
+
+    <issue
+        id="UnnecessaryRequiredFeature"
+        message="Consider whether this feature (`android.hardware.location.gps`) really is required for the app to function; you can set `android:required=&quot;false&quot;` to indicate that the feature is used but not required"
+        errorLine1="    &lt;uses-feature android:name=&quot;android.hardware.location.gps&quot; />"
+        errorLine2="                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="25"
+            column="33"/>
+    </issue>
+
+</issues>
