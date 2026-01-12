@@ -15,6 +15,10 @@ env:
 
   BUILD_CACHE_KEY: ${{ github.sha }}
 
+
+permissions:
+  contents: write
+  pull-requests: write
 jobs:
   job_install_deps:
     name: Install Dependencies
@@ -22,10 +26,10 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - run: corepack enable
       - name: Set up Node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v5
         # we use a hash of yarn.lock as our cache key, because if it hasn't changed, our dependencies haven't changed,
         # so no need to reinstall them
       - name: Compute dependency cache key
@@ -51,10 +55,10 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - run: corepack enable
       - name: Set up Node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v5
       - name: Check dependency cache
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # V4.3.0
         with:
@@ -102,10 +106,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - run: corepack enable
       - name: Set up Node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v5
       - name: Check dependency cache
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # V4.3.0
         with:
@@ -125,10 +129,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - run: corepack enable
       - name: Set up Node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v5
       - name: Check dependency cache
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # V4.3.0
         with:
