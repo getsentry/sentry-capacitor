@@ -78,7 +78,6 @@
     "jest-extended": "^4.0.2",
     "prettier": "^3.3.2",
     "prettier-plugin-java": "^2.6.0",
-    "replace-in-file": "^6.2.0",
     "rimraf": "^5.0.1",
     "swiftlint": "^2.0.0",
     "ts-jest": "^29.1.1",
