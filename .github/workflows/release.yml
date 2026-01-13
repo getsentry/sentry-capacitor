@@ -23,7 +23,7 @@ jobs:
       with:
         app-id: ${{ vars.SENTRY_RELEASE_BOT_CLIENT_ID }}
         private-key: ${{ secrets.SENTRY_RELEASE_BOT_PRIVATE_KEY }}
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v4
       with:
         token: ${{ steps.token.outputs.token }}
         fetch-depth: 0
