@@ -22,16 +22,10 @@ Pod::Spec.new do |s|
   else
     capacitorPackage =  JSON.parse(File.read(File.join(__dir__, '../../@capacitor/core/package.json')))
     capacitorVersion = capacitorPackage['version']
+    # Gets capacitor major version (9, 8, 7 ,...)
     majorVersion = capacitorVersion.split('.').first.to_i
-
-    if majorVersion < 7
-      miniOSVersion = '13.0' # Capacitor 6 or older.
-    elsif majorVersion < 8
-      miniOSVersion = '14.0' # Capacitor 7 or higher.
-    else
-      miniOSVersion = '15.0' # Capacitor 8 or higher.
-      end
-    end
+    miniOSVersion = '15.0' # Capacitor 8 or higher.
+  end
   s.ios.deployment_target  = miniOSVersion
   s.swift_version = '5.1'
 end
