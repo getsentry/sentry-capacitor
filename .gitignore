@@ -91,3 +91,6 @@ sentry-capacitor-v*.tgz
 
 #sentry tokens
 *.sentryclirc
+
+# Local Claude Code settings that should not be committed
+.claude/settings.local.json
