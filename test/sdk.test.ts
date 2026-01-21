@@ -1,6 +1,5 @@
 import { type EventHint, type Exception, type StackFrame } from '@sentry/browser';
 import type { Client, Event, Integration } from '@sentry/core';
-import type { CapacitorOptions } from '../src';
 import { init } from '../src/sdk';
 import { NATIVE } from '../src/wrapper';
 
@@ -214,7 +213,7 @@ describe('SDK Init', () => {
     init({ enabled: true }, mockOriginalInit);
 
     // Wait for async operations
-    return new Promise<void>(async (resolve) => {
+    return new Promise<void>((resolve) => {
       setTimeout(async () => {
         expect(mockOriginalInit).toHaveBeenCalled();
         const browserOptions = mockOriginalInit.mock.calls[0][0];
