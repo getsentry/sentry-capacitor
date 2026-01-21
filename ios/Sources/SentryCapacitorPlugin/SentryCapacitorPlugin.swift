@@ -1,6 +1,6 @@
 import Foundation
 import Capacitor
-import Sentry
+@preconcurrency import Sentry
 
 // Keep compatibility with CocoaPods.
 #if SWIFT_PACKAGE

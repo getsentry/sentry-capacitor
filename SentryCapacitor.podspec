@@ -12,25 +12,19 @@ Pod::Spec.new do |s|
   s.source = { :git => package['repository']['url'], :tag => s.version.to_s }
   s.source_files = 'ios/Sources/**/*.{swift,h,m,c,cc,mm,cpp}'
 
-  s.dependency 'Sentry/HybridSDK', '8.56.2'
+  s.dependency 'Sentry/HybridSDK', '9.0.0'
   s.dependency 'Capacitor'
 
   if File.exist?('../../@capacitor/core/package.json') == false
     # If Capacitor was not found (could happen when using Yarn PNP), fallback to the
-    # required minimum version of Capacitor 7.
-    miniOSVersion = '14.0'
+    # required minimum version of Capacitor 8.
+    miniOSVersion = '15.0'
   else
     capacitorPackage =  JSON.parse(File.read(File.join(__dir__, '../../@capacitor/core/package.json')))
     capacitorVersion = capacitorPackage['version']
+    # Gets capacitor major version (9, 8, 7 ,...)
     majorVersion = capacitorVersion.split('.').first.to_i
-
-    if majorVersion <= 3
-      miniOSVersion = '12.0' # Capacitor 3, 2.
-    elsif majorVersion < 7
-      miniOSVersion = '13.0' # Capacitor 6 or older.
-    else
-      miniOSVersion = '14.0' # Capacitor 7 or higher.
-    end
+    miniOSVersion = '15.0' # Capacitor 8 or higher.
   end
   s.ios.deployment_target  = miniOSVersion
   s.swift_version = '5.1'
