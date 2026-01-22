@@ -133,7 +133,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             options.sessionTrackingIntervalMillis = UInt(sessionTrackingIntervalMillis)
         }
 
-        if let maxBreadcrumbs = dict["maxBreadcrumbs"] as? Int {
+        if let maxBreadcrumbs = dict["maxBreadcrumbs"] as? UInt {
             options.maxBreadcrumbs = maxBreadcrumbs
         }
 
@@ -232,7 +232,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             }
 
             if self?.sentryOptions?.debug == true {
-                let data: Data? = try? JSONSerialization.data(withJSONObject: contexts, options: [])
+                let data: Data? = try? JSONSerializatƒion.data(withJSONObject: contexts, options: [])
                 if let data = data {
                   let debugContext = String(data: data, encoding: .utf8)
                   print("Contexts: \(debugContext ?? "")")
