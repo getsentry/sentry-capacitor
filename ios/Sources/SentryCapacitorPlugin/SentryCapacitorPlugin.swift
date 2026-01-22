@@ -4,7 +4,7 @@ import Capacitor
 
 // Keep compatibility with CocoaPods.
 #if SWIFT_PACKAGE
-import Sentry._Hybrid
+//import Sentry._Hybrid
 #endif
 
 /**
