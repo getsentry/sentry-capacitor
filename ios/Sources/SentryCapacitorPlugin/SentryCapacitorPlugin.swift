@@ -141,10 +141,6 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             options.enableCrashHandler = enableNativeCrashHandling
         }
 
-        if let enableNativeNagger = dict["enableNativeNagger"] as? Bool {
-            // This option may not exist in v9, but we'll try to set it if available
-        }
-
         if let attachStacktrace = dict["attachStacktrace"] as? Bool {
             options.attachStacktrace = attachStacktrace
         }
