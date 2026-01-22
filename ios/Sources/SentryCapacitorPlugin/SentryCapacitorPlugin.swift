@@ -133,8 +133,8 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             options.sessionTrackingIntervalMillis = UInt(sessionTrackingIntervalMillis)
         }
 
-        if let maxBreadcrumbs = dict["maxBreadcrumbs"] as? UInt {
-            options.maxBreadcrumbs = maxBreadcrumbs
+        if let maxBreadcrumbs = dict["maxBreadcrumbs"] as? Int {
+            options.maxBreadcrumbs = UInt(maxBreadcrumbs)
         }
 
         if let enableNativeCrashHandling = dict["enableNativeCrashHandling"] as? Bool {
