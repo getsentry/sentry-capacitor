@@ -1,0 +1,24 @@
+{
+  "originHash" : "0377f5caa8f9525a69e71479d0ace95675ae5d46bf1df80834aca264b5fe7092",
+  "pins" : [
+    {
+      "identity" : "capacitor-swift-pm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ionic-team/capacitor-swift-pm.git",
+      "state" : {
+        "revision" : "3e7ccfb8ab4d321ffcbd4e490234758e139f8a09",
+        "version" : "8.0.1"
+      }
+    },
+    {
+      "identity" : "sentry-cocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/getsentry/sentry-cocoa",
+      "state" : {
+        "revision" : "de66bd4fa0661c81455e8ad2509ed6f0e39025dc",
+        "version" : "9.2.0"
+      }
+    }
+  ],
+  "version" : 3
+}
