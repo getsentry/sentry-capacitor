@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- Duplicated session When running Capacitor as an app ([#1088](https://github.com/getsentry/sentry-capacitor/pull/1088))
+
 ## 3.0.0-beta.2
 
 ### Features
