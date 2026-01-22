@@ -3,11 +3,6 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, edited, ready_for_review, labeled, unlabeled]
 
-
-permissions:
-  contents: write
-  pull-requests: write
-  statuses: write # Required for the danger action to commit a message on the PR.
 jobs:
   danger:
     runs-on: ubuntu-latest
