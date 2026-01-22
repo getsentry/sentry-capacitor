@@ -228,7 +228,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             }
 
             if self?.sentryOptions?.debug == true {
-                let data: Data? = try? JSONSerializatƒion.data(withJSONObject: contexts, options: [])
+                let data: Data? = try? JSONSerialization.data(withJSONObject: contexts, options: [])
                 if let data = data {
                   let debugContext = String(data: data, encoding: .utf8)
                   print("Contexts: \(debugContext ?? "")")
