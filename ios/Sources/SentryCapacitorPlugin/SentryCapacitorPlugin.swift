@@ -2,11 +2,6 @@ import Foundation
 import Capacitor
 @preconcurrency import Sentry
 
-// Keep compatibility with CocoaPods.
-#if SWIFT_PACKAGE
-//import Sentry._Hybrid
-#endif
-
 /**
  * Please read the Capacitor iOS Plugin Development Guide
  * here: https://capacitorjs.com/docs/plugins/ios
