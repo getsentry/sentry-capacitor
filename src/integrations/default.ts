@@ -1,9 +1,5 @@
 import { breadcrumbsIntegration, browserApiErrorsIntegration, browserSessionIntegration, globalHandlersIntegration } from '@sentry/browser';
-<<<<<<< HEAD
 import { dedupeIntegration, eventFiltersIntegration, functionToStringIntegration, type Integration, linkedErrorsIntegration } from '@sentry/core';
-=======
-import { type Integration, dedupeIntegration, functionToStringIntegration, inboundFiltersIntegration, linkedErrorsIntegration } from '@sentry/core';
->>>>>>> 9103a4ff58acc7aad2f8a3f4866610008200f4d4
 import type { CapacitorOptions } from '../options';
 import { deviceContextIntegration } from './devicecontext';
 import { eventOriginIntegration } from './eventorigin';
