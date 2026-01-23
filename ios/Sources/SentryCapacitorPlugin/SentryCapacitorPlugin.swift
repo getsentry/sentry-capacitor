@@ -2,11 +2,6 @@ import Foundation
 import Capacitor
 @preconcurrency import Sentry
 
-// Keep compatibility with CocoaPods.
-#if SWIFT_PACKAGE
-import Sentry._Hybrid
-#endif
-
 /**
  * Please read the Capacitor iOS Plugin Development Guide
  * here: https://capacitorjs.com/docs/plugins/ios
@@ -70,7 +65,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
         }
 
         do {
-            let options = try SentryOptionsInternal.initWithDict(optionsDict)
+            let options = try createOptions(from: optionsDict)
             let sdkVersion = PrivateSentrySDKOnly.getSdkVersionString()
             PrivateSentrySDKOnly.setSdkName(nativeSdkName, andVersionString: sdkVersion)
 
@@ -102,8 +97,67 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
 
             call.resolve()
         } catch {
-            call.reject("Failed to start native SDK")
+            call.reject("Failed to start native SDK: \(error.localizedDescription)")
         }
+    }
+
+    private func createOptions(from dict: [AnyHashable: Any]) throws -> Options {
+        guard let dsn = dict["dsn"] as? String else {
+            throw NSError(domain: "SentryCapacitor", code: 1, userInfo: [NSLocalizedDescriptionKey: "DSN is required"])
+        }
+
+        let options = Options()
+        options.dsn = dsn
+
+        if let debug = dict["debug"] as? Bool {
+            options.debug = debug
+        }
+
+        if let environment = dict["environment"] as? String {
+            options.environment = environment
+        }
+
+        if let release = dict["release"] as? String {
+            options.releaseName = release
+        }
+
+        if let dist = dict["dist"] as? String {
+            options.dist = dist
+        }
+
+        if let enableAutoSessionTracking = dict["enableAutoSessionTracking"] as? Bool {
+            options.enableAutoSessionTracking = enableAutoSessionTracking
+        }
+
+        if let sessionTrackingIntervalMillis = dict["sessionTrackingIntervalMillis"] as? Int {
+            options.sessionTrackingIntervalMillis = UInt(sessionTrackingIntervalMillis)
+        }
+
+        if let maxBreadcrumbs = dict["maxBreadcrumbs"] as? Int {
+            options.maxBreadcrumbs = UInt(maxBreadcrumbs)
+        }
+
+        if let enableNativeCrashHandling = dict["enableNativeCrashHandling"] as? Bool {
+            options.enableCrashHandler = enableNativeCrashHandling
+        }
+
+        if let attachStacktrace = dict["attachStacktrace"] as? Bool {
+            options.attachStacktrace = attachStacktrace
+        }
+
+        if let sampleRate = dict["sampleRate"] as? Double {
+            options.sampleRate = NSNumber(value: sampleRate)
+        }
+
+        if let tracesSampleRate = dict["tracesSampleRate"] as? Double {
+            options.tracesSampleRate = NSNumber(value: tracesSampleRate)
+        }
+
+        if let enableAutoPerformanceTracing = dict["enableAutoPerformanceTracing"] as? Bool {
+            options.enableAutoPerformanceTracing = enableAutoPerformanceTracing
+        }
+
+        return options
     }
 
     @objc func captureEnvelope(_ call: CAPPluginCall) {
