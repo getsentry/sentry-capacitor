@@ -12,6 +12,13 @@
 
 - Support for Capacitor 8 ([#1071](https://github.com/getsentry/sentry-capacitor/pull/1071)) - Special thanks to ([jb3rndt](https://github.com/getsentry/sentry-capacitor/pull/1061)).
 
+### Dependencies
+
+- Bump JavaScript Sibling SDKs from v10.27.0 to v10.27.0 ([#x](https://github.com/getsentry/sentry-capacitor/pull/x))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.36.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/10.27.0...10.36.0)
+
+
 ## 3.0.0-beta.1
 
 ### Break Changes
