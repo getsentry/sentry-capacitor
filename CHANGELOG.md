@@ -6,6 +6,18 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- Duplicated session When running Capacitor as an app ([#1088](https://github.com/getsentry/sentry-capacitor/pull/1088))
+
+### Dependencies
+
+- Bump Cocoa SDK from v8.56.2 to v9.2.0 ([#1088](https://github.com/getsentry/sentry-capacitor/pull/1088), [#1086](https://github.com/getsentry/sentry-capacitor/pull/1086))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#920)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.56.0...9.2.0)
+
 ## 3.0.0-beta.2
 
 ### Features

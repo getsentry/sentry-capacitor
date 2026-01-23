@@ -1,6 +1,5 @@
 import { type EventHint, type Exception, type StackFrame } from '@sentry/browser';
-import type { Client, Event } from '@sentry/core';
-import type { CapacitorOptions } from '../src';
+import type { Client, Event, Integration } from '@sentry/core';
 import { init } from '../src/sdk';
 import { NATIVE } from '../src/wrapper';
 
@@ -95,51 +94,87 @@ describe('SDK Init', () => {
 
   test('Does not Enable Native SDK if enabled is false', async () => {
     NATIVE.platform = 'ios';
+    const mockOriginalInit = jest.fn();
 
     init({
       enabled: false
-    }, (capacitorOptions: CapacitorOptions) => {
-      expect(capacitorOptions.enableNative).toBe(false);
-      expect(capacitorOptions.enableNativeNagger).toBe(false);
+    }, mockOriginalInit);
+
+    // Wait for async operations
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        expect(NATIVE.initNativeSdk).toHaveBeenCalled();
+        const nativeOptions = (NATIVE.initNativeSdk as jest.Mock).mock.calls[0][0];
+        expect(nativeOptions.enableNative).toBe(false);
+        expect(nativeOptions.enableNativeNagger).toBe(false);
+        resolve();
+      }, 0);
     });
   });
 
   test('Keep enableNative if set on mobile', async () => {
     NATIVE.platform = 'ios';
+    const mockOriginalInit = jest.fn();
 
     init({
       enabled: true,
       enableNative: false
-    }, (capacitorOptions: CapacitorOptions) => {
-      expect(capacitorOptions.enableNative).toBe(false);
-      expect(capacitorOptions.enableNativeNagger).toBe(true);
-      expect(capacitorOptions.enabled).toBe(true);
+    }, mockOriginalInit);
+
+    // Wait for async operations
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        expect(NATIVE.initNativeSdk).toHaveBeenCalled();
+        const nativeOptions = (NATIVE.initNativeSdk as jest.Mock).mock.calls[0][0];
+        expect(nativeOptions.enableNative).toBe(false);
+        expect(nativeOptions.enableNativeNagger).toBe(true);
+        expect(nativeOptions.enabled).toBe(true);
+        resolve();
+      }, 0);
     });
   });
 
   test('Keep enableNativeNagger if set on mobile', async () => {
     NATIVE.platform = 'ios';
+    const mockOriginalInit = jest.fn();
 
     init({
       enabled: true,
       enableNative: false,
       enableNativeNagger: false
-    }, (capacitorOptions: CapacitorOptions) => {
-      expect(capacitorOptions.enableNative).toBe(false);
-      expect(capacitorOptions.enableNativeNagger).toBe(false);
-      expect(capacitorOptions.enabled).toBe(true);
+    }, mockOriginalInit);
+
+    // Wait for async operations
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        expect(NATIVE.initNativeSdk).toHaveBeenCalled();
+        const nativeOptions = (NATIVE.initNativeSdk as jest.Mock).mock.calls[0][0];
+        expect(nativeOptions.enableNative).toBe(false);
+        expect(nativeOptions.enableNativeNagger).toBe(false);
+        expect(nativeOptions.enabled).toBe(true);
+        resolve();
+      }, 0);
     });
   });
 
   test('WEB has enableNative false by default', async () => {
     NATIVE.platform = 'web';
+    const mockOriginalInit = jest.fn();
 
     init({
       enabled: true,
-    }, (capacitorOptions: CapacitorOptions) => {
-      expect(capacitorOptions.enableNative).toBe(false);
-      expect(capacitorOptions.enableNativeNagger).toBe(false);
-      expect(capacitorOptions.enabled).toBe(true);
+    }, mockOriginalInit);
+
+    // Wait for async operations
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        expect(NATIVE.initNativeSdk).toHaveBeenCalled();
+        const nativeOptions = (NATIVE.initNativeSdk as jest.Mock).mock.calls[0][0];
+        expect(nativeOptions.enableNative).toBe(false);
+        expect(nativeOptions.enableNativeNagger).toBe(false);
+        expect(nativeOptions.enabled).toBe(true);
+        resolve();
+      }, 0);
     });
   });
 
@@ -167,39 +202,49 @@ describe('SDK Init', () => {
         expect(browserOptions.beforeSendMetric).toBe(beforeSendMetric);
 
         resolve();
-      }, 10);
+      }, 0);
     });
   });
 
   test('RewriteFrames to be added by default', async () => {
     NATIVE.platform = 'web';
-    init({ enabled: true }, async (capacitorOptions: CapacitorOptions) => {
-      const rewriteFramesIntegration =
-        Array.isArray(capacitorOptions.integrations) &&
-        capacitorOptions.integrations.find(
-          (integration) => integration.name === 'RewriteFrames');
+    const mockOriginalInit = jest.fn();
 
-      // Capacitor specific frame.
-      const error = { values: [{ stacktrace: { frames: [{ filename: 'capacitor://localhost:8080/file.js' }] } }] };
-      const expectedError =
-      {
-        filename: 'app:///file.js',
-        in_app: true
-      }
+    init({ enabled: true }, mockOriginalInit);
 
-      expect(rewriteFramesIntegration).toBeDefined();
+    // Wait for async operations
+    return new Promise<void>((resolve) => {
+      setTimeout(async () => {
+        expect(mockOriginalInit).toHaveBeenCalled();
+        const browserOptions = mockOriginalInit.mock.calls[0][0];
 
-      if (!rewriteFramesIntegration) {
-        throw new Error('rewriteFrames should be defined, but it is false');
-      }
+        const rewriteFramesIntegration =
+          Array.isArray(browserOptions.defaultIntegrations) &&
+          browserOptions.defaultIntegrations.find(
+            (integration: Integration) => integration.name === 'RewriteFrames');
 
-      // @ts-expect-error
-      const event = await rewriteFramesIntegration.processEvent(({ exception: error }) as Event, {} as EventHint, {} as Client);
+        // Capacitor specific frame.
+        const error = { values: [{ stacktrace: { frames: [{ filename: 'capacitor://localhost:8080/file.js' }] } }] };
+        const expectedError =
+        {
+          filename: 'app:///file.js',
+          in_app: true
+        }
 
-      const [firstException] = event?.exception?.values as Exception[];
-      const [firstFrame] = firstException?.stacktrace?.frames as StackFrame[];
+        expect(rewriteFramesIntegration).toBeDefined();
 
-      expect(firstFrame).toStrictEqual(expectedError);
+        if (!rewriteFramesIntegration) {
+          throw new Error('rewriteFrames should be defined, but it is false');
+        }
+
+        const event = await rewriteFramesIntegration.processEvent(({ exception: error }) as Event, {} as EventHint, {} as Client);
+
+        const [firstException] = event?.exception?.values as Exception[];
+        const [firstFrame] = firstException?.stacktrace?.frames as StackFrame[];
+
+        expect(firstFrame).toStrictEqual(expectedError);
+        resolve();
+      }, 0);
     });
   });
 
@@ -236,7 +281,7 @@ describe('SDK Init', () => {
           expect(browserOptions.siblingOptions).toBeUndefined();
 
           resolve();
-        }, 10);
+        }, 0);
       });
     });
 
@@ -269,7 +314,7 @@ describe('SDK Init', () => {
           expect(browserOptions.siblingOptions).toBeUndefined();
 
           resolve();
-        }, 10);
+        }, 0);
       });
     });
 
@@ -308,7 +353,7 @@ describe('SDK Init', () => {
           expect(browserOptions.attachErrorHandler).toBe(false);
 
           resolve();
-        }, 10);
+        }, 0);
       });
     });
 
@@ -339,7 +384,7 @@ describe('SDK Init', () => {
           expect(nativeOptions.nuxtClientOptions).toBeUndefined();
 
           resolve();
-        }, 10);
+        }, 0);
       });
     });
   });

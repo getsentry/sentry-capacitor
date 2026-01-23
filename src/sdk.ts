@@ -1,7 +1,6 @@
 import type { BrowserOptions } from '@sentry/browser';
 import { init as browserInit } from '@sentry/browser';
-import type { Integration } from '@sentry/core';
-import { debug, getClient, getGlobalScope, getIntegrationsToSetup, getIsolationScope  } from '@sentry/core';
+import { debug, getClient, getGlobalScope, getIsolationScope } from '@sentry/core';
 import { sdkInit } from './client';
 import { getDefaultIntegrations } from './integrations/default';
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
@@ -19,48 +18,38 @@ import { NATIVE } from './wrapper';
  */
 export function init(
   passedOptions: CapacitorOptions,
-  originalInit: (passedOptions:BrowserOptions) => void = browserInit,
+  originalInit: (passedOptions: BrowserOptions) => void = browserInit,
 ): void {
 
-  const finalOptions = {
+  /**
+   * Shared options are the options that are shared between the browser and native SDKs.
+   */
+  const sharedOptions = {
     enableAutoSessionTracking: true,
     enableWatchdogTerminationTracking: true,
     enableCaptureFailedRequests: false,
     ...passedOptions,
   };
-  finalOptions.siblingOptions && delete finalOptions.siblingOptions;
+  sharedOptions.siblingOptions && delete sharedOptions.siblingOptions;
 
-  if (finalOptions.enabled === false || NATIVE.platform === 'web') {
-    finalOptions.enableNative = false;
-    finalOptions.enableNativeNagger = false;
+  if (sharedOptions.enabled === false || NATIVE.platform === 'web') {
+    sharedOptions.enableNative = false;
+    sharedOptions.enableNativeNagger = false;
   } else {
     // keep the original value if user defined it.
-    finalOptions.enableNativeNagger ??= true;
-    finalOptions.enableNative ??= true;
+    sharedOptions.enableNativeNagger ??= true;
+    sharedOptions.enableNative ??= true;
   }
-  //  const capacitorHub = new Hub(undefined, new CapacitorScope());
-  //  makeMain(capacitorHub);
-  const defaultIntegrations: false | Integration[] =
-passedOptions.defaultIntegrations === undefined
-      ? getDefaultIntegrations(finalOptions)
-: passedOptions.defaultIntegrations;
-
-  finalOptions.integrations = getIntegrationsToSetup({
-integrations: safeFactory(passedOptions.integrations, {
-      loggerMessage: 'The integrations threw an error',
-    }),
-    defaultIntegrations,
-  });
 
   if (
-    finalOptions.enableNative &&
-!passedOptions.transport &&
+    sharedOptions.enableNative &&
+    !passedOptions.transport &&
     NATIVE.platform !== 'web'
   ) {
-finalOptions.transport = passedOptions.transport || makeNativeTransport;
+    sharedOptions.transport = passedOptions.transport || makeNativeTransport;
 
-    finalOptions.transportOptions = {
-...(passedOptions.transportOptions ?? {}),
+    sharedOptions.transportOptions = {
+      ...(passedOptions.transportOptions ?? {}),
       bufferSize: DEFAULT_BUFFER_SIZE,
     };
   }
@@ -69,25 +58,35 @@ finalOptions.transport = passedOptions.transport || makeNativeTransport;
     useEncodePolyfill();
   }
 
-  if (finalOptions.enableNative) {
+  if (sharedOptions.enableNative) {
     enableSyncToNative(getGlobalScope());
     enableSyncToNative(getIsolationScope());
   }
 
+  /**
+   * Browser options are the options that are only used by the browser SDK.
+   */
   const browserOptions = {
     ...passedOptions.siblingOptions?.vueOptions,
     ...passedOptions.siblingOptions?.nuxtClientOptions,
-    ...finalOptions,
-    autoSessionTracking:
-      NATIVE.platform === 'web' && finalOptions.enableAutoSessionTracking,
-    enableMetrics: finalOptions._experiments?.enableMetrics,
-    beforeSendMetric: finalOptions._experiments?.beforeSendMetric,
+    ...sharedOptions,
+    integrations: safeFactory(passedOptions.integrations, { loggerMessage: 'The integrations threw an error' }),
+    enableMetrics: sharedOptions._experiments?.enableMetrics,
+    beforeSendMetric: sharedOptions._experiments?.beforeSendMetric,
   } as BrowserOptions;
 
+
+  browserOptions.defaultIntegrations = passedOptions.defaultIntegrations === undefined
+    ? getDefaultIntegrations(sharedOptions)
+    : passedOptions.defaultIntegrations;
+
+  /**
+   * Mobile options are the options that are only used by the native SDK.
+   */
   const mobileOptions = {
-    ...finalOptions,
+    ...sharedOptions,
     enableAutoSessionTracking:
-      NATIVE.platform !== 'web' && finalOptions.enableAutoSessionTracking,
+      NATIVE.platform !== 'web' && sharedOptions.enableAutoSessionTracking,
   } as CapacitorClientOptions;
 
   sdkInit(browserOptions, mobileOptions, originalInit, passedOptions.transport);
