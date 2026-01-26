@@ -1,5 +1,5 @@
 /* eslint-disable complexity */
-import type { Integration, Log } from '@sentry/core';
+import type { Client, Integration, Log } from '@sentry/core';
 import { debug } from '@sentry/core';
 import { NATIVE } from '../wrapper';
 
@@ -8,19 +8,18 @@ const INTEGRATION_NAME = 'LogEnricher';
 export const logEnricherIntegration = (): Integration => {
   return {
     name: INTEGRATION_NAME,
-    setup(client) {
-      client.on('afterInit', () => {
-        cacheLogContext().then(
-          () => {
-            client.on('beforeCaptureLog', (log: Log) => {
-              processLog(log, client);
-            });
-          },
-          reason => {
-            debug.log(reason);
-          },
-        );
-      });
+    setup(client: Client) {
+      // Cache log context immediately on setup
+      cacheLogContext().then(
+        () => {
+          client.on('beforeCaptureLog', (log: Log) => {
+            processLog(log, client);
+          });
+        },
+        reason => {
+          debug.log(reason);
+        },
+      );
     },
   };
 };
@@ -70,7 +69,7 @@ async function cacheLogContext(): Promise<void> {
   return Promise.resolve();
 }
 
-function processLog(log: Log, client: { getIntegrationByName: <T>(name: string) => T | null }): void {
+function processLog(log: Log, client: Client): void {
   if (NativeCache === undefined) {
     return;
   }
