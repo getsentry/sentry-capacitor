@@ -3,9 +3,6 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, edited, ready_for_review, labeled, unlabeled]
 
-permissions:
-  contents: write
-  pull-requests: write
 jobs:
   danger:
     runs-on: ubuntu-latest
