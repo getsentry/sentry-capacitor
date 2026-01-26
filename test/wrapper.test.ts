@@ -32,6 +32,22 @@ jest.mock('../src/plugin', () => {
           },
         })
       ),
+      fetchNativeLogAttributes: jest.fn(() =>
+        Promise.resolve({
+          contexts: {
+            device: {
+              brand: 'test-brand',
+              model: 'test-model',
+              family: 'test-family',
+            },
+            os: {
+              name: 'test-os',
+              version: '1.0.0',
+            },
+          },
+          release: 'test-release',
+        })
+      ),
       getStringBytesLength: jest.fn(() =>
         Promise.resolve({
           value: getStringBytesLengthValue,
@@ -307,7 +323,7 @@ describe('Tests Native Wrapper', () => {
       const base64Envelope = (SentryCapacitor.captureEnvelope as jest.Mock).mock.calls[0]?.[0]?.envelope;
       expect(base64Envelope).toBeDefined();
       expect(base64EnvelopeToString(base64Envelope)).toEqual(
-`{}
+        `{}
 {"type":"trace_metric","item_count":1,"content_type":"application/vnd.sentry.items.trace-metric+json","length":124}
 {"items":[{"timestamp":1765200319.505,"name":"test.metric.counter","value":1,"type":"counter","unit":"none","trace_id":""}]}
 `);
@@ -334,7 +350,7 @@ describe('Tests Native Wrapper', () => {
       const base64Envelope = (SentryCapacitor.captureEnvelope as jest.Mock).mock.calls[0]?.[0]?.envelope;
       expect(base64Envelope).toBeDefined();
       expect(base64EnvelopeToString(base64Envelope)).toEqual(
-`{}
+        `{}
 {"type":"log","item_count":1,"content_type":"application/vnd.sentry.items.log+json","length":117}
 {"items":[{"timestamp":1765200551.692,"level":"info","body":"test log message","severity_number":9,"attributes":{}}]}
 `);
@@ -360,7 +376,7 @@ describe('Tests Native Wrapper', () => {
       const base64Envelope = (SentryCapacitor.captureEnvelope as jest.Mock).mock.calls[0]?.[0]?.envelope;
       expect(base64Envelope).toBeDefined();
       expect(base64EnvelopeToString(base64Envelope)).toEqual(
-`{"event_id":"custom0","sent_at":"123"}
+        `{"event_id":"custom0","sent_at":"123"}
 {"type":"log","content_type":"application/vnd.sentry.items.custom+json","length":17}
 {"custom":"data"}
 `);
@@ -566,6 +582,47 @@ describe('Tests Native Wrapper', () => {
       });
 
       expect(SentryCapacitor.fetchNativeDeviceContexts).toHaveBeenCalled();
+    });
+  });
+
+  describe('fetchNativeLogAttributes', () => {
+    test('returns log attributes from native module', async () => {
+      NATIVE.platform = 'ios';
+      NATIVE.enableNative = true;
+
+      await expect(NATIVE.fetchNativeLogAttributes()).resolves.toMatchObject({
+        contexts: {
+          device: {
+            brand: 'test-brand',
+            model: 'test-model',
+            family: 'test-family',
+          },
+          os: {
+            name: 'test-os',
+            version: '1.0.0',
+          },
+        },
+        release: 'test-release',
+      });
+
+      expect(SentryCapacitor.fetchNativeLogAttributes).toHaveBeenCalled();
+    });
+
+    test('throws error when enableNative is false', async () => {
+      NATIVE.enableNative = false;
+
+      await expect(NATIVE.fetchNativeLogAttributes()).rejects.toThrow('Native is disabled');
+      expect(SentryCapacitor.fetchNativeLogAttributes).not.toHaveBeenCalled();
+    });
+
+    test('throws error when native client is not available', async () => {
+      NATIVE.enableNative = true;
+      const mockIsPluginAvailable = Capacitor.isPluginAvailable as jest.Mock;
+      mockIsPluginAvailable.mockReturnValueOnce(false);
+
+      await expect(NATIVE.fetchNativeLogAttributes()).rejects.toThrow(
+        "Native Client is not available, can't start on native.",
+      );
     });
   });
 
