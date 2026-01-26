@@ -1,5 +1,5 @@
 import { breadcrumbsIntegration, browserApiErrorsIntegration, browserSessionIntegration, globalHandlersIntegration } from '@sentry/browser';
-import { dedupeIntegration, eventFiltersIntegration, functionToStringIntegration, type Integration, linkedErrorsIntegration } from '@sentry/core';
+import { type Integration, dedupeIntegration, eventFiltersIntegration, functionToStringIntegration, linkedErrorsIntegration } from '@sentry/core';
 import type { CapacitorOptions } from '../options';
 import { deviceContextIntegration } from './devicecontext';
 import { eventOriginIntegration } from './eventorigin';
