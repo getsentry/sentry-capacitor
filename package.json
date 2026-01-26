@@ -1,5 +1,5 @@
 {
-  "name": "@sentry/capacitor-blabla",
+  "name": "@sentry/capacitor",
   "homepage": "https://github.com/getsentry/sentry-capacitor",
   "repository": {
     "type": "git",
