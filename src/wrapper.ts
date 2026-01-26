@@ -11,7 +11,7 @@ import type {
   User,
 } from '@sentry/core';
 import { debug } from '@sentry/core';
-import type { NativeDeviceContextsResponse } from './definitions';
+import type { NativeDeviceContextsResponse, NativeLogAttributesResponse } from './definitions';
 import { FilterNativeOptions } from './nativeOptions';
 import type { CapacitorOptions } from './options';
 import { SentryCapacitor } from './plugin';
@@ -129,6 +129,20 @@ export const NATIVE = {
     }
 
     return SentryCapacitor.fetchNativeDeviceContexts();
+  },
+
+  /**
+   * Fetches native log attributes for log enrichment.
+   */
+  async fetchNativeLogAttributes(): Promise<NativeLogAttributesResponse> {
+    if (!this.enableNative) {
+      throw this._DisabledNativeError;
+    }
+    if (!this.isNativeClientAvailable()) {
+      throw this._NativeClientError;
+    }
+
+    return SentryCapacitor.fetchNativeLogAttributes();
   },
 
   /**
