@@ -52,7 +52,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - run: corepack enable
       - name: Set up Node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v5
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v5
       - name: Check dependency cache
         uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
         with:
