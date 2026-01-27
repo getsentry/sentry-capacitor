@@ -8,6 +8,11 @@
 
 ## Unreleased
 
+### Features
+
+- Add native attributes to logs ([#1086](https://github.com/getsentry/sentry-react-native/pull/1086))
+- Add Replay ID to logs ([#1086](https://github.com/getsentry/sentry-react-native/pull/1086))
+
 ### Fixes
 
 - Duplicated session When running Capacitor as an app ([#1088](https://github.com/getsentry/sentry-capacitor/pull/1088))
@@ -17,19 +22,15 @@
 - Bump Cocoa SDK from v8.56.2 to v9.2.0 ([#1088](https://github.com/getsentry/sentry-capacitor/pull/1088), [#1086](https://github.com/getsentry/sentry-capacitor/pull/1086))
   - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#920)
   - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.56.0...9.2.0)
+- Bump JavaScript Sibling SDKs from v10.27.0 to v10.36.0 ([#1099](https://github.com/getsentry/sentry-capacitor/pull/1099))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.36.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/10.27.0...10.36.0)
 
 ## 3.0.0-beta.2
 
 ### Features
 
 - Support for Capacitor 8 ([#1071](https://github.com/getsentry/sentry-capacitor/pull/1071)) - Special thanks to ([jb3rndt](https://github.com/getsentry/sentry-capacitor/pull/1061)).
-
-### Dependencies
-
-- Bump JavaScript Sibling SDKs from v10.27.0 to v10.36.0 ([#1099](https://github.com/getsentry/sentry-capacitor/pull/1099))
-  - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.36.0/CHANGELOG.md)
-  - [diff](https://github.com/getsentry/sentry-javascript/compare/10.27.0...10.36.0)
-
 
 ## 3.0.0-beta.1
 
