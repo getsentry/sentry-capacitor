@@ -278,9 +278,10 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             var result: [String: Any] = [:]
             var contexts: [String: Any] = [:]
 
-            // Extract device context
-            if let scopeContexts = serializedScope["contexts"] as? [String: Any],
-               let deviceContext = scopeContexts["device"] as? [String: Any] {
+            // Extract device & OS context from scope
+            if let scopeContexts = serializedScope["context"] as? [String: Any],
+            let deviceContext = scopeContexts["device"] as? [String: Any] {
+
                 var device: [String: Any] = [:]
 
                 if let brand = deviceContext["brand"] as? String {
@@ -296,23 +297,37 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
                 if !device.isEmpty {
                     contexts["device"] = device
                 }
+
+                // Extract OS context
+                if let osContext = scopeContexts["os"] as? [String: Any] {
+                    var os: [String: Any] = [:]
+
+                    if let name = osContext["name"] as? String {
+                        os["name"] = name
+                    }
+                    if let version = osContext["version"] as? String {
+                        os["version"] = version
+                    }
+
+                    if !os.isEmpty {
+                        contexts["os"] = os
+                    }
+                }
             }
 
-            // Extract OS context
-            if let scopeContexts = serializedScope["contexts"] as? [String: Any],
-               let osContext = scopeContexts["os"] as? [String: Any] {
-                var os: [String: Any] = [:]
+            // Merge extra context from Sentry SDK
+            let extraContext = PrivateSentrySDKOnly.getExtraContext()
 
-                if let name = osContext["name"] as? String {
-                    os["name"] = name
-                }
-                if let version = osContext["version"] as? String {
-                    os["version"] = version
-                }
+            if let extraDevice = extraContext["device"] as? [String: Any] {
+                var mergedDevice = contexts["device"] as? [String: Any] ?? [:]
+                mergedDevice.merge(extraDevice) { _, new in new }
+                contexts["device"] = mergedDevice
+            }
 
-                if !os.isEmpty {
-                    contexts["os"] = os
-                }
+            if let extraOS = extraContext["os"] as? [String: Any] {
+                var mergedOS = contexts["os"] as? [String: Any] ?? [:]
+                mergedOS.merge(extraOS) { _, new in new }
+                contexts["os"] = mergedOS
             }
 
             if !contexts.isEmpty {
