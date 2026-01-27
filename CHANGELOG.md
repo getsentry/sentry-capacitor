@@ -26,7 +26,7 @@
 
 ### Dependencies
 
-- Bump JavaScript Sibling SDKs from v10.27.0 to v10.27.0 ([#x](https://github.com/getsentry/sentry-capacitor/pull/x))
+- Bump JavaScript Sibling SDKs from v10.27.0 to v10.36.0 ([#1099](https://github.com/getsentry/sentry-capacitor/pull/1099))
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.36.0/CHANGELOG.md)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/10.27.0...10.36.0)
 
