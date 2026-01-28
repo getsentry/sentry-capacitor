@@ -20,7 +20,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint .",
-    "fix": "eslint --fix test/* src/*",
+    "fix": "eslint --fix 'test/**/*.{ts,js}' 'src/**/*.ts'",
     "swiftlint": "node-swiftlint",
     "prepack": "yarn run build",
     "postinstall": "node scripts/check-siblings.js",
@@ -42,9 +42,9 @@
   "license": "MIT",
   "peerDependencies": {
     "@capacitor/core": ">=3.0.0",
-    "@sentry/angular": "10.27.0",
-    "@sentry/react": "10.27.0",
-    "@sentry/vue": "10.27.0"
+    "@sentry/angular": "10.36.0",
+    "@sentry/react": "10.36.0",
+    "@sentry/vue": "10.36.0"
   },
   "peerDependenciesMeta": {
     "@sentry/angular": {
@@ -58,22 +58,22 @@
     }
   },
   "dependencies": {
-    "@sentry/browser": "10.27.0",
-    "@sentry/core": "10.27.0",
-    "@sentry/types": "10.27.0"
+    "@sentry/browser": "10.36.0",
+    "@sentry/core": "10.36.0",
+    "@sentry/types": "10.36.0"
   },
   "devDependencies": {
     "@capacitor/android": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "@capacitor/core": "^6.0.0  || ^7.0.0 || ^8.0.0",
     "@capacitor/ios": "^6.0.0  || ^7.0.0 || ^8.0.0",
     "@ionic/prettier-config": "^1.0.0",
-    "@sentry-internal/eslint-config-sdk": "10.27.0",
-    "@sentry-internal/eslint-plugin-sdk": "10.27.0",
-    "@sentry-internal/typescript": "10.27.0",
+    "@sentry-internal/eslint-config-sdk": "10.36.0",
+    "@sentry-internal/eslint-plugin-sdk": "10.36.0",
+    "@sentry-internal/typescript": "10.36.0",
     "@sentry/wizard": "6.5.0",
     "@types/jest": "^29.5.3",
     "concurrently": "^8.2.2",
-    "eslint": "^7.13.0",
+    "eslint": "^8.57.0",
     "jest": "^29.6.2",
     "jest-extended": "^4.0.2",
     "prettier": "^3.3.2",

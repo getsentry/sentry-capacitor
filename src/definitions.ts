@@ -10,6 +10,21 @@ export type NativeDeviceContextsResponse = {
   [key: string]: Record<string, unknown>;
 };
 
+export type NativeLogAttributesResponse = {
+  contexts?: {
+    device?: {
+      brand?: string;
+      model?: string;
+      family?: string;
+    };
+    os?: {
+      name?: string;
+      version?: string;
+    };
+  };
+  release?: string;
+};
+
 export interface ISentryCapacitorPlugin {
   addBreadcrumb(breadcrumb: Breadcrumb): void;
   captureEnvelope(payload: { envelope: string }): PromiseLike<boolean>;
@@ -24,6 +39,7 @@ export interface ISentryCapacitorPlugin {
   }>;
   fetchNativeSdkInfo(): Promise<Package>;
   fetchNativeDeviceContexts(): PromiseLike<NativeDeviceContextsResponse>;
+  fetchNativeLogAttributes(): PromiseLike<NativeLogAttributesResponse>;
   getStringBytesLength(payload: { string: string }): Promise<{ value: number }>;
   initNativeSdk(payload: { options: CapacitorOptions }): Promise<boolean>;
   setUser(payload: {

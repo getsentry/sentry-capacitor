@@ -1,8 +1,9 @@
 import { breadcrumbsIntegration, browserApiErrorsIntegration, browserSessionIntegration, globalHandlersIntegration } from '@sentry/browser';
-import { type Integration, dedupeIntegration, functionToStringIntegration, inboundFiltersIntegration, linkedErrorsIntegration } from '@sentry/core';
+import { dedupeIntegration, eventFiltersIntegration, functionToStringIntegration, type Integration, linkedErrorsIntegration } from '@sentry/core';
 import type { CapacitorOptions } from '../options';
 import { deviceContextIntegration } from './devicecontext';
 import { eventOriginIntegration } from './eventorigin';
+import { logEnricherIntegration } from './logEnricherIntegration';
 import { nativeReleaseIntegration } from './release';
 import { capacitorRewriteFramesIntegration } from './rewriteframes';
 import { sdkInfoIntegration } from './sdkinfo';
@@ -22,12 +23,12 @@ export function getDefaultIntegrations(
 
   if (options.enableNative) {
     integrations.push(deviceContextIntegration());
+    integrations.push(logEnricherIntegration());
   }
 
   // @sentry/browser integrations
   integrations.push(
-    // eslint-disable-next-line deprecation/deprecation
-    inboundFiltersIntegration(),
+    eventFiltersIntegration(),
     functionToStringIntegration(),
     browserApiErrorsIntegration(),
     breadcrumbsIntegration(),

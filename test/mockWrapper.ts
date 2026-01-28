@@ -19,6 +19,7 @@ const NATIVE: MockInterface<NativeType> = {
 
   fetchNativeRelease: jest.fn(),
   fetchNativeDeviceContexts: jest.fn(),
+  fetchNativeLogAttributes: jest.fn(),
   fetchNativeSdkInfo: jest.fn(),
 
   addBreadcrumb: jest.fn(),
@@ -46,6 +47,7 @@ NATIVE.fetchNativeRelease.mockResolvedValue({
   id: 'mock-native-id',
 });
 NATIVE.fetchNativeDeviceContexts.mockResolvedValue({});
+NATIVE.fetchNativeLogAttributes.mockResolvedValue({});
 NATIVE.fetchNativeSdkInfo.mockResolvedValue({ name: '', version: '' });
 
 export const getCapSentryModule = jest.fn();
