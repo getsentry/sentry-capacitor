@@ -58,7 +58,7 @@
     }
   },
   "dependencies": {
-    "@sentry/browser": "10.36.0",
+    "@sentry/browser": "10.37.0",
     "@sentry/core": "10.36.0",
     "@sentry/types": "10.36.0"
   },
