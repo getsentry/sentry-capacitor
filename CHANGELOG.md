@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- Disable Native Android Session Replay ([#1105](https://github.com/getsentry/sentry-capacitor/pull/1105))
+
 ## 3.0.0-beta.3
 
 ### Features
