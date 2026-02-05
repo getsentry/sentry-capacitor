@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source = { :git => package['repository']['url'], :tag => s.version.to_s }
   s.source_files = 'ios/Sources/**/*.{swift,h,m,c,cc,mm,cpp}'
 
-  s.dependency 'Sentry/HybridSDK', '9.3.0'
+  s.dependency 'Sentry', '9.3.0'
   s.dependency 'Capacitor'
 
   if File.exist?('../../@capacitor/core/package.json') == false
