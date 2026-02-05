@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- Disable Native Android Session Replay ([#1105](https://github.com/getsentry/sentry-capacitor/pull/1105))
+
 ### Dependencies
 
 - Bump Cocoa SDK CocoaPods from v9.2.0 to v9.3.0 ([#1106](https://github.com/getsentry/sentry-capacitor/pull/1106))

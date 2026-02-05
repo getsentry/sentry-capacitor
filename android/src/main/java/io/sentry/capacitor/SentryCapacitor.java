@@ -154,6 +154,14 @@ public class SentryCapacitor extends Plugin {
                     }
                 }
 
+                // In case some user enable Android Replay by accident,
+                // it will not work with JavaScript replay, so we enforce this to disable Android replay.
+                // If you are interested on being able to use native replay, please open a Github issue
+                // on the following repo: https://github.com/getsentry/sentry-capacitor.
+                var controller = options.getSessionReplay();
+                controller.setSessionSampleRate(null);
+                controller.setOnErrorSampleRate(null);
+
                 options.getLogs().setEnabled(Boolean.TRUE.equals(capOptions.getBoolean("enableLogs", false)));
 
                 logger.log(SentryLevel.INFO, String.format("Native Integrations '%s'", options.getIntegrations()));
