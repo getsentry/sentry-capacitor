@@ -8,9 +8,127 @@
 
 ## Unreleased
 
+#### Sentry JavaScript V10
+
+Version 10 of the Sentry JavaScript SDK primarily focuses on upgrading underlying OpenTelemetry dependencies to v2 with minimal breaking changes.
+
+Version 10 of the SDK is compatible with Sentry self-hosted versions 24.4.2 or higher (unchanged from v9). Lower versions may continue to work, but may not support all features.
+
+### SDK Initialization changed for Sentry Vue and Nuxt
+
+Instead of adding the Nuxt/Vue options into `Sentry.init` options, you will now have to add it inside `siblingOptions`, this only applies to parameters specific to the respective SDK, other SDKs like React or Angular won't have to do that:
+
+before
+
+```typescript
+Sentry.init({
+  app: app,
+  attachErrorHandler: false,
+  dsn: '...',
+  enableLogs: true,...
+}, vueInit);
+```
+
+after
+
+```typescript
+Sentry.init({
+  dsn: '...',
+  enableLogs: true,
+  siblingOptions: {
+    vueOptions: {
+        app: app,
+        attachErrorHandler: false,
+        ...
+    }
+  },
+  ...
+}, vueInit);
+
+```
+### Removed APIs
+
+The changes outlined in this section detail deprecated APIs that are now removed.
+
+    * BaseClient was removed, use Client as a direct replacement.
+    * hasTracingEnabled was removed, use hasSpansEnabled as a direct replacement.
+    * The internal logger and type Logger exports in @sentry/core were removed, use debug and type SentryDebugLogger instead. This does not affect the logger export used for [Sentry Logging](https://docs.sentry.io/product/explore/logs/getting-started/).
+    * The _experiments.enableLogs and _experiments.beforeSendLog options were removed, use the top-level enableLogs and beforeSendLog options instead.
+
+```JavaScript
+// before
+Sentry.init({
+  _experiments: {
+    enableLogs: true,
+    beforeSendLog: (log) => {
+      return log;
+    },
+  },
+});
+// after
+Sentry.init({
+  enableLogs: true,
+  beforeSendLog: (log) => {
+    return log;
+  },
+});
+```
+
+### Removed Options
+
+- `_experimental.enableLogs` was removed, please use the options `enableLogs` from `CapacitorOptions`.
+
+For more informations, please go to the following link: https://docs.sentry.io/platforms/javascript/migration/v9-to-v10
+
+#### Sentry Cocoa V9
+
+### Breaking Changes
+
+#### Minimum Version Requirements
+
+- **iOS/macOS/tvOS**:
+  - iOS **15.0+** (previously 11.0+)
+  - macOS **10.14+** (previously 10.13+)
+  - tvOS **15.0+** (previously 11.0+)
+
+### PodSpec support
+
+- The current version continues to support Podspec-based setup, however future major releases will support only Swift Package Manager (SPM). We recommend migrating your project to SPM to ensure a smooth transition to upcoming SDK versions.
+
+### Features
+
+- Add native attributes to logs ([#1086](https://github.com/getsentry/sentry-react-native/pull/1086))
+- Add Replay ID to logs ([#1086](https://github.com/getsentry/sentry-react-native/pull/1086))
+- Support for Capacitor 8 ([#1071](https://github.com/getsentry/sentry-capacitor/pull/1071)) - Special thanks to ([jb3rndt](https://github.com/getsentry/sentry-capacitor/pull/1061)).
+- Add experimental Metric support for Web and iOS ([#1055](https://github.com/getsentry/sentry-capacitor/pull/1055))
+- Add Fallback to JavaScript SDK when Native SDK fails to initialize ([#1043](https://github.com/getsentry/sentry-capacitor/pull/1043))
+- Add spotlight integration `spotlightIntegration`. ([#1039](https://github.com/getsentry/sentry-capacitor/pull/1039))
+
 ### Fixes
 
 - Disable Native Android Session Replay ([#1105](https://github.com/getsentry/sentry-capacitor/pull/1105))
+- Duplicated session When running Capacitor as an app ([#1088](https://github.com/getsentry/sentry-capacitor/pull/1088))
+- Added missing integrations `inboundFiltersIntegration`, `functionToStringIntegration`, `browserApiErrorsIntegration`, `breadcrumbsIntegration`, `globalHandlersIntegration`, `linkedErrorsIntegration`, `dedupeIntegration` and `browserSessionIntegration` ([#1047](https://github.com/getsentry/sentry-capacitor/pull/1047))
+  - This fixes the following option parameters that weren't working: `ignoreErrors`, `ignoreTransactions`, `allowUrls`, `denyUrls`
+  - For more information about the Integrations, check the following link: https://docs.sentry.io/platforms/javascript/configuration/integrations.
+
+- Breadcrumbs are now showing and are tied with native breadcrumbs too ([#1047](https://github.com/getsentry/sentry-capacitor/pull/1047))
+- Init now showing the correct JSDoc for Vue/Nuxt init parameters. ([#1046](https://github.com/getsentry/sentry-capacitor/pull/1046))
+- Replays/Logs/Sessions now have the `capacitor` SDK name as the source of the event. ([#1043](https://github.com/getsentry/sentry-capacitor/pull/1043))
+- Sentry Capacitor integrations are now exposed to `@sentry/capacitor` ([#1039](https://github.com/getsentry/sentry-capacitor/pull/1039))
+
+### Dependencies
+
+- Bump Android SDK from v8.28.0 to v8.31.0 ([#1096](https://github.com/getsentry/sentry-capacitor/pull/1096))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8310)
+  - [diff](https://github.com/getsentry/sentry-java/compare/8.28.0...8.31.0)
+- Bump Cocoa SDK from v8.56.2 to v9.2.0 ([#1088](https://github.com/getsentry/sentry-capacitor/pull/1088), [#1086](https://github.com/getsentry/sentry-capacitor/pull/1086))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#920)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.56.0...9.2.0)
+- Bump JavaScript Sibling SDKs from v9.46.0 to v10.36.0 ([#1013](https://github.com/getsentry/sentry-capacitor/pull/1013), [#1028](https://github.com/getsentry/sentry-capacitor/pull/1028), [#1099](https://github.com/getsentry/sentry-capacitor/pull/1099))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.36.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/9.46.0...10.36.0)
+
 
 ## 3.0.0-beta.3
 
