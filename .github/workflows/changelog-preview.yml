@@ -10,7 +10,7 @@ on:
 permissions:
   contents: read
   pull-requests: write
-  statuses: read
+  statuses: none
 
 jobs:
   changelog-preview:
