@@ -10,10 +10,12 @@ PODS:
     - Capacitor
   - CapacitorStatusBar (6.0.2):
     - Capacitor
-  - Sentry/HybridSDK (9.0.0)
-  - "SentryCapacitor (3.0.0-beta.2+0daec817)":
+  - Sentry (9.3.0):
+    - Sentry/Core (= 9.3.0)
+  - Sentry/Core (9.3.0)
+  - "SentryCapacitor (3.0.0-beta.3+932fab1b)":
     - Capacitor
-    - Sentry/HybridSDK (= 9.0.0)
+    - Sentry (= 9.3.0)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -51,8 +53,8 @@ SPEC CHECKSUMS:
   CapacitorHaptics: 4fc15afe22b123d093e6ace24d95e8e3b1f261b9
   CapacitorKeyboard: e89189ad398b815b6ff7e52271f0fb4f911a0a0a
   CapacitorStatusBar: b16799a26320ffa52f6c8b01737d5a95bbb8f3eb
-  Sentry: b93debe54043eb107fd883141edf9c49c53d999a
-  SentryCapacitor: 10b1029331ca0b24c298f6e16401f8ee62a3a690
+  Sentry: 4d2abfa89a0f104f53e60c1d11c85e6f68a0e22b
+  SentryCapacitor: a362445c6a6c1d7d00e69a3d365d56cb8704ee4a
 
 PODFILE CHECKSUM: 72b7933f33f449ffc285e956394345ca4767d300
 

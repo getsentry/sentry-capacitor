@@ -12,6 +12,15 @@
 
 - Disable Native Android Session Replay ([#1105](https://github.com/getsentry/sentry-capacitor/pull/1105))
 
+### Dependencies
+
+- Bump Cocoa SDK CocoaPods from v9.2.0 to v9.3.0 ([#1106](https://github.com/getsentry/sentry-capacitor/pull/1106))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#930)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.2.0...9.3.0)
+- Bump Cocoa SDK CocoaPods from v9.0.0 to v9.3.0 ([#1106](https://github.com/getsentry/sentry-capacitor/pull/1106))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#930)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.0.0...9.3.0)
+
 ## 3.0.0-beta.3
 
 ### Features
