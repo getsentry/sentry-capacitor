@@ -124,22 +124,12 @@ For more informations, please go to the following link: https://docs.sentry.io/p
 - Bump Android SDK from v8.28.0 to v8.31.0 ([#1096](https://github.com/getsentry/sentry-capacitor/pull/1096))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8310)
   - [diff](https://github.com/getsentry/sentry-java/compare/8.28.0...8.31.0)
-- Bump Cocoa SDK from v8.56.2 to v9.2.0 ([#1088](https://github.com/getsentry/sentry-capacitor/pull/1088), [#1086](https://github.com/getsentry/sentry-capacitor/pull/1086))
-  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#920)
-  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.56.0...9.2.0)
+- Bump Cocoa SDK from v8.56.2 to v9.3.0 ([#1088](https://github.com/getsentry/sentry-capacitor/pull/1088), [#1086](https://github.com/getsentry/sentry-capacitor/pull/1086), [#1106](https://github.com/getsentry/sentry-capacitor/pull/1106))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#930))
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/8.56.0...9.3.0)
 - Bump JavaScript Sibling SDKs from v9.46.0 to v10.36.0 ([#1013](https://github.com/getsentry/sentry-capacitor/pull/1013), [#1028](https://github.com/getsentry/sentry-capacitor/pull/1028), [#1099](https://github.com/getsentry/sentry-capacitor/pull/1099))
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.36.0/CHANGELOG.md)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/9.46.0...10.36.0)
-
-
-### Dependencies
-
-- Bump Cocoa SDK CocoaPods from v9.2.0 to v9.3.0 ([#1106](https://github.com/getsentry/sentry-capacitor/pull/1106))
-  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#930)
-  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.2.0...9.3.0)
-- Bump Cocoa SDK CocoaPods from v9.0.0 to v9.3.0 ([#1106](https://github.com/getsentry/sentry-capacitor/pull/1106))
-  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#930)
-  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.0.0...9.3.0)
 
 ## 3.0.0-beta.3
 
