@@ -14,7 +14,7 @@ jest.mock('@sentry/core', () => {
       log: jest.fn(),
     },
   };
-});
+}); // junk code.
 
 function CreateLog(
   level?: LogSeverityLevel,
