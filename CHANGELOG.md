@@ -6,7 +6,7 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
-## Unreleased
+## 3.0.0-rc.1
 
 #### Sentry JavaScript V10
 
