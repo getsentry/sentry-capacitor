@@ -8,7 +8,7 @@ on:
     - edited
     - labeled
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
   statuses: write
 
