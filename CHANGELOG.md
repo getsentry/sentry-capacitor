@@ -80,7 +80,13 @@ Sentry.init({
 
 For more informations, please go to the following link: https://docs.sentry.io/platforms/javascript/migration/v9-to-v10
 
-#### Sentry Cocoa V9
+### Sentry Cocoa V9
+
+- With the addition of Sentry Cocoa V9, you may face issues when building your project, this is due to the increased minimum required version bump for the Apple platform,  you can see the specific changes on the breaking change section.
+
+#### PodSpec support
+
+- The current version continues to support Podspec-based setup, however future major releases will support only Swift Package Manager (SPM). We recommend migrating your project to SPM to ensure a smooth transition to upcoming SDK versions.
 
 ### Breaking Changes
 
@@ -90,10 +96,6 @@ For more informations, please go to the following link: https://docs.sentry.io/p
   - iOS **15.0+** (previously 11.0+)
   - macOS **10.14+** (previously 10.13+)
   - tvOS **15.0+** (previously 11.0+)
-
-### PodSpec support
-
-- The current version continues to support Podspec-based setup, however future major releases will support only Swift Package Manager (SPM). We recommend migrating your project to SPM to ensure a smooth transition to upcoming SDK versions.
 
 ### Features
 
