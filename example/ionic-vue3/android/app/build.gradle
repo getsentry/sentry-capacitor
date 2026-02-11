@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "io.ionic.sentry.vue3"
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "io.ionic.sentry.vue3"
         minSdkVersion rootProject.ext.minSdkVersion
