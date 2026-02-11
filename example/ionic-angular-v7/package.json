@@ -54,7 +54,7 @@
     "js-yaml": "3.14.2",
     "on-headers": "1.1.0",
     "tmp": "0.2.4",
-    "glob": "11.1.0"
+    "glob": "8.0.3"
   },
   "name": "ionic-angular",
   "private": true,
