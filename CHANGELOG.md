@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- Add missing `httpContextIntegration`
+
 ## 3.0.0-rc.1
 
 #### Sentry JavaScript V10
@@ -46,6 +52,7 @@ Sentry.init({
 }, vueInit);
 
 ```
+
 ### Removed APIs
 
 The changes outlined in this section detail deprecated APIs that are now removed.
@@ -82,7 +89,7 @@ For more informations, please go to the following link: https://docs.sentry.io/p
 
 ### Sentry Cocoa V9
 
-- With the addition of Sentry Cocoa V9, you may face issues when building your project, this is due to the increased minimum required version bump for the Apple platform,  you can see the specific changes on the breaking change section.
+- With the addition of Sentry Cocoa V9, you may face issues when building your project, this is due to the increased minimum required version bump for the Apple platform, you can see the specific changes on the breaking change section.
 
 #### PodSpec support
 
