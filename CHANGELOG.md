@@ -6,7 +6,7 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
-## Unreleased
+## 3.0.0
 
 #### Sentry JavaScript V10
 
@@ -132,7 +132,6 @@ For more informations, please go to the following link: https://docs.sentry.io/p
 - Bump JavaScript Sibling SDKs from v9.46.0 to v10.36.0 ([#1013](https://github.com/getsentry/sentry-capacitor/pull/1013), [#1028](https://github.com/getsentry/sentry-capacitor/pull/1028), [#1099](https://github.com/getsentry/sentry-capacitor/pull/1099))
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.36.0/CHANGELOG.md)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/9.46.0...10.36.0)
-
 
 ## 3.0.0-rc.1
 
