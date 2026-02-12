@@ -2,7 +2,7 @@
 
 <!-- prettier-ignore-start -->
 > [!IMPORTANT]
-> If you are upgrading to the `2.x` versions of the SDK from `1.x` or lower, make sure you follow our
+> If you are upgrading to the `3.x` versions of the SDK from `2.x` or lower, make sure you follow our
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
@@ -10,7 +10,7 @@
 
 ### Fixes
 
-- Add missing `httpContextIntegration`
+- Add missing `httpContextIntegration` integration by default when using your project on the browser. ([#1119](https://github.com/getsentry/sentry-capacitor/pull/1119))
 
 ## 3.0.0-rc.1
 
