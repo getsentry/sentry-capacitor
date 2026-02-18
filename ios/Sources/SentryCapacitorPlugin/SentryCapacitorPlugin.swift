@@ -412,6 +412,8 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
         SentrySDK.configureScope { scope in
             scope.setContext(value: call.getObject("value") ?? [:], key: key)
         }
+
+        call.resolve()
     }
 
     @objc func addBreadcrumb(_ call: CAPPluginCall) {
