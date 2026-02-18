@@ -82,7 +82,7 @@
     "rimraf": "^5.0.1",
     "swiftlint": "^2.0.0",
     "ts-jest": "^29.1.1",
-    "typescript": "5.0.4"
+    "typescript": "5.9.3"
   },
   "resolutions": {
     "form-data": "4.0.4",
