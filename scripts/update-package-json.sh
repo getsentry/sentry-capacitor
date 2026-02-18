@@ -24,17 +24,22 @@ set-version)
         version="${version:${#tagPrefix}}"
     fi
     for i in ${!packages[@]}; do
-        list+="${packages[$i]}@$version "
-    done
-    (
-        cd "$(dirname "$file")"
-        if [ "$updatePeerPackages" -eq 1 ]; then
-            #upgrade doesn't support peerDependencies so we'll use the yarn option.
-            yarn add --peer $list --update-sentry-capacitor
-        else
-            yarn upgrade --non-interactive $list --update-sentry-capacitor
+        # Only add packages that exist in package.json
+        if [[ $content =~ \"${packages[$i]}\": ]]; then
+            list+="${packages[$i]}@$version "
         fi
-    )
+    done
+    if [[ -n "$list" ]]; then
+        (
+            cd "$(dirname "$file")"
+            if [ "$updatePeerPackages" -eq 1 ]; then
+                #upgrade doesn't support peerDependencies so we'll use the yarn option.
+                yarn add --peer $list --update-sentry-capacitor
+            else
+                yarn upgrade --non-interactive $list --update-sentry-capacitor
+            fi
+        )
+    fi
     ;;
 *)
     echo "Unknown argument $1"
