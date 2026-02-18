@@ -28,7 +28,8 @@
     "bump:v7": "cd example/ionic-angular-v7 && yalc link @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
     "bump:v6": "cd example/ionic-angular-v6 && yalc link @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
     "bump:sample-vue": "cd example/ionic-vue3 && yalc link @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
-    "bump:samples": "yalc publish --sig && yarn concurrently --kill-others-on-fail \"yarn run bump:v7\" \"yarn run bump:v6\" \"yarn run bump:v8\" \"yarn run bump:sample-vue\""
+    "bump:samples": "yalc publish --sig && yarn concurrently --kill-others-on-fail \"yarn run bump:v7\" \"yarn run bump:v6\" \"yarn run bump:v8\" \"yarn run bump:sample-vue\"",
+    "bump:javascript-version": "bash -c 'scripts/update-javascript.sh set-version $1 && scripts/update-javascript-siblings.sh set-version $1' _"
   },
   "keywords": [
     "capacitor",
