@@ -30,7 +30,7 @@
     "@sentry/capacitor": "file:.yalc/@sentry/capacitor",
     "@sentry/cli": "^2.58.4",
     "@sentry/vite-plugin": "^2.10.3",
-    "@sentry/vue": "10.36.0",
+    "@sentry/vue": "10.40.0",
     "ionicons": "^8.0.0",
     "vue": "^3.5.0",
     "vue-facing-decorator": "^4.0.0",
