@@ -4,7 +4,7 @@
 
 You need:
 
-- [nodejs](https://nodejs.org/en/download/) 18 or higher (with corepack enabled)
+- [nodejs](https://nodejs.org/en/download/) 22 or higher (with corepack enabled)
 - [yarn 1](https://classic.yarnpkg.com/lang/en/docs/install) or higher
 - [yalc](https://github.com/wclr/yalc) (can be installed with `yarn global add yalc`)
 - http-server
@@ -39,6 +39,11 @@ yarn watch
 
 - Basically you'll need to edit SentryCapacitor.podspec and ios/Porfile updating the Sentry dependency and validate it on one of the examples apps on this project.
 - Run 'pod install --repo-update' on the ios folder and then 'yarn build' on the root folder.
+
+## Bumping Sentry JavaScript
+
+- You can use the following script `yarn bump:javascript-version version` to bump Sentry JavaScript to the version you desire, this will bump the root package and also the sample apps.
+  For example, if you want to update it to version `10.40.0`, You should run the following script `yarn bump:javascript-version 10.40.0`.
 
 ## Running the example apps
 
