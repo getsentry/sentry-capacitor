@@ -29,7 +29,7 @@
     "@ionic/vue-router": "^8.0.0",
     "@sentry/capacitor": "file:.yalc/@sentry/capacitor",
     "@sentry/cli": "^2.58.4",
-    "@sentry/vite-plugin": "^2.10.3",
+    "@sentry/vite-plugin": "^5.1.1",
     "@sentry/vue": "10.40.0",
     "brace-expansion": "2.0.2",
     "ionicons": "^8.0.0",
