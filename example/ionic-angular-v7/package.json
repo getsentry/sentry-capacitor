@@ -15,6 +15,7 @@
     "@ionic/angular": "6.7.5",
     "@sentry/angular": "10.40.0",
     "@sentry/capacitor": "file:.yalc/@sentry/capacitor",
+    "@tootallnate/once": "3.0.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
