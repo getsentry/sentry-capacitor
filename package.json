@@ -86,7 +86,8 @@
   },
   "resolutions": {
     "form-data": "4.0.4",
-    "tmp": ">0.2.3"
+    "tmp": ">0.2.3",
+    "js-yaml": "4.1.1"
   },
   "files": [
     "dist/",
