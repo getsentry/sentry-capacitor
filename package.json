@@ -90,7 +90,8 @@
     "js-yaml": "4.1.1",
     "minimatch": "9.0.7",
     "glob": "10.5.0",
-    "test-exclude": "7.0.1"
+    "test-exclude": "7.0.1",
+    "lodash": "4.17.23"
   },
   "files": [
     "dist/",
