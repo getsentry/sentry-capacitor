@@ -87,7 +87,10 @@
   "resolutions": {
     "form-data": "4.0.4",
     "tmp": ">0.2.3",
-    "js-yaml": "4.1.1"
+    "js-yaml": "4.1.1",
+    "minimatch": "9.0.7",
+    "glob": "10.5.0",
+    "test-exclude": "7.0.1"
   },
   "files": [
     "dist/",
