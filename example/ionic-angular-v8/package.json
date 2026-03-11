@@ -45,11 +45,12 @@
   "resolutions": {
     "form-data": "4.0.4",
     "qs": "6.14.2",
-    "tar": "6.2.1",
+    "tar": "7.5.11",
     "@modelcontextprotocol/sdk": "1.26.0",
     "webpack": "5.104.1",
     "on-headers": "1.1.0",
-    "tmp": "0.2.4"
+    "tmp": "0.2.4",
+    "minimatch": "10.2.3"
   },
   "name": "ionic-angular",
   "private": true,
