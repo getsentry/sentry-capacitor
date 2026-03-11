@@ -26,7 +26,7 @@
     "@angular/compiler": "^21.0.0",
     "@angular/compiler-cli": "^21.0.0",
     "@angular/language-service": "^21.0.0",
-    "@capacitor/cli": "^7.4.0",
+    "@capacitor/cli": "^8.0.0",
     "@ionic/angular-toolkit": "^10.0.0",
     "@ionic/cli": "^7.2.1",
     "@sentry/cli": "^2.21.2",

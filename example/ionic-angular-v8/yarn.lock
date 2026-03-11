@@ -1365,10 +1365,10 @@
   resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-8.0.0.tgz#8cd63ed432460c70db0770dccd9234700152f31a"
   integrity sha512-FrBSvVAC5JuLaYHNyDnwQny0/SYnP+xDQbc/KA4wInmRkMXLDv22fkx9aBJIDrxjuUVd+jsRih4SAt8FgMEzCw==
 
-"@capacitor/cli@^7.4.0":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-7.4.0.tgz#1ff769d3ccb2298635eac6814d1a226c9afd07be"
-  integrity sha512-RXmsW067r9sz7K1qtXGNB12w2aJtt86J3Jc4vOvmvpA+GyVYkVY1UhAMRnuVrXHjGZEVlwBORHunwrmv30HoZg==
+"@capacitor/cli@^8.0.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-8.2.0.tgz#8075f23fc4ca93e08d6965dc1f445752091aaab1"
+  integrity sha512-1cMEk0d/I6tl1U+v/lnJR5Oylpx8ZBIHrvQxD5zK0MkjYOUyQAAGJgh97rkhGJqjAUvrGpa8H4BmyhNQN9a17A==
   dependencies:
     "@ionic/cli-framework-output" "^2.2.8"
     "@ionic/utils-subprocess" "^3.0.1"
@@ -1378,13 +1378,13 @@
     env-paths "^2.2.0"
     fs-extra "^11.2.0"
     kleur "^4.1.5"
-    native-run "^2.0.1"
+    native-run "^2.0.3"
     open "^8.4.0"
     plist "^3.1.0"
     prompts "^2.4.2"
     rimraf "^6.0.1"
     semver "^7.6.3"
-    tar "^6.1.11"
+    tar "^7.5.3"
     tslib "^2.8.1"
     xml2js "^0.6.2"
 
@@ -6765,10 +6765,10 @@ nanoid@^3.3.11:
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.11.tgz#4f4f112cefbe303202f2199838128936266d185b"
   integrity sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==
 
-native-run@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/native-run/-/native-run-2.0.1.tgz#a9b213c32824b007cbdd0279e0edd3c24bcc2f7a"
-  integrity sha512-XfG1FBZLM50J10xH9361whJRC9SHZ0Bub4iNRhhI61C8Jv0e1ud19muex6sNKB51ibQNUJNuYn25MuYET/rE6w==
+native-run@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/native-run/-/native-run-2.0.3.tgz#b1ceb39c8d24abf4916c07ae9aad5a9fbcd31a02"
+  integrity sha512-U1PllBuzW5d1gfan+88L+Hky2eZx+9gv3Pf6rNBxKbORxi7boHzqiA6QFGSnqMem4j0A9tZ08NMIs5+0m/VS1Q==
   dependencies:
     "@ionic/utils-fs" "^3.1.7"
     "@ionic/utils-terminal" "^2.3.4"
@@ -8487,7 +8487,7 @@ tapable@^2.2.1, tapable@^2.3.0:
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.3.0.tgz#7e3ea6d5ca31ba8e078b560f0d83ce9a14aa8be6"
   integrity sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==
 
-tar@7.5.11, tar@^6.0.1, tar@^6.1.11, tar@^7.4.3, tar@^7.5.2:
+tar@7.5.11, tar@^6.0.1, tar@^7.4.3, tar@^7.5.2, tar@^7.5.3:
   version "7.5.11"
   resolved "https://registry.yarnpkg.com/tar/-/tar-7.5.11.tgz#1250fae45d98806b36d703b30973fa8e0a6d8868"
   integrity sha512-ChjMH33/KetonMTAtpYdgUFr0tbz69Fp2v7zWxQfYZX4g5ZN2nOBXm1R2xyA+lMIKrLKIoKAwFj93jE/avX9cQ==
