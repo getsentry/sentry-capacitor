@@ -1,1 +1,0 @@
-../../../scripts/update-javascript-siblings.sh
