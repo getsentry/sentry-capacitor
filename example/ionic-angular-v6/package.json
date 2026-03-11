@@ -26,7 +26,7 @@
     "@angular/compiler": "^14.3.0",
     "@angular/compiler-cli": "^14.3.0",
     "@angular/language-service": "^14.3.0",
-    "@capacitor/cli": "^6.0.0",
+    "@capacitor/cli": "^6.2.1",
     "@ionic/angular-toolkit": "^2.3.0",
     "@ionic/cli": "^6.16.3",
     "@sentry/cli": "^2.21.2",
@@ -56,7 +56,8 @@
     "js-yaml": "4.1.1",
     "on-headers": "1.1.0",
     "@tootallnate/once": "3.0.1",
-    "tmp": "0.2.4"
+    "tmp": "0.2.4",
+    "minimatch": "5.1.8"
   },
   "name": "ionic-angular",
   "private": true,

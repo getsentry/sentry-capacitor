@@ -26,7 +26,7 @@
     "@angular/compiler": "^14.3.0",
     "@angular/compiler-cli": "^14.3.0",
     "@angular/language-service": "^14.3.0",
-    "@capacitor/cli": "^7.4.0",
+    "@capacitor/cli": "^7.6.0",
     "@ionic/angular-toolkit": "^2.3.0",
     "@ionic/cli": "^7.2.1",
     "@sentry/cli": "^2.21.2",
@@ -48,7 +48,8 @@
   "resolutions": {
     "form-data": "4.0.4",
     "qs": "6.14.2",
-    "tar": "6.2.1",
+    "tar": "7.5.11",
+    "minimatch": "10.2.3",
     "webpack": "5.104.1",
     "webpack-dev-server": "5.2.1",
     "js-yaml": "4.1.1",
