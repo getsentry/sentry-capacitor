@@ -1,0 +1,1 @@
+{"version":3,"file":"breadcrumb.js","sourceRoot":"","sources":["../../src/breadcrumb.ts"],"names":[],"mappings":"AAEA,MAAM,CAAC,MAAM,wBAAwB,GAAkB,MAAM,CAAC","sourcesContent":["import type { SeverityLevel } from '@sentry/core';\n\nexport const DEFAULT_BREADCRUMB_LEVEL: SeverityLevel = 'info';\n"]}
