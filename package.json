@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "@sentry/browser": "10.40.0",
-    "@sentry/core": "10.40.0",
+    "@sentry/core": "10.43.0",
     "@sentry/types": "10.40.0"
   },
   "devDependencies": {
