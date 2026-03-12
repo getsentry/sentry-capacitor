@@ -1,1 +1,0 @@
-../../../scripts/update-package-json.sh
