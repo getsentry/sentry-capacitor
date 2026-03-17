@@ -206,6 +206,79 @@ describe('SDK Init', () => {
     });
   });
 
+  test('passes strictTraceContinuation and orgId to browser options', () => {
+    NATIVE.platform = 'web';
+    const mockOriginalInit = jest.fn();
+
+    init({
+      dsn: 'test-dsn',
+      enabled: true,
+      strictTraceContinuation: true,
+      orgId: '12345',
+    }, mockOriginalInit);
+
+    // Wait for async operations
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        expect(mockOriginalInit).toHaveBeenCalled();
+        const browserOptions = mockOriginalInit.mock.calls[0][0];
+
+        expect(browserOptions.strictTraceContinuation).toBe(true);
+        expect(browserOptions.orgId).toBe('12345');
+
+        resolve();
+      }, 0);
+    });
+  });
+
+  test('passes strictTraceContinuation and orgId to native options', () => {
+    NATIVE.platform = 'ios';
+    const mockOriginalInit = jest.fn();
+
+    init({
+      dsn: 'test-dsn',
+      enabled: true,
+      strictTraceContinuation: true,
+      orgId: 67890,
+    }, mockOriginalInit);
+
+    // Wait for async operations
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        expect(NATIVE.initNativeSdk).toHaveBeenCalled();
+        const nativeOptions = (NATIVE.initNativeSdk as jest.Mock).mock.calls[0][0];
+
+        expect(nativeOptions.strictTraceContinuation).toBe(true);
+        expect(nativeOptions.orgId).toBe(67890);
+
+        resolve();
+      }, 0);
+    });
+  });
+
+  test('strictTraceContinuation defaults to undefined when not set', () => {
+    NATIVE.platform = 'web';
+    const mockOriginalInit = jest.fn();
+
+    init({
+      dsn: 'test-dsn',
+      enabled: true,
+    }, mockOriginalInit);
+
+    // Wait for async operations
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        expect(mockOriginalInit).toHaveBeenCalled();
+        const browserOptions = mockOriginalInit.mock.calls[0][0];
+
+        expect(browserOptions.strictTraceContinuation).toBeUndefined();
+        expect(browserOptions.orgId).toBeUndefined();
+
+        resolve();
+      }, 0);
+    });
+  });
+
   test('RewriteFrames to be added by default', async () => {
     NATIVE.platform = 'web';
     const mockOriginalInit = jest.fn();

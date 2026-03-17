@@ -75,6 +75,27 @@ export interface BaseCapacitorOptions {
 
 
   /**
+   * If set to `true`, the SDK will only continue a trace if the `organization ID` of the incoming trace found in the
+   * `baggage` header matches the `organization ID` of the current Sentry client.
+   *
+   * The client's organization ID is extracted from the DSN or can be set with the `orgId` option.
+   *
+   * If the organization IDs do not match, the SDK will start a new trace instead of continuing the incoming one.
+   * This is useful to prevent traces of unknown third-party services from being continued in your application.
+   *
+   * @default false
+   */
+  strictTraceContinuation?: boolean;
+
+  /**
+   * The organization ID for your Sentry project.
+   *
+   * The SDK will try to extract the organization ID from the DSN. If it cannot be found, or if you need to override it,
+   * you can provide the ID with this option. The organization ID is used for trace propagation and for features like `strictTraceContinuation`.
+   */
+  orgId?: `${number}` | number;
+
+  /**
    * Only for Vue or Nuxt Client.
    * Allows the setup of sibling specific SDK. You are still allowed to set the same parameters
    * at the root of Capacitor Options at the cost of lost on JSDocs visibility.
