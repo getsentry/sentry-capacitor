@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Features
+
+- Add `strictTraceContinuation` and `orgId` options for trace continuation validation ([#1166](https://github.com/getsentry/sentry-capacitor/pull/1166))
+
 ## 3.1.0
 
 ### Dependencies
