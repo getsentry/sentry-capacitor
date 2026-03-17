@@ -231,30 +231,8 @@ describe('SDK Init', () => {
     });
   });
 
-  test('passes strictTraceContinuation and orgId to native options', () => {
-    NATIVE.platform = 'ios';
-    const mockOriginalInit = jest.fn();
-
-    init({
-      dsn: 'test-dsn',
-      enabled: true,
-      strictTraceContinuation: true,
-      orgId: 67890,
-    }, mockOriginalInit);
-
-    // Wait for async operations
-    return new Promise<void>(resolve => {
-      setTimeout(() => {
-        expect(NATIVE.initNativeSdk).toHaveBeenCalled();
-        const nativeOptions = (NATIVE.initNativeSdk as jest.Mock).mock.calls[0][0];
-
-        expect(nativeOptions.strictTraceContinuation).toBe(true);
-        expect(nativeOptions.orgId).toBe(67890);
-
-        resolve();
-      }, 0);
-    });
-  });
+  // Native option filtering for strictTraceContinuation and orgId
+  // is tested in nativeOptions.test.ts via FilterNativeOptions.
 
   test('strictTraceContinuation defaults to undefined when not set', () => {
     NATIVE.platform = 'web';

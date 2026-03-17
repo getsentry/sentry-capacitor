@@ -44,6 +44,8 @@ export function FilterNativeOptions(
     tracesSampleRate: options.tracesSampleRate,
     // tunnel: options.tunnel: Only handled on the JavaScript Layer.
     enableCaptureFailedRequests: options.enableCaptureFailedRequests,
+    ...(options.strictTraceContinuation !== undefined && { strictTraceContinuation: options.strictTraceContinuation }),
+    ...(options.orgId !== undefined && { orgId: options.orgId }),
     ...iOSParameters(options),
     ...LogParameters(options),
     ...SpotlightParameters(),
