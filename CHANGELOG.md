@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- (iOS): Missing Device and OS from event's context ([#1168](https://github.com/getsentry/sentry-capacitor/pull/1168))
+
 ## 3.1.0
 
 ### Dependencies
