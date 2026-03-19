@@ -14,6 +14,9 @@
 
 ### Dependencies
 
+- Bump JavaScript Sibling SDKs from v9.40.0 to v10.42.0 ([#1147](https://github.com/getsentry/sentry-capacitor/pull/1147))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.42.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/10.40.0...10.42.0)
 - Bump Android SDK from v8.31.0 to v8.35.0 ([#1163](https://github.com/getsentry/sentry-capacitor/pull/1163))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8350)
   - [diff](https://github.com/getsentry/sentry-java/compare/8.31.0...8.35.0)
