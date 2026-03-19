@@ -17,7 +17,6 @@ env:
     ${{ github.workspace }}/dist
   BUILD_CACHE_KEY: ${{ inputs.build_cache_key }}
 
-
 permissions:
   contents: write
   pull-requests: write
@@ -35,9 +34,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - bump: 'v6'
-            SAMPLE_DIR: 'example/ionic-angular-v6'
-            JAVA_VERSION: '17'
           - bump: 'v7'
             SAMPLE_DIR: 'example/ionic-angular-v7'
             JAVA_VERSION: '21'
