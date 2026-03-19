@@ -237,7 +237,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             }
 
             let extraContext = PrivateSentrySDKOnly.getExtraContext()
-            var context = contexts["contexts"] as? [String: Any] ?? [:]
+            var context = contexts["context"] as? [String: Any] ?? [:]
 
             if let deviceExtraContext = extraContext["device"] as? [String: Any] {
                 var deviceContext = context["device"] as? [String: Any] ?? [:]
@@ -267,6 +267,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             }
 
             contexts["contexts"] = context
+            contexts.removeValue(forKey: "context")
 
             call.resolve(contexts as PluginCallResultData)
         }
