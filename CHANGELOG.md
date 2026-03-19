@@ -12,6 +12,12 @@
 
 - (iOS): Missing Device and OS from event's context ([#1168](https://github.com/getsentry/sentry-capacitor/pull/1168))
 
+### Dependencies
+
+- Bump Android SDK from v8.31.0 to v8.35.0 ([#1163](https://github.com/getsentry/sentry-capacitor/pull/1163))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8350)
+  - [diff](https://github.com/getsentry/sentry-java/compare/8.31.0...8.35.0)
+
 ## 3.1.0
 
 ### Dependencies
