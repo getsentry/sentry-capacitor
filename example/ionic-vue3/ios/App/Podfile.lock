@@ -1,21 +1,21 @@
 PODS:
-  - Capacitor (6.2.1):
+  - Capacitor (8.0.2):
     - CapacitorCordova
-  - CapacitorApp (6.0.2):
+  - CapacitorApp (8.0.0):
     - Capacitor
-  - CapacitorCordova (6.2.1)
-  - CapacitorHaptics (6.0.2):
+  - CapacitorCordova (8.0.2)
+  - CapacitorHaptics (8.0.0):
     - Capacitor
-  - CapacitorKeyboard (6.0.3):
+  - CapacitorKeyboard (8.0.0):
     - Capacitor
-  - CapacitorStatusBar (6.0.2):
+  - CapacitorStatusBar (8.0.0):
     - Capacitor
-  - Sentry (9.3.0):
-    - Sentry/Core (= 9.3.0)
-  - Sentry/Core (9.3.0)
-  - "SentryCapacitor (3.0.0-beta.3+932fab1b)":
+  - Sentry (9.8.0):
+    - Sentry/Core (= 9.8.0)
+  - Sentry/Core (9.8.0)
+  - "SentryCapacitor (3.1.0+6503a2cd)":
     - Capacitor
-    - Sentry (= 9.3.0)
+    - Sentry (= 9.8.0)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -47,14 +47,14 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
-  Capacitor: c95400d761e376be9da6be5a05f226c0e865cebf
-  CapacitorApp: e1e6b7d05e444d593ca16fd6d76f2b7c48b5aea7
-  CapacitorCordova: 8d93e14982f440181be7304aa9559ca631d77fff
-  CapacitorHaptics: 4fc15afe22b123d093e6ace24d95e8e3b1f261b9
-  CapacitorKeyboard: e89189ad398b815b6ff7e52271f0fb4f911a0a0a
-  CapacitorStatusBar: b16799a26320ffa52f6c8b01737d5a95bbb8f3eb
-  Sentry: 4d2abfa89a0f104f53e60c1d11c85e6f68a0e22b
-  SentryCapacitor: a362445c6a6c1d7d00e69a3d365d56cb8704ee4a
+  Capacitor: 2b79172ad27f3be2d103cce88b8eb9803fdcc744
+  CapacitorApp: 3963a84197280757b84f126afd1520a85ae3b092
+  CapacitorCordova: 921bdb690ebe82421b24fce45552fd3dea2ae43a
+  CapacitorHaptics: 2079d9fa04c5a71e18663b4722323c304c58245c
+  CapacitorKeyboard: d7868c079a4d5277a3deca27a10a488fcbbb8b69
+  CapacitorStatusBar: 312e2e67928dfe9514c4a8916a1fd610552f5f35
+  Sentry: 88746bf877eff714bc45315a39ad1d1efea2cdda
+  SentryCapacitor: 66d8b9cf3f785e22dadd0d05b1c6f0fbbe3951ed
 
 PODFILE CHECKSUM: 72b7933f33f449ffc285e956394345ca4767d300
 
