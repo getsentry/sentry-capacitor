@@ -31,7 +31,7 @@
     "@sentry/cli": "^2.58.4",
     "@sentry/vite-plugin": "^5.1.1",
     "@sentry/vue": "10.43.0",
-    "brace-expansion": "2.0.2",
+    "brace-expansion": "2.0.3",
     "ionicons": "^8.0.0",
     "vue": "^3.5.0",
     "vue-facing-decorator": "^4.0.0",
