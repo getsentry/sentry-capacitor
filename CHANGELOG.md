@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- (Android): AGP 9.0 no longer supports `proguard-android.txt` ([#1196](https://github.com/getsentry/sentry-capacitor/pull/1196))
+
 ## 3.2.0
 
 ### Fixes
