@@ -87,7 +87,7 @@ export function init(
       : passedOptions.defaultIntegrations;
 
   if (
-    browserOptions.replaysSessionSampleRate !== undefined ||
+    browserOptions.replaysSessionSampleRate ||
     browserOptions.replaysOnErrorSampleRate
   ) {
     debug.warn(
