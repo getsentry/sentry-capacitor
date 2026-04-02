@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- Deprecate Session Replay ([#1205](https://github.com/getsentry/sentry-capacitor/pull/1205))
+
 ## 3.2.0
 
 ### Fixes
