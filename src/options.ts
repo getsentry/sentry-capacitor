@@ -151,7 +151,7 @@ export interface CapacitorOptions
       | '_experiments'
       | 'enableMetrics'
       | 'replaysOnErrorSampleRate'
-      | 'replaysOnErrorSampleRate'
+      | 'replaysSessionSampleRate'
     >,
     BaseCapacitorOptions {}
 
@@ -165,6 +165,6 @@ export interface CapacitorClientOptions
       | '_experiments'
       | 'enableMetrics'
       | 'replaysOnErrorSampleRate'
-      | 'replaysOnErrorSampleRate'
+      | 'replaysSessionSampleRate'
     >,
     BaseCapacitorOptions {}
