@@ -12,6 +12,12 @@
 
 - (Android): AGP 9.0 no longer supports `proguard-android.txt` ([#1196](https://github.com/getsentry/sentry-capacitor/pull/1196))
 
+## 3.2.1
+
+### Fixes
+
+- Deprecate Session Replay ([#1205](https://github.com/getsentry/sentry-capacitor/pull/1205))
+
 ## 3.2.0
 
 ### Fixes

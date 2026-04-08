@@ -1,6 +1,11 @@
 import type { BrowserOptions } from '@sentry/browser';
 import { init as browserInit } from '@sentry/browser';
-import { debug, getClient, getGlobalScope, getIsolationScope } from '@sentry/core';
+import {
+  debug,
+  getClient,
+  getGlobalScope,
+  getIsolationScope,
+} from '@sentry/core';
 import { sdkInit } from './client';
 import { getDefaultIntegrations } from './integrations/default';
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
@@ -20,7 +25,6 @@ export function init(
   passedOptions: CapacitorOptions,
   originalInit: (passedOptions: BrowserOptions) => void = browserInit,
 ): void {
-
   /**
    * Shared options are the options that are shared between the browser and native SDKs.
    */
@@ -70,15 +74,26 @@ export function init(
     ...passedOptions.siblingOptions?.vueOptions,
     ...passedOptions.siblingOptions?.nuxtClientOptions,
     ...sharedOptions,
-    integrations: safeFactory(passedOptions.integrations, { loggerMessage: 'The integrations threw an error' }),
+    integrations: safeFactory(passedOptions.integrations, {
+      loggerMessage: 'The integrations threw an error',
+    }),
     enableMetrics: sharedOptions._experiments?.enableMetrics,
     beforeSendMetric: sharedOptions._experiments?.beforeSendMetric,
   } as BrowserOptions;
 
+  browserOptions.defaultIntegrations =
+    passedOptions.defaultIntegrations === undefined
+      ? getDefaultIntegrations(sharedOptions)
+      : passedOptions.defaultIntegrations;
 
-  browserOptions.defaultIntegrations = passedOptions.defaultIntegrations === undefined
-    ? getDefaultIntegrations(sharedOptions)
-    : passedOptions.defaultIntegrations;
+  if (
+    browserOptions.replaysSessionSampleRate ||
+    browserOptions.replaysOnErrorSampleRate
+  ) {
+    debug.warn(
+      'Sentry Capacitor options "replaysSessionSampleRate" and "replaysOnErrorSampleRate" will be removed in Capacitor SDK v4.',
+    );
+  }
 
   /**
    * Mobile options are the options that are only used by the native SDK.
