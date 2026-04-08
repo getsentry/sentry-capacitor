@@ -41,10 +41,6 @@ Sentry.init({
         hooks: ["mount", "update", "unmount"]
       }
     }),
-    SentryVue.replayCanvasIntegration({
-      maskAllText: false,
-      blockAllMedia: false,
-    }),
     ...(localConfig.spotlightSidecarUrl ? [Sentry.spotlightIntegration({
       sidecarUrl: localConfig.spotlightSidecarUrl,
     })] : []),
@@ -52,9 +48,6 @@ Sentry.init({
   tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
   // Performance Monitoring
   tracesSampleRate: 1.0, //  Capture 100% of the transactions
-  // Session Replay
-  replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
-  replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
   enableLogs: true,
   beforeSendLog: (log) => {
     return log;

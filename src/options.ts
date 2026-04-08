@@ -5,24 +5,7 @@ import type { NuxtOptions, VueOptions } from './siblingOptions';
 // Direct reference of BrowserTransportOptions is not compatible with strict builds of latest versions of Typescript 5.
 type BrowserTransportOptions = Parameters<typeof makeFetchTransport>[0];
 
-type CapacitorBrowserClientReplayOptions = {
-  /**
-   * The sample rate for session-long replays.
-   * 1.0 will record all sessions and 0 will record none.
-   * @deprecated This option will be dropped on Capacitor V4.
-   */
-  replaysSessionSampleRate?: number;
-  /**
-   * The sample rate for sessions that has had an error occur.
-   * This is independent of `sessionSampleRate`.
-   * 1.0 will record all sessions and 0 will record none.
-   * @deprecated This option will be dropped on Capacitor V4.
-   */
-  replaysOnErrorSampleRate?: number;
-};
-
-export interface BaseCapacitorOptions
-  extends CapacitorBrowserClientReplayOptions {
+export interface BaseCapacitorOptions {
   /**
    * Enables crash reporting for native crashes.
    * Defaults to `true`.

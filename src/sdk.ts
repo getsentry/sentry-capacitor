@@ -86,15 +86,6 @@ export function init(
       ? getDefaultIntegrations(sharedOptions)
       : passedOptions.defaultIntegrations;
 
-  if (
-    browserOptions.replaysSessionSampleRate ||
-    browserOptions.replaysOnErrorSampleRate
-  ) {
-    debug.warn(
-      'Sentry Capacitor options "replaysSessionSampleRate" and "replaysOnErrorSampleRate" will be removed in Capacitor SDK v4.',
-    );
-  }
-
   /**
    * Mobile options are the options that are only used by the native SDK.
    */
