@@ -11,6 +11,7 @@
 ### Break Changes
 
 - Remove Session Replay ([#1214](https://github.com/getsentry/sentry-capacitor/pull/1214))
+- Remove Profiling support ([#1217](https://github.com/getsentry/sentry-capacitor/pull/1217))
 
 ## 3.2.1
 

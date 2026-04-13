@@ -1,5 +1,5 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 import router from './router';
 
 import { IonicVue } from '@ionic/vue';
@@ -26,10 +26,38 @@ import { localConfig } from './config/local';
 /* Theme variables */
 import './theme/variables.css';
 
-const app = createApp(App)
-  .use(IonicVue)
-  .use(router);
+const app = createApp(App).use(IonicVue).use(router);
 
+Sentry.init(
+  {
+    dsn: 'https://7f35532db4f8aca7c7b6992d488b39c1@o447951.ingest.sentry.io/4505912397660160',
+    integrations: [
+      SentryVue.vueIntegration({
+        tracingOptions: {
+          timeout: 1000,
+          trackComponents: true,
+          hooks: ['mount', 'update', 'unmount'],
+        },
+      }),
+      SentryVue.replayCanvasIntegration({
+        maskAllText: false,
+        blockAllMedia: false,
+      }),
+      ...(localConfig.spotlightSidecarUrl
+        ? [
+            Sentry.spotlightIntegration({
+              sidecarUrl: localConfig.spotlightSidecarUrl,
+            }),
+          ]
+        : []),
+    ],
+    tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
+    // Performance Monitoring
+    tracesSampleRate: 1.0, //  Capture 100% of the transactions
+    enableLogs: true,
+    beforeSendLog: log => {
+      return log;
+    },
 
 Sentry.init({
   dsn: 'https://7f35532db4f8aca7c7b6992d488b39c1@o447951.ingest.sentry.io/4505912397660160',
@@ -60,13 +88,11 @@ Sentry.init({
       attachProps: false,
     },
   },
-},
   // Forward the init method from @sentry/vue
   SentryVue.init,
 );
 
-
 router.isReady().then(() => {
   app.mount('#app');
-  app.mount('Hello')
+  app.mount('Hello');
 });
