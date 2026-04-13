@@ -14,8 +14,7 @@ import { environment } from '../environments/environment';
 // ATTENTION: Change the DSN below with your own to see the events in Sentry. Get one at sentry.io
 Sentry.init(
   {
-    dsn:
-      'https://4079af8b316240ea9453eb0a23b715cc@o447951.ingest.sentry.io/5522756',
+    dsn: 'https://4079af8b316240ea9453eb0a23b715cc@o447951.ingest.sentry.io/5522756',
     // An array of strings or regexps that'll be used to ignore specific errors based on their type/message
     ignoreErrors: [/MiddleEarth_\d\d/, 'RangeError'],
     // To see what the Sentry SDK is doing; Helps when setting things up
@@ -25,7 +24,7 @@ Sentry.init(
     // Use the tracing integration to see traces and add performance monitoring
     _experiments: {
       enableMetrics: true,
-      beforeSendMetric: (metric) => {
+      beforeSendMetric: metric => {
         return metric;
       },
     },
@@ -36,11 +35,11 @@ Sentry.init(
         blockAllMedia: true,
       }),
       Sentry.spotlightIntegration({
-        sidecarUrl:  environment.spotlightSidecarUrl,
+        sidecarUrl: environment.spotlightSidecarUrl,
       }),
     ],
     enableLogs: true,
-    beforeSendLog: (log) => {
+    beforeSendLog: log => {
       return log;
     },
     // A release identifier
@@ -52,12 +51,6 @@ Sentry.init(
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
     tracesSampleRate: 1.0,
-    // This sets the sample rate to be 10%. You may want this to be 100% while
-    // in development and sample at a lower rate in production
-    replaysSessionSampleRate: 0.1,
-    // If the entire session is not sampled, use the below sample rate to sample
-    // sessions when an error occurs.
-    replaysOnErrorSampleRate: 1.0,
   },
   sentryAngularInit,
 );
@@ -75,6 +68,6 @@ Sentry.init(
       useValue: createErrorHandler(),
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
