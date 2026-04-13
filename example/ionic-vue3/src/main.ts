@@ -59,12 +59,33 @@ Sentry.init(
       return log;
     },
 
-    siblingOptions: {
-      vueOptions: {
-        app: app,
-        attachErrorHandler: false,
-        attachProps: false,
-      },
+Sentry.init({
+  dsn: 'https://7f35532db4f8aca7c7b6992d488b39c1@o447951.ingest.sentry.io/4505912397660160',
+  integrations: [
+    SentryVue.vueIntegration({
+      tracingOptions: {
+        timeout: 1000,
+        trackComponents: true,
+        hooks: ["mount", "update", "unmount"]
+      }
+    }),
+    ...(localConfig.spotlightSidecarUrl ? [Sentry.spotlightIntegration({
+      sidecarUrl: localConfig.spotlightSidecarUrl,
+    })] : []),
+  ],
+  tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
+  // Performance Monitoring
+  tracesSampleRate: 1.0, //  Capture 100% of the transactions
+  enableLogs: true,
+  beforeSendLog: (log) => {
+    return log;
+  },
+
+  siblingOptions: {
+    vueOptions: {
+      app: app,
+      attachErrorHandler: false,
+      attachProps: false,
     },
   },
   // Forward the init method from @sentry/vue

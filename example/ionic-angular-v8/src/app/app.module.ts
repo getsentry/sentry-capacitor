@@ -30,10 +30,6 @@ Sentry.init(
     },
     integrations: [
       Sentry.browserTracingIntegration(),
-      Sentry.replayIntegration({
-        maskAllText: false,
-        blockAllMedia: true,
-      }),
       Sentry.spotlightIntegration({
         sidecarUrl: environment.spotlightSidecarUrl,
       }),

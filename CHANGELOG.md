@@ -2,14 +2,15 @@
 
 <!-- prettier-ignore-start -->
 > [!IMPORTANT]
-> If you are upgrading to the `3.x` versions of the SDK from `2.x` or lower, make sure you follow our
+> If you are upgrading to the `4.x` versions of the SDK from `3.x` or lower, make sure you follow our
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
 ## Unreleased
 
-### Breaking Changes
+### Break Changes
 
+- Remove Session Replay ([#1214](https://github.com/getsentry/sentry-capacitor/pull/1214))
 - Remove Profiling support ([#1217](https://github.com/getsentry/sentry-capacitor/pull/1217))
 
 ## 3.2.1
