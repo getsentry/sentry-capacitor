@@ -152,6 +152,9 @@ export interface CapacitorOptions
       | 'enableMetrics'
       | 'replaysOnErrorSampleRate'
       | 'replaysSessionSampleRate'
+      | 'profilesSampleRate'
+      | 'profileLifecycle'
+      | 'profileSessionSampleRate'
     >,
     BaseCapacitorOptions {}
 
@@ -165,6 +168,8 @@ export interface CapacitorClientOptions
       | '_experiments'
       | 'enableMetrics'
       | 'replaysOnErrorSampleRate'
-      | 'replaysSessionSampleRate'
+      | 'profilesSampleRate'
+      | 'profileLifecycle'
+      | 'profileSessionSampleRate'
     >,
     BaseCapacitorOptions {}
