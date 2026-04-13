@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Breaking Changes
+
+- Remove Profiling support ([#1217](https://github.com/getsentry/sentry-capacitor/pull/1217))
+
 ## 3.2.1
 
 ### Fixes
