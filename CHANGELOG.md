@@ -13,6 +13,10 @@
 - Remove Session Replay ([#1214](https://github.com/getsentry/sentry-capacitor/pull/1214))
 - Remove Profiling support ([#1217](https://github.com/getsentry/sentry-capacitor/pull/1217))
 
+### Fixes
+
+- (Android): AGP 9.0 no longer supports `proguard-android.txt` ([#1196](https://github.com/getsentry/sentry-capacitor/pull/1196))
+
 ## 3.2.1
 
 ### Fixes
