@@ -129,7 +129,13 @@ export interface BaseCapacitorOptions {
  * Configuration options for the Sentry Capacitor SDK.
  */
 export interface CapacitorOptions
-  extends Omit<BrowserOptions, '_experiments' | 'enableMetrics'>,
+  extends Omit<
+      BrowserOptions,
+      | '_experiments'
+      | 'enableMetrics'
+      | 'replaysOnErrorSampleRate'
+      | 'replaysSessionSampleRate'
+    >,
     BaseCapacitorOptions {}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -139,6 +145,9 @@ export interface CapacitorTransportOptions extends BrowserTransportOptions {}
 export interface CapacitorClientOptions
   extends Omit<
       ClientOptions<CapacitorTransportOptions>,
-      '_experiments' | 'enableMetrics'
+      | '_experiments'
+      | 'enableMetrics'
+      | 'replaysOnErrorSampleRate'
+      | 'replaysSessionSampleRate'
     >,
     BaseCapacitorOptions {}
