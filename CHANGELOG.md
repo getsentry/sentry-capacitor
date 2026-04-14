@@ -10,7 +10,7 @@
 
 #### Sentry Capacitor V4
 
-Version 4 primarily focuses on removing Session Replay and Profiling support. No additional breaking changes
+Version 4 removes Session Replay and Profiling support. No additional breaking changes
 are expected. If these features are enabled through other means, Sentry will not provide support for them.
 All other SDK features, including error monitoring and performance monitoring, remain fully supported and
 unchanged.
