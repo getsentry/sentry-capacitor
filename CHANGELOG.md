@@ -12,6 +12,34 @@
 
 - Add `strictTraceContinuation` and `orgId` options for trace continuation validation ([#1166](https://github.com/getsentry/sentry-capacitor/pull/1166))
 
+### Fixes
+
+- (Android): AGP 9.0 no longer supports `proguard-android.txt` ([#1196](https://github.com/getsentry/sentry-capacitor/pull/1196))
+
+## 3.2.1
+
+### Fixes
+
+- Deprecate Session Replay ([#1205](https://github.com/getsentry/sentry-capacitor/pull/1205))
+
+## 3.2.0
+
+### Fixes
+
+- (iOS): Missing Device and OS from event's context ([#1168](https://github.com/getsentry/sentry-capacitor/pull/1168))
+
+### Dependencies
+
+- Bump JavaScript Sibling SDKs from v9.40.0 to v10.42.0 ([#1147](https://github.com/getsentry/sentry-capacitor/pull/1147))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.42.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/10.40.0...10.42.0)
+- Bump Android SDK from v8.31.0 to v8.35.0 ([#1163](https://github.com/getsentry/sentry-capacitor/pull/1163))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8350)
+  - [diff](https://github.com/getsentry/sentry-java/compare/8.31.0...8.35.0)
+- Bump Cocoa SDK from v9.3.0 to v9.8.0 ([#?](https://github.com/getsentry/sentry-capacitor/pull/?))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#980)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.3.0...9.8.0)
+
 ## 3.1.0
 
 ### Dependencies

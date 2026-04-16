@@ -15,47 +15,52 @@ permissions:
   pull-requests: write
 jobs:
   android:
-    uses: getsentry/github-workflows/updater@v3
-    with:
-      path: scripts/update-android.sh
-      name: Android SDK
-      pr-strategy: update
-    secrets:
-      api-token: ${{ secrets.CI_DEPLOY_KEY }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: getsentry/github-workflows/updater@26f565c05d0dd49f703d238706b775883037d76b # v3
+        with:
+          path: scripts/update-android.sh
+          name: Android SDK
+          pr-strategy: update
+          ssh-key: ${{ secrets.CI_DEPLOY_KEY }}
 
   cocoa:
-    uses: getsentry/github-workflows/updater@v3
-    with:
-      path: scripts/update-cocoa.sh
-      name: Cocoa SDK
-      pr-strategy: update
-    secrets:
-      api-token: ${{ secrets.CI_DEPLOY_KEY }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: getsentry/github-workflows/updater@26f565c05d0dd49f703d238706b775883037d76b # v3
+        with:
+          path: scripts/update-cocoa.sh
+          name: Cocoa SDK
+          pr-strategy: update
+          ssh-key: ${{ secrets.CI_DEPLOY_KEY }}
 
   javascript:
-    uses: getsentry/github-workflows/updater@v3
-    with:
-      path: scripts/update-javascript.sh
-      name: JavaScript SDK
-      pr-strategy: update
-    secrets:
-      api-token: ${{ secrets.CI_DEPLOY_KEY }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: getsentry/github-workflows/updater@26f565c05d0dd49f703d238706b775883037d76b # v3
+        with:
+          path: scripts/update-javascript.sh
+          name: JavaScript SDK
+          pr-strategy: update
+          ssh-key: ${{ secrets.CI_DEPLOY_KEY }}
 
   javascript-siblings:
-    uses: getsentry/github-workflows/updater@v3
-    with:
-      path: scripts/update-javascript-siblings.sh
-      name: JavaScript Sibling SDKs
-      pr-strategy: update
-    secrets:
-      api-token: ${{ secrets.CI_DEPLOY_KEY }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: getsentry/github-workflows/updater@26f565c05d0dd49f703d238706b775883037d76b # v3
+        with:
+          path: scripts/update-javascript-siblings.sh
+          name: JavaScript Sibling SDKs
+          pr-strategy: update
+          ssh-key: ${{ secrets.CI_DEPLOY_KEY }}
 
   wizard:
-    uses: getsentry/github-workflows/updater@v3
-    with:
-      path: scripts/update-wizard.sh
-      name: Wizard
-      pr-strategy: update
-      changelog-entry: false
-    secrets:
-      api-token: ${{ secrets.CI_DEPLOY_KEY }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: getsentry/github-workflows/updater@26f565c05d0dd49f703d238706b775883037d76b # v3
+        with:
+          path: scripts/update-wizard.sh
+          name: Wizard
+          pr-strategy: update
+          changelog-entry: false
+          ssh-key: ${{ secrets.CI_DEPLOY_KEY }}
