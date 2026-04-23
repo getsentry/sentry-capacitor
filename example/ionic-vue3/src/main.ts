@@ -1,5 +1,5 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 import router from './router';
 
 import { IonicVue } from '@ionic/vue';
@@ -26,10 +26,7 @@ import { localConfig } from './config/local';
 /* Theme variables */
 import './theme/variables.css';
 
-const app = createApp(App)
-  .use(IonicVue)
-  .use(router);
-
+const app = createApp(App).use(IonicVue).use(router);
 
 Sentry.init({
   dsn: 'https://7f35532db4f8aca7c7b6992d488b39c1@o447951.ingest.sentry.io/4505912397660160',
@@ -38,42 +35,31 @@ Sentry.init({
       tracingOptions: {
         timeout: 1000,
         trackComponents: true,
-        hooks: ["mount", "update", "unmount"]
-      }
+        hooks: ['mount', 'update', 'unmount'],
+      },
     }),
-    SentryVue.replayCanvasIntegration({
-      maskAllText: false,
-      blockAllMedia: false,
-    }),
-    ...(localConfig.spotlightSidecarUrl ? [Sentry.spotlightIntegration({
-      sidecarUrl: localConfig.spotlightSidecarUrl,
-    })] : []),
+    ...(localConfig.spotlightSidecarUrl
+      ? [
+          Sentry.spotlightIntegration({
+            sidecarUrl: localConfig.spotlightSidecarUrl,
+          }),
+        ]
+      : []),
   ],
   tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
-  // Performance Monitoring
-  tracesSampleRate: 1.0, //  Capture 100% of the transactions
-  // Session Replay
-  replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
-  replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
+  tracesSampleRate: 1.0,
   enableLogs: true,
   beforeSendLog: (log) => {
     return log;
   },
+});
 
-  siblingOptions: {
-    vueOptions: {
-      app: app,
-      attachErrorHandler: false,
-      attachProps: false,
-    },
-  },
-},
-  // Forward the init method from @sentry/vue
-  SentryVue.init,
-);
-
+SentryVue.init({
+  app: app,
+  attachErrorHandler: false,
+  attachProps: false,
+});
 
 router.isReady().then(() => {
   app.mount('#app');
-  app.mount('Hello')
 });

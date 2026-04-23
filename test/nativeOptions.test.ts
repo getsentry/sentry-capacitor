@@ -77,8 +77,6 @@ describe('nativeOptions', () => {
         normalizeDepth: 100,
         normalizeMaxBreadth: 100,
         release: '1',
-        replaysOnErrorSampleRate: 1,
-        replaysSessionSampleRate: 1,
         sampleRate: 1,
         sendClientReports: true,
         sendDefaultPii: true,

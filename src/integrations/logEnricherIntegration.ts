@@ -13,7 +13,7 @@ export const logEnricherIntegration = (): Integration => {
       cacheLogContext().then(
         () => {
           client.on('beforeCaptureLog', (log: Log) => {
-            processLog(log, client);
+            processLog(log);
           });
         },
         reason => {
@@ -69,7 +69,7 @@ async function cacheLogContext(): Promise<void> {
   return Promise.resolve();
 }
 
-function processLog(log: Log, client: Client): void {
+function processLog(log: Log): void {
   if (NativeCache === undefined) {
     return;
   }
@@ -84,9 +84,6 @@ function processLog(log: Log, client: Client): void {
   setLogAttribute(logAttributes, 'os.name', NativeCache.os);
   setLogAttribute(logAttributes, 'os.version', NativeCache.version);
   setLogAttribute(logAttributes, 'sentry.release', NativeCache.release);
-
-  const replay = client.getIntegrationByName<Integration & { getReplayId: () => string | null }>('Replay');
-  setLogAttribute(logAttributes, 'sentry.replay_id', replay?.getReplayId());
 
   // Set log.attributes to the variable
   log.attributes = logAttributes;
