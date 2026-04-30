@@ -6,6 +6,24 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased 
+
+#### Sentry Capacitor V4
+
+Version 4 removes Session Replay and Profiling support. No additional breaking changes
+are expected. If these features are enabled through other means, Sentry will not provide support for them.
+All other SDK features, including error monitoring and performance monitoring, remain fully supported and
+unchanged.
+
+### Break Changes
+
+- Remove Session Replay ([#1214](https://github.com/getsentry/sentry-capacitor/pull/1214))
+- Remove Profiling support ([#1217](https://github.com/getsentry/sentry-capacitor/pull/1217))
+
+### Fixes
+
+- (Android): AGP 9.0 no longer supports `proguard-android.txt` ([#1196](https://github.com/getsentry/sentry-capacitor/pull/1196))
+
 ## 4.0.0-rc.1
 
 #### Sentry Capacitor V4
