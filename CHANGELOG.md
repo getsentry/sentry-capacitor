@@ -6,6 +6,14 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Dependencies
+
+- Bump JavaScript Sibling SDKs from v9.42.0 to v10.52.0 ([#1244](https://github.com/getsentry/sentry-capacitor/pull/1244))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.52.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/10.42.0...10.52.0)
+
 ## 4.0.0
 
 #### Sentry Capacitor V4
