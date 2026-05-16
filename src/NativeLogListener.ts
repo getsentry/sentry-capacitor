@@ -1,5 +1,5 @@
-import type { PluginListenerHandle } from '@capacitor/core';
 import { Capacitor } from '@capacitor/core';
+import type { PluginListenerHandle } from '@capacitor/core';
 import { debug } from '@sentry/core';
 import type { NativeLogEntry } from './options';
 import { SentryCapacitor } from './plugin';
@@ -13,7 +13,7 @@ async function registerNativeListener(
   setHandle: (listener: PluginListenerHandle) => void,
   isRemoved: () => boolean,
 ): Promise<void> {
-  const listenerHandle = await (SentryCapacitor.addListener(NATIVE_LOG_EVENT_NAME, callback) as Promise<PluginListenerHandle>);
+  const listenerHandle = await SentryCapacitor.addListener(NATIVE_LOG_EVENT_NAME, callback);
   if (isRemoved()) {
     await listenerHandle.remove();
   } else {
