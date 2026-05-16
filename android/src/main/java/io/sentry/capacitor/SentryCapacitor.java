@@ -55,7 +55,7 @@ public class SentryCapacitor extends Plugin {
     @Override
     public void load() {
         super.load();
-        capSentryLogger.setPlugin(this);
+        capSentryLogger.setEmitter(data -> notifyListeners("SentryNativeLog", data));
 
         if (this.context == null) {
             this.context = this.bridge.getContext();

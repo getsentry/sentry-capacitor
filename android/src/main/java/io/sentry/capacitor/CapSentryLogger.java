@@ -4,7 +4,6 @@ import com.getcapacitor.JSObject;
 import io.sentry.ILogger;
 import io.sentry.SentryLevel;
 import io.sentry.android.core.AndroidLogger;
-import java.lang.ref.WeakReference;
 
 /**
  * Custom ILogger implementation that wraps AndroidLogger and forwards log messages to JS.
@@ -12,17 +11,20 @@ import java.lang.ref.WeakReference;
  */
 public class CapSentryLogger implements ILogger {
   private static final String TAG = "CapacitorSentry";
-  private static final String EVENT_NAME = "SentryNativeLog";
+
+  public interface NativeLogEmitter {
+    void emit(JSObject data);
+  }
 
   private final AndroidLogger androidLogger;
-  private WeakReference<SentryCapacitor> pluginRef;
+  private volatile NativeLogEmitter emitter;
 
   public CapSentryLogger() {
     this.androidLogger = new AndroidLogger(TAG);
   }
 
-  public void setPlugin(SentryCapacitor plugin) {
-    this.pluginRef = plugin != null ? new WeakReference<>(plugin) : null;
+  public void setEmitter(NativeLogEmitter emitter) {
+    this.emitter = emitter;
   }
 
   @Override
@@ -60,8 +62,8 @@ public class CapSentryLogger implements ILogger {
   }
 
   private void forwardToJS(SentryLevel level, String message) {
-    SentryCapacitor plugin = pluginRef != null ? pluginRef.get() : null;
-    if (plugin == null) {
+    NativeLogEmitter currentEmitter = emitter;
+    if (currentEmitter == null) {
       return;
     }
 
@@ -70,9 +72,8 @@ public class CapSentryLogger implements ILogger {
       data.put("level", level.name().toLowerCase());
       data.put("component", "Sentry");
       data.put("message", message);
-      plugin.notifyListeners(EVENT_NAME, data);
+      currentEmitter.emit(data);
     } catch (Exception e) {
-      // Silently ignore - don't cause issues if the bridge isn't ready
       androidLogger.log(SentryLevel.DEBUG, "Failed to forward log to JS: " + e.getMessage());
     }
   }
