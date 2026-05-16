@@ -1,5 +1,5 @@
-import { Capacitor } from '@capacitor/core';
 import type { PluginListenerHandle } from '@capacitor/core';
+import { Capacitor } from '@capacitor/core';
 import { debug } from '@sentry/core';
 import type { NativeLogEntry } from './options';
 import { SentryCapacitor } from './plugin';
