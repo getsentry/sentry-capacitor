@@ -5,8 +5,6 @@ import io.sentry.ILogger;
 import io.sentry.SentryLevel;
 import io.sentry.android.core.AndroidLogger;
 import java.lang.ref.WeakReference;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Custom ILogger implementation that wraps AndroidLogger and forwards log messages to JS.
@@ -23,12 +21,12 @@ public class CapSentryLogger implements ILogger {
     this.androidLogger = new AndroidLogger(TAG);
   }
 
-  public void setPlugin(@Nullable SentryCapacitor plugin) {
+  public void setPlugin(SentryCapacitor plugin) {
     this.pluginRef = plugin != null ? new WeakReference<>(plugin) : null;
   }
 
   @Override
-  public void log(@NotNull SentryLevel level, @NotNull String message, @Nullable Object... args) {
+  public void log(SentryLevel level, String message, Object... args) {
     androidLogger.log(level, message, args);
 
     String formattedMessage =
@@ -37,8 +35,7 @@ public class CapSentryLogger implements ILogger {
   }
 
   @Override
-  public void log(
-      @NotNull SentryLevel level, @NotNull String message, @Nullable Throwable throwable) {
+  public void log(SentryLevel level, String message, Throwable throwable) {
     androidLogger.log(level, message, throwable);
 
     String fullMessage = throwable != null ? message + ": " + throwable.getMessage() : message;
@@ -46,11 +43,7 @@ public class CapSentryLogger implements ILogger {
   }
 
   @Override
-  public void log(
-      @NotNull SentryLevel level,
-      @Nullable Throwable throwable,
-      @NotNull String message,
-      @Nullable Object... args) {
+  public void log(SentryLevel level, Throwable throwable, String message, Object... args) {
     androidLogger.log(level, throwable, message, args);
 
     String formattedMessage =
@@ -62,11 +55,11 @@ public class CapSentryLogger implements ILogger {
   }
 
   @Override
-  public boolean isEnabled(@Nullable SentryLevel level) {
+  public boolean isEnabled(SentryLevel level) {
     return androidLogger.isEnabled(level);
   }
 
-  private void forwardToJS(@NotNull SentryLevel level, @NotNull String message) {
+  private void forwardToJS(SentryLevel level, String message) {
     SentryCapacitor plugin = pluginRef != null ? pluginRef.get() : null;
     if (plugin == null) {
       return;
