@@ -1,12 +1,21 @@
 jest.mock('../src/wrapper', () => jest.requireActual('./mockWrapper'));
 
+jest.mock('../src/NativeLogListener', () => ({
+  setupNativeLogListener: jest.fn(),
+  defaultNativeLogHandler: jest.fn(),
+}));
+
 import type { BrowserOptions } from '@sentry/browser';
 import { getClient, setCurrentClient } from '@sentry/core';
 import { sdkInit } from '../src/client';
+import { defaultNativeLogHandler, setupNativeLogListener } from '../src/NativeLogListener';
 import type { CapacitorOptions } from '../src/options';
 import { SDK_NAME, SDK_VERSION } from '../src/version';
 import { getDefaultTestClientOptions, TestClient } from './mocks/client';
 import { NATIVE } from './mockWrapper';
+
+const mockSetupNativeLogListener = setupNativeLogListener as jest.Mock;
+const mockDefaultNativeLogHandler = defaultNativeLogHandler as jest.Mock;
 
 describe('client', () => {
   let mockOriginalInit: jest.Mock;
@@ -200,6 +209,60 @@ describe('client', () => {
       await new Promise(resolve => setTimeout(resolve, 0));
 
       expect(mockOriginalInit).toHaveBeenCalledWith(browserOptions);
+    });
+
+    describe('native log listener', () => {
+      it('sets up the listener when debug is true', async () => {
+        NATIVE.initNativeSdk = jest.fn().mockResolvedValue(undefined);
+        const nativeOptions: CapacitorOptions = { dsn: 'test-dsn', debug: true };
+
+        sdkInit({}, nativeOptions, mockOriginalInit, mockCustomTransport);
+        await new Promise(resolve => setTimeout(resolve, 0));
+
+        expect(mockSetupNativeLogListener).toHaveBeenCalledWith(mockDefaultNativeLogHandler);
+      });
+
+      it('uses onNativeLog callback when provided', async () => {
+        NATIVE.initNativeSdk = jest.fn().mockResolvedValue(undefined);
+        const customHandler = jest.fn();
+        const nativeOptions: CapacitorOptions = { dsn: 'test-dsn', debug: true, onNativeLog: customHandler };
+
+        sdkInit({}, nativeOptions, mockOriginalInit, mockCustomTransport);
+        await new Promise(resolve => setTimeout(resolve, 0));
+
+        expect(mockSetupNativeLogListener).toHaveBeenCalledWith(customHandler);
+      });
+
+      it('does not set up the listener when debug is false', async () => {
+        NATIVE.initNativeSdk = jest.fn().mockResolvedValue(undefined);
+        const nativeOptions: CapacitorOptions = { dsn: 'test-dsn', debug: false };
+
+        sdkInit({}, nativeOptions, mockOriginalInit, mockCustomTransport);
+        await new Promise(resolve => setTimeout(resolve, 0));
+
+        expect(mockSetupNativeLogListener).not.toHaveBeenCalled();
+      });
+
+      it('does not set up the listener when debug is not set', async () => {
+        NATIVE.initNativeSdk = jest.fn().mockResolvedValue(undefined);
+        const nativeOptions: CapacitorOptions = { dsn: 'test-dsn' };
+
+        sdkInit({}, nativeOptions, mockOriginalInit, mockCustomTransport);
+        await new Promise(resolve => setTimeout(resolve, 0));
+
+        expect(mockSetupNativeLogListener).not.toHaveBeenCalled();
+      });
+
+      it('does not set up the listener when native init fails', async () => {
+        NATIVE.initNativeSdk = jest.fn().mockRejectedValue(new Error('fail'));
+        jest.spyOn(console, 'error').mockImplementation();
+        const nativeOptions: CapacitorOptions = { dsn: 'test-dsn', debug: true };
+
+        sdkInit({}, nativeOptions, mockOriginalInit, mockCustomTransport);
+        await new Promise(resolve => setTimeout(resolve, 10));
+
+        expect(mockSetupNativeLogListener).not.toHaveBeenCalled();
+      });
     });
 
     it('should preserve existing SDK packages when updating metadata', async () => {
