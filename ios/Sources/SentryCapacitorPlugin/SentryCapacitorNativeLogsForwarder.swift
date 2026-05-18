@@ -11,7 +11,7 @@ private let nativeLogEventName = "SentryNativeLog"
  * Note: iOS log forwarding requires sentry-cocoa to expose `SentrySDKLog.setOutput`.
  * See: https://github.com/getsentry/sentry-cocoa/pull/7444
  */
-class SentryCapacitorNativeLogsForwarder {
+final class SentryCapacitorNativeLogsForwarder: @unchecked Sendable {
     static let shared = SentryCapacitorNativeLogsForwarder()
 
     private weak var plugin: CAPPlugin?
