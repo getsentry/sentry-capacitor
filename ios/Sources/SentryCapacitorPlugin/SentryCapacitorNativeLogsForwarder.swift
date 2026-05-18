@@ -1,6 +1,6 @@
 import Foundation
 import Capacitor
-@preconcurrency import Sentry
+@_spi(Private) @preconcurrency import Sentry
 
 private let nativeLogEventName = "SentryNativeLog"
 

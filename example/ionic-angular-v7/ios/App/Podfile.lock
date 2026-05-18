@@ -5,7 +5,7 @@ PODS:
   - Sentry (9.8.0):
     - Sentry/Core (= 9.8.0)
   - Sentry/Core (9.8.0)
-  - "SentryCapacitor (3.1.0+6503a2cd)":
+  - "SentryCapacitor (4.0.0+7c5fc59e)":
     - Capacitor
     - Sentry (= 9.8.0)
 
@@ -30,7 +30,7 @@ SPEC CHECKSUMS:
   Capacitor: de199cba6c8b20995428ad0b7cb0bc6ca625ffd4
   CapacitorCordova: 63d476958d5022d76f197031e8b7ea3519988c64
   Sentry: 88746bf877eff714bc45315a39ad1d1efea2cdda
-  SentryCapacitor: 66d8b9cf3f785e22dadd0d05b1c6f0fbbe3951ed
+  SentryCapacitor: b3f752e89cf74e33e3a389455221fa8b7f6b9661
 
 PODFILE CHECKSUM: 1556569b6b66479d0ac544257ad54061032afdfc
 
