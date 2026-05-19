@@ -2,7 +2,7 @@
 
 <!-- prettier-ignore-start -->
 > [!IMPORTANT]
-> If you are upgrading to the `3.x` versions of the SDK from `2.x` or lower, make sure you follow our
+> If you are upgrading to the `4.x` versions of the SDK from `3.x` or lower, make sure you follow our
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
@@ -11,6 +11,50 @@
 ### Features
 
 - Add `strictTraceContinuation` and `orgId` options for trace continuation validation ([#1166](https://github.com/getsentry/sentry-capacitor/pull/1166))
+
+### Dependencies
+
+- Bump Android SDK from v8.35.0 to v8.41.0 ([#1247](https://github.com/getsentry/sentry-capacitor/pull/1247))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8410)
+  - [diff](https://github.com/getsentry/sentry-java/compare/8.35.0...8.41.0)
+- Bump JavaScript Sibling SDKs from v9.42.0 to v10.52.0 ([#1244](https://github.com/getsentry/sentry-capacitor/pull/1244))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.52.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/10.42.0...10.52.0)
+- Bump Cocoa SDK from v9.8.0 to v9.13.0 ([#1248](https://github.com/getsentry/sentry-capacitor/pull/1248))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#9130)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.8.0...9.13.0)
+
+## 4.0.0
+
+#### Sentry Capacitor V4
+
+Version 4 removes Session Replay and Profiling support. No additional breaking changes
+are expected. If these features are enabled through other means, Sentry will not provide support for them.
+All other SDK features, including error monitoring and performance monitoring, remain fully supported and
+unchanged.
+
+### Break Changes
+
+- Remove Session Replay ([#1214](https://github.com/getsentry/sentry-capacitor/pull/1214))
+- Remove Profiling support ([#1217](https://github.com/getsentry/sentry-capacitor/pull/1217))
+
+### Fixes
+
+- (Android): AGP 9.0 no longer supports `proguard-android.txt` ([#1196](https://github.com/getsentry/sentry-capacitor/pull/1196))
+
+## 4.0.0-rc.1
+
+#### Sentry Capacitor V4
+
+Version 4 removes Session Replay and Profiling support. No additional breaking changes
+are expected. If these features are enabled through other means, Sentry will not provide support for them.
+All other SDK features, including error monitoring and performance monitoring, remain fully supported and
+unchanged.
+
+### Break Changes
+
+- Remove Session Replay ([#1214](https://github.com/getsentry/sentry-capacitor/pull/1214))
+- Remove Profiling support ([#1217](https://github.com/getsentry/sentry-capacitor/pull/1217))
 
 ### Fixes
 

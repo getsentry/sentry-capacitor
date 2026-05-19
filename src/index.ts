@@ -50,7 +50,7 @@ export {
   startIdleSpan,
 } from '@sentry/core';
 
-export { metrics, replayIntegration, browserTracingIntegration, registerSpanErrorInstrumentation, logger } from '@sentry/browser';
+export { metrics, browserTracingIntegration, registerSpanErrorInstrumentation, logger } from '@sentry/browser';
 
 export { pauseAppHangTracking, resumeAppHangTracking } from './wrapper';
 

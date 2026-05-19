@@ -35,8 +35,6 @@ export function FilterNativeOptions(
     maxBreadcrumbs: options.maxBreadcrumbs,
     // maxValueLength: Only available on the JavaScript Layer.
     release: options.release,
-    // replaysOnErrorSampleRate: Only handled on the JavaScript Layer.
-    // replaysSessionSampleRate: Only handled on the JavaScript Layer.
     sampleRate: options.sampleRate,
     sendClientReports: options.sendClientReports,
     sendDefaultPii: options.sendDefaultPii,
