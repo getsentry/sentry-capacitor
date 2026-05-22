@@ -85,6 +85,10 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
                 SentrySDK.start(options: options)
             }
 
+            if options.debug {
+                SentryCapacitorNativeLogsForwarder.shared.configure(plugin: self)
+            }
+
             sentryOptions = options
 
             // checking enableAutoSessionTracking is actually not necessary, but we'd spare the sent bits.
@@ -456,6 +460,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
     }
 
     @objc func closeNativeSdk(_ call: CAPPluginCall ) {
+        SentryCapacitorNativeLogsForwarder.shared.stopForwarding()
         SentrySDK.close()
         call.resolve()
     }

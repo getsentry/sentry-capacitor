@@ -47,6 +47,7 @@ public class SentryCapacitor extends Plugin {
     private static final String NATIVE_SDK_NAME = "sentry.native.android.capacitor";
     private static final String ANDROID_SDK_NAME = "sentry.java.android.capacitor";
 
+    private final CapSentryLogger capSentryLogger = new CapSentryLogger();
     static final ILogger logger = new AndroidLogger("capacitor-sentry");
     private Context context;
     private static PackageInfo packageInfo;
@@ -54,6 +55,7 @@ public class SentryCapacitor extends Plugin {
     @Override
     public void load() {
         super.load();
+        capSentryLogger.setEmitter(data -> notifyListeners("SentryNativeLog", data));
 
         if (this.context == null) {
             this.context = this.bridge.getContext();
@@ -74,6 +76,8 @@ public class SentryCapacitor extends Plugin {
        SentryAndroid.init(
             this.getContext(),
             options -> {
+                options.setLogger(capSentryLogger);
+
                 SdkVersion sdkVersion = options.getSdkVersion();
                 if (sdkVersion == null) {
                     sdkVersion = new SdkVersion(ANDROID_SDK_NAME, BuildConfig.VERSION_NAME);
