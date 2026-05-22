@@ -61,6 +61,9 @@
     "fast-uri": "3.1.2",
     "@babel/plugin-transform-modules-systemjs": "7.29.4"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "name": "ionic-angular",
   "private": true,
   "scripts": {

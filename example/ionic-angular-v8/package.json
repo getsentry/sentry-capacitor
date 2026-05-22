@@ -62,6 +62,9 @@
     "@babel/plugin-transform-modules-systemjs": "7.29.4",
     "undici": "7.22.0"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "name": "ionic-angular",
   "private": true,
   "scripts": {
