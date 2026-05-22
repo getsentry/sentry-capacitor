@@ -26,6 +26,7 @@ example/*/.env
 Pods
 Build
 xcuserdata
+Package.resolved
 
 # macOS files
 .DS_Store
