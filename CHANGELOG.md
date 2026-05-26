@@ -8,6 +8,10 @@
 
 ## Unreleased
 
+### Features
+
+- Add `strictTraceContinuation` and `orgId` options for trace continuation validation ([#1166](https://github.com/getsentry/sentry-capacitor/pull/1166))
+
 ### Dependencies
 
 - Bump Android SDK from v8.35.0 to v8.41.0 ([#1247](https://github.com/getsentry/sentry-capacitor/pull/1247))
