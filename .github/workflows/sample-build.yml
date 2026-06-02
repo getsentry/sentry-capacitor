@@ -29,7 +29,7 @@ jobs:
       labels: ${{ toJson(github.event.pull_request.labels) }}
   job_sample_build:
     name: Sample Build (${{ matrix.bump }})
-    runs-on: macos-latest
+    runs-on: macos-15
     needs: ready-to-merge-gate
     strategy:
       matrix:
