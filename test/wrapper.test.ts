@@ -170,6 +170,58 @@ describe('Tests Native Wrapper', () => {
       );
     });
 
+    test('passes strictTraceContinuation to native SDK', async () => {
+      const initNativeSdk = jest.spyOn(SentryCapacitor, 'initNativeSdk');
+
+      await NATIVE.initNativeSdk({
+        dsn: 'test',
+        enableNative: true,
+        strictTraceContinuation: true,
+      });
+
+      const nativeOption = initNativeSdk.mock.calls[0]?.[0]?.options;
+      expect(nativeOption?.strictTraceContinuation).toBe(true);
+    });
+
+    test('passes orgId as string to native SDK', async () => {
+      const initNativeSdk = jest.spyOn(SentryCapacitor, 'initNativeSdk');
+
+      await NATIVE.initNativeSdk({
+        dsn: 'test',
+        enableNative: true,
+        orgId: '12345',
+      });
+
+      const nativeOption = initNativeSdk.mock.calls[0]?.[0]?.options;
+      expect(nativeOption?.orgId).toBe('12345');
+    });
+
+    test('passes numeric orgId to native SDK', async () => {
+      const initNativeSdk = jest.spyOn(SentryCapacitor, 'initNativeSdk');
+
+      await NATIVE.initNativeSdk({
+        dsn: 'test',
+        enableNative: true,
+        orgId: 12345,
+      });
+
+      const nativeOption = initNativeSdk.mock.calls[0]?.[0]?.options;
+      expect(nativeOption?.orgId).toBe(12345);
+    });
+
+    test('does not include strictTraceContinuation when not set', async () => {
+      const initNativeSdk = jest.spyOn(SentryCapacitor, 'initNativeSdk');
+
+      await NATIVE.initNativeSdk({
+        dsn: 'test',
+        enableNative: true,
+      });
+
+      const nativeOption = initNativeSdk.mock.calls[0]?.[0]?.options;
+      expect(nativeOption?.strictTraceContinuation).toBeUndefined();
+      expect(nativeOption?.orgId).toBeUndefined();
+    });
+
     test('sets enableNative: false when dsn is undefined', async () => {
       await NATIVE.initNativeSdk({
         dsn: undefined,

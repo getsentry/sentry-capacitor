@@ -158,6 +158,18 @@ public class SentryCapacitor extends Plugin {
                     }
                 }
 
+                if (capOptions.has("strictTraceContinuation")) {
+                    options.setStrictTraceContinuation(capOptions.getBool("strictTraceContinuation"));
+                }
+                if (capOptions.has("orgId")) {
+                    Object orgIdValue = capOptions.opt("orgId");
+                    if (orgIdValue instanceof String) {
+                        options.setOrgId((String) orgIdValue);
+                    } else if (orgIdValue instanceof Number) {
+                        options.setOrgId(String.valueOf(((Number) orgIdValue).longValue()));
+                    }
+                }
+
                 options.getLogs().setEnabled(Boolean.TRUE.equals(capOptions.getBoolean("enableLogs", false)));
 
                 logger.log(SentryLevel.INFO, String.format("Native Integrations '%s'", options.getIntegrations()));

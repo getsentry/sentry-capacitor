@@ -162,6 +162,17 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             options.enableAutoPerformanceTracing = enableAutoPerformanceTracing
         }
 
+        if let strictTraceContinuation = dict["strictTraceContinuation"] as? Bool {
+            options.strictTraceContinuation = strictTraceContinuation
+        }
+        if let orgId = dict["orgId"] {
+            if let orgIdString = orgId as? String {
+                options.orgId = orgIdString
+            } else if let orgIdNumber = orgId as? NSNumber {
+                options.orgId = orgIdNumber.stringValue
+            }
+        }
+
         return options
     }
 

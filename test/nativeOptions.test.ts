@@ -35,6 +35,16 @@ describe('nativeOptions', () => {
     expect(nativeOptions.enableWatchdogTerminationTracking).toBeTruthy();
   });
 
+  test('strictTraceContinuation and orgId are set when defined', () => {
+    const nativeOptions = FilterNativeOptions(
+      {
+        strictTraceContinuation: true,
+        orgId: '12345',
+      });
+    expect(nativeOptions.strictTraceContinuation).toBe(true);
+    expect(nativeOptions.orgId).toBe('12345');
+  });
+
   test('enableCaptureFailedRequests is set when defined', () => {
     const nativeOptions = FilterNativeOptions(
       {

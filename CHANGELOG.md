@@ -30,6 +30,7 @@
       },
     });
     ```
+- Add `strictTraceContinuation` and `orgId` options for trace continuation validation ([#1166](https://github.com/getsentry/sentry-capacitor/pull/1166))
 
 ### Dependencies
 
