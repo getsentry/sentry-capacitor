@@ -1,5 +1,6 @@
 import type { BrowserOptions, makeFetchTransport } from '@sentry/browser';
 import { getClient } from '@sentry/core';
+import { defaultNativeLogHandler, setupNativeLogListener } from './NativeLogListener';
 import type { CapacitorOptions } from './options';
 import { RestoreNonNativeOptions } from './utils/optionsUtils';
 import { SDK_NAME, SDK_VERSION } from './version';
@@ -51,6 +52,10 @@ export function sdkInit(
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   NATIVE.initNativeSdk(nativeOptions)
     .then(() => {
+      if (nativeOptions.debug) {
+        const logHandler = nativeOptions.onNativeLog ?? defaultNativeLogHandler;
+        setupNativeLogListener(logHandler);
+      }
       originalInit(browserOptions);
     }).catch((error: Error) => {
       // Fallback to JavaScript only SDK Init.

@@ -8,6 +8,7 @@ import {
 } from '@sentry/core';
 import { sdkInit } from './client';
 import { getDefaultIntegrations } from './integrations/default';
+import { stopNativeLogListener } from './NativeLogListener';
 import type { CapacitorClientOptions, CapacitorOptions } from './options';
 import { enableSyncToNative } from './scopeSync';
 import { useEncodePolyfill } from './transports/encodePolyfill';
@@ -102,6 +103,7 @@ export function init(
  * Closes the SDK, stops sending events.
  */
 export async function close(): Promise<void> {
+  stopNativeLogListener();
   try {
     const client = getClient();
 

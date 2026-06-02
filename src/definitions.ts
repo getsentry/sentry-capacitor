@@ -1,5 +1,6 @@
+import type { PluginListenerHandle } from '@capacitor/core';
 import type { Breadcrumb, Package } from '@sentry/core';
-import type { CapacitorOptions } from './options';
+import type { CapacitorOptions, NativeLogEntry } from './options';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface serializedObject {
@@ -53,4 +54,6 @@ export interface ISentryCapacitorPlugin {
   // iOS specific.
   pauseAppHangTracking(): void;
   resumeAppHangTracking(): void;
+
+  addListener(eventName: 'SentryNativeLog', listenerFunc: (event: NativeLogEntry) => void): Promise<PluginListenerHandle>;
 }

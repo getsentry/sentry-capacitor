@@ -1,6 +1,6 @@
 import { type EventHint, type Exception, type StackFrame } from '@sentry/browser';
 import type { Client, Event, Integration } from '@sentry/core';
-import { init } from '../src/sdk';
+import { close, init } from '../src/sdk';
 import { NATIVE } from '../src/wrapper';
 
 jest.mock('../src/wrapper', () => {
@@ -8,9 +8,16 @@ jest.mock('../src/wrapper', () => {
     NATIVE: {
       platform: 'web',
       initNativeSdk: jest.fn(() => Promise.resolve()),
+      closeNativeSdk: jest.fn(() => Promise.resolve()),
     },
   };
 });
+
+jest.mock('../src/NativeLogListener', () => ({
+  setupNativeLogListener: jest.fn(),
+  stopNativeLogListener: jest.fn(),
+  defaultNativeLogHandler: jest.fn(),
+}));
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -438,5 +445,13 @@ describe('SDK Init', () => {
         }, 0);
       });
     });
+  });
+});
+
+describe('close', () => {
+  it('calls stopNativeLogListener', async () => {
+    const { stopNativeLogListener } = await import('../src/NativeLogListener');
+    await close();
+    expect(stopNativeLogListener).toHaveBeenCalled();
   });
 });

@@ -48,6 +48,7 @@ export {
   getRootSpan,
   addChildSpanToSpan,
   startIdleSpan,
+  consoleSandbox,
 } from '@sentry/core';
 
 export { metrics, browserTracingIntegration, registerSpanErrorInstrumentation, logger } from '@sentry/browser';
@@ -55,5 +56,5 @@ export { metrics, browserTracingIntegration, registerSpanErrorInstrumentation, l
 export { pauseAppHangTracking, resumeAppHangTracking } from './wrapper';
 
 export { SDK_NAME, SDK_VERSION } from './version';
-export type { CapacitorOptions } from './options';
+export type { CapacitorOptions, NativeLogEntry } from './options';
 export { init, nativeCrash, close } from './sdk';
