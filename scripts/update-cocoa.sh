@@ -8,7 +8,7 @@ case $1 in
 get-version)
     if [[ -f "$podFile" ]]; then
         podContent=$(cat $podFile)
-        podRegex="('Sentry/HybridSDK', *)'([0-9\.]+)'"
+        podRegex="('Sentry', *)'([0-9\.]+)'"
         if [[ $podContent =~ $podRegex ]]; then
             echo ${BASH_REMATCH[2]}
             exit 0
@@ -24,7 +24,7 @@ set-version)
     # Update podspec file
     if [[ -f "$podFile" ]]; then
         podContent=$(cat $podFile)
-        podRegex="('Sentry/HybridSDK', *)'([0-9\.]+)'"
+        podRegex="('Sentry', *)'([0-9\.]+)'"
         if [[ $podContent =~ $podRegex ]]; then
             newValue="${BASH_REMATCH[1]}'$2'"
             echo "${podContent/${BASH_REMATCH[0]}/$newValue}" >$podFile
