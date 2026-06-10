@@ -6,7 +6,7 @@ updatePeerPackages=${updatePeerPackages:-0}
 
 case $1 in
 get-version)
-    regex='"'${packages[0]}'": *"([0-9.]+)"'
+    regex='"'${packages[0]}'": *"\^?([0-9.]+)"'
     if ! [[ $content =~ $regex ]]; then
         echo "Failed to find plugin '${packages[0]}' version in $file"
         exit 1
