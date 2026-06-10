@@ -40,9 +40,9 @@
 - Bump JavaScript Sibling SDKs from v9.42.0 to v10.52.0 ([#1244](https://github.com/getsentry/sentry-capacitor/pull/1244))
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.52.0/CHANGELOG.md)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/10.42.0...10.52.0)
-- Bump Cocoa SDK from v9.8.0 to v9.16.0 ([#1248](https://github.com/getsentry/sentry-capacitor/pull/1248), [#1276](https://github.com/getsentry/sentry-capacitor/pull/1276))
+- Bump Cocoa SDK from v9.8.0 to v9.16.1 ([#1248](https://github.com/getsentry/sentry-capacitor/pull/1248), [#1276](https://github.com/getsentry/sentry-capacitor/pull/1276))
   - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#9160)
-  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.8.0...9.16.0)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.8.0...9.16.1)
 
 ## 4.0.0
 
