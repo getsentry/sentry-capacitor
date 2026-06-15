@@ -339,10 +339,10 @@
     tslib "^2.3.0"
     yargs "^18.0.0"
 
-"@angular/compiler@^20.3.16":
-  version "20.3.18"
-  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-20.3.18.tgz#5370dc1a24d55623828a2b0875c776c8da13fdc6"
-  integrity sha512-AaP/LCiDNcYmF135EEozjyR04NRBT38ZfBHQwjhgwiBBTejmvcpHwJaHSkraLpZqZzE4BQqqmgiQ1EJqxEwLVA==
+"@angular/compiler@^20.3.25":
+  version "20.3.25"
+  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-20.3.25.tgz#674d07b2437e9a3c99e9bb1c10e4d13bbedb4086"
+  integrity sha512-TSh6gVoQqlLPqWwsYMK0lfVEQYENQO+USzS+BHFXEHFfgBRap6qDpIUGnRdj0Y2PlaVJUVFbeq1855EZUPUEoA==
   dependencies:
     tslib "^2.3.0"
 
@@ -3129,6 +3129,11 @@
   resolved "https://registry.yarnpkg.com/@sentry/cli-linux-x64/-/cli-linux-x64-2.58.6.tgz#57860d46ac3397c33bbcc6224ac19b7de2502c18"
   integrity sha512-DZu956Mhi3ZRjTBe1WdbGV46ldVbA8d2rgp/fh51GsI25zjBHah4wZnPTSzpc+YqxU6pJpg579B/r3jrIK530Q==
 
+"@sentry/cli-win32-arm64@2.58.6":
+  version "2.58.6"
+  resolved "https://registry.yarnpkg.com/@sentry/cli-win32-arm64/-/cli-win32-arm64-2.58.6.tgz#9335a5d2411381dca1d6b11fdd71a4342b375fc3"
+  integrity sha512-nj0Ff/kmAB73EPDhR8B4O9r+NUHK5GkPCkGWC+kXVemqAJWL5jcJ5KdxG0l/S0z6RoEoltID8/43/B+TaMlT7A==
+
 "@sentry/cli-win32-i686@2.58.6":
   version "2.58.6"
   resolved "https://registry.yarnpkg.com/@sentry/cli-win32-i686/-/cli-win32-i686-2.58.6.tgz#2afd19536ef111af43538ccc5f9c8c0b179d930e"
@@ -3138,11 +3143,6 @@
   version "2.58.6"
   resolved "https://registry.yarnpkg.com/@sentry/cli-win32-x64/-/cli-win32-x64-2.58.6.tgz#8d0e70b5660cc82a7763a4bbe9346cf18e49e07e"
   integrity sha512-R35WJ17oF4D2eqI1DR2sQQqr0fjRTt5xoP16WrTu91XM2lndRMFsnjh+/GttbxapLCBNlrjzia99MJ0PZHZpgA==
-
-"@sentry/cli-win32-arm64@2.58.6":
-  version "2.58.6"
-  resolved "https://registry.yarnpkg.com/@sentry/cli-win32-arm64/-/cli-win32-arm64-2.58.6.tgz#9335a5d2411381dca1d6b11fdd71a4342b375fc3"
-  integrity sha512-nj0Ff/kmAB73EPDhR8B4O9r+NUHK5GkPCkGWC+kXVemqAJWL5jcJ5KdxG0l/S0z6RoEoltID8/43/B+TaMlT7A==
 
 "@sentry/cli@^2.58.6":
   version "2.58.6"
