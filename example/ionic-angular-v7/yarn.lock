@@ -318,10 +318,10 @@
     yargs "18.0.0"
     zod "4.1.13"
 
-"@angular/common@^20.3.16":
-  version "20.3.18"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-20.3.18.tgz#311dc0658be69f1368db2eeea92ea1b940329975"
-  integrity sha512-M62oQbSTRmnGavIVCwimoadg/PDWadgNhactMm9fgH0eM9rx+iWBAYJk4VufO0bwOhysFpRZpJgXlFjOifz/Jw==
+"@angular/common@^20.3.25":
+  version "20.3.25"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-20.3.25.tgz#0f2bd058ec6595cfb4dd6a05601c41cb5cf3cb23"
+  integrity sha512-rnRGcXbjet0DHgkRL4Dqxk21G2T4UypVfiTV/fay58H8w9U89PJ1L6gRmk8B/uyfpii/9r23cBwnpcguQykxYw==
   dependencies:
     tslib "^2.3.0"
 
@@ -3129,6 +3129,11 @@
   resolved "https://registry.yarnpkg.com/@sentry/cli-linux-x64/-/cli-linux-x64-2.58.6.tgz#57860d46ac3397c33bbcc6224ac19b7de2502c18"
   integrity sha512-DZu956Mhi3ZRjTBe1WdbGV46ldVbA8d2rgp/fh51GsI25zjBHah4wZnPTSzpc+YqxU6pJpg579B/r3jrIK530Q==
 
+"@sentry/cli-win32-arm64@2.58.6":
+  version "2.58.6"
+  resolved "https://registry.yarnpkg.com/@sentry/cli-win32-arm64/-/cli-win32-arm64-2.58.6.tgz#9335a5d2411381dca1d6b11fdd71a4342b375fc3"
+  integrity sha512-nj0Ff/kmAB73EPDhR8B4O9r+NUHK5GkPCkGWC+kXVemqAJWL5jcJ5KdxG0l/S0z6RoEoltID8/43/B+TaMlT7A==
+
 "@sentry/cli-win32-i686@2.58.6":
   version "2.58.6"
   resolved "https://registry.yarnpkg.com/@sentry/cli-win32-i686/-/cli-win32-i686-2.58.6.tgz#2afd19536ef111af43538ccc5f9c8c0b179d930e"
@@ -3138,11 +3143,6 @@
   version "2.58.6"
   resolved "https://registry.yarnpkg.com/@sentry/cli-win32-x64/-/cli-win32-x64-2.58.6.tgz#8d0e70b5660cc82a7763a4bbe9346cf18e49e07e"
   integrity sha512-R35WJ17oF4D2eqI1DR2sQQqr0fjRTt5xoP16WrTu91XM2lndRMFsnjh+/GttbxapLCBNlrjzia99MJ0PZHZpgA==
-
-"@sentry/cli-win32-arm64@2.58.6":
-  version "2.58.6"
-  resolved "https://registry.yarnpkg.com/@sentry/cli-win32-arm64/-/cli-win32-arm64-2.58.6.tgz#9335a5d2411381dca1d6b11fdd71a4342b375fc3"
-  integrity sha512-nj0Ff/kmAB73EPDhR8B4O9r+NUHK5GkPCkGWC+kXVemqAJWL5jcJ5KdxG0l/S0z6RoEoltID8/43/B+TaMlT7A==
 
 "@sentry/cli@^2.58.6":
   version "2.58.6"
