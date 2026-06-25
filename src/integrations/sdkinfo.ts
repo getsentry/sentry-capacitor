@@ -37,7 +37,7 @@ export const sdkInfoIntegration = (): Integration => {
     setup(client) {
       const options = client.getOptions();
       // eslint-disable-next-line deprecation/deprecation
-      DefaultPii = options.sendDefaultPii;
+      DefaultPii = options.dataCollection?.userInfo ?? options.sendDefaultPii;
       if (DefaultPii) {
         client.on('beforeSendEvent', (event => {
           if (event.user?.ip_address === '{{auto}}') {
