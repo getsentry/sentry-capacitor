@@ -42,9 +42,9 @@
   "license": "MIT",
   "peerDependencies": {
     "@capacitor/core": ">=3.0.0",
-    "@sentry/angular": "10.52.0",
-    "@sentry/react": "10.52.0",
-    "@sentry/vue": "10.52.0"
+    "@sentry/angular": "10.60.0",
+    "@sentry/react": "10.60.0",
+    "@sentry/vue": "10.60.0"
   },
   "peerDependenciesMeta": {
     "@sentry/angular": {
@@ -58,18 +58,18 @@
     }
   },
   "dependencies": {
-    "@sentry/browser": "10.52.0",
-    "@sentry/core": "10.52.0",
-    "@sentry/types": "10.52.0"
+    "@sentry/browser": "10.60.0",
+    "@sentry/core": "10.60.0",
+    "@sentry/types": "10.60.0"
   },
   "devDependencies": {
     "@capacitor/android": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "@capacitor/core": "^6.0.0  || ^7.0.0 || ^8.0.0",
     "@capacitor/ios": "^6.0.0  || ^7.0.0 || ^8.0.0",
     "@ionic/prettier-config": "^1.0.0",
-    "@sentry-internal/eslint-config-sdk": "10.52.0",
-    "@sentry-internal/eslint-plugin-sdk": "10.52.0",
-    "@sentry-internal/typescript": "10.52.0",
+    "@sentry/eslint-config-sdk": "10.60.0",
+    "@sentry/eslint-plugin-sdk": "10.60.0",
+    "@sentry/typescript": "10.60.0",
     "@sentry/wizard": "^6.12.0",
     "@types/jest": "^29.5.3",
     "concurrently": "^8.2.2",
@@ -81,7 +81,7 @@
     "rimraf": "^5.0.1",
     "swiftlint": "^2.0.0",
     "ts-jest": "^29.1.1",
-    "typescript": "5.0.4"
+    "typescript": "5.8.3"
   },
   "resolutions": {
     "form-data": "4.0.4",
@@ -94,7 +94,8 @@
     "lodash-es": "4.18.1",
     "@xmldom/xmldom": "0.8.13",
     "axios": "1.15.2",
-    "flatted": "3.4.2"
+    "flatted": "3.4.2",
+    "braces": "3.0.3"
   },
   "files": [
     "dist/",

@@ -3,8 +3,8 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: ['@sentry-internal/sdk'],
-  plugins: ['@sentry-internal/sdk'],
+  extends: ['@sentry/sdk'],
+  plugins: ['@sentry/sdk'],
   parserOptions: {
     project: './tsconfig.json',
   },
@@ -46,9 +46,9 @@ module.exports = {
     },
   ],
   rules: {
-    '@sentry-internal/sdk/no-async-await': 'off',
-    '@sentry-internal/sdk/no-optional-chaining': 'off',
-    '@sentry-internal/sdk/no-nullish-coalescing': 'off',
-    '@sentry-internal/sdk/no-class-field-initializers': 'off',
+    '@sentry/sdk/no-async-await': 'off',
+    '@sentry/sdk/no-optional-chaining': 'off',
+    '@sentry/sdk/no-nullish-coalescing': 'off',
+    '@sentry/sdk/no-class-field-initializers': 'off',
   },
 };

@@ -36,6 +36,7 @@ export const sdkInfoIntegration = (): Integration => {
     processEvent: processEvent,
     setup(client) {
       const options = client.getOptions();
+      // eslint-disable-next-line deprecation/deprecation
       DefaultPii = options.sendDefaultPii;
       if (DefaultPii) {
         client.on('beforeSendEvent', (event => {
