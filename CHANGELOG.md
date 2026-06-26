@@ -6,6 +6,18 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Features
+
+- Support for Angular 22 ([#1249](https://github.com/getsentry/sentry-capacitor/pull/1303/))
+
+### Dependencies
+
+- Bump JavaScript Sibling SDKs from v10.52.0 to v10.60.0 ([#1303](https://github.com/getsentry/sentry-capacitor/pull/1303))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.60.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/10.52.0...10.60.0)
+
 ## 4.1.0
 
 ### Features
@@ -30,6 +42,7 @@
       },
     });
     ```
+
 - Add `strictTraceContinuation` and `orgId` options for trace continuation validation ([#1166](https://github.com/getsentry/sentry-capacitor/pull/1166))
 
 ### Dependencies

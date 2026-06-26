@@ -37,7 +37,7 @@ export function FilterNativeOptions(
     release: options.release,
     sampleRate: options.sampleRate,
     sendClientReports: options.sendClientReports,
-    sendDefaultPii: options.sendDefaultPii,
+    sendDefaultPii: options.dataCollection?.userInfo ?? options.sendDefaultPii,
     sessionTrackingIntervalMillis: options.sessionTrackingIntervalMillis,
     tracesSampleRate: options.tracesSampleRate,
     // tunnel: options.tunnel: Only handled on the JavaScript Layer.

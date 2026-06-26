@@ -28,21 +28,18 @@ const lookup: string[] = [];
 
 const code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 for (let i = 0, len = code.length; i < len; ++i) {
-  // @ts-expect-error
-  lookup[i] = code[i];
+  lookup[i] = code[i]!;
 }
 
 function tripletToBase64(num: number): string {
-  // @ts-expect-error
-  return lookup[(num >> 18) & 0x3f] + lookup[(num >> 12) & 0x3f] + lookup[(num >> 6) & 0x3f] + lookup[num & 0x3f];
+  return lookup[(num >> 18) & 0x3f]! + lookup[(num >> 12) & 0x3f]! + lookup[(num >> 6) & 0x3f]! + lookup[num & 0x3f]!;
 }
 
 function encodeChunk(uint8: Uint8Array | number[], start: number, end: number): string {
   let tmp;
   const output = [];
   for (let i = start; i < end; i += 3) {
-    // @ts-expect-error
-    tmp = ((uint8[i] << 16) & 0xff0000) + ((uint8[i + 1] << 8) & 0xff00) + (uint8[i + 2] & 0xff);
+    tmp = ((uint8[i]! << 16) & 0xff0000) + ((uint8[i + 1]! << 8) & 0xff00) + (uint8[i + 2]! & 0xff);
     output.push(tripletToBase64(tmp));
   }
   return output.join('');
@@ -65,14 +62,11 @@ export function base64StringFromByteArray(uint8: Uint8Array | number[]): string 
 
   // pad the end with zeros, but make sure to not forget the extra bytes
   if (extraBytes === 1) {
-    tmp = uint8[len - 1];
-    // @ts-expect-error
-    parts.push(`${lookup[tmp >> 2] + lookup[(tmp << 4) & 0x3f]}==`);
+    tmp = uint8[len - 1]!;
+    parts.push(`${lookup[tmp >> 2]! + lookup[(tmp << 4) & 0x3f]!}==`);
   } else if (extraBytes === 2) {
-    // @ts-expect-error
-    tmp = (uint8[len - 2] << 8) + uint8[len - 1];
-    // @ts-expect-error
-    parts.push(`${lookup[tmp >> 10] + lookup[(tmp >> 4) & 0x3f] + lookup[(tmp << 2) & 0x3f]}=`);
+    tmp = (uint8[len - 2]! << 8) + uint8[len - 1]!;
+    parts.push(`${lookup[tmp >> 10]! + lookup[(tmp >> 4) & 0x3f]! + lookup[(tmp << 2) & 0x3f]!}=`);
   }
 
   return parts.join('');

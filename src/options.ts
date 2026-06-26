@@ -1,5 +1,5 @@
 import type { BrowserOptions, makeFetchTransport } from '@sentry/browser';
-import type { ClientOptions, Metric } from '@sentry/core';
+import type { ClientOptions, DataCollection, Metric } from '@sentry/core';
 import type { NuxtOptions, VueOptions } from './siblingOptions';
 
 // Direct reference of BrowserTransportOptions is not compatible with strict builds of latest versions of Typescript 5.
@@ -95,6 +95,25 @@ export interface BaseCapacitorOptions {
   orgId?: `${number}` | number;
 
   /**
+   * If this flag is enabled, certain personally identifiable information (PII) is added by active
+   * integrations. By default, no such data is sent.
+   *
+   * @default false
+   */
+  sendDefaultPii?: boolean;
+
+  /**
+   * Controls what data the SDK collects and sends to Sentry.
+   *
+   * On the JavaScript layer, all `dataCollection` options are fully supported.
+   * On the native mobile layer (iOS/Android), `dataCollection` is not yet supported.
+   * Only `dataCollection.userInfo` is bridged to the native SDK as `sendDefaultPii`.
+   *
+   * @experimental Native SDK support for `dataCollection` is not yet available.
+   */
+  dataCollection?: DataCollection;
+
+  /**
    * Only for Vue or Nuxt Client.
    * Allows the setup of sibling specific SDK. You are still allowed to set the same parameters
    * at the root of Capacitor Options at the cost of lost on JSDocs visibility.
@@ -173,6 +192,7 @@ export interface CapacitorOptions
       BrowserOptions,
       | '_experiments'
       | 'enableMetrics'
+      | 'sendDefaultPii'
       | 'replaysOnErrorSampleRate'
       | 'replaysSessionSampleRate'
       | 'profilesSampleRate'
@@ -199,6 +219,7 @@ export interface CapacitorClientOptions
       ClientOptions<CapacitorTransportOptions>,
       | '_experiments'
       | 'enableMetrics'
+      | 'sendDefaultPii'
       | 'replaysOnErrorSampleRate'
       | 'replaysSessionSampleRate'
       | 'profilesSampleRate'
