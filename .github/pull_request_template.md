@@ -25,6 +25,7 @@
 - [ ] I updated the docs if needed.
 - [ ] I updated the wizard if needed.
 - [ ] All tests passing
+- [ ] Public API changes reviewed by another Mobile SDK team member or implemented according to the [develop docs](https://develop.sentry.dev/) spec
 - [ ] No breaking changes
 
 ## :crystal_ball: Next steps
