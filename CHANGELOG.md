@@ -6,6 +6,14 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Dependencies
+
+- Bump Cocoa SDK from v9.16.1 to v9.19.1 ([#1280](https://github.com/getsentry/sentry-capacitor/pull/1280))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#9191)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.16.1...9.19.1)
+
 ## 4.2.0
 
 ### Features
