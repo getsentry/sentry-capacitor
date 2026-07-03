@@ -9,6 +9,7 @@ on:
 env:
   CACHED_DEPENDENCY_PATHS: |
     ${{ github.workspace }}/node_modules
+    ${{ github.workspace }}/.yarn/install-state.gz
 
   CACHED_BUILD_PATHS: |
     ${{ github.workspace }}/dist
