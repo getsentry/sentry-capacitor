@@ -24,9 +24,9 @@
     "swiftlint": "node-swiftlint",
     "prepack": "yarn run build",
     "postinstall": "node scripts/check-siblings.js",
-    "bump:v8": "cd example/ionic-angular-v8 && yalc link @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
-    "bump:v7": "cd example/ionic-angular-v7 && yalc link @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
-    "bump:sample-vue": "cd example/ionic-vue3 && yalc link @sentry/capacitor && yarn install --check-files && yarn build && yarn run bump:sample-pod && npx cap sync",
+    "bump:v8": "cd example/ionic-angular-v8 && yalc link @sentry/capacitor && yarn install && yarn build && yarn run bump:sample-pod && npx cap sync",
+    "bump:v7": "cd example/ionic-angular-v7 && yalc link @sentry/capacitor && yarn install && yarn build && yarn run bump:sample-pod && npx cap sync",
+    "bump:sample-vue": "cd example/ionic-vue3 && yalc link @sentry/capacitor && yarn install && yarn build && yarn run bump:sample-pod && npx cap sync",
     "bump:samples": "yalc publish --sig && yarn concurrently --kill-others-on-fail \"yarn run bump:v7\" \"yarn run bump:v8\" \"yarn run bump:sample-vue\"",
     "bump:javascript-version": "bash -c 'scripts/update-javascript.sh set-version $1 && scripts/update-javascript-siblings.sh set-version $1' _"
   },
@@ -98,12 +98,12 @@
     "braces": "3.0.3"
   },
   "files": [
-    "dist/",
-    "ios/",
-    "android/",
-    "Package.swift",
-    "SentryCapacitor.podspec",
-    "scripts/check-siblings.js"
+    "/dist/",
+    "/ios/",
+    "/android/",
+    "/Package.swift",
+    "/SentryCapacitor.podspec",
+    "/scripts/check-siblings.js"
   ],
   "capacitor": {
     "ios": {
@@ -145,5 +145,5 @@
       "**/*.test.(ts|tsx)"
     ]
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "yarn@4.17.0"
 }

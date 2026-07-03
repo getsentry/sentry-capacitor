@@ -14,5 +14,6 @@
   "license": "MIT",
   "dependencies": {
     "typescript": "^5.3.3"
-  }
+  },
+  "packageManager": "yarn@4.17.0"
 }

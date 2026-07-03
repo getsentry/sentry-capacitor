@@ -80,10 +80,10 @@ jobs:
         # yarn.lock cannot be dirty when releasing a new version.
       - name: Check if yarn.lock is dirty
         if: steps.cache_built_packages.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
       - name: Publish package locally
         run: |
-          yarn global add yalc
+          npm install --global yalc
           yalc publish
 
       - name: Upload yalc package

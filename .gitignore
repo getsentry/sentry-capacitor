@@ -9,6 +9,16 @@ node_modules/
 # Jest generated folder
 coverage/
 
+# Yarn Berry (packages are kept in the global cache, not committed locally)
+.yarn/cache
+.yarn/install-state.gz
+.yarn/unplugged
+.pnp.*
+example/*/.yarn/cache
+example/*/.yarn/install-state.gz
+example/*/.yarn/unplugged
+example/*/.pnp.*
+
 # example files
 example/*/dist
 example/*/node_modules

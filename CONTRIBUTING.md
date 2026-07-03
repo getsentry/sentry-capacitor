@@ -5,8 +5,8 @@
 You need:
 
 - [nodejs](https://nodejs.org/en/download/) 22 or higher (with corepack enabled)
-- [yarn 1](https://classic.yarnpkg.com/lang/en/docs/install) or higher
-- [yalc](https://github.com/wclr/yalc) (can be installed with `yarn global add yalc`)
+- [yarn 4](https://yarnpkg.com/getting-started/install) (via corepack; each project pins its version with the `packageManager` field, so `corepack enable` is all you need)
+- [yalc](https://github.com/wclr/yalc) (can be installed with `npm install --global yalc`)
 - http-server
 - [ionic](https://ionicframework.com/docs/intro/cli)
 
