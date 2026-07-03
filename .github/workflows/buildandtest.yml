@@ -42,6 +42,7 @@ jobs:
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ steps.compute_lockfile_hash.outputs.hash }}
+          enableCrossOsArchive: true
 
       - name: Install dependencies
         if: steps.cache_dependencies.outputs.cache-hit != 'true'
@@ -65,12 +66,14 @@ jobs:
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_install_deps.outputs.dependency_cache_key }}
+          enableCrossOsArchive: true
       - name: Check build cache
         uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
         id: cache_built_packages
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
+          enableCrossOsArchive: true
       - name: Build packages
         # Under normal circumstances, using the git SHA as a cache key, there shouldn't ever be a cache hit on the built
         # packages, and so `yarn build` should always run. This `if` check is therefore only there for testing CI issues
@@ -116,11 +119,13 @@ jobs:
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_build.outputs.dependency_cache_key }}
+          enableCrossOsArchive: true
       - name: Check build cache
         uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
+          enableCrossOsArchive: true
       - name: Run tests
         run: yarn test
 
@@ -139,11 +144,13 @@ jobs:
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_build.outputs.dependency_cache_key }}
+          enableCrossOsArchive: true
       - name: Check build cache
         uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
+          enableCrossOsArchive: true
       - name: Pack
         run: yarn pack
       - name: Archive artifacts

@@ -55,11 +55,13 @@ jobs:
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ inputs.dependency_cache_key }}
+          enableCrossOsArchive: true
       - name: Check build cache
         uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
+          enableCrossOsArchive: true
       - name: Install yalc
         run: npm install --global yalc
       - name: Install Ionic
