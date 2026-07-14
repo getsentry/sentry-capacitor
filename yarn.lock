@@ -945,14 +945,14 @@
   resolved "https://registry.yarnpkg.com/@sentry/typescript/-/typescript-10.60.0.tgz#94167fe82500ac05216931da73341a8732ed2875"
   integrity sha512-b8pIiJeQEks39x7NtPAIIxDWkGHprR6lvoNMpR2O+ogcMqmTFl5zVOMDIieMcZbptdtEN+lPevO6WGDluWdjRg==
 
-"@sentry/wizard@^6.12.0":
-  version "6.12.0"
-  resolved "https://registry.yarnpkg.com/@sentry/wizard/-/wizard-6.12.0.tgz#63d1814f7af641883d09968856d13ceb7d71ed5b"
-  integrity sha512-EF5bT9i/DRNC7lD3RxMKoKGFnr1lhVecqge6kd6XW5hRqNwcCK/srTDDK16U5NXqA85NuwlyxN0AgavmfArd8w==
+"@sentry/wizard@6.13.0":
+  version "6.13.0"
+  resolved "https://registry.yarnpkg.com/@sentry/wizard/-/wizard-6.13.0.tgz#29b80b3f0f4e8aabdf3033fda77722a9f99608b2"
+  integrity sha512-W/FTUscHdIaarX/gTwVWaJIhV8MAe/9GrOWOrHYis0Nv4acbXliKA4Fuq6AmAi5WxYGs07E+LdT6A2eonpOLIw==
   dependencies:
     "@clack/prompts" "0.7.0"
     "@sentry/node" "^10.29.0"
-    axios "1.13.5"
+    axios "1.15.2"
     chalk "^2.4.1"
     glob "9.3.5"
     inquirer "^6.2.0"
@@ -1463,7 +1463,7 @@ available-typed-arrays@^1.0.7:
   dependencies:
     possible-typed-array-names "^1.0.0"
 
-axios@1.13.5, axios@1.15.2:
+axios@1.15.2:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.15.2.tgz#eb8fb6d30349abace6ade5b4cb4d9e8a0dc23e5b"
   integrity sha512-wLrXxPtcrPTsNlJmKjkPnNPK2Ihe0hn0wGSaTEiHRPxwjvJwT3hKmXF4dpqxmPO9SoNb2FsYXj/xEo0gHN+D5A==
