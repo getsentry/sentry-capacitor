@@ -60,7 +60,7 @@ export function sdkInit(
     }).catch((error: Error) => {
       // Fallback to JavaScript only SDK Init.
       // eslint-disable-next-line no-console
-      console.error('Native Sentry SDK failed to initialize. Using Sentry JavaScript SDK without native integraiton.\n', { error });
+      console.error('Native Sentry SDK failed to initialize. Using Sentry JavaScript SDK without native integration.\n', { error });
       RestoreNonNativeOptions(browserOptions, customTransport);
       originalInit(browserOptions);
     }).finally(() => {
