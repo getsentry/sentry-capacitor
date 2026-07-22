@@ -79,5 +79,6 @@
     "bump:sample-pod": "cd ios/App && pod update Sentry/HybridSDK || pod install || node ../../../../scripts/sample-skip-pod-windows.js",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org sentry-sdks --project capacitor ./www && sentry-cli sourcemaps upload --org sentry-sdks --project capacitor ./www"
   },
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "packageManager": "yarn@4.17.0"
 }

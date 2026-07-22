@@ -66,5 +66,6 @@
     "systeminformation": "5.31.6",
     "@babel/plugin-transform-modules-systemjs": "7.29.4"
   },
-  "description": "Sentry Capacitor Vue3 sample"
+  "description": "Sentry Capacitor Vue3 sample",
+  "packageManager": "yarn@4.17.0"
 }

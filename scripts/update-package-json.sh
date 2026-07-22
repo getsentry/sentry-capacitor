@@ -36,7 +36,7 @@ set-version)
                 #upgrade doesn't support peerDependencies so we'll use the yarn option.
                 yarn add --peer $list --update-sentry-capacitor
             else
-                yarn upgrade --non-interactive $list --update-sentry-capacitor
+                yarn up $list --update-sentry-capacitor
             fi
         )
     fi

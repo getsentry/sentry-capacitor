@@ -13,6 +13,7 @@ on:
 env:
   CACHED_DEPENDENCY_PATHS: |
     ${{ github.workspace }}/node_modules
+    ${{ github.workspace }}/.yarn/install-state.gz
   CACHED_BUILD_PATHS: |
     ${{ github.workspace }}/dist
   BUILD_CACHE_KEY: ${{ inputs.build_cache_key }}
@@ -51,18 +52,27 @@ jobs:
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v5
       - name: Check dependency cache
         uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
+        id: cache_dependencies
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ inputs.dependency_cache_key }}
+          enableCrossOsArchive: true
+      - name: Install dependencies
+        # job_install_deps/job_build save this cache from ubuntu-latest. Cross-OS cache restore onto
+        # macos-latest has proven unreliable (likely a zstd/gzip compression mismatch between runner
+        # OSes), so install directly whenever the restore above didn't actually hit.
+        if: steps.cache_dependencies.outputs.cache-hit != 'true'
+        run: yarn install
       - name: Check build cache
         uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
+          enableCrossOsArchive: true
       - name: Install yalc
-        run: yarn  global add yalc
+        run: npm install --global yalc
       - name: Install Ionic
-        run: yarn  global add @ionic/cli
+        run: npm install --global @ionic/cli
 
       - name: Download Sentry Capacitor package
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
