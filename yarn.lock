@@ -5423,13 +5423,13 @@ __metadata:
   linkType: hard
 
 "prettier-plugin-java@npm:^2.6.0":
-  version: 2.10.2
-  resolution: "prettier-plugin-java@npm:2.10.2"
+  version: 2.10.3
+  resolution: "prettier-plugin-java@npm:2.10.3"
   dependencies:
-    web-tree-sitter: "npm:0.26.9"
+    web-tree-sitter: "npm:0.26.11"
   peerDependencies:
     prettier: ^3.0.0
-  checksum: 10c0/0b259194e59b9cb9ebbe152c239b5cd7a6a33959f759322958a06ae4a1fd043bb6bd03bda149ec0cf2f5408836be512019b94e890d5759959af355576767e819
+  checksum: 10c0/7d910608a4fbfcd21c7635c712099f8ac952601b26ae9f3138df21667f45dae373277cb641014fe26ad63d4df4763124b6d7eeb7d69f047445087347cbe1534c
   languageName: node
   linkType: hard
 
@@ -6618,10 +6618,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-tree-sitter@npm:0.26.9":
-  version: 0.26.9
-  resolution: "web-tree-sitter@npm:0.26.9"
-  checksum: 10c0/7df36536f65384a08c78d98836d163f74635167b55d8f2c86b1404f4915238d1369cb0ce88f5fb5d78fd81ad5898a0b02aec0cda8bd77f19311781aa989962a5
+"web-tree-sitter@npm:0.26.11":
+  version: 0.26.11
+  resolution: "web-tree-sitter@npm:0.26.11"
+  checksum: 10c0/eb8fe10c04abbeb0b4f753c61af229291c7286b3f1d1113dc4f25da95c756b2a9d1f8f77c6bb17a204570a81a7df62815752ce7a34dad0f6d89d0b61ec74649b
   languageName: node
   linkType: hard
 
