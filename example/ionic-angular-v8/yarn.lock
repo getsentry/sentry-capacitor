@@ -4254,24 +4254,12 @@ __metadata:
 
 "@sentry/capacitor@file:.yalc/@sentry/capacitor::locator=ionic-angular%40workspace%3A.":
   version: 4.1.0+2f79fdca
-  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=816988&locator=ionic-angular%40workspace%3A."
+  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=83983d&locator=ionic-angular%40workspace%3A."
   dependencies:
     "@sentry/browser": "npm:10.60.0"
     "@sentry/core": "npm:10.60.0"
     "@sentry/types": "npm:10.60.0"
-  peerDependencies:
-    "@capacitor/core": ">=3.0.0"
-    "@sentry/angular": 10.60.0
-    "@sentry/react": 10.60.0
-    "@sentry/vue": 10.60.0
-  peerDependenciesMeta:
-    "@sentry/angular":
-      optional: true
-    "@sentry/react":
-      optional: true
-    "@sentry/vue":
-      optional: true
-  checksum: 10c0/e5f9be2a5206dd3cc5304fa1f8d05fe1709c8c0c39f8a0ac4601adf1b0f51468488a39e662de8c16e8b773e5f8e1c6ebf61e5edabaec6d48d029bad4788682b8
+  checksum: 10c0/7cdd7b183c0feb8d25af87994326c3de9d8c5c63369226bdad7b97a8062e7dd5559ba40beeee8c9153e9ed2bfe32faaaac23caea5fbbaf27f41c914ba927e201
   languageName: node
   linkType: hard
 
@@ -7677,9 +7665,9 @@ __metadata:
   linkType: hard
 
 "hono@npm:^4.11.4":
-  version: 4.12.5
-  resolution: "hono@npm:4.12.5"
-  checksum: 10c0/a8cf0c988e84b370978b57d941fc543b93994b7b01c847611ec73be8e8c9fda5baeac8be08a44eaefdf215381fea2620ccb742ff5c4eaeecb35b92f6a75832c6
+  version: 4.12.32
+  resolution: "hono@npm:4.12.32"
+  checksum: 10c0/3bb2fc0b042af87202e0cb0e5f77ee5b578684d868e1e321ed3de53e02f1ef02fe700811fa0d2fc765636a217bae7633d552d55934175f3dec6307a1f63f4ecb
   languageName: node
   linkType: hard
 
