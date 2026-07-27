@@ -2441,24 +2441,12 @@ __metadata:
 
 "@sentry/capacitor@file:.yalc/@sentry/capacitor::locator=ionic-vue3%40workspace%3A.":
   version: 4.1.0+2f79fdca
-  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=816988&locator=ionic-vue3%40workspace%3A."
+  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=83983d&locator=ionic-vue3%40workspace%3A."
   dependencies:
     "@sentry/browser": "npm:10.60.0"
     "@sentry/core": "npm:10.60.0"
     "@sentry/types": "npm:10.60.0"
-  peerDependencies:
-    "@capacitor/core": ">=3.0.0"
-    "@sentry/angular": 10.60.0
-    "@sentry/react": 10.60.0
-    "@sentry/vue": 10.60.0
-  peerDependenciesMeta:
-    "@sentry/angular":
-      optional: true
-    "@sentry/react":
-      optional: true
-    "@sentry/vue":
-      optional: true
-  checksum: 10c0/e5f9be2a5206dd3cc5304fa1f8d05fe1709c8c0c39f8a0ac4601adf1b0f51468488a39e662de8c16e8b773e5f8e1c6ebf61e5edabaec6d48d029bad4788682b8
+  checksum: 10c0/7cdd7b183c0feb8d25af87994326c3de9d8c5c63369226bdad7b97a8062e7dd5559ba40beeee8c9153e9ed2bfe32faaaac23caea5fbbaf27f41c914ba927e201
   languageName: node
   linkType: hard
 
@@ -7852,9 +7840,9 @@ __metadata:
   linkType: hard
 
 "undici@npm:^7.20.0":
-  version: 7.24.4
-  resolution: "undici@npm:7.24.4"
-  checksum: 10c0/cb302e81fadb7f0b7946ab77595715c0961b46a025ccecae79ba599432d0bc8d1e3da4dfe7ff66bc74f115c1b8ff0f099bc4e9bf313db4562da23995872c6d17
+  version: 7.29.0
+  resolution: "undici@npm:7.29.0"
+  checksum: 10c0/85ea96e91e7f3de24de678cbbc54230fdd641a3b0643005f2aef044af1f1a2db8fbecb88b28e6fa78bb41ffeafda4479b57075b6b6ab92beac4b7b5ab53f9b10
   languageName: node
   linkType: hard
 
