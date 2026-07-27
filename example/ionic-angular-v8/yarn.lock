@@ -4254,24 +4254,12 @@ __metadata:
 
 "@sentry/capacitor@file:.yalc/@sentry/capacitor::locator=ionic-angular%40workspace%3A.":
   version: 4.1.0+2f79fdca
-  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=816988&locator=ionic-angular%40workspace%3A."
+  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=83983d&locator=ionic-angular%40workspace%3A."
   dependencies:
     "@sentry/browser": "npm:10.60.0"
     "@sentry/core": "npm:10.60.0"
     "@sentry/types": "npm:10.60.0"
-  peerDependencies:
-    "@capacitor/core": ">=3.0.0"
-    "@sentry/angular": 10.60.0
-    "@sentry/react": 10.60.0
-    "@sentry/vue": 10.60.0
-  peerDependenciesMeta:
-    "@sentry/angular":
-      optional: true
-    "@sentry/react":
-      optional: true
-    "@sentry/vue":
-      optional: true
-  checksum: 10c0/e5f9be2a5206dd3cc5304fa1f8d05fe1709c8c0c39f8a0ac4601adf1b0f51468488a39e662de8c16e8b773e5f8e1c6ebf61e5edabaec6d48d029bad4788682b8
+  checksum: 10c0/7cdd7b183c0feb8d25af87994326c3de9d8c5c63369226bdad7b97a8062e7dd5559ba40beeee8c9153e9ed2bfe32faaaac23caea5fbbaf27f41c914ba927e201
   languageName: node
   linkType: hard
 
@@ -11356,9 +11344,9 @@ __metadata:
   linkType: hard
 
 "shell-quote@npm:^1.8.3":
-  version: 1.8.3
-  resolution: "shell-quote@npm:1.8.3"
-  checksum: 10c0/bee87c34e1e986cfb4c30846b8e6327d18874f10b535699866f368ade11ea4ee45433d97bf5eada22c4320c27df79c3a6a7eb1bf3ecfc47f2c997d9e5e2672fd
+  version: 1.10.0
+  resolution: "shell-quote@npm:1.10.0"
+  checksum: 10c0/46ee59bfd972ce6a45500c44ed130dff2d0a7d6fbac9841e59d548518cad8060a06393c9a5dcbc0cede294ad80b2a2cd8c904679e09265f53efc0a0879f30961
   languageName: node
   linkType: hard
 
