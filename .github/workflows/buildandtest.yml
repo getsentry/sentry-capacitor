@@ -37,7 +37,7 @@ jobs:
         id: compute_lockfile_hash
         run: echo "hash=${{ hashFiles('yarn.lock') }}" >> "$GITHUB_OUTPUT"
       - name: Check dependency cache
-        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # V6.1.0
         id: cache_dependencies
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
@@ -62,13 +62,13 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v5
       - name: Check dependency cache
-        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # V6.1.0
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_install_deps.outputs.dependency_cache_key }}
           enableCrossOsArchive: true
       - name: Check build cache
-        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # V6.1.0
         id: cache_built_packages
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
@@ -115,13 +115,13 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v5
       - name: Check dependency cache
-        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # V6.1.0
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_build.outputs.dependency_cache_key }}
           enableCrossOsArchive: true
       - name: Check build cache
-        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # V6.1.0
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
@@ -140,13 +140,13 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v5
       - name: Check dependency cache
-        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # V6.1.0
         with:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_build.outputs.dependency_cache_key }}
           enableCrossOsArchive: true
       - name: Check build cache
-        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # V6.1.0
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
