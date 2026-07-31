@@ -87,7 +87,7 @@ describe('client', () => {
       expect(NATIVE.initNativeSdk).toHaveBeenCalledWith(nativeOptions);
       expect(mockOriginalInit).toHaveBeenCalledWith(browserOptions);
       expect(consoleSpy).toHaveBeenCalledWith(
-        'Native Sentry SDK failed to initialize. Using Sentry JavaScript SDK without native integraiton.\n',
+        'Native Sentry SDK failed to initialize. Using Sentry JavaScript SDK without native integration.\n',
         { error: initError }
       );
 

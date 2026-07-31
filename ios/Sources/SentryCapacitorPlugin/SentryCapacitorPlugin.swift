@@ -165,6 +165,19 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
         if let strictTraceContinuation = dict["strictTraceContinuation"] as? Bool {
             options.strictTraceContinuation = strictTraceContinuation
         }
+
+        if let enableAppHangTracking = dict["enableAppHangTracking"] as? Bool {
+            options.enableAppHangTracking = enableAppHangTracking
+        }
+
+        if let appHangTimeoutInterval = dict["appHangTimeoutInterval"] as? Double {
+            options.appHangTimeoutInterval = appHangTimeoutInterval
+        }
+
+        if let enableWatchdogTerminationTracking = dict["enableWatchdogTerminationTracking"] as? Bool {
+            options.enableWatchdogTerminationTracking = enableWatchdogTerminationTracking
+        }
+
         if let orgId = dict["orgId"] {
             if let orgIdString = orgId as? String {
                 options.orgId = orgIdString
