@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- iOS: `enableAppHangTracking`, `appHangTimeoutInterval` and `enableWatchdogTerminationTracking` are now correctly passed into Sentry Cocoa SDK ([#1350](https://github.com/getsentry/sentry-capacitor/pull/1350))
+
 ## 4.2.0
 
 ### Features
