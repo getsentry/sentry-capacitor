@@ -12,6 +12,12 @@
 
 - iOS: `enableAppHangTracking`, `appHangTimeoutInterval` and `enableWatchdogTerminationTracking` are now correctly passed into Sentry Cocoa SDK ([#1350](https://github.com/getsentry/sentry-capacitor/pull/1350))
 
+### Dependencies
+
+- Bump Android SDK from v8.41.0 to v8.50.1 ([#1344](https://github.com/getsentry/sentry-capacitor/pull/1344))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8501)
+  - [diff](https://github.com/getsentry/sentry-java/compare/8.41.0...8.50.1)
+
 ## 4.2.0
 
 ### Features
