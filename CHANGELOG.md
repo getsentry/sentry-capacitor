@@ -10,7 +10,7 @@
 
 ### Deprecations
 
-- iOS: CocoaPods support is deprecated, the podspec setup will be removed in the next minor version (#TODO: add PR link when opened)
+- iOS: CocoaPods support is deprecated, the podspec setup will be removed in the next minor version ([#1353](https://github.com/getsentry/sentry-capacitor/pull/1353))
   - `sentry-cocoa` has [deprecated CocoaPods](https://github.com/getsentry/sentry-cocoa/pull/7526) and stopped publishing new releases to CocoaPods trunk after `9.19.1`, so `SentryCapacitor.podspec` can no longer be kept up to date.
   - Please migrate to Swift Package Manager (`Package.swift`) before upgrading to the next minor version. The removal itself is already staged in [#1352](https://github.com/getsentry/sentry-capacitor/pull/1352).
 
