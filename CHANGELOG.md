@@ -8,6 +8,12 @@
 
 ## Unreleased
 
+### Break Changes
+
+- Remove `SentryCapacitor.podspec`, dropping CocoaPods support for iOS (#TODO: add PR link when opened)
+  - `sentry-cocoa` [deprecated CocoaPods](https://github.com/getsentry/sentry-cocoa/pull/7526) and stopped publishing new releases to CocoaPods trunk after `9.19.1`, so the podspec could no longer be bumped past that version.
+  - iOS consumers must use Swift Package Manager (`Package.swift`) to install this SDK going forward. Remove any `pod 'SentryCapacitor'` entry from your `Podfile` and add the package through Xcode/SPM instead.
+
 ### Fixes
 
 - iOS: `enableAppHangTracking`, `appHangTimeoutInterval` and `enableWatchdogTerminationTracking` are now correctly passed into Sentry Cocoa SDK ([#1350](https://github.com/getsentry/sentry-capacitor/pull/1350))
@@ -17,6 +23,9 @@
 - Bump Android SDK from v8.41.0 to v8.50.1 ([#1344](https://github.com/getsentry/sentry-capacitor/pull/1344))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8501)
   - [diff](https://github.com/getsentry/sentry-java/compare/8.41.0...8.50.1)
+- Bump Cocoa SDK from v9.16.1 to v9.24.0 ([#1280](https://github.com/getsentry/sentry-capacitor/pull/1280))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#9240)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.16.1...9.24.0)
 
 ## 4.2.0
 
