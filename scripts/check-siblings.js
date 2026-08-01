@@ -12,17 +12,12 @@ const jsonFilter = /\s*\"\@sentry\/(?!capacitor|wizard|cli|typescript|electron)(
  * @return {Boolean} true if requested to skip the post-install check, false otherwise.
  */
 function SkipPostInstall() {
-  if (env.UPDATE_SENTRY_CAPACITOR) {
-    // Internal bump scripts (env var, since Yarn 4/Berry rejects unrecognized CLI flags
-    // like --update-sentry-capacitor on `yarn add`/`yarn up`).
-    return true;
-  }
   if (env.npm_config_update_sentry_capacitor) {
     // NPM.
     return true;
   }
   else if (env.npm_config_argv && env.npm_config_argv.includes(updateArgument)) {
-    // YARN Classic.
+    // YARN.
     return true;
   }
   return false;
