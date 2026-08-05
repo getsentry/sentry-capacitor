@@ -1,8 +1,16 @@
 const fs = require('fs');
 const path = require('path');
-const { env, exit } = require('process');
+const { env, exit, platform } = require('process');
 
-const updateArgument = '--update-sentry-capacitor';
+// Deprecated: a `--update-sentry-capacitor` CLI flag passed to `yarn add`/`npm install` to skip this
+// check during an intentional sibling bump. Yarn 2+ (Berry) rejects unrecognized CLI flags outright, so
+// this only ever worked on Yarn Classic and npm (which auto-converts unknown flags into `npm_config_*`
+// env vars for lifecycle scripts). Kept only for backwards compatibility; will be removed in the next
+// major version - use the `updateArgument` env var below instead.
+const legacyUpdateArgument = '--update-sentry-capacitor';
+// Environment variable that skips this check during an intentional sibling bump. Works the same way
+// regardless of package manager or Yarn version.
+const updateArgument = 'UPDATE_SENTRY_CAPACITOR';
 
 // Filters all Sentry packages but Capacitor, CLI and Wizard.
 const jsonFilter = /\s*\"\@sentry\/(?!capacitor|wizard|cli|typescript|electron)(?<packageName>[a-zA-Z]+)\"\:\s*\"(?<version>.+)\"/;
@@ -12,12 +20,15 @@ const jsonFilter = /\s*\"\@sentry\/(?!capacitor|wizard|cli|typescript|electron)(
  * @return {Boolean} true if requested to skip the post-install check, false otherwise.
  */
 function SkipPostInstall() {
-  if (env.npm_config_update_sentry_capacitor) {
-    // NPM.
+  if (env[updateArgument]) {
     return true;
   }
-  else if (env.npm_config_argv && env.npm_config_argv.includes(updateArgument)) {
-    // YARN.
+  if (env.npm_config_update_sentry_capacitor) {
+    // NPM, legacy --update-sentry-capacitor flag.
+    return true;
+  }
+  else if (env.npm_config_argv && env.npm_config_argv.includes(legacyUpdateArgument)) {
+    // Yarn Classic, legacy --update-sentry-capacitor flag.
     return true;
   }
   return false;
@@ -99,18 +110,22 @@ function GetPackageJsonRootPath() {
 }
 
 /**
- * @param {String} package The package.
- * @return {String} The path where package.json is located.
+ * @param {String} sentryPackages The sibling packages (with the required version) to install.
+ * @return {String} The command(s) to run, with `updateArgument` set, to install the given packages
+ * while skipping this check.
  */
 function FormatPackageInstallCommand(sentryPackages) {
   // Yarn V1 || Yarn V3/V4.
-  if (env.npm_config_argv || env.npm_config_user_agent?.startsWith('yarn')) {
-    return "yarn add --exact " + sentryPackages + " " + updateArgument;
+  const isYarn = env.npm_config_argv || env.npm_config_user_agent?.startsWith('yarn');
+  const command = isYarn
+    ? "yarn add --exact " + sentryPackages
+    : "npm install --save-exact " + sentryPackages;
+
+  if (platform === 'win32') {
+    return `set ${updateArgument}=1&& ${command}\n` +
+      `  or, in PowerShell: $env:${updateArgument}=1; ${command}`;
   }
-  else {
-    // NPM
-    return "npm install --save-exact " + sentryPackages + " " + updateArgument;
-  }
+  return `${updateArgument}=1 ${command}`;
 }
 
 function CheckSiblings() {
@@ -151,7 +166,7 @@ function CheckSiblings() {
       packagesList += sentryPackage[0] + '@' + siblingVersion + ' ';
     }
     IncompatibilityError.push(
-      `Please install the mentioned packages exactly with version ${siblingVersion} and with the argument ${updateArgument}.
+      `Please install the mentioned packages exactly with version ${siblingVersion} and with the environment variable ${updateArgument} set.
 Your project will build with the wrong package but you may face Runtime errors.
 You can use the below command to fix your package.json:`);
 
