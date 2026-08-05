@@ -522,13 +522,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/core@npm:^20.3.16":
-  version: 20.3.25
-  resolution: "@angular/core@npm:20.3.25"
+"@angular/core@npm:^20.3.27":
+  version: 20.3.27
+  resolution: "@angular/core@npm:20.3.27"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
-    "@angular/compiler": 20.3.25
+    "@angular/compiler": 20.3.27
     rxjs: ^6.5.3 || ^7.4.0
     zone.js: ~0.15.0
   peerDependenciesMeta:
@@ -536,7 +536,7 @@ __metadata:
       optional: true
     zone.js:
       optional: true
-  checksum: 10c0/34f37d0228b724dbd37a8f7b3f308bd35942b536f250a28a0c59a215915207fcc95f8507cd2aa760a9818a9197239e9dbafa480588ae6d31a35cea798fcc5596
+  checksum: 10c0/c86d7484b350f95c43850b7fa1764c697d6d84cc2e07548865457d950e88aee844e572dea7128107ed85eb4d3c5a33d1f29e0117625b5009b24e1874c2d72432
   languageName: node
   linkType: hard
 
@@ -4150,24 +4150,12 @@ __metadata:
 
 "@sentry/capacitor@file:.yalc/@sentry/capacitor::locator=ionic-angular%40workspace%3A.":
   version: 4.2.0+c5265af2
-  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=9385cf&locator=ionic-angular%40workspace%3A."
+  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=3db4e6&locator=ionic-angular%40workspace%3A."
   dependencies:
     "@sentry/browser": "npm:10.69.0"
     "@sentry/core": "npm:10.69.0"
     "@sentry/types": "npm:10.69.0"
-  peerDependencies:
-    "@capacitor/core": ">=3.0.0"
-    "@sentry/angular": 10.69.0
-    "@sentry/react": 10.69.0
-    "@sentry/vue": 10.69.0
-  peerDependenciesMeta:
-    "@sentry/angular":
-      optional: true
-    "@sentry/react":
-      optional: true
-    "@sentry/vue":
-      optional: true
-  checksum: 10c0/88f200d15caad270881a28141e6b238e02b2ed0165def75440c0b74cabbf31b80ffccff216d446bcf3d2f3d15afa8004382b7147350c2f49f6ac74f9a7c6d179
+  checksum: 10c0/e84825a29c05ec202918afdaeac5e558167472b79275bac4dd595f7b7d5c04b989ddfe875943784efd1791c5df8dcde3e8e4393e40297dd80e933a3b8ac88c48
   languageName: node
   linkType: hard
 
@@ -7763,7 +7751,7 @@ __metadata:
     "@angular/common": "npm:^20.3.16"
     "@angular/compiler": "npm:^20.3.16"
     "@angular/compiler-cli": "npm:^20.3.16"
-    "@angular/core": "npm:^20.3.16"
+    "@angular/core": "npm:^20.3.27"
     "@angular/forms": "npm:^20.3.16"
     "@angular/language-service": "npm:^20.3.16"
     "@angular/platform-browser": "npm:^20.3.16"
