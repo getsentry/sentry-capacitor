@@ -12,7 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/ionic-team/capacitor-swift-pm.git", exact: "8.0.0"),
-        .package(name: "SentryCapacitor", path: "../../../node_modules/@sentry/capacitor")
+        .package(name: "SentryCapacitor", path: "../../../.yalc/@sentry/capacitor")
     ],
     targets: [
         .target(
