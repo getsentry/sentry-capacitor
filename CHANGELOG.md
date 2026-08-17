@@ -6,6 +6,14 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Dependencies
+
+- Bump Cocoa SDK from v9.16.1 to v9.24.0 ([#1280](https://github.com/getsentry/sentry-capacitor/pull/1280))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#9240)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.16.1...9.24.0)
+
 ## 4.3.0
 
 ### Deprecations
@@ -32,9 +40,6 @@
 - Bump Android SDK from v8.41.0 to v8.50.1 ([#1344](https://github.com/getsentry/sentry-capacitor/pull/1344))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8501)
   - [diff](https://github.com/getsentry/sentry-java/compare/8.41.0...8.50.1)
-- Bump Cocoa SDK from v9.16.1 to v9.24.0 ([#1280](https://github.com/getsentry/sentry-capacitor/pull/1280))
-  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#9240)
-  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.16.1...9.24.0)
 
 ## 4.2.0
 
