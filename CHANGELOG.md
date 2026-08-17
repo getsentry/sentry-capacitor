@@ -6,7 +6,13 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
-## Unreleased
+## 4.3.0
+
+### Deprecations
+
+- iOS: CocoaPods support is deprecated, the podspec setup will be removed in the next minor version.
+  - `sentry-cocoa` has [deprecated CocoaPods](https://github.com/getsentry/sentry-cocoa/pull/7526) and stopped publishing new releases to CocoaPods trunk after `9.19.1`, so `SentryCapacitor.podspec` can no longer be kept up to date.
+  - Please migrate to Swift Package Manager (`Package.swift`) before upgrading to the next minor version.
 
 ### Break Changes
 
@@ -20,6 +26,9 @@
 
 ### Dependencies
 
+- Bump JavaScript SDK from v10.60.0 to v10.69.0 ([#1354](https://github.com/getsentry/sentry-capacitor/pull/1354))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.69.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/10.60.0...10.69.0)
 - Bump Android SDK from v8.41.0 to v8.50.1 ([#1344](https://github.com/getsentry/sentry-capacitor/pull/1344))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8501)
   - [diff](https://github.com/getsentry/sentry-java/compare/8.41.0...8.50.1)
