@@ -8,6 +8,12 @@
 
 ## Unreleased
 
+### Break Changes
+
+- Remove `SentryCapacitor.podspec`, dropping CocoaPods support for iOS ([#1352](https://github.com/getsentry/sentry-capacitor/pull/1352))
+  - `sentry-cocoa` [deprecated CocoaPods](https://github.com/getsentry/sentry-cocoa/pull/7526) and stopped publishing new releases to CocoaPods trunk after `9.19.1`, so the podspec could no longer be bumped past that version.
+  - iOS consumers must use Swift Package Manager (`Package.swift`) to install this SDK going forward. Remove any `pod 'SentryCapacitor'` entry from your `Podfile` and add the package through Xcode/SPM instead.
+
 ### Dependencies
 
 - Bump Cocoa SDK from v9.16.1 to v9.24.0 ([#1280](https://github.com/getsentry/sentry-capacitor/pull/1280))
@@ -21,12 +27,6 @@
 - iOS: CocoaPods support is deprecated, the podspec setup will be removed in the next minor version.
   - `sentry-cocoa` has [deprecated CocoaPods](https://github.com/getsentry/sentry-cocoa/pull/7526) and stopped publishing new releases to CocoaPods trunk after `9.19.1`, so `SentryCapacitor.podspec` can no longer be kept up to date.
   - Please migrate to Swift Package Manager (`Package.swift`) before upgrading to the next minor version.
-
-### Break Changes
-
-- Remove `SentryCapacitor.podspec`, dropping CocoaPods support for iOS ([#1352](https://github.com/getsentry/sentry-capacitor/pull/1352))
-  - `sentry-cocoa` [deprecated CocoaPods](https://github.com/getsentry/sentry-cocoa/pull/7526) and stopped publishing new releases to CocoaPods trunk after `9.19.1`, so the podspec could no longer be bumped past that version.
-  - iOS consumers must use Swift Package Manager (`Package.swift`) to install this SDK going forward. Remove any `pod 'SentryCapacitor'` entry from your `Podfile` and add the package through Xcode/SPM instead.
 
 ### Fixes
 
