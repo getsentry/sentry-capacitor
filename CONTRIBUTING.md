@@ -37,8 +37,8 @@ yarn watch
 
 ### iOS
 
-- Basically you'll need to edit SentryCapacitor.podspec and ios/Porfile updating the Sentry dependency and validate it on one of the examples apps on this project.
-- Run 'pod install --repo-update' on the ios folder and then 'yarn build' on the root folder.
+- Edit `Package.swift` updating the `sentry-cocoa` dependency version and validate it on one of the example apps on this project.
+- Run 'yarn build' on the root folder.
 
 ## Bumping Sentry JavaScript
 
@@ -121,26 +121,11 @@ make build-xcframework
 cd sentry-capacitor
 ```
 
-Comment out sentry dependency in `SentryCapacitor.podspec`.
+Point the `sentry-cocoa` dependency in `Package.swift` at your local checkout.
 
 ```diff
--   s.dependency 'Sentry', '7.31.0'
-+   # s.dependency 'Sentry', '7.31.0'
-```
-
-Add local pods to `example/ionic-angular/ios/App/Podfile`.
-
-```diff
-target 'sample' do
-
-  # ... capacitor config
-
-+  pod 'Sentry/HybridSDK', :path => '../../../sentry-cocoa'
-+  pod 'SentryPrivate', :path => '../../../sentry-cocoa/SentryPrivate.podspec'
-
-  # ... rest of the configuration
-
-end
+-   .package(url: "https://github.com/getsentry/sentry-cocoa", from: "9.24.0")
++   .package(path: "../../../sentry-cocoa")
 ```
 
 ## Develop with sentry-java
