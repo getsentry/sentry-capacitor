@@ -13,6 +13,10 @@
 - Pin Sentry Cocoa to 9.28.0 ([#1404](https://github.com/getsentry/sentry-capacitor/pull/1404))
 - iOS: `enableCaptureFailedRequests` and `sendDefaultPii` are now correctly passed into Sentry Cocoa SDK ([#1384](https://github.com/getsentry/sentry-capacitor/pull/1384))
 
+### Features
+
+- Add automatic instrumentation for `CapacitorHttp` requests, including spans, breadcrumbs, and trace propagation using `tracePropagationTargets` and `propagateTraceparent`.
+
 ### Break Changes
 
 - Remove `SentryCapacitor.podspec`, dropping CocoaPods support for iOS ([#1352](https://github.com/getsentry/sentry-capacitor/pull/1352))
