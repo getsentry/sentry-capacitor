@@ -8,6 +8,10 @@
 
 ## Unreleased
 
+### Features
+
+- Add automatic instrumentation for `CapacitorHttp` requests, including spans, breadcrumbs, and trace propagation using `tracePropagationTargets` and `propagateTraceparent`.
+
 ### Break Changes
 
 - Remove `SentryCapacitor.podspec`, dropping CocoaPods support for iOS ([#1352](https://github.com/getsentry/sentry-capacitor/pull/1352))
