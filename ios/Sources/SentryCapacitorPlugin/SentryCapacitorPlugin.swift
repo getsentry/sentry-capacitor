@@ -186,6 +186,14 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             }
         }
 
+        if let enableCaptureFailedRequests = dict["enableCaptureFailedRequests"] as? Bool {
+            options.enableCaptureFailedRequests = enableCaptureFailedRequests
+        }
+
+        if let sendDefaultPii = dict["sendDefaultPii"] as? Bool {
+            options.sendDefaultPii = sendDefaultPii
+        }
+
         return options
     }
 
