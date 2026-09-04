@@ -12,6 +12,10 @@
 
 - Add automatic instrumentation for `CapacitorHttp` requests, including spans, breadcrumbs, and trace propagation using `tracePropagationTargets` and `propagateTraceparent`.
 
+### Fixes
+
+- iOS: `enableCaptureFailedRequests` and `sendDefaultPii` are now correctly passed into Sentry Cocoa SDK ([#1384](https://github.com/getsentry/sentry-capacitor/pull/1384))
+
 ### Break Changes
 
 - Remove `SentryCapacitor.podspec`, dropping CocoaPods support for iOS ([#1352](https://github.com/getsentry/sentry-capacitor/pull/1352))
