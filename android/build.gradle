@@ -91,5 +91,5 @@ repositories {
 
 dependencies {
     implementation project(':capacitor-android')
-    implementation 'io.sentry:sentry-android:8.50.1'
+    implementation 'io.sentry:sentry-android:8.55.0'
 }
