@@ -8,18 +8,42 @@ const mockPut = jest.fn();
 const mockPatch = jest.fn();
 const mockDelete = jest.fn();
 
+const mockHttpMethods: Record<string, jest.Mock> = {
+  request: mockRequest,
+  get: mockGet,
+  post: mockPost,
+  put: mockPut,
+  patch: mockPatch,
+  delete: mockDelete,
+};
+
+const mockNativePromise = jest.fn(
+  (_pluginName: string, methodName: string, options?: unknown) =>
+    mockHttpMethods[methodName]?.(options),
+);
+
+const mockCapacitor = {
+  isNativePlatform: mockIsNativePlatform,
+  nativePromise: mockNativePromise,
+};
+
+const mockCapacitorHttp = new Proxy(
+  {},
+  {
+    get(_target, property) {
+      return (options: unknown) =>
+        mockCapacitor.nativePromise(
+          'CapacitorHttp',
+          String(property),
+          options,
+        );
+    },
+  },
+);
+
 jest.mock('@capacitor/core', () => ({
-  Capacitor: {
-    isNativePlatform: mockIsNativePlatform,
-  },
-  CapacitorHttp: {
-    request: mockRequest,
-    get: mockGet,
-    post: mockPost,
-    put: mockPut,
-    patch: mockPatch,
-    delete: mockDelete,
-  },
+  Capacitor: mockCapacitor,
+  CapacitorHttp: mockCapacitorHttp,
 }));
 
 jest.mock('@sentry/core', () => {
@@ -68,6 +92,36 @@ beforeEach(() => {
     'baggage': 'sentry-release=1.0.0',
     'traceparent': 'traceparent-value',
   });
+});
+
+it('instruments methods returned as fresh wrappers by the plugin proxy', async () => {
+  expect(CapacitorHttp.get).not.toBe(CapacitorHttp.get);
+
+  mockGet.mockResolvedValue({
+    data: {},
+    headers: {},
+    status: 200,
+    url: 'https://example.com/users',
+  });
+
+  await CapacitorHttp.get({ url: 'https://example.com/users' });
+
+  expect(startSpan).toHaveBeenCalledTimes(1);
+});
+
+it('does not instrument native calls for other plugins', async () => {
+  const options = { value: 'test' };
+
+  mockNativePromise.mockResolvedValueOnce(undefined);
+
+  await mockCapacitor.nativePromise('OtherPlugin', 'get', options);
+
+  expect(mockNativePromise).toHaveBeenCalledWith(
+    'OtherPlugin',
+    'get',
+    options,
+  );
+  expect(startSpan).not.toHaveBeenCalled();
 });
 
 it('instruments a successful GET request', async () => {

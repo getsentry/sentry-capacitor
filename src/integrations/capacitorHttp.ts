@@ -1,6 +1,5 @@
 import {
   Capacitor,
-  CapacitorHttp,
   type HttpOptions,
   type HttpResponse,
 } from '@capacitor/core';
@@ -22,6 +21,16 @@ const INTEGRATION_NAME = 'CapacitorHttp';
 
 type HttpMethod = 'request' | 'get' | 'post' | 'put' | 'patch' | 'delete';
 
+type NativePromise = (
+  pluginName: string,
+  methodName: string,
+  options?: unknown,
+) => Promise<unknown>;
+
+type CapacitorWithNativePromise = typeof Capacitor & {
+  nativePromise: NativePromise;
+};
+
 const HTTP_METHODS: HttpMethod[] = [
   'request',
   'get',
@@ -31,6 +40,19 @@ const HTTP_METHODS: HttpMethod[] = [
   'delete',
 ];
 
+function isHttpMethod(method: string): method is HttpMethod {
+  return HTTP_METHODS.includes(method as HttpMethod);
+}
+
+function isHttpOptions(options: unknown): options is HttpOptions {
+  return (
+    typeof options === 'object' &&
+    options !== null &&
+    'url' in options &&
+    typeof options.url === 'string'
+  );
+}
+
 export const capacitorHttpIntegration = (): Integration => ({
   name: INTEGRATION_NAME,
 
@@ -39,15 +61,39 @@ export const capacitorHttpIntegration = (): Integration => ({
       return;
     }
 
-    HTTP_METHODS.forEach(method => {
-      fillTyped(CapacitorHttp, method, original => {
-        return function (
-          this: typeof CapacitorHttp,
-          options: HttpOptions,
-        ): Promise<HttpResponse> {
-          return instrumentRequest(original, this, method, options);
-        };
-      });
+    const capacitor = Capacitor as CapacitorWithNativePromise;
+
+    if (typeof capacitor.nativePromise !== 'function') {
+      return;
+    }
+
+    fillTyped(capacitor, 'nativePromise', original => {
+      return function (
+        this: CapacitorWithNativePromise,
+        pluginName: string,
+        methodName: string,
+        options?: unknown,
+      ): Promise<unknown> {
+        if (
+          pluginName !== INTEGRATION_NAME ||
+          !isHttpMethod(methodName) ||
+          !isHttpOptions(options)
+        ) {
+          return original.call(this, pluginName, methodName, options);
+        }
+
+        const nativeRequest = (
+          requestOptions: HttpOptions,
+        ): Promise<HttpResponse> =>
+          original.call(
+            this,
+            pluginName,
+            methodName,
+            requestOptions,
+          ) as Promise<HttpResponse>;
+
+        return instrumentRequest(nativeRequest, this, methodName, options);
+      };
     });
   },
 });
