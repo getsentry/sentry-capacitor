@@ -5,9 +5,12 @@ import {
 } from '@capacitor/core';
 import {
   addBreadcrumb,
+  type Client,
+  debug,
   getBreadcrumbLogLevelFromHttpStatusCode,
   getClient,
   getTraceData,
+  hasSpanStreamingEnabled,
   type Integration,
   setHttpStatus,
   shouldPropagateTraceForUrl,
@@ -58,6 +61,9 @@ export const capacitorHttpIntegration = (): Integration => ({
 
   setupOnce(): void {
     if (!Capacitor.isNativePlatform()) {
+      debug.warn(
+        `[${INTEGRATION_NAME}] is disabled by not running on a native platform`,
+      );
       return;
     }
 
@@ -100,13 +106,15 @@ export const capacitorHttpIntegration = (): Integration => ({
 
 function getMethod(method: HttpMethod, options: HttpOptions): string {
   return method === 'request'
-    ? (options.method ?? 'GET').toUpperCase()
+    ? (options.method?.toUpperCase() ?? 'GET')
     : method.toUpperCase();
 }
 
-function addTracingHeaders(options: HttpOptions, span: Span): HttpOptions {
-  const client = getClient();
-
+function addTracingHeaders(
+  options: HttpOptions,
+  span: Span,
+  client: Client,
+): HttpOptions {
   if (!client) {
     return options;
   }
@@ -161,26 +169,17 @@ function mergeBaggageHeader(
     return;
   }
 
-  const existingKey = findHeaderKey(headers, 'baggage');
+  const key = findHeaderKey(headers, 'baggage') ?? 'baggage';
+  const existingValue = headers[key];
 
-  if (!existingKey) {
-    headers.baggage = sentryBaggage;
+  // Preserve baggage wich already contains Sentry values
+  if (existingValue && /(?:^|,)\s*sentry-[^=]*=/.test(existingValue)) {
     return;
   }
 
-  const existingValue = headers[existingKey];
-
-  if (!existingValue) {
-    headers[existingKey] = sentryBaggage;
-    return;
-  }
-
-  // Preserve baggage which already contains Sentry Values
-  if (/(?:^|,)\s*sentry-[^=]*=/.test(existingValue)) {
-    return;
-  }
-
-  headers[existingKey] = `${existingValue},${sentryBaggage}`;
+  headers[key] = existingValue
+    ? `${existingValue},${sentryBaggage}`
+    : sentryBaggage;
 }
 
 async function instrumentRequest(
@@ -202,7 +201,7 @@ async function instrumentRequest(
     {
       name: spanName,
       op: 'http.client',
-      onlyIfParent: true,
+      onlyIfParent: !hasSpanStreamingEnabled(client),
       attributes: {
         'http.request.method': method,
         'url.full': options.url,
@@ -211,7 +210,7 @@ async function instrumentRequest(
     },
     async span => {
       // Trace headers, request, status and breadcrumb
-      const requestOptions = addTracingHeaders(options, span);
+      const requestOptions = addTracingHeaders(options, span, client);
 
       try {
         const response = (await original.call(
