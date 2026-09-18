@@ -10,12 +10,6 @@ PODS:
     - Capacitor
   - CapacitorStatusBar (8.0.0):
     - Capacitor
-  - Sentry (9.13.0):
-    - Sentry/Core (= 9.13.0)
-  - Sentry/Core (9.13.0)
-  - "SentryCapacitor (4.0.0+690e9f79)":
-    - Capacitor
-    - Sentry (= 9.13.0)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -24,11 +18,6 @@ DEPENDENCIES:
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
-  - "SentryCapacitor (from `../../node_modules/@sentry/capacitor`)"
-
-SPEC REPOS:
-  trunk:
-    - Sentry
 
 EXTERNAL SOURCES:
   Capacitor:
@@ -43,8 +32,6 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/keyboard"
   CapacitorStatusBar:
     :path: "../../node_modules/@capacitor/status-bar"
-  SentryCapacitor:
-    :path: "../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
   Capacitor: 2b79172ad27f3be2d103cce88b8eb9803fdcc744
@@ -53,9 +40,7 @@ SPEC CHECKSUMS:
   CapacitorHaptics: 2079d9fa04c5a71e18663b4722323c304c58245c
   CapacitorKeyboard: d7868c079a4d5277a3deca27a10a488fcbbb8b69
   CapacitorStatusBar: 312e2e67928dfe9514c4a8916a1fd610552f5f35
-  Sentry: 5c3f67235d4c16fcfab43158a8c1502a18fece9a
-  SentryCapacitor: b61b47c846aa2418e44f4ddc8e538348f3007dce
 
-PODFILE CHECKSUM: 72b7933f33f449ffc285e956394345ca4767d300
+PODFILE CHECKSUM: dbe0a1138d3b0ad4e9d6ecd4c77f0b993612bf21
 
 COCOAPODS: 1.16.2
