@@ -10,7 +10,7 @@
 
 ### Fixes
 
-- Pin Sentry Cocoa to 9.8.0 via SPM, preventing it from resolving a newer release that removed legacy hybrid SDK facade APIs still used by this SDK ([#1404](https://github.com/getsentry/sentry-capacitor/pull/1404))
+- Pin Sentry Cocoa to 9.8.0 via SPM, preventing it from resolving a newer release that removed legacy hybrid SDK facade APIs still used by this SDK ([#1406](https://github.com/getsentry/sentry-capacitor/pull/1406))
 
 ## 3.2.1
 
