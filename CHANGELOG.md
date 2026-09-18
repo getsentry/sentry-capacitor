@@ -10,6 +10,7 @@
 
 ### Fixes
 
+- Pin Sentry Cocoa to 9.28.0 ([#1404](https://github.com/getsentry/sentry-capacitor/pull/1404))
 - iOS: `enableCaptureFailedRequests` and `sendDefaultPii` are now correctly passed into Sentry Cocoa SDK ([#1384](https://github.com/getsentry/sentry-capacitor/pull/1384))
 
 ### Break Changes
