@@ -36,7 +36,8 @@
     "native"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "tag": "v3.2"
   },
   "author": "Sentry Team and Contributors",
   "license": "MIT",
