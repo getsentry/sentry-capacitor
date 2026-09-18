@@ -513,12 +513,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/compiler@npm:^20.3.16":
-  version: 20.3.25
-  resolution: "@angular/compiler@npm:20.3.25"
+"@angular/compiler@npm:^20.3.28":
+  version: 20.3.28
+  resolution: "@angular/compiler@npm:20.3.28"
   dependencies:
     tslib: "npm:^2.3.0"
-  checksum: 10c0/cbc3f947711a5abc95a981b3be6d861eef186083e7d74e157bdc136a114843bf60f8a8cc45477ec3a5b7dd5821e11df4e883771d68dfebab1c247dab78a06937
+  checksum: 10c0/c891fee1c6b2d32b08f8091dba1d6fcc469082da1b45cba0fcf7ad6a1317334b8e4c99aec0c6be143a380360efe5cc67097daa6b6426bd5cbe793a39a4dc5422
   languageName: node
   linkType: hard
 
@@ -4150,24 +4150,12 @@ __metadata:
 
 "@sentry/capacitor@file:.yalc/@sentry/capacitor::locator=ionic-angular%40workspace%3A.":
   version: 4.3.0+13176b28
-  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=f8672e&locator=ionic-angular%40workspace%3A."
+  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=9c876e&locator=ionic-angular%40workspace%3A."
   dependencies:
     "@sentry/browser": "npm:10.69.0"
     "@sentry/core": "npm:10.69.0"
     "@sentry/types": "npm:10.69.0"
-  peerDependencies:
-    "@capacitor/core": ">=3.0.0"
-    "@sentry/angular": 10.69.0
-    "@sentry/react": 10.69.0
-    "@sentry/vue": 10.69.0
-  peerDependenciesMeta:
-    "@sentry/angular":
-      optional: true
-    "@sentry/react":
-      optional: true
-    "@sentry/vue":
-      optional: true
-  checksum: 10c0/6236ed55e5e4b7ba966c4ec8f77e0328e623e8170628e75f82e9cd21f1852bf04c597c3a661642a1515ffa9a3a450792c42f7ebe9ae5b6edb6716560f8cf0490
+  checksum: 10c0/0a0d9452e359bfa2ac0f8cfee7b895be1f3456dc203103f747484034ec3aed447678a944b4ecef39f32c4d65a49cceb237855e5805125f5079548e9944364731
   languageName: node
   linkType: hard
 
@@ -7761,7 +7749,7 @@ __metadata:
     "@angular-devkit/build-angular": "npm:^20.3.16"
     "@angular/cli": "npm:^20.3.16"
     "@angular/common": "npm:^20.3.16"
-    "@angular/compiler": "npm:^20.3.16"
+    "@angular/compiler": "npm:^20.3.28"
     "@angular/compiler-cli": "npm:^20.3.16"
     "@angular/core": "npm:^20.3.16"
     "@angular/forms": "npm:^20.3.16"
