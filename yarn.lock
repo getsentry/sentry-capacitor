@@ -1328,12 +1328,12 @@ __metadata:
   linkType: hard
 
 "@sentry/wizard@npm:^6.12.0":
-  version: 6.12.0
-  resolution: "@sentry/wizard@npm:6.12.0"
+  version: 6.13.0
+  resolution: "@sentry/wizard@npm:6.13.0"
   dependencies:
     "@clack/prompts": "npm:0.7.0"
     "@sentry/node": "npm:^10.29.0"
-    axios: "npm:1.13.5"
+    axios: "npm:1.15.2"
     chalk: "npm:^2.4.1"
     glob: "npm:9.3.5"
     inquirer: "npm:^6.2.0"
@@ -1348,7 +1348,7 @@ __metadata:
     yargs: "npm:^16.2.0"
   bin:
     sentry-wizard: dist/bin.js
-  checksum: 10c0/96610c70a6ae836ac9aa0ffaf707a6a2063a294b1bf16a7c43a8bac6bc729fa789c2169a7978fc9c8fc81aada5c9c0141bb73bc216ef439448ef58ee55fcf5b9
+  checksum: 10c0/53b7f61bafbbbba2e42e0beec8103f4dffaba30eba5dbb6ffbd70313091fd1c4b5f580366154cdd522003d2657465dc80d33a6b1c7c6e26ab0c1490d2ffbf9b4
   languageName: node
   linkType: hard
 
