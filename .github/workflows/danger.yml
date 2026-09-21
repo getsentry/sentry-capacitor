@@ -7,4 +7,4 @@ jobs:
   danger:
     runs-on: ubuntu-latest
     steps:
-      - uses: getsentry/github-workflows/danger@17cc15eb58ea3687cd8f2714a4192dcee4aa09ef
+      - uses: getsentry/github-workflows/danger@45c8e3ad80a43dc92cfbaa64b8870fac55afdf84
