@@ -17,7 +17,7 @@ jobs:
   android:
     runs-on: ubuntu-latest
     steps:
-      - uses: getsentry/github-workflows/updater@607fed74f812e69201531a5185b6c3c57caa4e89 # v3
+      - uses: getsentry/github-workflows/updater@959162c159b866489d3fabe93327f48f9b8cb7ee # v3
         with:
           path: scripts/update-android.sh
           name: Android SDK
@@ -27,7 +27,7 @@ jobs:
   cocoa:
     runs-on: ubuntu-latest
     steps:
-      - uses: getsentry/github-workflows/updater@607fed74f812e69201531a5185b6c3c57caa4e89 # v3
+      - uses: getsentry/github-workflows/updater@959162c159b866489d3fabe93327f48f9b8cb7ee # v3
         with:
           path: scripts/update-cocoa.sh
           name: Cocoa SDK
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: corepack enable
-      - uses: getsentry/github-workflows/updater@607fed74f812e69201531a5185b6c3c57caa4e89 # v3
+      - uses: getsentry/github-workflows/updater@959162c159b866489d3fabe93327f48f9b8cb7ee # v3
         with:
           path: scripts/update-javascript.sh
           name: JavaScript SDK
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: corepack enable
-      - uses: getsentry/github-workflows/updater@607fed74f812e69201531a5185b6c3c57caa4e89 # v3
+      - uses: getsentry/github-workflows/updater@959162c159b866489d3fabe93327f48f9b8cb7ee # v3
         with:
           path: scripts/update-javascript-siblings.sh
           name: JavaScript Sibling SDKs
@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: corepack enable
-      - uses: getsentry/github-workflows/updater@607fed74f812e69201531a5185b6c3c57caa4e89 # v3
+      - uses: getsentry/github-workflows/updater@959162c159b866489d3fabe93327f48f9b8cb7ee # v3
         with:
           path: scripts/update-wizard.sh
           name: Wizard
