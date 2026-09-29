@@ -37,6 +37,7 @@ jobs:
   javascript:
     runs-on: ubuntu-latest
     steps:
+      - run: corepack enable
       - uses: getsentry/github-workflows/updater@607fed74f812e69201531a5185b6c3c57caa4e89 # v3
         with:
           path: scripts/update-javascript.sh
@@ -47,6 +48,7 @@ jobs:
   javascript-siblings:
     runs-on: ubuntu-latest
     steps:
+      - run: corepack enable
       - uses: getsentry/github-workflows/updater@607fed74f812e69201531a5185b6c3c57caa4e89 # v3
         with:
           path: scripts/update-javascript-siblings.sh
@@ -57,6 +59,7 @@ jobs:
   wizard:
     runs-on: ubuntu-latest
     steps:
+      - run: corepack enable
       - uses: getsentry/github-workflows/updater@607fed74f812e69201531a5185b6c3c57caa4e89 # v3
         with:
           path: scripts/update-wizard.sh
