@@ -41,7 +41,7 @@
   "author": "Sentry Team and Contributors",
   "license": "MIT",
   "peerDependencies": {
-    "@capacitor/core": ">=3.0.0",
+    "@capacitor/core": ">=6.0.0",
     "@sentry/angular": "10.69.0",
     "@sentry/react": "10.69.0",
     "@sentry/vue": "10.69.0"
