@@ -110,6 +110,29 @@ function getMethod(method: HttpMethod, options: HttpOptions): string {
     : method.toUpperCase();
 }
 
+function getRequestUrl(options: HttpOptions): string {
+  const query: string[] = [];
+  const encode =
+    options.shouldEncodeUrlParams === false
+      ? (value: string): string => value
+      : encodeURIComponent;
+
+  for (const [key, value] of Object.entries(options.params ?? {})) {
+    for (const item of Array.isArray(value) ? value : [value]) {
+      query.push(`${encode(key)}=${encode(item)}`);
+    }
+  }
+
+  if (!query.length) {
+    return options.url;
+  }
+
+  const hashIndex = options.url.indexOf('#');
+  const url = hashIndex < 0 ? options.url : options.url.slice(0, hashIndex);
+  const fragment = hashIndex < 0 ? '' : options.url.slice(hashIndex);
+  return `${url}${url.includes('?') ? '&' : '?'}${query.join('&')}${fragment}`;
+}
+
 function addTracingHeaders(
   options: HttpOptions,
   span: Span,
@@ -195,6 +218,7 @@ async function instrumentRequest(
   }
 
   const method = getMethod(methodName, options);
+  const url = getRequestUrl(options);
   const spanName = `${method} ${stripUrlQueryAndFragment(options.url)}`;
 
   return startSpan(
@@ -204,7 +228,7 @@ async function instrumentRequest(
       onlyIfParent: !hasSpanStreamingEnabled(client),
       attributes: {
         'http.request.method': method,
-        'url.full': options.url,
+        'url.full': url,
         'sentry.origin': 'auto.http.capacitor',
       },
     },
@@ -226,7 +250,7 @@ async function instrumentRequest(
           level: getBreadcrumbLogLevelFromHttpStatusCode(response.status),
           data: {
             method,
-            url: options.url,
+            url,
             status_code: response.status,
           },
         });
@@ -239,7 +263,7 @@ async function instrumentRequest(
           level: 'error',
           data: {
             method,
-            url: options.url,
+            url,
           },
         });
 

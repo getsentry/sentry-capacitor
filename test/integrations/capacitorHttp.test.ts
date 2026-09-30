@@ -60,7 +60,7 @@ jest.mock('@sentry/core', () => {
   };
 });
 
-import { CapacitorHttp } from '@capacitor/core';
+import { CapacitorHttp, type HttpOptions } from '@capacitor/core';
 import {
   addBreadcrumb,
   getClient,
@@ -174,7 +174,60 @@ it('instruments a successful GET request', async () => {
   });
 });
 
-it('adds an error breadcrumb and preserves request rejection', async () => {
+it.each<[HttpOptions, string]>([
+  [
+    { url: 'https://example.com/users', params: { page: '2' } },
+    'https://example.com/users?page=2',
+  ],
+  [
+    { url: 'https://example.com/users', params: { tag: ['active', 'new'] } },
+    'https://example.com/users?tag=active&tag=new',
+  ],
+  [
+    { url: 'https://example.com/users', params: { 'search term': 'a b&c' } },
+    'https://example.com/users?search%20term=a%20b%26c',
+  ],
+  [
+    { url: 'https://example.com/users?q=a%20b#details', params: { q: 'c' } },
+    'https://example.com/users?q=a%20b&q=c#details',
+  ],
+  [
+    {
+      url: 'https://example.com/users',
+      params: { q: 'a%20b' },
+      shouldEncodeUrlParams: false,
+    },
+    'https://example.com/users?q=a%20b',
+  ],
+  [
+    { url: 'https://example.com/users', params: {} },
+    'https://example.com/users',
+  ],
+  [
+    { url: 'https://example.com/users', params: { tag: [] } },
+    'https://example.com/users',
+  ],
+])('captures request params in %s as %s', async (options, url) => {
+  Object.freeze(options);
+  mockGet.mockResolvedValue({ status: 200 });
+
+  await CapacitorHttp.get(options);
+
+  expect(startSpan).toHaveBeenCalledWith(
+    expect.objectContaining({
+      name: 'GET https://example.com/users',
+      attributes: expect.objectContaining({ 'url.full': url }),
+    }),
+    expect.any(Function),
+  );
+  expect(addBreadcrumb).toHaveBeenCalledWith(
+    expect.objectContaining({ data: { method: 'GET', url, status_code: 200 } }),
+  );
+  expect(mockGet).toHaveBeenCalledWith(expect.objectContaining(options));
+  expect(mockGet.mock.calls[0]?.[0].params).toBe(options.params);
+});
+
+it('adds an error breadcrumb with params and preserves request rejection', async () => {
   const error = new Error('Network request failed');
 
   mockGet.mockRejectedValue(error);
@@ -182,6 +235,7 @@ it('adds an error breadcrumb and preserves request rejection', async () => {
   await expect(
     CapacitorHttp.get({
       url: 'https://example.com/users',
+      params: { page: '2' },
     }),
   ).rejects.toBe(error);
 
@@ -193,7 +247,7 @@ it('adds an error breadcrumb and preserves request rejection', async () => {
     level: 'error',
     data: {
       method: 'GET',
-      url: 'https://example.com/users',
+      url: 'https://example.com/users?page=2',
     },
   });
 });
