@@ -1,17 +1,5 @@
-import {
-  breadcrumbsIntegration,
-  browserApiErrorsIntegration,
-  browserSessionIntegration,
-  globalHandlersIntegration,
-  httpContextIntegration,
-} from '@sentry/browser';
-import {
-  dedupeIntegration,
-  eventFiltersIntegration,
-  functionToStringIntegration,
-  type Integration,
-  linkedErrorsIntegration,
-} from '@sentry/core';
+import { breadcrumbsIntegration, browserApiErrorsIntegration, browserSessionIntegration, globalHandlersIntegration, httpContextIntegration } from '@sentry/browser';
+import { dedupeIntegration, eventFiltersIntegration, functionToStringIntegration, type Integration, linkedErrorsIntegration } from '@sentry/core';
 import type { CapacitorOptions } from '../options';
 import { deviceContextIntegration } from './devicecontext';
 import { eventOriginIntegration } from './eventorigin';
@@ -36,7 +24,8 @@ export function getDefaultIntegrations(
   if (options.enableNative) {
     integrations.push(deviceContextIntegration());
     integrations.push(logEnricherIntegration());
-  } else {
+  }
+  else {
     integrations.push(httpContextIntegration());
   }
 
