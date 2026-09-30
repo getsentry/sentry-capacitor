@@ -74,6 +74,9 @@ export const capacitorHttpIntegration = (): Integration => ({
     const capacitor = Capacitor as CapacitorWithNativePromise;
 
     if (typeof capacitor.nativePromise !== 'function') {
+      debug.warn(
+        `[${INTEGRATION_NAME}] is disabled because Capacitor.nativePromise is unavailable`,
+      );
       return;
     }
 
