@@ -6,19 +6,17 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Features
+
+- Add automatic instrumentation for `CapacitorHttp` requests, including spans, breadcrumbs, and trace propagation using `tracePropagationTargets` and `propagateTraceparent`. ([#1387](https://github.com/getsentry/sentry-capacitor/pull/1387))
+
 ## 4.4.0
 
 ### Fixes
 
 - Pin Sentry Cocoa to 9.28.0 ([#1404](https://github.com/getsentry/sentry-capacitor/pull/1404))
-- iOS: `enableCaptureFailedRequests` and `sendDefaultPii` are now correctly passed into Sentry Cocoa SDK ([#1384](https://github.com/getsentry/sentry-capacitor/pull/1384))
-
-### Features
-
-- Add automatic instrumentation for `CapacitorHttp` requests, including spans, breadcrumbs, and trace propagation using `tracePropagationTargets` and `propagateTraceparent`. ([#1387](https://github.com/getsentry/sentry-capacitor/pull/1387))
-- 
-### Fixes
-
 - iOS: `enableCaptureFailedRequests` and `sendDefaultPii` are now correctly passed into Sentry Cocoa SDK ([#1384](https://github.com/getsentry/sentry-capacitor/pull/1384))
 
 ### Break Changes
