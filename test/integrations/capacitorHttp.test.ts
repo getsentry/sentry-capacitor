@@ -124,6 +124,28 @@ it('does not instrument native calls for other plugins', async () => {
   expect(startSpan).not.toHaveBeenCalled();
 });
 
+it.each(['sentry-trace', 'Sentry-Trace', 'traceparent', 'Traceparent'])(
+  'passes native requests with an existing %s header through unchanged',
+  async header => {
+    const options = {
+      url: 'https://example.com/users',
+      method: 'POST',
+      headers: { [header]: 'existing-trace' },
+    };
+    const response = { status: 200 };
+    mockRequest.mockResolvedValue(response);
+
+    const result = await mockCapacitor.nativePromise('CapacitorHttp', 'request', options);
+
+    expect(result).toBe(response);
+    expect(mockNativePromise).toHaveBeenCalledWith('CapacitorHttp', 'request', options);
+    expect(mockRequest.mock.calls[0]?.[0]).toBe(options);
+    expect(startSpan).not.toHaveBeenCalled();
+    expect(addBreadcrumb).not.toHaveBeenCalled();
+    expect(getTraceData).not.toHaveBeenCalled();
+  },
+);
+
 it('instruments a successful GET request', async () => {
   const response = {
     data: { success: true },
@@ -287,7 +309,7 @@ it('does not inject headers when the URL does not match', async () => {
   });
 });
 
-it('preserves existing trace headers and merges non-Sentry baggage', async () => {
+it('merges non-Sentry baggage', async () => {
   const response = {
     data: {},
     headers: {},
@@ -298,9 +320,7 @@ it('preserves existing trace headers and merges non-Sentry baggage', async () =>
   const options = {
     url: 'https://example.com/users',
     headers: {
-      'Sentry-Trace': 'existing-trace',
-      'Traceparent': 'existing-traceparent',
-      'Baggage': 'vendor=value',
+      Baggage: 'vendor=value',
     },
   };
 
@@ -316,8 +336,8 @@ it('preserves existing trace headers and merges non-Sentry baggage', async () =>
   expect(mockGet).toHaveBeenCalledWith({
     url: 'https://example.com/users',
     headers: {
-      'Sentry-Trace': 'existing-trace',
-      'Traceparent': 'existing-traceparent',
+      'sentry-trace': 'trace-value',
+      'traceparent': 'traceparent-value',
       'Baggage': 'vendor=value,sentry-release=1.0.0',
     },
   });
@@ -325,9 +345,7 @@ it('preserves existing trace headers and merges non-Sentry baggage', async () =>
   expect(options).toEqual({
     url: 'https://example.com/users',
     headers: {
-      'Sentry-Trace': 'existing-trace',
-      'Traceparent': 'existing-traceparent',
-      'Baggage': 'vendor=value',
+      Baggage: 'vendor=value',
     },
   });
 });

@@ -56,6 +56,10 @@ function isHttpOptions(options: unknown): options is HttpOptions {
   );
 }
 
+/**
+ * Instruments direct CapacitorHttp plugin calls.
+ * Fetch/XHR are already covered by browser tracing.
+ */
 export const capacitorHttpIntegration = (): Integration => ({
   name: INTEGRATION_NAME,
 
@@ -84,6 +88,14 @@ export const capacitorHttpIntegration = (): Integration => ({
           pluginName !== INTEGRATION_NAME ||
           !isHttpMethod(methodName) ||
           !isHttpOptions(options)
+        ) {
+          return original.call(this, pluginName, methodName, options);
+        }
+
+        if (
+          options.headers &&
+          (findHeaderKey(options.headers, 'sentry-trace') ||
+            findHeaderKey(options.headers, 'traceparent'))
         ) {
           return original.call(this, pluginName, methodName, options);
         }
@@ -138,9 +150,6 @@ function addTracingHeaders(
   span: Span,
   client: Client,
 ): HttpOptions {
-  if (!client) {
-    return options;
-  }
   const { tracePropagationTargets, propagateTraceparent } = client.getOptions();
   if (!shouldPropagateTraceForUrl(options.url, tracePropagationTargets)) {
     return options;
@@ -195,7 +204,7 @@ function mergeBaggageHeader(
   const key = findHeaderKey(headers, 'baggage') ?? 'baggage';
   const existingValue = headers[key];
 
-  // Preserve baggage wich already contains Sentry values
+  // Preserve baggage which already contains Sentry values
   if (existingValue && /(?:^|,)\s*sentry-[^=]*=/.test(existingValue)) {
     return;
   }
