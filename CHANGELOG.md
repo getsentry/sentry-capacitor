@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Features
+
+- Add automatic instrumentation for `CapacitorHttp` requests, including spans, breadcrumbs, and trace propagation using `tracePropagationTargets` and `propagateTraceparent`. ([#1387](https://github.com/getsentry/sentry-capacitor/pull/1387))
+
 ## 4.4.0
 
 ### Fixes
