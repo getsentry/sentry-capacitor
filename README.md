@@ -93,3 +93,4 @@ Sentry.captureEvent({
 - [![Discord Chat](https://img.shields.io/discord/621778831602221064?logo=discord&logoColor=ffffff&color=7389D8)](https://discord.gg/PXa5Apfe7K)
 - [![Stack Overflow](https://img.shields.io/badge/stack%20overflow-sentry-green.svg)](https://stackoverflow.com/questions/tagged/sentry)
 - [![X Follow](https://img.shields.io/twitter/follow/sentry?label=sentry&style=social)](https://x.com/intent/follow?screen_name=sentry)
+- Check out product updates, deep dives, and React Native tips on [the Sentry blog](https://blog.sentry.io/) and [our changelog](https://sentry.io/changelog/)
