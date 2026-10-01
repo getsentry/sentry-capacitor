@@ -1,5 +1,4 @@
 const mockSpan = {};
-const mockIsNativePlatform = jest.fn(() => true);
 
 const mockRequest = jest.fn();
 const mockGet = jest.fn();
@@ -23,28 +22,24 @@ const mockNativePromise = jest.fn(
 );
 
 const mockCapacitor = {
-  isNativePlatform: mockIsNativePlatform,
   nativePromise: mockNativePromise,
+  PluginHeaders: [{
+    name: 'CapacitorHttp',
+    methods: Object.keys(mockHttpMethods).map(name => ({ name, rtype: 'promise' })),
+  }],
 };
 
-const mockCapacitorHttp = new Proxy(
-  {},
-  {
-    get(_target, property) {
-      return (options: unknown) =>
-        mockCapacitor.nativePromise(
-          'CapacitorHttp',
-          String(property),
-          options,
-        );
-    },
-  },
-);
+const capacitorGlobal = globalThis as typeof globalThis & {
+  Capacitor?: unknown;
+  androidBridge?: unknown;
+};
+const originalGlobals = {
+  Capacitor: capacitorGlobal.Capacitor,
+  androidBridge: capacitorGlobal.androidBridge,
+};
 
-jest.mock('@capacitor/core', () => ({
-  Capacitor: mockCapacitor,
-  CapacitorHttp: mockCapacitorHttp,
-}));
+// Seed the native bridge before Capacitor registers its plugins on import.
+Object.assign(capacitorGlobal, { Capacitor: mockCapacitor, androidBridge: {} });
 
 jest.mock('@sentry/core', () => {
   const actual = jest.requireActual('@sentry/core');
@@ -60,7 +55,7 @@ jest.mock('@sentry/core', () => {
   };
 });
 
-import { CapacitorHttp, type HttpOptions } from '@capacitor/core';
+import { Capacitor, CapacitorHttp, type HttpOptions } from '@capacitor/core';
 import {
   addBreadcrumb,
   getClient,
@@ -73,6 +68,10 @@ import { capacitorHttpIntegration } from '../../src/integrations/capacitorHttp';
 
 beforeAll(() => {
   capacitorHttpIntegration().setupOnce?.();
+});
+
+afterAll(() => {
+  Object.assign(capacitorGlobal, originalGlobals);
 });
 
 beforeEach(() => {
@@ -94,7 +93,9 @@ beforeEach(() => {
   });
 });
 
-it('instruments methods returned as fresh wrappers by the plugin proxy', async () => {
+it('instruments the real CapacitorHttp plugin proxy', async () => {
+  expect(Capacitor.isNativePlatform()).toBe(true);
+  expect(Capacitor.isPluginAvailable('CapacitorHttp')).toBe(true);
   expect(CapacitorHttp.get).not.toBe(CapacitorHttp.get);
 
   mockGet.mockResolvedValue({
