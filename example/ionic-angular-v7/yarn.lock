@@ -1783,12 +1783,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@capacitor/android@npm:^7.0.0":
-  version: 7.6.7
-  resolution: "@capacitor/android@npm:7.6.7"
+"@capacitor/android@npm:^7.6.9":
+  version: 7.6.9
+  resolution: "@capacitor/android@npm:7.6.9"
   peerDependencies:
     "@capacitor/core": ^7.6.0
-  checksum: 10c0/f492807157f05be13ed825c633d8122fc944c3ba2d92a07ef1b354c3f0a9ad506f1e2e50fb7f5048c548a781395e0dcc7a4904cbd43d478cff421cc4f8d9851a
+  checksum: 10c0/29167da3f04a8284ecb4b4a615d36f8a16bdca1df443d9bd5f88d1288e20221e3323ece42af53ba0b098409eef851223c45d018b82d13d336817077e065bc0ac
   languageName: node
   linkType: hard
 
@@ -4150,24 +4150,12 @@ __metadata:
 
 "@sentry/capacitor@file:.yalc/@sentry/capacitor::locator=ionic-angular%40workspace%3A.":
   version: 4.3.0+13176b28
-  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=f8672e&locator=ionic-angular%40workspace%3A."
+  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=9c876e&locator=ionic-angular%40workspace%3A."
   dependencies:
     "@sentry/browser": "npm:10.69.0"
     "@sentry/core": "npm:10.69.0"
     "@sentry/types": "npm:10.69.0"
-  peerDependencies:
-    "@capacitor/core": ">=3.0.0"
-    "@sentry/angular": 10.69.0
-    "@sentry/react": 10.69.0
-    "@sentry/vue": 10.69.0
-  peerDependenciesMeta:
-    "@sentry/angular":
-      optional: true
-    "@sentry/react":
-      optional: true
-    "@sentry/vue":
-      optional: true
-  checksum: 10c0/6236ed55e5e4b7ba966c4ec8f77e0328e623e8170628e75f82e9cd21f1852bf04c597c3a661642a1515ffa9a3a450792c42f7ebe9ae5b6edb6716560f8cf0490
+  checksum: 10c0/0a0d9452e359bfa2ac0f8cfee7b895be1f3456dc203103f747484034ec3aed447678a944b4ecef39f32c4d65a49cceb237855e5805125f5079548e9944364731
   languageName: node
   linkType: hard
 
@@ -7769,7 +7757,7 @@ __metadata:
     "@angular/platform-browser": "npm:^20.3.16"
     "@angular/platform-browser-dynamic": "npm:^20.3.16"
     "@angular/router": "npm:^20.3.16"
-    "@capacitor/android": "npm:^7.0.0"
+    "@capacitor/android": "npm:^7.6.9"
     "@capacitor/cli": "npm:^7.6.0"
     "@capacitor/core": "npm:^7.0.0"
     "@capacitor/ios": "npm:^7.0.0"
