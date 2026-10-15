@@ -12,6 +12,12 @@
 
 - Add automatic instrumentation for `CapacitorHttp` requests, including spans, breadcrumbs, and trace propagation using `tracePropagationTargets` and `propagateTraceparent`. ([#1387](https://github.com/getsentry/sentry-capacitor/pull/1387))
 
+### Dependencies
+
+- Bump Cocoa SDK from v9.28.0 to v9.30.2 ([#1280](https://github.com/getsentry/sentry-capacitor/pull/1280))
+  - [changelog](https://github.com/getsentry/sentry-cocoa/blob/main/CHANGELOG.md#9302)
+  - [diff](https://github.com/getsentry/sentry-cocoa/compare/9.28.0...9.30.2)
+
 ## 4.4.0
 
 ### Fixes
