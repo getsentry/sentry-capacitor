@@ -1,4 +1,5 @@
 const mockSpan = {};
+const mockDsn = { host: 'o1.ingest.sentry.io' };
 
 const mockRequest = jest.fn();
 const mockGet = jest.fn();
@@ -78,6 +79,7 @@ beforeEach(() => {
   jest.clearAllMocks();
 
   (getClient as jest.Mock).mockReturnValue({
+    getDsn: () => mockDsn,
     getOptions: () => ({
       tracePropagationTargets: ['example.com'],
       propagateTraceparent: true,
@@ -360,6 +362,7 @@ it('does not add traceparent when propagateTraceparent is disabled', async () =>
   };
 
   (getClient as jest.Mock).mockReturnValue({
+    getDsn: () => mockDsn,
     getOptions: () => ({
       tracePropagationTargets: ['example.com'],
       propagateTraceparent: false,
@@ -496,4 +499,39 @@ it('preserves baggage that already contains Sentry values', async () => {
       Baggage: 'vendor=value, sentry-release=existing',
     },
   });
+});
+
+it.each([
+  ['the DSN envelope URL', { url: 'https://o1.ingest.sentry.io/api/1/envelope/?sentry_key=abc', method: 'POST' }],
+  ['the DSN envelope URL with sentry_key in params', { url: 'https://o1.ingest.sentry.io/api/1/envelope/', method: 'POST', params: { sentry_key: 'abc' } }],
+  ['the tunnel URL', { url: 'https://example.com/tunnel', method: 'POST' }],
+])('passes Sentry requests to %s through unchanged', async (_name, options) => {
+  (getClient as jest.Mock).mockReturnValue({
+    getDsn: () => mockDsn,
+    getOptions: () => ({
+      tracePropagationTargets: ['example.com'],
+      tunnel: 'https://example.com/tunnel',
+    }),
+  });
+  const response = { status: 200 };
+  mockRequest.mockResolvedValue(response);
+
+  const result = await mockCapacitor.nativePromise('CapacitorHttp', 'request', options);
+
+  expect(result).toBe(response);
+  expect(mockRequest.mock.calls[0]?.[0]).toBe(options);
+  expect(startSpan).not.toHaveBeenCalled();
+  expect(addBreadcrumb).not.toHaveBeenCalled();
+  expect(getTraceData).not.toHaveBeenCalled();
+});
+
+it('instruments requests to the DSN host without a sentry_key', async () => {
+  mockRequest.mockResolvedValue({ status: 200 });
+
+  await mockCapacitor.nativePromise('CapacitorHttp', 'request', {
+    url: 'https://o1.ingest.sentry.io/api/1/envelope/',
+    method: 'POST',
+  });
+
+  expect(startSpan).toHaveBeenCalledTimes(1);
 });
