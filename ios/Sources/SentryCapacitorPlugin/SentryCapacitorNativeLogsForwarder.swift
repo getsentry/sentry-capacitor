@@ -8,8 +8,7 @@ private let nativeLogEventName = "SentryNativeLog"
  * Singleton class that forwards native Sentry SDK logs to JavaScript via Capacitor events.
  * This allows developers to see native SDK logs in the browser console when debug mode is enabled.
  *
- * Note: iOS log forwarding requires sentry-cocoa to expose `SentrySDKLog.setOutput`.
- * See: https://github.com/getsentry/sentry-cocoa/pull/7444
+ * Note: iOS log forwarding relies on sentry-cocoa's `SentrySDK.internal.setLogOutput`.
  */
 final class SentryCapacitorNativeLogsForwarder: @unchecked Sendable {
     static let shared = SentryCapacitorNativeLogsForwarder()
@@ -21,7 +20,7 @@ final class SentryCapacitorNativeLogsForwarder: @unchecked Sendable {
     func configure(plugin: CAPPlugin) {
         self.plugin = plugin
 
-        SentrySDKLog.setOutput { [weak self] message in
+        SentrySDK.internal.setLogOutput { [weak self] message in
             // Always print to console (default behavior)
             NSLog("%@", message)
 
@@ -32,7 +31,7 @@ final class SentryCapacitorNativeLogsForwarder: @unchecked Sendable {
 
     func stopForwarding() {
         self.plugin = nil
-        SentrySDKLog.setOutput { message in NSLog("%@", message) }
+        SentrySDK.internal.setLogOutput { message in NSLog("%@", message) }
     }
 
     private func forwardLogMessage(_ message: String) {
