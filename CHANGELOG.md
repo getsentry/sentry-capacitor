@@ -14,7 +14,7 @@
 
 ### Dependencies
 
-- Bump JavaScript SDK from v10.69.0 to v10.76.2 ([#PR_NUMBER](https://github.com/getsentry/sentry-capacitor/pull/PR_NUMBER))
+- Bump JavaScript SDK from v10.69.0 to v10.76.2 ([#1435](https://github.com/getsentry/sentry-capacitor/pull/1435))
   - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.76.2/CHANGELOG.md)
   - [diff](https://github.com/getsentry/sentry-javascript/compare/10.69.0...10.76.2)
 
