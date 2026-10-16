@@ -12,6 +12,12 @@
 
 - Add automatic instrumentation for `CapacitorHttp` requests, including spans, breadcrumbs, and trace propagation using `tracePropagationTargets` and `propagateTraceparent`. ([#1387](https://github.com/getsentry/sentry-capacitor/pull/1387))
 
+### Dependencies
+
+- Bump Android SDK from v8.50.1 to v8.61.0 ([#PR_NUMBER](https://github.com/getsentry/sentry-capacitor/pull/PR_NUMBER))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8610)
+  - [diff](https://github.com/getsentry/sentry-java/compare/8.50.1...8.61.0)
+
 ## 4.4.0
 
 ### Fixes
