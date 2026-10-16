@@ -41,6 +41,8 @@ jobs:
           - bump: 'v8'
             SAMPLE_DIR: 'example/ionic-angular-v8'
             JAVA_VERSION: '22'
+            # Capacitor 9 CLI requires Node 24+.
+            NODE_VERSION: '24'
           - bump: 'sample-vue'
             SAMPLE_DIR: 'example/ionic-vue3'
             JAVA_VERSION: '22'
@@ -50,6 +52,8 @@ jobs:
       - run: corepack enable
       - name: Set up Node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v5
+        with:
+          node-version: ${{ matrix.NODE_VERSION }}
       - name: Check dependency cache
         uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # V5.0.2
         id: cache_dependencies

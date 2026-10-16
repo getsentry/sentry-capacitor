@@ -10,6 +10,9 @@ def getCapacitorCompileSdkVersion() {
 
 def GetCapacitorVersion() {
   def compileVersion =  getCapacitorCompileSdkVersion()
+  if (compileVersion >= 37) {
+    return 9
+  }
   if (compileVersion >= 36) {
     return 8
   }
@@ -40,8 +43,16 @@ else if ( capVersion >= 6) {
 else {
   throw new GradleException("The version of Capacitor is not supported by Sentry, CODE: " + capVersion)
 }
-if (capVersion == 8) {
-  println "Sentry Capacitor: Applying defaults for Capacitor 8 or higher"
+if (capVersion == 9) {
+  println "Sentry Capacitor: Applying defaults for Capacitor 9"
+  defaultMinAndroidVersion = 26
+  ext {
+    androidxAppCompatVersion = safeExtGet('androidxAppCompatVersion', '1.7.1')
+    androidxEspressoCoreVersion = safeExtGet('androidxEspressoCoreVersion', '3.7.0')
+  }
+}
+else if (capVersion == 8) {
+  println "Sentry Capacitor: Applying defaults for Capacitor 8"
   ext {
     androidxAppCompatVersion = safeExtGet('androidxAppCompatVersion', '1.7.1')
     androidxEspressoCoreVersion = safeExtGet('androidxEspressoCoreVersion', '3.6.1')
