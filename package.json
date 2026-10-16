@@ -42,9 +42,9 @@
   "license": "MIT",
   "peerDependencies": {
     "@capacitor/core": ">=6.0.0",
-    "@sentry/angular": "10.69.0",
-    "@sentry/react": "10.69.0",
-    "@sentry/vue": "10.69.0"
+    "@sentry/angular": "10.76.2",
+    "@sentry/react": "10.76.2",
+    "@sentry/vue": "10.76.2"
   },
   "peerDependenciesMeta": {
     "@sentry/angular": {
@@ -58,9 +58,9 @@
     }
   },
   "dependencies": {
-    "@sentry/browser": "10.69.0",
-    "@sentry/core": "10.69.0",
-    "@sentry/types": "10.69.0"
+    "@sentry/browser": "10.76.2",
+    "@sentry/core": "10.76.2",
+    "@sentry/types": "10.76.2"
   },
   "devDependencies": {
     "@capacitor/android": "^6.0.0 || ^7.0.0 || ^8.0.0",
