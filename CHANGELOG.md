@@ -14,7 +14,7 @@
 
 ### Fixes
 
-- iOS: Migrate the native bridge from `PrivateSentrySDKOnly` and `SentrySDKLog` to `SentrySDK.internal` ([#1407](https://github.com/getsentry/sentry-capacitor/issues/1407))
+- iOS: Migrate the native bridge from `PrivateSentrySDKOnly` and `SentrySDKLog` to `SentrySDK.internal` ([#1433](https://github.com/getsentry/sentry-capacitor/pull/1433))
 
 ## 4.4.0
 
