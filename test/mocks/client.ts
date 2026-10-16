@@ -111,8 +111,11 @@ export function init(options: TestClientOptions): void {
 }
 
 export function setupTestClient(options: Partial<TestClientOptions> = {}): TestClient {
+  // eslint-disable-next-line deprecation/deprecation
   getCurrentScope().clear();
+  // eslint-disable-next-line deprecation/deprecation
   getIsolationScope().clear();
+  // eslint-disable-next-line deprecation/deprecation
   getGlobalScope().clear();
 
   const finalOptions = getDefaultTestClientOptions({ tracesSampleRate: 1.0, ...options });
