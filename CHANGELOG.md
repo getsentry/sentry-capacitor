@@ -12,6 +12,10 @@
 
 - Add automatic instrumentation for `CapacitorHttp` requests, including spans, breadcrumbs, and trace propagation using `tracePropagationTargets` and `propagateTraceparent`. ([#1387](https://github.com/getsentry/sentry-capacitor/pull/1387))
 
+### Fixes
+
+- iOS: Migrate the native bridge from `PrivateSentrySDKOnly` and `SentrySDKLog` to `SentrySDK.internal` ([#1433](https://github.com/getsentry/sentry-capacitor/pull/1433))
+
 ### Dependencies
 
 - Bump Android SDK from v8.50.1 to v8.61.0 ([#1434](https://github.com/getsentry/sentry-capacitor/pull/1434))
