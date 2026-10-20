@@ -141,31 +141,27 @@ describe('nativeOptions', () => {
     });
 
     expectPlatformWithReturn('android');
-    expect(nativeOptions).toEqual(expectedOptions);
+    expect(nativeOptions).toEqual({ ...expectedOptions, enableLogs: true });
   });
 
-  test('Set logger on Android', () => {
+  test.each([
+    [undefined, true],
+    ['all' as const, true],
+    ['native' as const, true],
+    ['js' as const, false],
+  ])('Set enableLogs on Android when logsOrigin is %s', (logsOrigin, enableLogs) => {
     mockGetPlatform.mockReturnValue('android');
-    const filteredOptions: CapacitorOptions & { enableLogs?: boolean } = {
-      enableLogs: true
-    };
-    const expectedOptions = {
-      enableLogs: true
-    };
 
-    const nativeOptions = FilterNativeOptions(filteredOptions);
+    const nativeOptions = FilterNativeOptions({ logsOrigin });
 
     expectPlatformWithReturn('android');
-    expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify(expectedOptions));
+    expect(JSON.stringify(nativeOptions)).toEqual(JSON.stringify({ enableLogs }));
   });
 
-  test('Ignore logger on iOS', () => {
+  test('Ignore logsOrigin on iOS', () => {
     mockGetPlatform.mockReturnValue('ios');
-    const filteredOptions: CapacitorOptions & { enableLogs?: boolean } = {
-      enableLogs: true
-    };
 
-    const nativeOptions = FilterNativeOptions(filteredOptions);
+    const nativeOptions = FilterNativeOptions({ logsOrigin: 'native' });
 
     expectPlatformWithReturn('ios');
     expect(nativeOptions).toEqual({});

@@ -170,7 +170,7 @@ public class SentryCapacitor extends Plugin {
                     }
                 }
 
-                options.getLogs().setEnabled(Boolean.TRUE.equals(capOptions.getBoolean("enableLogs", false)));
+                options.getLogs().setEnabled(Boolean.TRUE.equals(capOptions.getBoolean("enableLogs", true)));
 
                 logger.log(SentryLevel.INFO, String.format("Native Integrations '%s'", options.getIntegrations()));
             }

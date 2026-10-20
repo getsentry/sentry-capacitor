@@ -58,11 +58,10 @@ function iOSParameters(options: CapacitorOptions): CapacitorOptions {
     }
     : {};
 }
-// Browser options added so options.enableLogs is exposed.
-function LogParameters(options: CapacitorOptions  & { enableLogs?: boolean }): CapacitorLoggerOptions | undefined {
-  // Only Web and Android implements log parameters initialization.
-  if (options.enableLogs && Capacitor.getPlatform() === 'android') {
-    return { enableLogs: true };
+function LogParameters(options: CapacitorOptions): CapacitorLoggerOptions | undefined {
+  // Only Android implements native log parameters initialization.
+  if (Capacitor.getPlatform() === 'android') {
+    return { enableLogs: options.logsOrigin !== 'js' };
   }
   return undefined;
 }

@@ -47,9 +47,10 @@ export {
   setCurrentClient,
   getRootSpan,
   addChildSpanToSpan,
-  startIdleSpan,
   consoleSandbox,
 } from '@sentry/core';
+
+export { startIdleSpan } from '@sentry/core/browser';
 
 export { metrics, browserTracingIntegration, registerSpanErrorInstrumentation, logger } from '@sentry/browser';
 
