@@ -21,6 +21,7 @@ const mockBridgeRequest = jest.fn();
 class FakeNativeXMLHttpRequest {
   public _method?: string;
   public _url?: string;
+  public _headers: Record<string, string> = {};
   public readyState = 0;
   public status = 0;
   public calls: string[] = [];
@@ -60,6 +61,7 @@ function installCapacitorHttpXhr(): void {
     constructor: NativeXMLHttpRequest.prototype.constructor,
     fullObject: NativeXMLHttpRequest,
     open: NativeXMLHttpRequest.prototype.open,
+    setRequestHeader: NativeXMLHttpRequest.prototype.setRequestHeader,
     prototype: NativeXMLHttpRequest.prototype,
     send: NativeXMLHttpRequest.prototype.send,
   };
@@ -73,6 +75,14 @@ function installCapacitorHttpXhr(): void {
       this._method = method.toUpperCase();
       this._url = url;
       return original.open.call(this, method, url);
+    };
+    prototype.setRequestHeader = function (this: FakeNativeXMLHttpRequest, header: string, value: string) {
+      if (this._url?.startsWith('https:') && this._method !== 'GET') {
+        // Bridged requests keep headers for CapacitorHttp.
+        this._headers[header] = value;
+        return;
+      }
+      return original.setRequestHeader.call(this, header, value);
     };
     prototype.send = function (this: FakeNativeXMLHttpRequest) {
       this.calls.push('capacitor send');
@@ -155,6 +165,21 @@ describe('patchCapacitorHttpXhr', () => {
       );
       // Once on send and once on readyState 4.
       expect(handler).toHaveBeenCalledTimes(2);
+    }
+
+    // Sentry wraps `setRequestHeader` on the instance, so Capacitor still keeps the headers of bridged requests.
+    for (const url of ['https://example.com/post-first', 'https://example.com/post-second']) {
+      const xhr = new (testGlobal.XMLHttpRequest as new () => FakeNativeXMLHttpRequest)();
+      xhr.open('POST', url);
+      xhr.setRequestHeader('sentry-trace', '123');
+      xhr.setRequestHeader('X-Custom', 'abc');
+      xhr.send();
+
+      expect(xhr._headers).toEqual({ 'sentry-trace': '123', 'X-Custom': 'abc' });
+      expect((xhr as unknown as Record<string, { request_headers: object }>)[SENTRY_XHR_DATA_KEY]?.request_headers).toEqual({
+        'sentry-trace': '123',
+        'x-custom': 'abc',
+      });
     }
   });
 
