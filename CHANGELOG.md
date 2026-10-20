@@ -14,8 +14,8 @@
 
 ### Fixes
 
-- Fix XHR instrumentation not working when `CapacitorHttp` is enabled ([#1436](https://github.com/getsentry/sentry-capacitor/issues/1436))
-- Avoid duplicated spans and breadcrumbs from `capacitorHttpIntegration` for XHR and fetch requests sent through `CapacitorHttp` ([#1436](https://github.com/getsentry/sentry-capacitor/issues/1436))
+- Fix XHR instrumentation not working when `CapacitorHttp` is enabled ([#1449](https://github.com/getsentry/sentry-capacitor/pull/1449))
+- Avoid duplicated spans and breadcrumbs from `capacitorHttpIntegration` for XHR and fetch requests sent through `CapacitorHttp` ([#1449](https://github.com/getsentry/sentry-capacitor/pull/1449))
 
 ### Dependencies
 
