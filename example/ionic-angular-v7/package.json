@@ -5,7 +5,7 @@
     "@angular/forms": "^20.3.16",
     "@angular/platform-browser": "^20.3.16",
     "@angular/platform-browser-dynamic": "^20.3.16",
-    "@angular/router": "^20.3.16",
+    "@angular/router": "^20.3.33",
     "@capacitor/android": "^7.0.0",
     "@capacitor/core": "^7.0.0",
     "@capacitor/ios": "^7.0.0",
