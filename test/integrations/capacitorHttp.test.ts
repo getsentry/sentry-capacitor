@@ -29,17 +29,38 @@ const mockCapacitor = {
   }],
 };
 
+// Mimics Capacitor's fetch patch, which sends non-GET requests through CapacitorHttp.
+const mockFetch = jest.fn(async (url: string, init?: { method?: string }) => {
+  const method = (init?.method ?? 'GET').toUpperCase();
+  if (method === 'GET') {
+    return { status: 200 };
+  }
+  return mockCapacitor.nativePromise('CapacitorHttp', 'request', {
+    url: new URL(url).href,
+    method,
+  });
+});
+
 const capacitorGlobal = globalThis as typeof globalThis & {
   Capacitor?: unknown;
   androidBridge?: unknown;
+  CapacitorWebXMLHttpRequest?: unknown;
 };
 const originalGlobals = {
   Capacitor: capacitorGlobal.Capacitor,
   androidBridge: capacitorGlobal.androidBridge,
+  CapacitorWebXMLHttpRequest: capacitorGlobal.CapacitorWebXMLHttpRequest,
+  fetch: capacitorGlobal.fetch,
 };
 
 // Seed the native bridge before Capacitor registers its plugins on import.
-Object.assign(capacitorGlobal, { Capacitor: mockCapacitor, androidBridge: {} });
+Object.assign(capacitorGlobal, {
+  Capacitor: mockCapacitor,
+  androidBridge: {},
+  // CapacitorHttp is enabled when the original XHR was replaced.
+  CapacitorWebXMLHttpRequest: { fullObject: function NativeXMLHttpRequest() {} },
+  fetch: mockFetch,
+});
 
 jest.mock('@sentry/core', () => {
   const actual = jest.requireActual('@sentry/core');
@@ -496,4 +517,29 @@ it('preserves baggage that already contains Sentry values', async () => {
       Baggage: 'vendor=value, sentry-release=existing',
     },
   });
+});
+
+it('does not record fetch requests that Capacitor sends through CapacitorHttp', async () => {
+  const response = { status: 201 };
+  mockRequest.mockResolvedValue(response);
+
+  const result = await fetch('https://example.com/bridged', { method: 'post' });
+
+  expect(result).toBe(response);
+  expect(mockRequest).toHaveBeenCalledWith({
+    url: 'https://example.com/bridged',
+    method: 'POST',
+  });
+  expect(startSpan).not.toHaveBeenCalled();
+  expect(addBreadcrumb).not.toHaveBeenCalled();
+});
+
+it('records direct CapacitorHttp requests after a bridged fetch finished', async () => {
+  mockRequest.mockResolvedValue({ status: 201 });
+  mockPost.mockResolvedValue({ status: 201 });
+
+  await fetch('https://example.com/bridged', { method: 'POST' });
+  await CapacitorHttp.post({ url: 'https://example.com/bridged' });
+
+  expect(startSpan).toHaveBeenCalledTimes(1);
 });

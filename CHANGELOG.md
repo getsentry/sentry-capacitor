@@ -12,6 +12,11 @@
 
 - Add automatic instrumentation for `CapacitorHttp` requests, including spans, breadcrumbs, and trace propagation using `tracePropagationTargets` and `propagateTraceparent`. ([#1387](https://github.com/getsentry/sentry-capacitor/pull/1387))
 
+### Fixes
+
+- Fix XHR instrumentation not working when `CapacitorHttp` is enabled ([#1436](https://github.com/getsentry/sentry-capacitor/issues/1436))
+- Avoid duplicated spans and breadcrumbs from `capacitorHttpIntegration` for XHR and fetch requests sent through `CapacitorHttp` ([#1436](https://github.com/getsentry/sentry-capacitor/issues/1436))
+
 ### Dependencies
 
 - Bump Android SDK from v8.50.1 to v8.61.0 ([#1434](https://github.com/getsentry/sentry-capacitor/pull/1434))

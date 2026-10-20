@@ -5,11 +5,13 @@ import {
 } from '@capacitor/core';
 import {
   addBreadcrumb,
+  addFetchInstrumentationHandler,
   type Client,
   debug,
   getBreadcrumbLogLevelFromHttpStatusCode,
   getClient,
   getTraceData,
+  type HandlerDataFetch,
   hasSpanStreamingEnabled,
   type Integration,
   setHttpStatus,
@@ -18,6 +20,11 @@ import {
   startSpan,
   stripUrlQueryAndFragment,
 } from '@sentry/core';
+import {
+  consumeBridgedRequest,
+  markBridgedRequest,
+  unmarkBridgedRequest,
+} from '../utils/capacitorHttpBridge';
 import { fillTyped } from '../utils/fill';
 
 const INTEGRATION_NAME = 'CapacitorHttp';
@@ -57,8 +64,19 @@ function isHttpOptions(options: unknown): options is HttpOptions {
 }
 
 /**
+ * Marks fetch requests sent through CapacitorHttp, so they aren't recorded twice.
+ */
+function markBridgedFetch({ fetchData, endTimestamp }: HandlerDataFetch): void {
+  if (endTimestamp) {
+    unmarkBridgedRequest(fetchData.method, fetchData.url, fetchData);
+  } else {
+    markBridgedRequest('fetch', fetchData.method, fetchData.url, fetchData);
+  }
+}
+
+/**
  * Instruments direct CapacitorHttp plugin calls.
- * Fetch/XHR are already covered by browser tracing.
+ * Fetch/XHR are already covered by browser tracing, including the ones Capacitor sends through CapacitorHttp.
  */
 export const capacitorHttpIntegration = (): Integration => ({
   name: INTEGRATION_NAME,
@@ -80,6 +98,8 @@ export const capacitorHttpIntegration = (): Integration => ({
       return;
     }
 
+    addFetchInstrumentationHandler(markBridgedFetch);
+
     fillTyped(capacitor, 'nativePromise', original => {
       return function (
         this: CapacitorWithNativePromise,
@@ -92,6 +112,10 @@ export const capacitorHttpIntegration = (): Integration => ({
           !isHttpMethod(methodName) ||
           !isHttpOptions(options)
         ) {
+          return original.call(this, pluginName, methodName, options);
+        }
+
+        if (consumeBridgedRequest(getMethod(methodName, options), options.url)) {
           return original.call(this, pluginName, methodName, options);
         }
 

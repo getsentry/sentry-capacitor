@@ -13,6 +13,7 @@ import type { CapacitorClientOptions, CapacitorOptions } from './options';
 import { enableSyncToNative } from './scopeSync';
 import { useEncodePolyfill } from './transports/encodePolyfill';
 import { DEFAULT_BUFFER_SIZE, makeNativeTransport } from './transports/native';
+import { patchCapacitorHttpXhr } from './utils/capacitorHttpXhr';
 import { safeFactory } from './utils/safeFactory';
 import { IsTextEncoderAvailable } from './utils/textEncoder';
 import { NATIVE } from './wrapper';
@@ -61,6 +62,10 @@ export function init(
 
   if (!IsTextEncoderAvailable()) {
     useEncodePolyfill();
+  }
+
+  if (NATIVE.platform !== 'web') {
+    patchCapacitorHttpXhr();
   }
 
   if (sharedOptions.enableNative) {
