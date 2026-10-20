@@ -12,6 +12,7 @@ import {
   getTraceData,
   hasSpanStreamingEnabled,
   type Integration,
+  isSentryRequestUrl,
   setHttpStatus,
   shouldPropagateTraceForUrl,
   type Span,
@@ -224,13 +225,14 @@ async function instrumentRequest(
   options: HttpOptions,
 ): Promise<HttpResponse> {
   const client = getClient();
+  const url = getRequestUrl(options);
 
-  if (!client) {
+  // Don't instrument the SDK's own envelope requests (e.g. custom transports using CapacitorHttp)
+  if (!client || isSentryRequestUrl(url, client)) {
     return original.call(thisArg, options);
   }
 
   const method = getMethod(methodName, options);
-  const url = getRequestUrl(options);
   const spanName = `${method} ${stripUrlQueryAndFragment(options.url)}`;
 
   return startSpan(
