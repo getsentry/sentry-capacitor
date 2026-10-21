@@ -16,6 +16,7 @@
 
 - Fix XHR instrumentation not working when `CapacitorHttp` is enabled ([#1449](https://github.com/getsentry/sentry-capacitor/pull/1449))
 - Avoid duplicated spans and breadcrumbs from `capacitorHttpIntegration` for XHR and fetch requests sent through `CapacitorHttp` ([#1449](https://github.com/getsentry/sentry-capacitor/pull/1449))
+- iOS: Migrate the native bridge from `PrivateSentrySDKOnly` and `SentrySDKLog` to `SentrySDK.internal` ([#1433](https://github.com/getsentry/sentry-capacitor/pull/1433))
 
 ### Dependencies
 
