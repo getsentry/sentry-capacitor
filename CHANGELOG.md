@@ -20,6 +20,10 @@
 
 ### Dependencies
 
+- Bump JavaScript SDK from v10.69.0 to v10.76.2 ([#1435](https://github.com/getsentry/sentry-capacitor/pull/1435))
+  - `enableLogs` now defaults to `true` for JavaScript logs, so `Sentry.logger.*` works without opting in. Nothing is captured unless you call the `Sentry.logger.*` APIs or add a log-forwarding integration such as `consoleLoggingIntegration`. Set `enableLogs: false` to opt out. Native Android logs are unchanged and still require `enableLogs: true` to be set explicitly.
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/10.76.2/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/10.69.0...10.76.2)
 - Bump Android SDK from v8.50.1 to v8.61.0 ([#1434](https://github.com/getsentry/sentry-capacitor/pull/1434))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8610)
   - [diff](https://github.com/getsentry/sentry-java/compare/8.50.1...8.61.0)
