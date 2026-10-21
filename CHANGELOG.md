@@ -11,6 +11,14 @@
 ### Features
 
 - Add automatic instrumentation for `CapacitorHttp` requests, including spans, breadcrumbs, and trace propagation using `tracePropagationTargets` and `propagateTraceparent`. ([#1387](https://github.com/getsentry/sentry-capacitor/pull/1387))
+- Add `logsOrigin` option to control whether logs are captured from JavaScript (`'js'`), native (`'native'`, Android only) or both (`'all'`, default). ([#1450](https://github.com/getsentry/sentry-capacitor/pull/1450))
+
+### Break Changes
+
+- Remove `@sentry/types` dependency, it is no longer published for JavaScript SDK v11. Import types from `@sentry/core` instead. ([#1450](https://github.com/getsentry/sentry-capacitor/pull/1450))
+- `traceLifecycle` now defaults to `'static'`, keeping spans sent on their transaction instead of the JavaScript SDK v11 default of `'stream'`. ([#1450](https://github.com/getsentry/sentry-capacitor/pull/1450))
+- Remove `enableLogs` and `_experiments.enableMetrics`, following their removal from the JavaScript SDK v11. Logs and metrics are now always enabled, including native logs on Android. Use `logsOrigin` to restrict which origin logs are captured from. ([#1450](https://github.com/getsentry/sentry-capacitor/pull/1450))
+- Move `_experiments.beforeSendMetric` to the root option `beforeSendMetric`. ([#1450](https://github.com/getsentry/sentry-capacitor/pull/1450))
 
 ### Fixes
 
@@ -18,6 +26,9 @@
 
 ### Dependencies
 
+- Bump JavaScript SDK from v10.69.0 to v11.8.0 ([#1450](https://github.com/getsentry/sentry-capacitor/pull/1450))
+  - [changelog](https://github.com/getsentry/sentry-javascript/blob/11.8.0/CHANGELOG.md)
+  - [diff](https://github.com/getsentry/sentry-javascript/compare/10.69.0...11.8.0)
 - Bump Android SDK from v8.50.1 to v8.61.0 ([#1434](https://github.com/getsentry/sentry-capacitor/pull/1434))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8610)
   - [diff](https://github.com/getsentry/sentry-java/compare/8.50.1...8.61.0)

@@ -4107,59 +4107,59 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/angular@npm:10.69.0":
-  version: 10.69.0
-  resolution: "@sentry/angular@npm:10.69.0"
+"@sentry/angular@npm:11.8.0":
+  version: 11.8.0
+  resolution: "@sentry/angular@npm:11.8.0"
   dependencies:
-    "@sentry/browser": "npm:10.69.0"
-    "@sentry/conventions": "npm:^0.16.0"
-    "@sentry/core": "npm:10.69.0"
+    "@sentry/browser": "npm:11.8.0"
+    "@sentry/conventions": "npm:^0.27.0"
+    "@sentry/core": "npm:11.8.0"
     tslib: "npm:^2.4.1"
   peerDependencies:
     "@angular/common": ">= 14.x <= 22.x"
     "@angular/core": ">= 14.x <= 22.x"
     "@angular/router": ">= 14.x <= 22.x"
     rxjs: ^6.5.5 || ^7.x
-  checksum: 10c0/b476e5c9de120fc73586e4d41e3f6dcb44593d74936cca733ebca25adfe15467d0951bcb6cd835dc33f962bd472e0806f78991447289e0c7f72c4bf30deaa3f9
+  checksum: 10c0/0870571ce3d3131fa839da5ba551c8ff0e26e2152058721000d93b14f719c4382e1659474408ac4729092805308d8ac63c9064d6657f62a8694346d089d1b53f
   languageName: node
   linkType: hard
 
-"@sentry/browser-utils@npm:10.69.0":
-  version: 10.69.0
-  resolution: "@sentry/browser-utils@npm:10.69.0"
+"@sentry/browser-utils@npm:11.8.0":
+  version: 11.8.0
+  resolution: "@sentry/browser-utils@npm:11.8.0"
   dependencies:
-    "@sentry/conventions": "npm:^0.16.0"
-    "@sentry/core": "npm:10.69.0"
-  checksum: 10c0/2b4a1429e39e48ba4729f30fae4dd217a42203c69e114fcbe3633b5690ca1ea65658b25e7e2a03c5b2df7b62362930e9d1ac648b0653f89058fd1c4f56df55df
+    "@sentry/conventions": "npm:^0.27.0"
+    "@sentry/core": "npm:11.8.0"
+    web-vitals: "npm:^6.2.3"
+  checksum: 10c0/c51cfdbcea7ff23ae9f62c92743d4ab61d2e3cecdc4593066b3a66f1406676d3a99d80e1bf0ba990de184cdb767d855b22a5aacb0790bc5dcde1df14dddd256c
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:10.69.0":
-  version: 10.69.0
-  resolution: "@sentry/browser@npm:10.69.0"
+"@sentry/browser@npm:11.8.0":
+  version: 11.8.0
+  resolution: "@sentry/browser@npm:11.8.0"
   dependencies:
-    "@sentry/browser-utils": "npm:10.69.0"
-    "@sentry/conventions": "npm:^0.16.0"
-    "@sentry/core": "npm:10.69.0"
-    "@sentry/feedback": "npm:10.69.0"
-    "@sentry/replay": "npm:10.69.0"
-    "@sentry/replay-canvas": "npm:10.69.0"
-  checksum: 10c0/0a0c2cdf0801b92bb274f74cba9b0d3cc660f2b3fd85937c3b6e9eb9021799dc8bf015b72ac3ece29a63c437a2dbe7dc13d559220f81742b8212ec2b56a89912
+    "@sentry/browser-utils": "npm:11.8.0"
+    "@sentry/conventions": "npm:^0.27.0"
+    "@sentry/core": "npm:11.8.0"
+    "@sentry/feedback": "npm:11.8.0"
+    "@sentry/replay": "npm:11.8.0"
+    "@sentry/replay-canvas": "npm:11.8.0"
+  checksum: 10c0/66eff45b112fd94eb428bd380c741a41e7305d681dc996c37cd2d2ca4f04f2f3aee8be3eb31028cd971e038c367ce9636df57574fc4dde376bfe49da10a69fd4
   languageName: node
   linkType: hard
 
 "@sentry/capacitor@file:.yalc/@sentry/capacitor::locator=ionic-angular%40workspace%3A.":
-  version: 4.3.0+13176b28
-  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=f8672e&locator=ionic-angular%40workspace%3A."
+  version: 4.4.0+9732fde9
+  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=a21b6f&locator=ionic-angular%40workspace%3A."
   dependencies:
-    "@sentry/browser": "npm:10.69.0"
-    "@sentry/core": "npm:10.69.0"
-    "@sentry/types": "npm:10.69.0"
+    "@sentry/browser": "npm:11.8.0"
+    "@sentry/core": "npm:11.8.0"
   peerDependencies:
-    "@capacitor/core": ">=3.0.0"
-    "@sentry/angular": 10.69.0
-    "@sentry/react": 10.69.0
-    "@sentry/vue": 10.69.0
+    "@capacitor/core": ">=6.0.0"
+    "@sentry/angular": 11.8.0
+    "@sentry/react": 11.8.0
+    "@sentry/vue": 11.8.0
   peerDependenciesMeta:
     "@sentry/angular":
       optional: true
@@ -4167,7 +4167,7 @@ __metadata:
       optional: true
     "@sentry/vue":
       optional: true
-  checksum: 10c0/6236ed55e5e4b7ba966c4ec8f77e0328e623e8170628e75f82e9cd21f1852bf04c597c3a661642a1515ffa9a3a450792c42f7ebe9ae5b6edb6716560f8cf0490
+  checksum: 10c0/07925cc922387f77802c689f1519375f0099110e308a6dd42d7e9941d73ddbfe969c2ae69b96cee52cacc838456d649e791fe9a13de4c52a2f6955b651e3e039
   languageName: node
   linkType: hard
 
@@ -4267,57 +4267,48 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/conventions@npm:^0.16.0":
-  version: 0.16.0
-  resolution: "@sentry/conventions@npm:0.16.0"
-  checksum: 10c0/415aaa94cade2b8e0dd00ad9aa06d998d7fe95658a8f43b6e4ef382e3b4c115c8f199ca0fe9b74a98500e8270dc68d5333fd943f7dad6ed78f60d9372231fbe8
+"@sentry/conventions@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "@sentry/conventions@npm:0.27.0"
+  checksum: 10c0/865f5c531aa03d0f683f680c8223f5473ab0ce5fd89621b7991da1daf894c92decc84a880206e5df7858cd659d43667f56520fe37e1c83ca54a48d93e92a8824
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:10.69.0":
-  version: 10.69.0
-  resolution: "@sentry/core@npm:10.69.0"
+"@sentry/core@npm:11.8.0":
+  version: 11.8.0
+  resolution: "@sentry/core@npm:11.8.0"
   dependencies:
-    "@sentry/conventions": "npm:^0.16.0"
-  checksum: 10c0/d6a00824a12d332063ed309c3fc263715ac1d20d253ddfce75d22b8b046da4eb2f99d843628bf365281ca625826bc6a9bdf5dec0ce24c9eb88712f7187858891
+    "@sentry/conventions": "npm:^0.27.0"
+  checksum: 10c0/420d3009b5e42e157471c1dfb6e0eecc7d09cd1bf5f9c2b6a96f066eb9e5d69099cb2424fd0ef16e8a73cd84c0ef93a72997fc92b74089c0130b1d952905ddf8
   languageName: node
   linkType: hard
 
-"@sentry/feedback@npm:10.69.0":
-  version: 10.69.0
-  resolution: "@sentry/feedback@npm:10.69.0"
+"@sentry/feedback@npm:11.8.0":
+  version: 11.8.0
+  resolution: "@sentry/feedback@npm:11.8.0"
   dependencies:
-    "@sentry/core": "npm:10.69.0"
-  checksum: 10c0/397c463bf47054c7210355eeebb81048f21f5b6d8af5e835e514eebebf670e49aa4fc07c73cbf0327a5ed88fd250a131a8045c024f164dac7587c02eb3cd0be7
+    "@sentry/core": "npm:11.8.0"
+  checksum: 10c0/5a7e28366240fcdf291ef22fb4b8760fd824296284cfb714bdda45f525af8b03737e987f51067d5a2e644b5c650928bba5106b386c10b2ba59ffeb521175509b
   languageName: node
   linkType: hard
 
-"@sentry/replay-canvas@npm:10.69.0":
-  version: 10.69.0
-  resolution: "@sentry/replay-canvas@npm:10.69.0"
+"@sentry/replay-canvas@npm:11.8.0":
+  version: 11.8.0
+  resolution: "@sentry/replay-canvas@npm:11.8.0"
   dependencies:
-    "@sentry/core": "npm:10.69.0"
-    "@sentry/replay": "npm:10.69.0"
-  checksum: 10c0/25f42d13a534c5608cc0c01624068c5f08e3157c309e53cf5a5788fa89ec66bcf706c649ff4d94240b879e8a62036813acd4416a3072eea88cd98663bfe91fb7
+    "@sentry/core": "npm:11.8.0"
+    "@sentry/replay": "npm:11.8.0"
+  checksum: 10c0/6215d78558e284eaab6ebaa2405736b3c21f783f3f7627e102805734f720c757ed3e159a89bc2b6de4f90c1bdef8b3d6368ddcfcda313e27cbff49239ba00037
   languageName: node
   linkType: hard
 
-"@sentry/replay@npm:10.69.0":
-  version: 10.69.0
-  resolution: "@sentry/replay@npm:10.69.0"
+"@sentry/replay@npm:11.8.0":
+  version: 11.8.0
+  resolution: "@sentry/replay@npm:11.8.0"
   dependencies:
-    "@sentry/browser-utils": "npm:10.69.0"
-    "@sentry/core": "npm:10.69.0"
-  checksum: 10c0/3c3918a037b9c1f8dc1d06b0cc456338d2316b10cef6ad42cc9154534631f48f47c4398fc503ad1d814326c489a075742e676abf27a61b3443c71265dcdadf30
-  languageName: node
-  linkType: hard
-
-"@sentry/types@npm:10.69.0":
-  version: 10.69.0
-  resolution: "@sentry/types@npm:10.69.0"
-  dependencies:
-    "@sentry/core": "npm:10.69.0"
-  checksum: 10c0/be2c617dd2fd9a5d9f9a2eae004581028460b2857fe5dd0e0016313853e5a4b7a36f9361f477e2984c9bb0d4a30ff38e46b709ae671cff74ad89f5d82530eb17
+    "@sentry/browser-utils": "npm:11.8.0"
+    "@sentry/core": "npm:11.8.0"
+  checksum: 10c0/828446d2a37238e4e9e74d9b515c6a2fc18231c5f13c576409c41c2e58c9136f4b372245280ccc6e6913601e42bc6661e3d4d8df3104f8ea0cb16610479d67b4
   languageName: node
   linkType: hard
 
@@ -7779,7 +7770,7 @@ __metadata:
     "@ionic/angular": "npm:^8.0.0"
     "@ionic/angular-toolkit": "npm:^10.0.0"
     "@ionic/cli": "npm:^7.2.1"
-    "@sentry/angular": "npm:10.69.0"
+    "@sentry/angular": "npm:11.8.0"
     "@sentry/capacitor": "file:.yalc/@sentry/capacitor"
     "@sentry/cli": "npm:^2.58.6"
     "@types/jasmine": "npm:~5.1.0"
@@ -12107,6 +12098,13 @@ __metadata:
   version: 1.2.2
   resolution: "weak-lru-cache@npm:1.2.2"
   checksum: 10c0/744847bd5b96ca86db1cb40d0aea7e92c02bbdb05f501181bf9c581e82fa2afbda32a327ffbe75749302b8492ab449f1c657ca02410d725f5d412d1e6c607d72
+  languageName: node
+  linkType: hard
+
+"web-vitals@npm:^6.2.3":
+  version: 6.2.3
+  resolution: "web-vitals@npm:6.2.3"
+  checksum: 10c0/d7db74ab8503f069db0f697b1b1318670062616a1b46464abde98dc599ffbf71c0080f39bfe739ed122da12f6980fe882d471e86a78fedad61a4bfa1abffa32c
   languageName: node
   linkType: hard
 

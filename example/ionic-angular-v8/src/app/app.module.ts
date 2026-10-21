@@ -22,21 +22,17 @@ Sentry.init(
     // Whether SDK should be enabled or not
     enabled: true,
     // Use the tracing integration to see traces and add performance monitoring
-    _experiments: {
-      enableMetrics: true,
-      beforeSendMetric: metric => {
-        return metric;
-      },
-    },
     integrations: [
       Sentry.browserTracingIntegration(),
       Sentry.spotlightIntegration({
         sidecarUrl: environment.spotlightSidecarUrl,
       }),
     ],
-    enableLogs: true,
     beforeSendLog: log => {
       return log;
+    },
+    beforeSendMetric: metric => {
+      return metric;
     },
     // A release identifier
     release: '1.0.0',

@@ -1,5 +1,6 @@
 import type { Event, Integration, Package, SdkInfo, SdkInfo as SdkInfoType } from '@sentry/core';
 import { debug } from '@sentry/core';
+import type { CapacitorClientOptions } from '../options';
 import { SDK_NAME, SDK_VERSION } from '../version';
 import { NATIVE } from '../wrapper';
 
@@ -35,8 +36,7 @@ export const sdkInfoIntegration = (): Integration => {
     name: INTEGRATION_NAME,
     processEvent: processEvent,
     setup(client) {
-      const options = client.getOptions();
-      // eslint-disable-next-line deprecation/deprecation
+      const options = client.getOptions() as CapacitorClientOptions;
       DefaultPii = options.dataCollection?.userInfo ?? options.sendDefaultPii;
       if (DefaultPii) {
         client.on('beforeSendEvent', (event => {

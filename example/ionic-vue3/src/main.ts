@@ -48,7 +48,6 @@ Sentry.init({
   ],
   tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
   tracesSampleRate: 1.0,
-  enableLogs: true,
   beforeSendLog: (log) => {
     return log;
   },

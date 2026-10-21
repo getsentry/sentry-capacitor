@@ -185,7 +185,7 @@ describe('SDK Init', () => {
     });
   });
 
-  test('passes metrics experiments to browser options', () => {
+  test('passes beforeSendMetric to browser options', () => {
     NATIVE.platform = 'web';
     const mockOriginalInit = jest.fn();
     const beforeSendMetric = jest.fn(metric => metric);
@@ -193,10 +193,7 @@ describe('SDK Init', () => {
     init({
       dsn: 'test-dsn',
       enabled: true,
-      _experiments: {
-        enableMetrics: true,
-        beforeSendMetric,
-      },
+      beforeSendMetric,
     }, mockOriginalInit);
 
     // Wait for async operations
@@ -205,8 +202,101 @@ describe('SDK Init', () => {
         expect(mockOriginalInit).toHaveBeenCalled();
         const browserOptions = mockOriginalInit.mock.calls[0][0];
 
-        expect(browserOptions.enableMetrics).toBe(true);
         expect(browserOptions.beforeSendMetric).toBe(beforeSendMetric);
+
+        resolve();
+      }, 0);
+    });
+  });
+
+  test('drops JavaScript logs when logsOrigin is native', () => {
+    NATIVE.platform = 'web';
+    const mockOriginalInit = jest.fn();
+
+    init({
+      dsn: 'test-dsn',
+      enabled: true,
+      logsOrigin: 'native',
+      beforeSendLog: log => log,
+    }, mockOriginalInit);
+
+    // Wait for async operations
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        expect(mockOriginalInit).toHaveBeenCalled();
+        const browserOptions = mockOriginalInit.mock.calls[0][0];
+
+        expect(browserOptions.beforeSendLog({ level: 'info', message: 'test' })).toBeNull();
+
+        resolve();
+      }, 0);
+    });
+  });
+
+  test.each([undefined, 'all' as const, 'js' as const])('keeps beforeSendLog when logsOrigin is %s', logsOrigin => {
+    NATIVE.platform = 'web';
+    const mockOriginalInit = jest.fn();
+    const beforeSendLog = jest.fn(log => log);
+
+    init({
+      dsn: 'test-dsn',
+      enabled: true,
+      logsOrigin,
+      beforeSendLog,
+    }, mockOriginalInit);
+
+    // Wait for async operations
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        expect(mockOriginalInit).toHaveBeenCalled();
+        const browserOptions = mockOriginalInit.mock.calls[0][0];
+
+        expect(browserOptions.beforeSendLog).toBe(beforeSendLog);
+
+        resolve();
+      }, 0);
+    });
+  });
+
+  test('defaults traceLifecycle to static', () => {
+    NATIVE.platform = 'web';
+    const mockOriginalInit = jest.fn();
+
+    init({
+      dsn: 'test-dsn',
+      enabled: true,
+    }, mockOriginalInit);
+
+    // Wait for async operations
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        expect(mockOriginalInit).toHaveBeenCalled();
+        const browserOptions = mockOriginalInit.mock.calls[0][0];
+
+        expect(browserOptions.traceLifecycle).toBe('static');
+
+        resolve();
+      }, 0);
+    });
+  });
+
+  test('allows overriding traceLifecycle', () => {
+    NATIVE.platform = 'web';
+    const mockOriginalInit = jest.fn();
+
+    init({
+      dsn: 'test-dsn',
+      enabled: true,
+      traceLifecycle: 'stream',
+    }, mockOriginalInit);
+
+    // Wait for async operations
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        expect(mockOriginalInit).toHaveBeenCalled();
+        const browserOptions = mockOriginalInit.mock.calls[0][0];
+
+        expect(browserOptions.traceLifecycle).toBe('stream');
 
         resolve();
       }, 0);
