@@ -30,17 +30,44 @@ const mockCapacitor = {
   }],
 };
 
+// Stands in for Capacitor's async body conversion, which runs before the request reaches CapacitorHttp.
+let mockConvertBody = (): Promise<void> => Promise.resolve();
+
+// Mimics Capacitor's fetch patch, which converts the body and then sends non-GET requests through CapacitorHttp.
+const mockFetch = jest.fn(async (url: string, init?: { method?: string }) => {
+  const method = (init?.method ?? 'GET').toUpperCase();
+  if (method === 'GET') {
+    return { status: 200 };
+  }
+  await mockConvertBody();
+  return mockCapacitor.nativePromise('CapacitorHttp', 'request', {
+    url: new URL(url).href,
+    method,
+    data: undefined,
+    dataType: undefined,
+  });
+});
+
 const capacitorGlobal = globalThis as typeof globalThis & {
   Capacitor?: unknown;
   androidBridge?: unknown;
+  CapacitorWebXMLHttpRequest?: unknown;
 };
 const originalGlobals = {
   Capacitor: capacitorGlobal.Capacitor,
   androidBridge: capacitorGlobal.androidBridge,
+  CapacitorWebXMLHttpRequest: capacitorGlobal.CapacitorWebXMLHttpRequest,
+  fetch: capacitorGlobal.fetch,
 };
 
 // Seed the native bridge before Capacitor registers its plugins on import.
-Object.assign(capacitorGlobal, { Capacitor: mockCapacitor, androidBridge: {} });
+Object.assign(capacitorGlobal, {
+  Capacitor: mockCapacitor,
+  androidBridge: {},
+  // CapacitorHttp is enabled when the original XHR was replaced.
+  CapacitorWebXMLHttpRequest: { fullObject: function NativeXMLHttpRequest() {} },
+  fetch: mockFetch,
+});
 
 jest.mock('@sentry/core', () => {
   const actual = jest.requireActual('@sentry/core');
@@ -498,6 +525,63 @@ it('preserves baggage that already contains Sentry values', async () => {
     headers: {
       Baggage: 'vendor=value, sentry-release=existing',
     },
+  });
+});
+
+it('does not record fetch requests that Capacitor sends through CapacitorHttp', async () => {
+  const response = { status: 201 };
+  mockRequest.mockResolvedValue(response);
+
+  const result = await fetch('https://example.com/bridged', { method: 'post' });
+
+  expect(result).toBe(response);
+  expect(mockRequest).toHaveBeenCalledWith({
+    url: 'https://example.com/bridged',
+    method: 'POST',
+    data: undefined,
+    dataType: undefined,
+  });
+  expect(startSpan).not.toHaveBeenCalled();
+  expect(addBreadcrumb).not.toHaveBeenCalled();
+});
+
+it('records direct CapacitorHttp requests after a bridged fetch finished', async () => {
+  mockRequest.mockResolvedValue({ status: 201 });
+  mockPost.mockResolvedValue({ status: 201 });
+
+  await fetch('https://example.com/bridged', { method: 'POST' });
+  await CapacitorHttp.post({ url: 'https://example.com/bridged' });
+
+  expect(startSpan).toHaveBeenCalledTimes(1);
+});
+
+it('records direct CapacitorHttp requests that overlap a bridged fetch to the same url', async () => {
+  mockRequest.mockResolvedValue({ status: 201 });
+  mockPost.mockResolvedValue({ status: 201 });
+
+  let finishConvertBody = (): void => {};
+  mockConvertBody = () => new Promise(resolve => {
+    finishConvertBody = resolve;
+  });
+
+  try {
+    const bridged = fetch('https://example.com/bridged', { method: 'POST' });
+    await CapacitorHttp.post({ url: 'https://example.com/bridged' });
+    finishConvertBody();
+    await bridged;
+  } finally {
+    mockConvertBody = () => Promise.resolve();
+  }
+
+  expect(startSpan).toHaveBeenCalledTimes(1);
+  expect(mockPost.mock.calls[0]?.[0]).toEqual(expect.objectContaining({
+    headers: expect.objectContaining({ 'sentry-trace': 'trace-value' }),
+  }));
+  expect(mockRequest.mock.calls[0]?.[0]).toEqual({
+    url: 'https://example.com/bridged',
+    method: 'POST',
+    data: undefined,
+    dataType: undefined,
   });
 });
 

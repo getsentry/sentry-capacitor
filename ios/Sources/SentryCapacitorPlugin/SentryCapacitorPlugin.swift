@@ -1,6 +1,6 @@
 import Foundation
 import Capacitor
-@preconcurrency import Sentry
+@_spi(Private) @preconcurrency import Sentry
 
 /**
  * Please read the Capacitor iOS Plugin Development Guide
@@ -67,8 +67,8 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
 
         do {
             let options = try createOptions(from: optionsDict)
-            let sdkVersion = PrivateSentrySDKOnly.getSdkVersionString()
-            PrivateSentrySDKOnly.setSdkName(nativeSdkName, andVersionString: sdkVersion)
+            let sdkVersion = SentrySDK.internal.sdk.versionString
+            SentrySDK.internal.sdk.setName(nativeSdkName, version: sdkVersion)
 
             if let sidecarUrl = optionsDict["sidecarUrl"] as? String {
                 options.enableSpotlight = true
@@ -210,16 +210,12 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             return
         }
 
-        let pointer = UnsafeMutablePointer<UInt8>.allocate(capacity: data.count)
-        data.copyBytes(to: pointer, count: data.count)
-
-        guard let envelope = PrivateSentrySDKOnly.envelope(with: data) else {
+        guard let envelope = SentrySDK.internal.envelope.deserialize(from: data) else {
             call.reject("SentryCapacitor", "Failed to parse envelope from byte array.", nil)
             return
         }
-        pointer.deallocate()
 
-        PrivateSentrySDKOnly.capture(envelope)
+        SentrySDK.internal.envelope.capture(envelope)
 
         call.resolve()
     }
@@ -244,8 +240,8 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
 
     @objc func fetchNativeSdkInfo(_ call: CAPPluginCall) {
         call.resolve([
-            "name": PrivateSentrySDKOnly.getSdkName(),
-            "version": PrivateSentrySDKOnly.getSdkVersionString()
+            "name": SentrySDK.internal.sdk.name,
+            "version": SentrySDK.internal.sdk.versionString
         ])
     }
 
@@ -261,7 +257,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
                 contexts[key] = value
             }
             if contexts["user"] == nil {
-                contexts["user"] = ["id" : PrivateSentrySDKOnly.installationID]
+                contexts["user"] = ["id" : SentrySDK.internal.sdk.installationID]
             }
 
             if self?.sentryOptions?.debug == true {
@@ -272,7 +268,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
                 }
             }
 
-            let extraContext = PrivateSentrySDKOnly.getExtraContext()
+            let extraContext = SentrySDK.internal.sdk.extraContext
             var context = contexts["context"] as? [String: Any] ?? [:]
 
             if let deviceExtraContext = extraContext["device"] as? [String: Any] {
@@ -353,7 +349,7 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             }
 
             // Merge extra context from Sentry SDK
-            let extraContext = PrivateSentrySDKOnly.getExtraContext()
+            let extraContext = SentrySDK.internal.sdk.extraContext
 
             if let extraDevice = extraContext["device"] as? [String: Any] {
                 var mergedDevice = contexts["device"] as? [String: Any] ?? [:]
