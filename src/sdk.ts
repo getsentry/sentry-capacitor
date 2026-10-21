@@ -64,7 +64,7 @@ export function init(
     useEncodePolyfill();
   }
 
-  if (NATIVE.platform !== 'web') {
+  if (sharedOptions.enabled !== false && NATIVE.platform !== 'web') {
     patchCapacitorHttpXhr();
   }
 
