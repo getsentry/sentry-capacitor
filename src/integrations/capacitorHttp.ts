@@ -5,11 +5,13 @@ import {
 } from '@capacitor/core';
 import {
   addBreadcrumb,
+  addFetchInstrumentationHandler,
   type Client,
   debug,
   getBreadcrumbLogLevelFromHttpStatusCode,
   getClient,
   getTraceData,
+  type HandlerDataFetch,
   hasSpanStreamingEnabled,
   type Integration,
   isSentryRequestUrl,
@@ -19,6 +21,11 @@ import {
   startSpan,
   stripUrlQueryAndFragment,
 } from '@sentry/core';
+import {
+  consumeBridgedRequest,
+  markBridgedRequest,
+  unmarkBridgedRequest,
+} from '../utils/capacitorHttpBridge';
 import { fillTyped } from '../utils/fill';
 
 const INTEGRATION_NAME = 'CapacitorHttp';
@@ -48,6 +55,14 @@ function isHttpMethod(method: string): method is HttpMethod {
   return HTTP_METHODS.includes(method as HttpMethod);
 }
 
+/**
+ * Capacitor's patched XHR/fetch always call `request` with a `dataType` key, so direct calls with the
+ * same method and url don't take their marks.
+ */
+function isBridgedCall(method: HttpMethod, options: HttpOptions): boolean {
+  return method === 'request' && 'dataType' in options;
+}
+
 function isHttpOptions(options: unknown): options is HttpOptions {
   return (
     typeof options === 'object' &&
@@ -58,8 +73,19 @@ function isHttpOptions(options: unknown): options is HttpOptions {
 }
 
 /**
+ * Marks fetch requests sent through CapacitorHttp, so they aren't recorded twice.
+ */
+function markBridgedFetch({ fetchData, endTimestamp }: HandlerDataFetch): void {
+  if (endTimestamp) {
+    unmarkBridgedRequest(fetchData.method, fetchData.url, fetchData);
+  } else {
+    markBridgedRequest('fetch', fetchData.method, fetchData.url, fetchData);
+  }
+}
+
+/**
  * Instruments direct CapacitorHttp plugin calls.
- * Fetch/XHR are already covered by browser tracing.
+ * Fetch/XHR are already covered by browser tracing, including the ones Capacitor sends through CapacitorHttp.
  */
 export const capacitorHttpIntegration = (): Integration => ({
   name: INTEGRATION_NAME,
@@ -81,6 +107,8 @@ export const capacitorHttpIntegration = (): Integration => ({
       return;
     }
 
+    addFetchInstrumentationHandler(markBridgedFetch);
+
     fillTyped(capacitor, 'nativePromise', original => {
       return function (
         this: CapacitorWithNativePromise,
@@ -92,6 +120,13 @@ export const capacitorHttpIntegration = (): Integration => ({
           pluginName !== INTEGRATION_NAME ||
           !isHttpMethod(methodName) ||
           !isHttpOptions(options)
+        ) {
+          return original.call(this, pluginName, methodName, options);
+        }
+
+        if (
+          isBridgedCall(methodName, options) &&
+          consumeBridgedRequest(getMethod(methodName, options), options.url)
         ) {
           return original.call(this, pluginName, methodName, options);
         }

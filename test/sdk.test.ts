@@ -1,6 +1,7 @@
 import { type EventHint, type Exception, type StackFrame } from '@sentry/browser';
 import type { Client, Event, Integration } from '@sentry/core';
 import { close, init } from '../src/sdk';
+import { patchCapacitorHttpXhr } from '../src/utils/capacitorHttpXhr';
 import { NATIVE } from '../src/wrapper';
 
 jest.mock('../src/wrapper', () => {
@@ -12,6 +13,10 @@ jest.mock('../src/wrapper', () => {
     },
   };
 });
+
+jest.mock('../src/utils/capacitorHttpXhr', () => ({
+  patchCapacitorHttpXhr: jest.fn(),
+}));
 
 jest.mock('../src/NativeLogListener', () => ({
   setupNativeLogListener: jest.fn(),
@@ -117,6 +122,30 @@ describe('SDK Init', () => {
         resolve();
       }, 0);
     });
+  });
+
+  test('Patches CapacitorHttp XHR on mobile', () => {
+    NATIVE.platform = 'ios';
+
+    init({}, jest.fn());
+
+    expect(patchCapacitorHttpXhr).toHaveBeenCalledTimes(1);
+  });
+
+  test('Does not patch CapacitorHttp XHR on web', () => {
+    NATIVE.platform = 'web';
+
+    init({}, jest.fn());
+
+    expect(patchCapacitorHttpXhr).not.toHaveBeenCalled();
+  });
+
+  test('Does not patch CapacitorHttp XHR if enabled is false', () => {
+    NATIVE.platform = 'ios';
+
+    init({ enabled: false }, jest.fn());
+
+    expect(patchCapacitorHttpXhr).not.toHaveBeenCalled();
   });
 
   test('Keep enableNative if set on mobile', async () => {
