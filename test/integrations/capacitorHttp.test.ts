@@ -543,6 +543,10 @@ it('records direct CapacitorHttp requests after a bridged fetch finished', async
 
   await fetch('https://example.com/bridged', { method: 'POST' });
   await CapacitorHttp.post({ url: 'https://example.com/bridged' });
+
+  expect(startSpan).toHaveBeenCalledTimes(1);
+});
+
 it.each([
   ['the DSN envelope URL', { url: 'https://o1.ingest.sentry.io/api/1/envelope/?sentry_key=abc', method: 'POST' }],
   ['the DSN envelope URL with sentry_key in params', { url: 'https://o1.ingest.sentry.io/api/1/envelope/', method: 'POST', params: { sentry_key: 'abc' } }],
