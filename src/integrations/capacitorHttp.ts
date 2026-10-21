@@ -55,6 +55,14 @@ function isHttpMethod(method: string): method is HttpMethod {
   return HTTP_METHODS.includes(method as HttpMethod);
 }
 
+/**
+ * Capacitor's patched XHR/fetch always call `request` with a `dataType` key, so direct calls with the
+ * same method and url don't take their marks.
+ */
+function isBridgedCall(method: HttpMethod, options: HttpOptions): boolean {
+  return method === 'request' && 'dataType' in options;
+}
+
 function isHttpOptions(options: unknown): options is HttpOptions {
   return (
     typeof options === 'object' &&
@@ -116,7 +124,10 @@ export const capacitorHttpIntegration = (): Integration => ({
           return original.call(this, pluginName, methodName, options);
         }
 
-        if (consumeBridgedRequest(getMethod(methodName, options), options.url)) {
+        if (
+          isBridgedCall(methodName, options) &&
+          consumeBridgedRequest(getMethod(methodName, options), options.url)
+        ) {
           return original.call(this, pluginName, methodName, options);
         }
 
