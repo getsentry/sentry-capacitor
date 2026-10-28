@@ -11,7 +11,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/ionic-team/capacitor-swift-pm.git", "7.0.0"..<"9.0.0"),
-        .package(url: "https://github.com/getsentry/sentry-cocoa", exact: "9.28.0")
+        .package(url: "https://github.com/getsentry/sentry-apple-binaries", exact: "9.28.0")
     ],
     targets: [
         .target(
@@ -19,7 +19,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Capacitor", package: "capacitor-swift-pm"),
                 .product(name: "Cordova", package: "capacitor-swift-pm"),
-                .product(name: "Sentry", package: "sentry-cocoa")
+                .product(name: "Sentry-Static", package: "sentry-apple-binaries")
             ],
             path: "ios/Sources/SentryCapacitorPlugin"),
         .testTarget(

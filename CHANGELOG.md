@@ -16,6 +16,7 @@
 
 - Fix XHR instrumentation not working when `CapacitorHttp` is enabled ([#1449](https://github.com/getsentry/sentry-capacitor/pull/1449))
 - `capacitorHttpIntegration` now only records direct `CapacitorHttp` calls; XHR and fetch requests routed through `CapacitorHttp` are recorded by the browser SDK's XHR/fetch instrumentation, avoiding duplicated spans and breadcrumbs ([#1449](https://github.com/getsentry/sentry-capacitor/pull/1449))
+- iOS: Use the `Sentry-Static` product from `sentry-apple-binaries` for SwiftPM builds, avoiding downloads of unused Sentry Cocoa binary targets
 - iOS: Migrate the native bridge from `PrivateSentrySDKOnly` and `SentrySDKLog` to `SentrySDK.internal` ([#1433](https://github.com/getsentry/sentry-capacitor/pull/1433))
 
 ### Dependencies
