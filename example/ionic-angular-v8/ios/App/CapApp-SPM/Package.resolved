@@ -10,12 +10,12 @@
       }
     },
     {
-      "identity" : "sentry-cocoa",
+      "identity" : "sentry-apple-binaries",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/getsentry/sentry-cocoa",
+      "location" : "https://github.com/getsentry/sentry-apple-binaries",
       "state" : {
-        "revision" : "de66bd4fa0661c81455e8ad2509ed6f0e39025dc",
-        "version" : "9.2.0"
+        "revision" : "71ed5066fa7b5b1f54ac72c6bc8666cbf80d54dd",
+        "version" : "9.28.0"
       }
     }
   ],

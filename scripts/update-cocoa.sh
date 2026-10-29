@@ -7,7 +7,7 @@ case $1 in
 get-version)
     if [[ -f "$swiftFile" ]]; then
         swiftContent=$(cat $swiftFile)
-        swiftRegex='(getsentry\/sentry-cocoa\", (from|exact): \")([0-9.]+)'
+        swiftRegex='(getsentry\/sentry-apple-binaries\", (from|exact): \")([0-9.]+)'
         if [[ $swiftContent =~ $swiftRegex ]]; then
             echo ${BASH_REMATCH[3]}
             exit 0
@@ -24,7 +24,7 @@ set-version)
     if [[ -f "$swiftFile" ]]; then
         echo "Updating $swiftFile"
         swiftContent=$(cat $swiftFile)
-        swiftRegex='(getsentry\/sentry-cocoa\", (from|exact): \")([0-9.]+)'
+        swiftRegex='(getsentry\/sentry-apple-binaries\", (from|exact): \")([0-9.]+)'
         if [[ $swiftContent =~ $swiftRegex ]]; then
             newValue="${BASH_REMATCH[1]}$2"
             echo "${swiftContent/${BASH_REMATCH[0]}/$newValue}" >$swiftFile

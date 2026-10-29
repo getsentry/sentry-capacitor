@@ -75,7 +75,7 @@ yarn watch
 
 ### iOS
 
-- Edit `Package.swift` updating the `sentry-cocoa` dependency version and validate it on one of the example apps on this project.
+- Edit `Package.swift` updating the `sentry-apple-binaries` dependency version and validate it on one of the example apps on this project.
 - Run 'yarn build' on the root folder.
 
 ## Bumping Sentry JavaScript
