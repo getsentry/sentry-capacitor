@@ -13,6 +13,8 @@ const NATIVE: MockInterface<NativeType> = {
   _processLevel: jest.fn(),
   _serializeObject: jest.fn(),
 
+  _waitForNativeReady: jest.fn(),
+
   initNativeSdk: jest.fn(),
   closeNativeSdk: jest.fn(),
 

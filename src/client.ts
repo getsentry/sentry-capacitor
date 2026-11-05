@@ -56,12 +56,16 @@ export function sdkInit(
 
   nativeInit
     .then(didCallNativeInit => {
-      nativeOptions.onReady?.({ didCallNativeInit });
+      try {
+        nativeOptions.onReady?.({ didCallNativeInit });
+      } catch (error) {
+        debug.error('The onReady callback threw an error: ', error);
+      }
       // `afterInit` is not part of the core client's typed hooks (same as in React Native).
       (getClient() as { emit?: (hook: string) => void } | undefined)?.emit?.('afterInit');
     })
     .catch((error: Error) => {
-      debug.error('The onReady callback threw an error: ', error);
+      debug.error('An afterInit listener threw an error: ', error);
     });
 }
 

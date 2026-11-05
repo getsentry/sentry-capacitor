@@ -129,6 +129,17 @@ describe('client', () => {
       expect(onReady).toHaveBeenCalledWith({ didCallNativeInit: false });
     });
 
+    it('still emits afterInit when onReady throws', async () => {
+      const emit = jest.fn();
+      setCurrentClient({ emit, getOptions: () => ({}) } as never);
+      NATIVE.initNativeSdk = jest.fn().mockResolvedValue(true);
+
+      sdkInit({}, { dsn: 'test-dsn', onReady: () => { throw new Error('boom'); } }, mockOriginalInit);
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(emit).toHaveBeenCalledWith('afterInit');
+    });
+
     it('does not break when onReady throws', async () => {
       NATIVE.initNativeSdk = jest.fn().mockResolvedValue(true);
 
