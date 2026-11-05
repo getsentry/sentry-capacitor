@@ -154,6 +154,13 @@ export interface BaseCapacitorOptions {
   onNativeLog?: (log: NativeLogEntry) => void;
 
   /**
+   * Invoked once the native SDK finished starting (or failed to). The JS client is
+   * available before this, events captured earlier are sent as soon as native is ready.
+   * `didCallNativeInit` is `false` when native is disabled or failed to initialize.
+   */
+  onReady?: (response: { didCallNativeInit: boolean }) => void;
+
+  /**
    * Options which are in beta, or otherwise not guaranteed to be stable.
    */
   _experiments?: {

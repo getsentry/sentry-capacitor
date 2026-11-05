@@ -6,6 +6,12 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Fixes
+
+- Create the JS client synchronously and start the native SDK in the background, so errors raised while the app boots are no longer dropped. Events captured before native is ready wait for it (or fall back to the fetch transport if native fails). Adds an `onReady` option. ([#1463](https://github.com/getsentry/sentry-capacitor/issues/1463))
+
 ## 4.5.0
 
 ### Features

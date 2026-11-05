@@ -24,6 +24,12 @@ import { base64StringFromByteArray } from './vendor/fromByteArray';
  */
 export const NATIVE = {
   /**
+   * Pending native init, set by `sdkInit`. Resolves to `true` when native started,
+   * `false` when it is disabled or failed.
+   */
+  nativeReady: undefined as Promise<boolean> | undefined,
+
+  /**
    * Sending the event over the bridge to native
    * @param event Event
    */
