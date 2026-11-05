@@ -249,8 +249,12 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
     // Based on: https://github.com/getsentry/sentry-react-native/blob/a8d5ac86e3c53c90ef8e190cc082bdac440bd2a7/ios/RNSentry.m#L156-L188
     // Updated with: https://github.com/getsentry/sentry-react-native/blob/241b7c2831f1bb5691c735058d8dc3de61c40fac/ios/RNSentry.mm#L190-L228
     // Temp work around until sorted out this API in sentry-cocoa.
-    // TODO: If the callback isnt' executed the promise wouldn't be resolved.
+    // configureScope only runs its callback synchronously when the SDK is started.
+    // Reject otherwise so the promise never hangs (the React Native bridge resolves
+    // outside the callback for the same reason).
+        var scopeCallbackRan = false
         SentrySDK.configureScope { [weak self] scope in
+            scopeCallbackRan = true
             var contexts: [String : Any?] = [:]
             let serializedScope = scope.serialize()
             for (key, value) in serializedScope {
@@ -303,10 +307,15 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
 
             call.resolve(contexts as PluginCallResultData)
         }
+        if !scopeCallbackRan {
+            call.reject("Native SDK is not started")
+        }
     }
 
     @objc func fetchNativeLogAttributes(_ call: CAPPluginCall) {
+        var scopeCallbackRan = false
         SentrySDK.configureScope { scope in
+            scopeCallbackRan = true
             let serializedScope = scope.serialize()
             var result: [String: Any] = [:]
             var contexts: [String: Any] = [:]
@@ -373,6 +382,9 @@ public class SentryCapacitorPlugin: CAPPlugin, CAPBridgedPlugin {
             }
 
             call.resolve(result as PluginCallResultData)
+        }
+        if !scopeCallbackRan {
+            call.reject("Native SDK is not started")
         }
     }
 
