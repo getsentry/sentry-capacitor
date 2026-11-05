@@ -1,3 +1,4 @@
+import { makeFetchTransport } from '@sentry/browser';
 import type {   BaseTransportOptions,
   Envelope,
 PromiseBuffer ,
@@ -20,7 +21,10 @@ export class NativeTransport implements Transport {
   /** A simple buffer holding all requests. */
   protected readonly _buffer: PromiseBuffer<TransportMakeRequestResponse>;
 
-  public constructor(options: BaseNativeTransportOptions = {}) {
+  private _fallback?: Transport;
+
+  public constructor(private readonly _options: BaseNativeTransportOptions = {}) {
+    const options = _options;
     this._buffer = makePromiseBuffer(options.bufferSize || DEFAULT_BUFFER_SIZE);
   }
 
@@ -30,7 +34,16 @@ export class NativeTransport implements Transport {
    * @param envelope Envelope that should be sent to Sentry.
    */
   public send(envelope: Envelope): PromiseLike<TransportMakeRequestResponse> {
-    return this._buffer.add(() => NATIVE.sendEnvelope(envelope));
+    return this._buffer.add(async () => {
+      // Events captured before the native SDK is ready wait for it.
+      const nativeReady = NATIVE.nativeReady ? await NATIVE.nativeReady : true;
+      if (nativeReady) {
+        return NATIVE.sendEnvelope(envelope);
+      }
+      // Native is unavailable: send through the JS transport instead of dropping.
+      this._fallback ??= makeFetchTransport(this._options as Parameters<typeof makeFetchTransport>[0]);
+      return this._fallback.send(envelope);
+    });
   }
 
   /**

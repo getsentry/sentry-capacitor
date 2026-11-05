@@ -91,10 +91,62 @@ describe('client', () => {
         { error: initError }
       );
 
-      // Should restore non-native options (transport should be set to custom transport)
-      expect(browserOptions.transport).toBe(mockCustomTransport);
+      // Events are routed to the fetch fallback by the native transport.
+      await expect(NATIVE.nativeReady).resolves.toBe(false);
 
       consoleSpy.mockRestore();
+    });
+
+    it('creates the JS client synchronously, before native init resolves', () => {
+      let resolveNative: (v: boolean) => void = () => undefined;
+      NATIVE.initNativeSdk = jest.fn().mockReturnValue(new Promise<boolean>(r => (resolveNative = r)));
+
+      sdkInit({ dsn: 'test-dsn' }, { dsn: 'test-dsn', enableNative: true }, mockOriginalInit);
+
+      expect(NATIVE.initNativeSdk).toHaveBeenCalledTimes(1);
+      expect(mockOriginalInit).toHaveBeenCalledTimes(1);
+      resolveNative(true);
+    });
+
+    it('calls onReady with didCallNativeInit when native init finishes', async () => {
+      const onReady = jest.fn();
+      NATIVE.initNativeSdk = jest.fn().mockResolvedValue(true);
+
+      sdkInit({}, { dsn: 'test-dsn', enableNative: true, onReady }, mockOriginalInit);
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(onReady).toHaveBeenCalledWith({ didCallNativeInit: true });
+    });
+
+    it('calls onReady with didCallNativeInit false when native init fails', async () => {
+      const onReady = jest.fn();
+      NATIVE.initNativeSdk = jest.fn().mockRejectedValue(new Error('fail'));
+      jest.spyOn(console, 'error').mockImplementation();
+
+      sdkInit({}, { dsn: 'test-dsn', enableNative: true, onReady }, mockOriginalInit);
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(onReady).toHaveBeenCalledWith({ didCallNativeInit: false });
+    });
+
+    it('still emits afterInit when onReady throws', async () => {
+      const emit = jest.fn();
+      setCurrentClient({ emit, getOptions: () => ({}) } as never);
+      NATIVE.initNativeSdk = jest.fn().mockResolvedValue(true);
+
+      sdkInit({}, { dsn: 'test-dsn', onReady: () => { throw new Error('boom'); } }, mockOriginalInit);
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(emit).toHaveBeenCalledWith('afterInit');
+    });
+
+    it('does not break when onReady throws', async () => {
+      NATIVE.initNativeSdk = jest.fn().mockResolvedValue(true);
+
+      sdkInit({}, { dsn: 'test-dsn', onReady: () => { throw new Error('boom'); } }, mockOriginalInit);
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(mockOriginalInit).toHaveBeenCalled();
     });
 
     it('should update client SDK metadata after initialization', async () => {
@@ -253,15 +305,17 @@ describe('client', () => {
         expect(mockSetupNativeLogListener).not.toHaveBeenCalled();
       });
 
-      it('does not set up the listener when native init fails', async () => {
-        NATIVE.initNativeSdk = jest.fn().mockRejectedValue(new Error('fail'));
-        jest.spyOn(console, 'error').mockImplementation();
-        const nativeOptions: CapacitorOptions = { dsn: 'test-dsn', debug: true };
+      it('sets up the listener before native init starts', () => {
+        const order: string[] = [];
+        mockSetupNativeLogListener.mockImplementation(() => order.push('listener'));
+        NATIVE.initNativeSdk = jest.fn().mockImplementation(() => {
+          order.push('init');
+          return Promise.resolve(true);
+        });
 
-        sdkInit({}, nativeOptions, mockOriginalInit, mockCustomTransport);
-        await new Promise(resolve => setTimeout(resolve, 10));
+        sdkInit({}, { dsn: 'test-dsn', debug: true }, mockOriginalInit, mockCustomTransport);
 
-        expect(mockSetupNativeLogListener).not.toHaveBeenCalled();
+        expect(order).toEqual(['listener', 'init']);
       });
     });
 

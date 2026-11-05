@@ -24,6 +24,23 @@ import { base64StringFromByteArray } from './vendor/fromByteArray';
  */
 export const NATIVE = {
   /**
+   * Pending native init, set by `sdkInit`. Resolves to `true` when native started,
+   * `false` when it is disabled or failed.
+   */
+  nativeReady: undefined as Promise<boolean> | undefined,
+
+  /**
+   * Waits for the native SDK to finish starting. The JS client is created before the
+   * native SDK is ready, so calls that read native state must not run earlier.
+   * Throws if native failed to start or is disabled.
+   */
+  async _waitForNativeReady(): Promise<void> {
+    if (this.nativeReady && !(await this.nativeReady)) {
+      throw this._DisabledNativeError;
+    }
+  },
+
+  /**
    * Sending the event over the bridge to native
    * @param event Event
    */
@@ -121,6 +138,7 @@ export const NATIVE = {
    * Fetches the device contexts. Not used on Android.
    */
   async fetchNativeDeviceContexts(): Promise<NativeDeviceContextsResponse> {
+    await this._waitForNativeReady();
     if (!this.enableNative) {
       throw this._DisabledNativeError;
     }
@@ -135,6 +153,7 @@ export const NATIVE = {
    * Fetches native log attributes for log enrichment.
    */
   async fetchNativeLogAttributes(): Promise<NativeLogAttributesResponse> {
+    await this._waitForNativeReady();
     if (!this.enableNative) {
       throw this._DisabledNativeError;
     }
@@ -153,6 +172,7 @@ export const NATIVE = {
     id: string;
     version: string;
   }> {
+    await this._waitForNativeReady();
     if (!this.enableNative) {
       throw this._DisabledNativeError;
     }
@@ -164,6 +184,7 @@ export const NATIVE = {
     name: string;
     version: string;
   }> {
+    await this._waitForNativeReady();
     if (!this.enableNative) {
       throw this._DisabledNativeError;
     }

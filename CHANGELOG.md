@@ -6,6 +6,17 @@
 > [migration guide](https://docs.sentry.io/platforms/javascript/guides/capacitor/migration/) first.
 <!-- prettier-ignore-end -->
 
+## Unreleased
+
+### Features
+
+- Add an `onReady` option, called with `{ didCallNativeInit }` once the native SDK finished starting (or failed to) ([#1469](https://github.com/getsentry/sentry-capacitor/pull/1469))
+
+### Fixes
+
+- Fix errors raised while the app boots being dropped: the JS client is now created synchronously and the native SDK starts in the background. Events captured before native is ready wait for it, or fall back to the fetch transport if native fails ([#1469](https://github.com/getsentry/sentry-capacitor/pull/1469))
+- iOS: Reject `fetchNativeDeviceContexts` and `fetchNativeLogAttributes` when the native SDK is not started instead of leaving the promise pending, which stalled event processing ([#1469](https://github.com/getsentry/sentry-capacitor/pull/1469))
+
 ## 4.5.0
 
 ### Features
