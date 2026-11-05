@@ -57,8 +57,8 @@ export function sdkInit(
   nativeInit
     .then(didCallNativeInit => {
       nativeOptions.onReady?.({ didCallNativeInit });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (getClient() )?.emit?.('afterInit');
+      // `afterInit` is not part of the core client's typed hooks (same as in React Native).
+      (getClient() as { emit?: (hook: string) => void } | undefined)?.emit?.('afterInit');
     })
     .catch((error: Error) => {
       debug.error('The onReady callback threw an error: ', error);
