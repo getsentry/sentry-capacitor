@@ -637,6 +637,39 @@ describe('Tests Native Wrapper', () => {
     });
   });
 
+  describe('native readiness', () => {
+    afterEach(() => {
+      NATIVE.nativeReady = undefined;
+    });
+
+    test('native fetches wait for native init before calling native', async () => {
+      NATIVE.platform = 'ios';
+      let resolveReady: (v: boolean) => void = () => undefined;
+      NATIVE.nativeReady = new Promise<boolean>(r => (resolveReady = r));
+      (SentryCapacitor.fetchNativeDeviceContexts as jest.Mock).mockClear();
+
+      const pending = NATIVE.fetchNativeDeviceContexts();
+      await Promise.resolve();
+      expect(SentryCapacitor.fetchNativeDeviceContexts).not.toHaveBeenCalled();
+
+      resolveReady(true);
+      await pending;
+      expect(SentryCapacitor.fetchNativeDeviceContexts).toHaveBeenCalledTimes(1);
+    });
+
+    test('native fetches reject without calling native when native failed to start', async () => {
+      NATIVE.platform = 'ios';
+      NATIVE.nativeReady = Promise.resolve(false);
+      (SentryCapacitor.fetchNativeLogAttributes as jest.Mock).mockClear();
+
+      await expect(NATIVE.fetchNativeDeviceContexts()).rejects.toBe(NATIVE._DisabledNativeError);
+      await expect(NATIVE.fetchNativeLogAttributes()).rejects.toBe(NATIVE._DisabledNativeError);
+      await expect(NATIVE.fetchNativeRelease()).rejects.toBe(NATIVE._DisabledNativeError);
+      await expect(NATIVE.fetchNativeSdkInfo()).rejects.toBe(NATIVE._DisabledNativeError);
+      expect(SentryCapacitor.fetchNativeLogAttributes).not.toHaveBeenCalled();
+    });
+  });
+
   describe('fetchNativeLogAttributes', () => {
     test('returns log attributes from native module', async () => {
       NATIVE.platform = 'ios';

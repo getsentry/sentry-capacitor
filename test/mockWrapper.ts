@@ -6,11 +6,14 @@ type NativeType = typeof ORIGINAL_NATIVE;
 const NATIVE: MockInterface<NativeType> = {
   enableNative: true,
   platform: 'ios',
+  nativeReady: undefined,
 
   _processItem: jest.fn(),
   _processLevels: jest.fn(),
   _processLevel: jest.fn(),
   _serializeObject: jest.fn(),
+
+  _waitForNativeReady: jest.fn(),
 
   initNativeSdk: jest.fn(),
   closeNativeSdk: jest.fn(),
