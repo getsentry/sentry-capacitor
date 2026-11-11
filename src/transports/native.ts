@@ -24,8 +24,7 @@ export class NativeTransport implements Transport {
   private _fallback?: Transport;
 
   public constructor(private readonly _options: BaseNativeTransportOptions = {}) {
-    const options = _options;
-    this._buffer = makePromiseBuffer(options.bufferSize || DEFAULT_BUFFER_SIZE);
+    this._buffer = makePromiseBuffer(_options.bufferSize || DEFAULT_BUFFER_SIZE);
   }
 
   /**
