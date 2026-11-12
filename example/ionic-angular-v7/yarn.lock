@@ -4150,24 +4150,12 @@ __metadata:
 
 "@sentry/capacitor@file:.yalc/@sentry/capacitor::locator=ionic-angular%40workspace%3A.":
   version: 4.4.0+995302bd
-  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=80c64f&locator=ionic-angular%40workspace%3A."
+  resolution: "@sentry/capacitor@file:.yalc/@sentry/capacitor#.yalc/@sentry/capacitor::hash=cfa400&locator=ionic-angular%40workspace%3A."
   dependencies:
     "@sentry/browser": "npm:10.76.2"
     "@sentry/core": "npm:10.76.2"
     "@sentry/types": "npm:10.76.2"
-  peerDependencies:
-    "@capacitor/core": ">=6.0.0"
-    "@sentry/angular": 10.76.2
-    "@sentry/react": 10.76.2
-    "@sentry/vue": 10.76.2
-  peerDependenciesMeta:
-    "@sentry/angular":
-      optional: true
-    "@sentry/react":
-      optional: true
-    "@sentry/vue":
-      optional: true
-  checksum: 10c0/dbe0e34efcb41608c79080abb097534840977a2e080451dfbf86c2c289097718f6a1b3ea47ff110b3c3290228cbe922c58344894b5c1b04553035dc251f15f29
+  checksum: 10c0/893a36d842cefd9840032354c774047a436c6be248e577171565cc80768ed180a8b6bee28392239a5665a2dec657b554f177ef5178475c872d7746d3ff5aaa6e
   languageName: node
   linkType: hard
 
@@ -7118,12 +7106,12 @@ __metadata:
   linkType: hard
 
 "follow-redirects@npm:^1.0.0":
-  version: 1.16.0
-  resolution: "follow-redirects@npm:1.16.0"
+  version: 1.16.1
+  resolution: "follow-redirects@npm:1.16.1"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 10c0/a1e2900163e6f1b4d1ed5c221b607f41decbab65534c63fe7e287e40a5d552a6496e7d9d7d976fa4ba77b4c51c11e5e9f683f10b43011ea11e442ff128d0e181
+  checksum: 10c0/544e24ccb93b7afb5dd5a2199bd556e167b84de2af7c13b2ced08494239677359d7883bae56ae43a9ca98ac5451e75cf4834a5fadd6fa79053b9248fac5447a4
   languageName: node
   linkType: hard
 
