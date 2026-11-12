@@ -19,7 +19,7 @@
 
 ### Dependencies
 
-- Bump Android SDK from v8.61.0 to v8.64.0
+- Bump Android SDK from v8.61.0 to v8.64.0 ([#1472](https://github.com/getsentry/sentry-capacitor/pull/1472))
   - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8640)
   - [diff](https://github.com/getsentry/sentry-java/compare/8.61.0...8.64.0)
 
