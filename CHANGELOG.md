@@ -17,6 +17,12 @@
 - Fix errors raised while the app boots being dropped: the JS client is now created synchronously and the native SDK starts in the background. Events captured before native is ready wait for it, or fall back to the fetch transport if native fails ([#1469](https://github.com/getsentry/sentry-capacitor/pull/1469))
 - iOS: Reject `fetchNativeDeviceContexts` and `fetchNativeLogAttributes` when the native SDK is not started instead of leaving the promise pending, which stalled event processing ([#1469](https://github.com/getsentry/sentry-capacitor/pull/1469))
 
+### Dependencies
+
+- Bump Android SDK from v8.61.0 to v8.64.0 ([#1173](https://github.com/getsentry/sentry-capacitor/pull/1173))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8640)
+  - [diff](https://github.com/getsentry/sentry-java/compare/8.61.0...8.64.0)
+
 ## 4.5.0
 
 ### Features
