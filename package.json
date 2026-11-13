@@ -69,7 +69,7 @@
     "@ionic/prettier-config": "^1.0.0",
     "@sentry/eslint-config-sdk": "10.60.0",
     "@sentry/eslint-plugin-sdk": "10.60.0",
-    "@sentry/typescript": "10.60.0",
+    "@sentry/typescript": "11.9.0",
     "@sentry/wizard": "^6.12.0",
     "@types/jest": "^29.5.3",
     "concurrently": "^8.2.2",

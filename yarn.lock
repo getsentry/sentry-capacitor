@@ -1121,7 +1121,7 @@ __metadata:
     "@sentry/eslint-config-sdk": "npm:10.60.0"
     "@sentry/eslint-plugin-sdk": "npm:10.60.0"
     "@sentry/types": "npm:10.76.2"
-    "@sentry/typescript": "npm:10.60.0"
+    "@sentry/typescript": "npm:11.9.0"
     "@sentry/wizard": "npm:^6.12.0"
     "@types/jest": "npm:^29.5.3"
     concurrently: "npm:^8.2.2"
@@ -1324,6 +1324,15 @@ __metadata:
   peerDependencies:
     typescript: ~5.8.0
   checksum: 10c0/91f31912d5ea1af57b57ac0ecfbb8aa3fbed75ba90425df35909b95210036fd5e01e6a104c9508b9ea41051e60250f6e8db6fd66b4bee6299f48a6615a98fbfa
+  languageName: node
+  linkType: hard
+
+"@sentry/typescript@npm:11.9.0":
+  version: 11.9.0
+  resolution: "@sentry/typescript@npm:11.9.0"
+  peerDependencies:
+    typescript: ~5.8.0
+  checksum: 10c0/1a8a94f344000938d1214350b91d63ad5f588d276c49bc676669eb1068f72c8d28a6d16800a7f8ad9160c25aaecb90712c890c8ca40e31459c844df81312e5e5
   languageName: node
   linkType: hard
 
