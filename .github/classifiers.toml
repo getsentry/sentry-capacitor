@@ -1,0 +1,53 @@
+# getsentry/sentry-capacitor 8d25b76115772995193ef1468e6f175f9c316eb8
+
+rubric = "sdk"
+
+# JavaScript layer runs in the app's WebView on top of @sentry/browser and the framework
+# siblings (@sentry/angular, react, vue), and bridges to native through the Capacitor plugin.
+[[area]]
+paths = ["src/**"]
+families = ["hybrid", "browser"]
+
+# Native plugin halves: Android (bundles sentry-android) and iOS (bundles sentry-cocoa).
+[[area]]
+paths = ["android/**", "ios/**", "Package.swift"]
+families = ["hybrid"]
+
+# Shipped in the npm package and run as a postinstall hook in customers' installs.
+[[area]]
+paths = ["scripts/check-siblings.js"]
+families = ["tooling", "hybrid"]
+
+# The published package manifest pins the Sentry JavaScript SDKs and runs the postinstall hook;
+# yarn.lock is the dependency set it is built from.
+[[area]]
+paths = ["package.json", "yarn.lock"]
+families = ["hybrid", "browser"]
+shared_core = true
+
+# Bundled SDK pins: sentry-android in Gradle, sentry-cocoa in Package.swift (default),
+# Sentry JavaScript in package.json (default).
+[[kind]]
+paths = ["android/build.gradle", ".yarnrc.yml"]
+kind = "dependencies"
+
+[[kind]]
+paths = ["test/**", "ios/Tests/**", "typings/jest-*.d.ts", "example/broken_node_module/**"]
+kind = "tests"
+
+[[kind]]
+paths = ["example/**"]
+kind = "samples"
+
+[[kind]]
+paths = [
+  "scripts/**", "**/tsconfig*.json", "**/*.gradle", "**/gradle.properties", "**/gradle/**",
+  "**/gradlew", "**/gradlew.bat", "**/.npmignore", "src/version.ts",
+]
+kind = "build-release"
+
+[[kind]]
+paths = [
+  ".eslintrc.js", ".eslintignore", ".prettierignore", ".swiftlint.yml",
+]
+kind = "dev-tooling"
